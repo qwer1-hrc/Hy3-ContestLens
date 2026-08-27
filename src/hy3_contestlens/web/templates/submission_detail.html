@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Revision · Hy3-ContestLens{% endblock %}
+{% block content %}
+<section class="page-head"><span class="eyebrow">IMMUTABLE HISTORY</span><h1>代码 Revision</h1><p><code>{{ submission_id }}</code></p></section>
+<section class="panel"><div id="revision-list"></div><pre id="revision-source">选择 revision 查看源码与 diff。</pre></section>
+{% endblock %}
+{% block scripts %}<script>loadSubmission('{{ run_id }}','{{ submission_id }}');</script>{% endblock %}
+

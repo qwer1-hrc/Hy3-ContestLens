@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <span class="eyebrow">PROCESS EVALUATION · ERROR LOCALIZATION</span>
+  <h1>看见答案，也看见错误从哪里开始。</h1>
+  <p>Hy3-ContestLens 对 NOIP2018 解题过程、C++ 实现与 120 个确定性测试点进行联合评审，并保留每次修复的完整证据链。</p>
+  <div class="actions"><a class="button primary" href="/ui/runs/new">创建评测</a><a class="button" href="/ui/resources">检查资源</a></div>
+</section>
+<section><div class="section-title"><div><span class="eyebrow">DATASET</span><h2>NOIP2018 提高组</h2></div><span class="muted">难度等待用户按洛谷七档标注</span></div>
+<div class="cards">
+{% for problem in problems %}<article class="card"><div class="card-top"><span class="tag">DAY {{ problem.day }}</span><span class="status pending">待标注</span></div><h3>{{ problem.title_zh }}</h3><code>{{ problem.problem_id }}</code><dl><div><dt>时间</dt><dd>{{ problem.resource_limits.time_ms }} ms</dd></div><div><dt>内存</dt><dd>{{ problem.effective_memory_limit_mb }} MB</dd></div></dl><a href="/ui/runs/new?problem={{ problem.problem_id }}">评测此题 →</a></article>{% endfor %}
+</div></section>
+<section class="pipeline"><span>题面冻结</span><i>→</i><span>Hy3 求解</span><i>→</i><span>双 Critic 盲审</span><i>→</i><span>Docker 判题</span><i>→</i><span>定位与修复</span></section>
+{% endblock %}
+

@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "TestResult": {
+      "additionalProperties": false,
+      "properties": {
+        "test_id": {
+          "title": "Test Id",
+          "type": "string"
+        },
+        "verdict": {
+          "$ref": "#/$defs/Verdict"
+        },
+        "cpu_ms": {
+          "default": 0,
+          "title": "Cpu Ms",
+          "type": "integer"
+        },
+        "wall_ms": {
+          "default": 0,
+          "title": "Wall Ms",
+          "type": "integer"
+        },
+        "peak_rss_mb": {
+          "default": 0,
+          "title": "Peak Rss Mb",
+          "type": "number"
+        },
+        "memory_limit_mb": {
+          "title": "Memory Limit Mb",
+          "type": "integer"
+        },
+        "memory_limit_source": {
+          "enum": [
+            "problem_manifest",
+            "default"
+          ],
+          "title": "Memory Limit Source",
+          "type": "string"
+        },
+        "expected_sha256": {
+          "title": "Expected Sha256",
+          "type": "string"
+        },
+        "actual_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Sha256"
+        },
+        "first_diff": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Diff"
+        },
+        "exit_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Code"
+        }
+      },
+      "required": [
+        "test_id",
+        "verdict",
+        "memory_limit_mb",
+        "memory_limit_source",
+        "expected_sha256"
+      ],
+      "title": "TestResult",
+      "type": "object"
+    },
+    "Verdict": {
+      "enum": [
+        "OK",
+        "AC",
+        "CE",
+        "WA",
+        "TLE",
+        "MLE",
+        "RE",
+        "OLE",
+        "IO_CONFLICT",
+        "SANDBOX_VIOLATION",
+        "INVALID_PROBLEM_MANIFEST",
+        "SANDBOX_UNAVAILABLE"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "check_id": {
+      "title": "Check Id",
+      "type": "string"
+    },
+    "verdict": {
+      "$ref": "#/$defs/Verdict"
+    },
+    "problem_id": {
+      "title": "Problem Id",
+      "type": "string"
+    },
+    "dataset_id": {
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "integer"
+    },
+    "total": {
+      "title": "Total",
+      "type": "integer"
+    },
+    "score": {
+      "title": "Score",
+      "type": "number"
+    },
+    "tests": {
+      "items": {
+        "$ref": "#/$defs/TestResult"
+      },
+      "title": "Tests",
+      "type": "array"
+    }
+  },
+  "required": [
+    "check_id",
+    "verdict",
+    "problem_id",
+    "dataset_id",
+    "passed",
+    "total",
+    "score"
+  ],
+  "title": "CheckResult",
+  "type": "object"
+}

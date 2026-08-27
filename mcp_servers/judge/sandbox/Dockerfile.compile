@@ -1,0 +1,5 @@
+FROM gcc:13-bookworm
+RUN useradd --uid 65534 --no-create-home --shell /usr/sbin/nologin sandbox || true
+USER 65534:65534
+WORKDIR /build
+

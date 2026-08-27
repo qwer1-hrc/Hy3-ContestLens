@@ -1,0 +1,5 @@
+{
+  "command": "conda",
+  "args": ["run", "--no-capture-output", "-n", "hy3-contestlens", "python", "-m", "mcp_servers.judge.server"],
+  "env": {"HY3_CONTESTLENS_ROOT": "<PROJECT_ROOT>"}
+}

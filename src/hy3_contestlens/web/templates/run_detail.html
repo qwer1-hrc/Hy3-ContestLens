@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Run {{ run_id }}{% endblock %}
+{% block content %}
+<section class="page-head"><span class="eyebrow">LIVE RUN</span><h1>运行详情</h1><p><code>{{ run_id }}</code></p><div class="actions"><button onclick="cancelRun('{{ run_id }}')">取消</button><a class="button" href="/api/v1/runs/{{ run_id }}/report">报告</a></div></section>
+<section class="metrics"><article><span>状态</span><strong id="run-status">载入中</strong></article><article><span>初次通过</span><strong id="initial-score">—</strong></article><article><span>最佳通过</span><strong id="best-score">—</strong></article><article><span>停止原因</span><strong id="stop-reason">—</strong></article></section>
+<section class="panel"><h2>事件时间线</h2><div id="event-list" class="timeline"></div></section>
+<section class="panel"><h2>诊断与评测结果</h2><pre id="run-result">尚未完成</pre></section>
+{% endblock %}
+{% block scripts %}<script>watchRun('{{ run_id }}');</script>{% endblock %}
+

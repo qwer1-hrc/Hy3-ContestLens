@@ -1,0 +1,14 @@
+[resources]
+allow_local_webui_grants = true
+auto_discover = true
+max_depth = 8
+max_entries = 20000
+max_document_mb = 50
+max_return_chars = 12000
+auto_bind_confidence = 0.90
+
+[[resources.roots]]
+name = "noip2018-local"
+path = "<ABSOLUTE_PATH_TO_NOIP2018>"
+read_only = true
+

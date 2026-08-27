@@ -1,0 +1,147 @@
+{
+  "$defs": {
+    "CodeStepMap": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "title": "Step Id",
+          "type": "string"
+        },
+        "code_location": {
+          "title": "Code Location",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "code_location"
+      ],
+      "title": "CodeStepMap",
+      "type": "object"
+    },
+    "Complexity": {
+      "additionalProperties": false,
+      "properties": {
+        "time": {
+          "title": "Time",
+          "type": "string"
+        },
+        "space": {
+          "title": "Space",
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "space"
+      ],
+      "title": "Complexity",
+      "type": "object"
+    },
+    "ReasoningStep": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "title": "Step Id",
+          "type": "string"
+        },
+        "goal": {
+          "title": "Goal",
+          "type": "string"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "invariant": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Invariant"
+        },
+        "justification": {
+          "title": "Justification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "goal",
+        "statement",
+        "justification"
+      ],
+      "title": "ReasoningStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "problem_summary": {
+      "title": "Problem Summary",
+      "type": "string"
+    },
+    "assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/ReasoningStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "proof_obligations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Proof Obligations",
+      "type": "array"
+    },
+    "complexity": {
+      "$ref": "#/$defs/Complexity"
+    },
+    "boundary_cases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Boundary Cases",
+      "type": "array"
+    },
+    "cpp_source": {
+      "title": "Cpp Source",
+      "type": "string"
+    },
+    "code_step_map": {
+      "items": {
+        "$ref": "#/$defs/CodeStepMap"
+      },
+      "title": "Code Step Map",
+      "type": "array"
+    }
+  },
+  "required": [
+    "problem_summary",
+    "steps",
+    "complexity",
+    "cpp_source"
+  ],
+  "title": "SolverOutput",
+  "type": "object"
+}

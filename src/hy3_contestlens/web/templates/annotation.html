@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}人工标注 · Hy3-ContestLens{% endblock %}
+{% block content %}<section class="page-head"><span class="eyebrow">BLIND ANNOTATION</span><h1>过程标注任务</h1><p><code>{{ task_id }}</code> · 提交前不展示系统预测。</p></section><section class="panel narrow"><label>首错步骤<input placeholder="例如 S3"></label><label>错误类型<select><option>STATEMENT_MISREAD</option><option>WRONG_ALGORITHM</option><option>PROOF_GAP</option><option>BOUNDARY_ERROR</option><option>IMPLEMENTATION_MISMATCH</option><option>UNRESOLVED</option></select></label><label>备注<textarea rows="7"></textarea></label><button disabled>标注接口将在创建验证任务后启用</button></section>{% endblock %}
+

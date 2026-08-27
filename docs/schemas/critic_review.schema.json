@@ -1,0 +1,125 @@
+{
+  "$defs": {
+    "ErrorType": {
+      "enum": [
+        "STATEMENT_MISREAD",
+        "CONSTRAINT_OMISSION",
+        "WRONG_ALGORITHM",
+        "PROOF_GAP",
+        "CIRCULAR_REASONING",
+        "HALLUCINATED_CLAIM",
+        "COMPLEXITY_TLE",
+        "COMPLEXITY_MLE",
+        "BOUNDARY_ERROR",
+        "INTEGER_OVERFLOW",
+        "STATE_TRANSITION_ERROR",
+        "IMPLEMENTATION_MISMATCH",
+        "IO_OR_FORMAT_ERROR",
+        "COMPILE_ERROR",
+        "RUNTIME_ERROR",
+        "RESULT_CORRECT_PROCESS_INVALID",
+        "UNRESOLVED"
+      ],
+      "title": "ErrorType",
+      "type": "string"
+    },
+    "StepAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "title": "Step Id",
+          "type": "string"
+        },
+        "verdict": {
+          "$ref": "#/$defs/StepVerdict"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        }
+      },
+      "required": [
+        "step_id",
+        "verdict",
+        "confidence"
+      ],
+      "title": "StepAssessment",
+      "type": "object"
+    },
+    "StepVerdict": {
+      "enum": [
+        "SUPPORTED",
+        "UNSUPPORTED",
+        "CONTRADICTED",
+        "NOT_ASSESSABLE"
+      ],
+      "title": "StepVerdict",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "reviewer": {
+      "enum": [
+        "algorithm_critic",
+        "code_critic"
+      ],
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "assessments": {
+      "items": {
+        "$ref": "#/$defs/StepAssessment"
+      },
+      "title": "Assessments",
+      "type": "array"
+    },
+    "error_type": {
+      "$ref": "#/$defs/ErrorType",
+      "default": "UNRESOLVED"
+    },
+    "first_error_step_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "First Error Step Id"
+    },
+    "code_location": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Code Location"
+    },
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "reviewer",
+    "summary"
+  ],
+  "title": "CriticReview",
+  "type": "object"
+}

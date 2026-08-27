@@ -1,0 +1,11 @@
+FROM gcc:13-bookworm AS builder
+COPY runner/runner.cpp /src/runner.cpp
+RUN g++ /src/runner.cpp -std=c++17 -O2 -static -pthread -o /runner
+
+FROM debian:bookworm-slim
+COPY --from=builder /runner /runner
+RUN chmod 0555 /runner
+USER 65534:65534
+WORKDIR /work
+ENTRYPOINT []
+

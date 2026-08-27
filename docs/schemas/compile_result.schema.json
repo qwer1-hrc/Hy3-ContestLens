@@ -1,0 +1,86 @@
+{
+  "$defs": {
+    "Verdict": {
+      "enum": [
+        "OK",
+        "AC",
+        "CE",
+        "WA",
+        "TLE",
+        "MLE",
+        "RE",
+        "OLE",
+        "IO_CONFLICT",
+        "SANDBOX_VIOLATION",
+        "INVALID_PROBLEM_MANIFEST",
+        "SANDBOX_UNAVAILABLE"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "verdict": {
+      "$ref": "#/$defs/Verdict"
+    },
+    "compile_artifact_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Compile Artifact Id"
+    },
+    "compiler": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Compiler"
+    },
+    "duration_ms": {
+      "default": 0,
+      "title": "Duration Ms",
+      "type": "integer"
+    },
+    "diagnostics": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    },
+    "binary_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Binary Sha256"
+    },
+    "source_artifact_id": {
+      "title": "Source Artifact Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "verdict",
+    "source_artifact_id"
+  ],
+  "title": "CompileResult",
+  "type": "object"
+}

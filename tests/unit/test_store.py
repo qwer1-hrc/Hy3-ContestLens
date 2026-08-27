@@ -1,0 +1,25 @@
+from pathlib import Path
+
+import pytest
+
+from hy3_contestlens.errors import ContestLensError
+from hy3_contestlens.store import Store
+
+
+def test_run_events_are_monotonic_and_idempotent(tmp_path: Path):
+    store = Store(tmp_path / "store.sqlite3")
+    first = store.create_run("road", {"problem_id": "road"}, idempotency_key="same")
+    second = store.create_run("road", {"problem_id": "road"}, idempotency_key="same")
+    assert first["run_id"] == second["run_id"]
+    store.update_run(first["run_id"], "ANALYZING")
+    events = store.list_events(first["run_id"])
+    assert [item["seq"] for item in events] == [1, 2]
+
+
+def test_idempotency_key_cannot_cross_operations(tmp_path: Path):
+    store = Store(tmp_path / "store.sqlite3")
+    store.idempotency_put("key", "x", {"ok": True})
+    with pytest.raises(ContestLensError) as error:
+        store.idempotency_get("key", "y")
+    assert error.value.code == "IDEMPOTENCY_KEY_REUSED"
+

@@ -1,0 +1,13 @@
+### Health
+GET http://127.0.0.1:8000/readyz
+
+### Problems
+GET http://127.0.0.1:8000/api/v1/datasets/noip2018/problems
+
+### Create road run after resource binding
+POST http://127.0.0.1:8000/api/v1/runs
+Content-Type: application/json
+Idempotency-Key: road-example-001
+
+{"problem_id":"road","repair":{"enabled":true,"max_rounds":3}}
+

@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}报告 · Hy3-ContestLens{% endblock %}
+{% block content %}<section class="page-head"><span class="eyebrow">REPORTS</span><h1>评测产物</h1><p>每个 run 分开保存初次、逐轮、最佳与最终结果。批量难度结论仅在六题标注完成后生成。</p></section><section class="panel"><p>通过 REST <code>GET /api/v1/runs/&lt;run_id&gt;/report</code> 获取可打印 HTML 报告；通过 CLI 使用 <code>hy3-contest report --run &lt;run_id&gt;</code>。</p></section>{% endblock %}
+

@@ -1,0 +1,14 @@
+services:
+  compile-image:
+    image: hy3-contestlens-compile:local
+    build:
+      context: mcp_servers/judge/sandbox
+      dockerfile: Dockerfile.compile
+    command: ["true"]
+  run-image:
+    image: hy3-contestlens-run:local
+    build:
+      context: mcp_servers/judge/sandbox
+      dockerfile: Dockerfile.run
+    command: ["true"]
+

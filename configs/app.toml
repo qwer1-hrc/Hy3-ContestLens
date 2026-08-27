@@ -1,0 +1,21 @@
+[app]
+host = "127.0.0.1"
+port = 8200
+local_mode = true
+database_path = "runs/contestlens.sqlite3"
+default_memory_mb = 512
+max_source_bytes = 1048576
+max_output_bytes = 16777216
+
+[repair]
+enabled = true
+max_rounds = 3
+hard_max_rounds = 5
+stop_after_no_improvement_rounds = 2
+
+[docker]
+executable = "docker"
+compile_image = "hy3-contestlens-compile:local"
+run_image = "hy3-contestlens-run:local"
+compile_timeout_seconds = 30
+

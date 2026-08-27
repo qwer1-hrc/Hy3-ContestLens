@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "IOConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "basename": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Basename",
+          "type": "string"
+        },
+        "input_mode": {
+          "const": "stdin_and_file",
+          "default": "stdin_and_file",
+          "title": "Input Mode",
+          "type": "string"
+        },
+        "output_mode": {
+          "const": "stdout_or_file",
+          "default": "stdout_or_file",
+          "title": "Output Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "basename"
+      ],
+      "title": "IOConfig",
+      "type": "object"
+    },
+    "JudgeConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "comparator": {
+          "const": "noip_fulltext",
+          "default": "noip_fulltext",
+          "title": "Comparator",
+          "type": "string"
+        },
+        "input_glob": {
+          "default": "tests/*.in",
+          "title": "Input Glob",
+          "type": "string"
+        },
+        "expected_glob": {
+          "default": "expected/*.out",
+          "title": "Expected Glob",
+          "type": "string"
+        },
+        "score_per_test": {
+          "exclusiveMinimum": 0,
+          "title": "Score Per Test",
+          "type": "number"
+        }
+      },
+      "required": [
+        "score_per_test"
+      ],
+      "title": "JudgeConfig",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "time_ms": {
+          "exclusiveMinimum": 0,
+          "title": "Time Ms",
+          "type": "integer"
+        },
+        "memory_mb": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Memory Mb"
+        },
+        "output_bytes": {
+          "default": 16777216,
+          "exclusiveMinimum": 0,
+          "title": "Output Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "time_ms"
+      ],
+      "title": "ResourceLimits",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "dataset_id": {
+      "const": "noip2018",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "problem_id": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "title": "Problem Id",
+      "type": "string"
+    },
+    "title_zh": {
+      "title": "Title Zh",
+      "type": "string"
+    },
+    "day": {
+      "enum": [
+        1,
+        2
+      ],
+      "title": "Day",
+      "type": "integer"
+    },
+    "luogu_difficulty": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Luogu Difficulty"
+    },
+    "resource_limits": {
+      "$ref": "#/$defs/ResourceLimits"
+    },
+    "io": {
+      "$ref": "#/$defs/IOConfig"
+    },
+    "judge": {
+      "$ref": "#/$defs/JudgeConfig"
+    }
+  },
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "problem_id",
+    "title_zh",
+    "day",
+    "resource_limits",
+    "io",
+    "judge"
+  ],
+  "title": "ProblemManifest",
+  "type": "object"
+}

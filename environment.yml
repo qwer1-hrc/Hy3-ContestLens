@@ -1,0 +1,13 @@
+name: hy3-contestlens
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - python=3.12
+  - pip>=24
+  - setuptools>=75
+  - wheel>=0.44
+  - pip:
+      - "-e .[dev]"
