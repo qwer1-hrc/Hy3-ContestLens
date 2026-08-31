@@ -13,9 +13,32 @@ max_rounds = 3
 hard_max_rounds = 5
 stop_after_no_improvement_rounds = 2
 
+# Separate from solver settings; credentials/model inherit unless explicitly overridden.
+[report_translation]
+reasoning_effort = "low"
+max_tokens = 4096
+temperature = 0.1
+top_p = 0.95
+timeout_seconds = 60
+max_attempts = 3
+retry_backoff_seconds = 1.0
+batch_max_items = 2
+batch_max_chars = 2000
+# Concurrent formatting batches per WebUI service; use 1 for serial mode.
+max_concurrency = 2
+
 [docker]
 executable = "docker"
 compile_image = "hy3-contestlens-compile:local"
 run_image = "hy3-contestlens-run:local"
 compile_timeout_seconds = 30
 
+# Optional image interpretation budget; no effect on the main model or /readyz.
+[image_understanding]
+max_tokens = 8192
+timeout_seconds = 90
+decision_timeout_seconds = 300
+max_images = 12
+max_image_mb = 8
+max_image_side = 2400
+max_output_chars = 16000

@@ -4,6 +4,8 @@ import asyncio
 import csv
 import io
 import json
+from contextlib import asynccontextmanager
+from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 
 import uvicorn
@@ -14,13 +16,19 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field
 
 from ..errors import ContestLensError
-from ..reporting import aggregate_runs, render_run_report
+from ..reporting import aggregate_runs, has_evaluation_report
+from ..report_translation import REPORT_LABELS
 from ..service import ServiceHub
 from ..settings import AppSettings
 
 
 class APIModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+class ReportTranslationRequest(APIModel):
+    priority_run_id: str | None = None
+    retry_run_id: str | None = None
 
 
 class ValidatePathRequest(APIModel):
@@ -53,6 +61,12 @@ class CreateRunRequest(APIModel):
     problem_id: str
     resource_binding_id: str | None = None
     repair: RepairOptions = Field(default_factory=RepairOptions)
+    image_understanding: Literal["ask", "use", "skip"] = "skip"
+
+
+class ImageUnderstandingChoice(APIModel):
+    request_id: str
+    choice: Literal["use", "skip"]
 
 
 class SubmissionRequest(APIModel):
@@ -129,7 +143,18 @@ class AdjudicationRequest(APIModel):
 
 def create_app(settings: AppSettings | None = None) -> FastAPI:
     hub = ServiceHub(settings)
-    app = FastAPI(title="Hy3-ContestLens", version="0.1.0", description="Hy3 process evaluation and error localization for NOIP 2018")
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI):
+        try:
+            yield
+        finally:
+            for task in list(hub.background_tasks):
+                task.cancel()
+            await asyncio.gather(*list(hub.background_tasks), return_exceptions=True)
+            await hub.report_translations.close()
+
+    app = FastAPI(title="Hy3-ContestLens", version="0.1.0", description="Hy3 process evaluation and error localization for NOIP 2018", lifespan=lifespan)
     app.state.hub = hub
 
     @app.exception_handler(ContestLensError)
@@ -162,6 +187,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             "schema_version": 1, "dataset": "noip2018", "problem_count": 6,
             "interfaces": ["REST", "CLI", "MCP", "WebUI"], "sandbox": "linux_docker_only",
             "mcp_servers": ["resources", "workspace", "judge"], "max_repair_rounds": hub.settings.repair_hard_max_rounds,
+            "image_understanding": hub.settings.image_understanding.safe_summary(),
         }
 
     @app.get("/api/v1/datasets")
@@ -248,6 +274,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     def cancel_run(run_id: str) -> dict[str, Any]:
         return hub.store.cancel_run(run_id)
 
+    @app.post("/api/v1/runs/{run_id}/image-understanding")
+    def image_understanding_choice(run_id: str, body: ImageUnderstandingChoice) -> dict[str, Any]:
+        return hub.store.decide_image_understanding(run_id, body.request_id, body.choice)
+
     @app.get("/api/v1/runs/{run_id}/events")
     def events(run_id: str, after_seq: int = 0) -> dict[str, Any]:
         items = hub.store.list_events(run_id, after_seq)
@@ -276,8 +306,26 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         return run["result"]
 
     @app.get("/api/v1/runs/{run_id}/report", response_class=HTMLResponse)
-    def run_report(run_id: str) -> str:
-        return render_run_report(run_result(run_id))
+    def run_report(request: Request, run_id: str, priority: bool = False):
+        result = run_result(run_id)
+        available = has_evaluation_report(result)
+        document = hub.report_translations.document(run_id)
+        response = page(
+            request, "report_detail.html", run_id=run_id, result=result,
+            report_available=available, translation=document["state"], sections=document["sections"],
+            priority=priority, back_url=f"/ui/runs/{run_id}" if priority else "/ui/reports",
+        )
+        response.headers["Cache-Control"] = "no-store"
+        return response
+
+    @app.post("/api/v1/report-translations", status_code=202)
+    async def start_report_translations(body: ReportTranslationRequest) -> dict[str, Any]:
+        return hub.report_translations.enqueue(priority_run_id=body.priority_run_id, retry_run_id=body.retry_run_id)
+
+    @app.get("/api/v1/report-translations")
+    def report_translation_status() -> dict[str, Any]:
+        # Polling is read-only: it cannot enqueue work or invoke the model.
+        return hub.report_translations.snapshot()
 
     @app.get("/api/v1/runs/{run_id}/diagnosis")
     def run_diagnosis(run_id: str) -> dict[str, Any]:
@@ -444,6 +492,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     templates_root = hub.settings.project_root / "src" / "hy3_contestlens" / "web" / "templates"
     static_root = hub.settings.project_root / "src" / "hy3_contestlens" / "web" / "static"
     templates = Jinja2Templates(directory=str(templates_root))
+    templates.env.filters["report_label"] = lambda value: REPORT_LABELS.get(value, value or "—")
     app.mount("/static", StaticFiles(directory=str(static_root)), name="static")
 
     def page(request: Request, name: str, **context: Any):
@@ -463,7 +512,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @app.get("/ui/runs/{run_id}", response_class=HTMLResponse)
     def run_page(request: Request, run_id: str):
-        return page(request, "run_detail.html", run_id=run_id)
+        run = hub.store.get_run(run_id)
+        return page(request, "run_detail.html", run_id=run_id, run=run, problem=problem_view(run["problem_id"]))
 
     @app.get("/ui/submissions/{submission_id}", response_class=HTMLResponse)
     def submission_page(request: Request, submission_id: str, run_id: str):
@@ -471,7 +521,39 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @app.get("/ui/reports", response_class=HTMLResponse)
     def reports_page(request: Request):
-        return page(request, "reports.html")
+        titles = {item.problem_id: item.title_zh for item in hub.catalog.list()}
+        status_labels = {
+            "CREATED": "已创建", "DISCOVERING_RESOURCES": "发现资源",
+            "WAITING_FOR_RESOURCE_CONFIRMATION": "等待资源确认", "ANALYZING": "分析题目",
+            "SOLVING": "生成解法", "REVIEWING": "双路盲审", "COMPILING": "编译中",
+            "JUDGING": "评测中", "LOCALIZING": "定位错误", "REPAIRING": "修复中",
+            "REJUDGING": "重新评测", "COMPLETED": "已完成", "FAILED": "运行失败",
+            "CANCELLED": "已取消",
+        }
+        empty_reasons = {
+            "CREATED": "尚未启动", "FAILED": "运行失败，未生成报告",
+            "CANCELLED": "已取消，未生成报告", "COMPLETED": "未生成完整评测报告",
+        }
+        report_rows = []
+        for run in hub.store.list_runs():
+            created_at = datetime.fromisoformat(run["created_at"])
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+            report_rows.append({
+                "run_id": run["run_id"], "problem_id": run["problem_id"],
+                "title_zh": titles.get(run["problem_id"], run["problem_id"]),
+                "created_at": run["created_at"],
+                "created_at_display": created_at.astimezone(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
+                "status_label": status_labels.get(run["status"], run["status"]),
+                "status_tone": {"COMPLETED": "success", "FAILED": "danger", "CANCELLED": "muted"}.get(run["status"], "active"),
+                "report_available": has_evaluation_report(run["result"]),
+                "translation": hub.report_translations.status(run["run_id"]),
+                "empty_reason": empty_reasons.get(run["status"], "等待运行完成"),
+            })
+        return page(
+            request, "reports.html", runs=report_rows,
+            report_count=sum(row["report_available"] for row in report_rows),
+        )
 
     @app.get("/ui/annotations/{task_id}", response_class=HTMLResponse)
     def annotation_page(request: Request, task_id: str):

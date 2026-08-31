@@ -699,6 +699,57 @@
         }
       }
     },
+    "/api/v1/runs/{run_id}/image-understanding": {
+      "post": {
+        "summary": "Image Understanding Choice",
+        "operationId": "image_understanding_choice_api_v1_runs__run_id__image_understanding_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageUnderstandingChoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Image Understanding Choice Api V1 Runs  Run Id  Image Understanding Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/runs/{run_id}/events": {
       "get": {
         "summary": "Events",
@@ -851,6 +902,16 @@
               "type": "string",
               "title": "Run Id"
             }
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Priority"
+            }
           }
         ],
         "responses": {
@@ -860,6 +921,64 @@
               "text/html": {
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/report-translations": {
+      "get": {
+        "summary": "Report Translation Status",
+        "operationId": "report_translation_status_api_v1_report_translations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Report Translation Status Api V1 Report Translations Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Start Report Translations",
+        "operationId": "start_report_translations_api_v1_report_translations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportTranslationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Start Report Translations Api V1 Report Translations Post"
                 }
               }
             }
@@ -2614,6 +2733,16 @@
           },
           "repair": {
             "$ref": "#/components/schemas/RepairOptions"
+          },
+          "image_understanding": {
+            "type": "string",
+            "enum": [
+              "ask",
+              "use",
+              "skip"
+            ],
+            "title": "Image Understanding",
+            "default": "skip"
           }
         },
         "additionalProperties": false,
@@ -2704,6 +2833,29 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "ImageUnderstandingChoice": {
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "choice": {
+            "type": "string",
+            "enum": [
+              "use",
+              "skip"
+            ],
+            "title": "Choice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "request_id",
+          "choice"
+        ],
+        "title": "ImageUnderstandingChoice"
       },
       "PatchRequest": {
         "properties": {
@@ -2806,6 +2958,35 @@
         ],
         "title": "ReplaceRequest"
       },
+      "ReportTranslationRequest": {
+        "properties": {
+          "priority_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority Run Id"
+          },
+          "retry_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry Run Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ReportTranslationRequest"
+      },
       "SubmissionRequest": {
         "properties": {
           "problem_id": {
@@ -2867,13 +3048,6 @@
           "type": {
             "type": "string",
             "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
           }
         },
         "type": "object",

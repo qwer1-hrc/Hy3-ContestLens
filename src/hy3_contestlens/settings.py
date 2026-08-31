@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import math
 import os
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 
 def _toml(path: Path) -> dict[str, Any]:
@@ -30,6 +32,17 @@ class Hy3Settings:
     temperature: float = 0.2
     top_p: float = 0.95
     max_tokens: int = 8192
+    response_format: str = "json_schema"
+    max_attempts: int = 3
+    retry_backoff_seconds: float = 1.0
+
+    def __post_init__(self) -> None:
+        if self.response_format not in {"json_schema", "json_object"}:
+            raise ValueError("Hy3 response_format must be json_schema or json_object")
+        if isinstance(self.max_attempts, bool) or not isinstance(self.max_attempts, int) or not 1 <= self.max_attempts <= 5:
+            raise ValueError("Hy3 max_attempts must be an integer between 1 and 5")
+        if not math.isfinite(self.retry_backoff_seconds) or not 0 <= self.retry_backoff_seconds <= 30:
+            raise ValueError("Hy3 retry_backoff_seconds must be between 0 and 30")
 
     @property
     def configured(self) -> bool:
@@ -41,7 +54,106 @@ class Hy3Settings:
             "base_url": self.base_url,
             "model": self.model,
             "reasoning_effort": self.reasoning_effort,
+            "response_format": self.response_format,
+            "max_attempts": self.max_attempts,
         }
+
+
+@dataclass(slots=True)
+class ReportTranslationSettings:
+    """Report-only budget. Only connection credentials/model inherit from Hy3."""
+    api_key: str | None = None
+    base_url: str | None = None
+    model: str | None = None
+    reasoning_effort: str = "low"
+    temperature: float = 0.1
+    top_p: float = 0.95
+    max_tokens: int = 4096
+    response_format: str | None = None
+    timeout_seconds: float = 60
+    max_attempts: int = 3
+    retry_backoff_seconds: float = 1.0
+    batch_max_items: int = 2
+    batch_max_chars: int = 2000
+    max_concurrency: int = 2
+
+    def __post_init__(self) -> None:
+        for name, minimum, maximum in (
+            ("max_tokens", 256, 16384), ("max_attempts", 1, 5),
+            ("batch_max_items", 1, 8), ("batch_max_chars", 2000, 6000),
+            ("max_concurrency", 1, 8),
+        ):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
+                raise ValueError(f"Report translation {name} must be an integer between {minimum} and {maximum}")
+        for name, minimum, maximum in (
+            ("temperature", 0, 2), ("top_p", 0.01, 1),
+            ("timeout_seconds", 1, 480), ("retry_backoff_seconds", 0, 30),
+        ):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not math.isfinite(value) or not minimum <= value <= maximum:
+                raise ValueError(f"Report translation {name} must be between {minimum} and {maximum}")
+        if self.reasoning_effort not in {"", "low", "medium", "high"}:
+            raise ValueError("Report translation reasoning_effort must be low, medium, high or empty")
+        if self.response_format not in {None, "json_schema", "json_object"}:
+            raise ValueError("Report translation response_format must be json_schema or json_object")
+
+    def model_settings(self, solver: Hy3Settings) -> Hy3Settings:
+        return Hy3Settings(
+            api_key=self.api_key or solver.api_key,
+            base_url=self.base_url or solver.base_url,
+            model=self.model or solver.model,
+            reasoning_effort=self.reasoning_effort,
+            temperature=self.temperature, top_p=self.top_p, max_tokens=self.max_tokens,
+            response_format=self.response_format or solver.response_format,
+            # The report queue owns fragment-level retries; avoid nested whole-batch retries.
+            max_attempts=1, retry_backoff_seconds=0,
+        )
+
+
+@dataclass(slots=True)
+class ImageUnderstandingSettings:
+    """Optional vision connection. Never inherits credentials or parameters from Hy3."""
+    api_key: str | None = None
+    base_url: str = "https://api.moonshot.cn/v1"
+    model: str = "kimi-k3"
+    max_tokens: int = 8192
+    timeout_seconds: float = 90
+    decision_timeout_seconds: float = 300
+    max_images: int = 12
+    max_image_mb: int = 8
+    max_image_side: int = 2400
+    max_output_chars: int = 16000
+    configuration_error: bool = False
+
+    def __post_init__(self) -> None:
+        if self.api_key is not None and not isinstance(self.api_key, str):
+            raise ValueError("Image understanding api_key must be a string")
+        if not isinstance(self.model, str):
+            raise ValueError("Image understanding model must be a string")
+        endpoint = urlsplit(self.base_url)
+        if endpoint.scheme not in {"http", "https"} or not endpoint.hostname or endpoint.username or endpoint.password or endpoint.query or endpoint.fragment:
+            raise ValueError("Image understanding base_url must be an HTTP(S) endpoint without credentials or query")
+        for name, minimum, maximum in (
+            ("max_tokens", 256, 32768), ("max_images", 1, 32), ("max_image_mb", 1, 20),
+            ("max_image_side", 512, 4096), ("max_output_chars", 256, 32000),
+        ):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
+                raise ValueError(f"Image understanding {name} is out of range")
+        for name, maximum in (("timeout_seconds", 480), ("decision_timeout_seconds", 3600)):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not math.isfinite(value) or not 1 <= value <= maximum:
+                raise ValueError(f"Image understanding {name} is out of range")
+
+    @property
+    def configured(self) -> bool:
+        return bool(not self.configuration_error and self.api_key and self.api_key.strip() and self.model.strip())
+
+    def safe_summary(self) -> dict[str, Any]:
+        return {"configured": self.configured, "model": self.model,
+                "configuration_error": self.configuration_error,
+                "decision_timeout_seconds": self.decision_timeout_seconds}
 
 
 @dataclass(slots=True)
@@ -77,6 +189,8 @@ class AppSettings:
     docker_run_image: str = "hy3-contestlens-run:local"
     compile_timeout_seconds: int = 30
     hy3: Hy3Settings = field(default_factory=Hy3Settings)
+    report_translation: ReportTranslationSettings = field(default_factory=ReportTranslationSettings)
+    image_understanding: ImageUnderstandingSettings = field(default_factory=ImageUnderstandingSettings)
     resources: ResourceSettings = field(default_factory=ResourceSettings)
 
     def __post_init__(self) -> None:
@@ -117,7 +231,50 @@ class AppSettings:
             temperature=float(_value(secret_file, "hy3", "temperature", "HY3_TEMPERATURE", 0.2)),
             top_p=float(_value(secret_file, "hy3", "top_p", "HY3_TOP_P", 0.95)),
             max_tokens=int(_value(secret_file, "hy3", "max_tokens", "HY3_MAX_TOKENS", 8192)),
+            response_format=str(_value(secret_file, "hy3", "response_format", "HY3_RESPONSE_FORMAT", "json_schema")),
+            max_attempts=int(_value(secret_file, "hy3", "max_attempts", "HY3_MAX_ATTEMPTS", 3)),
+            retry_backoff_seconds=float(_value(secret_file, "hy3", "retry_backoff_seconds", "HY3_RETRY_BACKOFF_SECONDS", 1.0)),
         )
+        report_data = {"report_translation": {
+            **app_file.get("report_translation", {}), **secret_file.get("report_translation", {}),
+        }}
+
+        def report_value(name: str, default: Any = None) -> Any:
+            return _value(report_data, "report_translation", name, f"HY3_REPORT_{name.upper()}", default)
+
+        report_concurrency = report_value("max_concurrency", 2)
+        report_translation = ReportTranslationSettings(
+            api_key=report_value("api_key"), base_url=report_value("base_url"), model=report_value("model"),
+            reasoning_effort=str(report_value("reasoning_effort", "low")),
+            temperature=float(report_value("temperature", 0.1)), top_p=float(report_value("top_p", 0.95)),
+            max_tokens=int(report_value("max_tokens", 4096)), response_format=report_value("response_format"),
+            timeout_seconds=float(report_value("timeout_seconds", 60)),
+            max_attempts=int(report_value("max_attempts", 3)),
+            retry_backoff_seconds=float(report_value("retry_backoff_seconds", 1.0)),
+            batch_max_items=int(report_value("batch_max_items", 2)),
+            batch_max_chars=int(report_value("batch_max_chars", 2000)),
+            max_concurrency=int(report_concurrency) if isinstance(report_concurrency, str) else report_concurrency,
+        )
+        def image_value(name: str, default: Any = None) -> Any:
+            return _value(image_data, "image_understanding", name, f"HY3_IMAGE_{name.upper()}", default)
+
+        try:
+            image_data = {"image_understanding": {
+                **app_file.get("image_understanding", {}), **secret_file.get("image_understanding", {}),
+            }}
+            image_understanding = ImageUnderstandingSettings(
+                api_key=image_value("api_key"), base_url=str(image_value("base_url", "https://api.moonshot.cn/v1")),
+                model=str(image_value("model", "kimi-k3")),
+                **{name: int(image_value(name, default)) for name, default in (
+                    ("max_tokens", 8192), ("max_images", 12), ("max_image_mb", 8),
+                    ("max_image_side", 2400), ("max_output_chars", 16000),
+                )},
+                timeout_seconds=float(image_value("timeout_seconds", 90)),
+                decision_timeout_seconds=float(image_value("decision_timeout_seconds", 300)),
+            )
+        except (ValueError, TypeError, AttributeError):
+            # A bad optional profile must not disable the solver or readiness checks.
+            image_understanding = ImageUnderstandingSettings(configuration_error=True)
         return cls(
             project_root=root,
             host=str(app.get("host", "127.0.0.1")),
@@ -135,6 +292,8 @@ class AppSettings:
             docker_run_image=str(docker.get("run_image", "hy3-contestlens-run:local")),
             compile_timeout_seconds=int(docker.get("compile_timeout_seconds", 30)),
             hy3=hy3,
+            report_translation=report_translation,
+            image_understanding=image_understanding,
             resources=ResourceSettings(
                 allow_local_webui_grants=bool(resource.get("allow_local_webui_grants", True)),
                 auto_discover=bool(resource.get("auto_discover", True)),

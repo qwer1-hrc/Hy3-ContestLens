@@ -23,3 +23,19 @@ def test_idempotency_key_cannot_cross_operations(tmp_path: Path):
         store.idempotency_get("key", "y")
     assert error.value.code == "IDEMPOTENCY_KEY_REUSED"
 
+
+def test_run_history_includes_all_states_and_is_stable_for_equal_timestamps(tmp_path: Path, monkeypatch):
+    store = Store(tmp_path / "store.sqlite3")
+    assert store.list_runs() == []
+    monkeypatch.setattr("hy3_contestlens.store.utc_now", lambda: "2026-08-29T16:00:00+00:00")
+    first = store.create_run("road", {"problem_id": "road"})
+    second = store.create_run("money", {"problem_id": "money"})
+    failure = {"error_code": "HY3_NOT_CONFIGURED"}
+    store.update_run(second["run_id"], "FAILED", result=failure)
+
+    history = store.list_runs()
+    assert [item["run_id"] for item in history] == [second["run_id"], first["run_id"]]
+    assert history[0]["status"] == "FAILED"
+    assert history[0]["result"] == failure
+    assert history[1]["result"] is None
+    assert "request_json" not in history[0] and "result_json" not in history[0]

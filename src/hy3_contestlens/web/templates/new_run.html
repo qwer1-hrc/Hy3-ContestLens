@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 {% block title %}新评测 · Hy3-ContestLens{% endblock %}
 {% block content %}
-<section class="page-head"><span class="eyebrow">NEW RUN</span><h1>创建一次可审计评测</h1><p>运行开始后会冻结题面、测试集与代码哈希；初次结果不会被后续修复覆盖。</p></section>
-<section class="panel narrow"><label>题目<select id="run-problem">{% for problem in problems %}<option value="{{ problem.problem_id }}">{{ problem.title_zh }} · {{ problem.problem_id }}</option>{% endfor %}</select></label><label>最大修复轮数<input id="repair-rounds" type="number" min="1" max="5" value="3"></label><label class="check"><input id="repair-enabled" type="checkbox" checked> 启用有界循环修复</label><button class="primary wide" onclick="createRun()">创建并启动</button><pre id="run-create-result">运行需要先完成该题资源 binding，并配置 Hy3。</pre></section>
+<section class="page-head"><span class="eyebrow">NEW RUN</span><h1>创建一次可审计评测</h1></section>
+<section class="panel narrow">
+  <div class="window-note"><span aria-hidden="true">↗</span><div><strong>独立解题页面</strong><br>这个页面只负责当前题目。你可以回到主页继续打开其他题目，它们会在各自页面并行运行。</div></div>
+  <label>题目<select id="run-problem">{% for problem in problems %}<option value="{{ problem.problem_id }}">{{ problem.title_zh }} · {{ problem.problem_id }}</option>{% endfor %}</select></label>
+  <label>最大修复轮数<input id="repair-rounds" type="number" min="1" max="5" value="3"></label>
+  <label class="check"><input id="repair-enabled" type="checkbox" checked> 启用有界循环修复</label>
+  <p class="image-model-note">若题面包含图片或图形，且已配置独立图片模型，运行步骤中会询问是否使用更精确的图片理解。未配置、跳过或识别失败均继续原流程。</p>
+  <button id="run-create-button" class="primary wide" onclick="createRun()">创建并启动</button>
+  <pre id="run-create-result">运行需要先完成该题资源 binding，并配置 Hy3。</pre>
+</section>
 {% endblock %}
 {% block scripts %}<script>const selected=new URLSearchParams(location.search).get('problem');if(selected)document.getElementById('run-problem').value=selected;</script>{% endblock %}
-

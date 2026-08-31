@@ -8,8 +8,7 @@
 </section>
 <section><div class="section-title"><div><span class="eyebrow">DATASET</span><h2>NOIP2018 提高组</h2></div><span class="muted">难度等待用户按洛谷七档标注</span></div>
 <div class="cards">
-{% for problem in problems %}<article class="card"><div class="card-top"><span class="tag">DAY {{ problem.day }}</span><span class="status pending">待标注</span></div><h3>{{ problem.title_zh }}</h3><code>{{ problem.problem_id }}</code><dl><div><dt>时间</dt><dd>{{ problem.resource_limits.time_ms }} ms</dd></div><div><dt>内存</dt><dd>{{ problem.effective_memory_limit_mb }} MB</dd></div></dl><a href="/ui/runs/new?problem={{ problem.problem_id }}">评测此题 →</a></article>{% endfor %}
+{% for problem in problems %}<article class="card"><div class="card-top"><span class="tag">DAY {{ problem.day }}</span><span class="status pending">待标注</span></div><h3>{{ problem.title_zh }}</h3><code>{{ problem.problem_id }}</code><dl><div><dt>时间</dt><dd>{{ problem.resource_limits.time_ms }} ms</dd></div><div><dt>内存</dt><dd>{{ problem.effective_memory_limit_mb }} MB</dd></div></dl><a href="/ui/runs/new?problem={{ problem.problem_id }}" target="_blank" rel="noopener" aria-label="在新页面评测{{ problem.title_zh }}">评测此题 → <span class="open-new-mark" aria-hidden="true">新页面</span></a></article>{% endfor %}
 </div></section>
 <section class="pipeline"><span>题面冻结</span><i>→</i><span>Hy3 求解</span><i>→</i><span>双 Critic 盲审</span><i>→</i><span>Docker 判题</span><i>→</i><span>定位与修复</span></section>
 {% endblock %}
-

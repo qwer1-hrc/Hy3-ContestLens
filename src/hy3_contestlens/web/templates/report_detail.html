@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}评测报告 · {{ result.problem_id or run_id }}{% endblock %}
+{% macro evidence(items) %}
+  {% if items %}<ul class="report-evidence">{% for item in items %}<li>{{ item }}</li>{% endfor %}</ul>{% else %}<p class="muted">未提供额外证据。</p>{% endif %}
+{% endmacro %}
+{% block content %}
+<div class="report-navigation"><a class="button" href="{{ back_url }}">← {{ '返回运行详情' if priority else '返回报告列表' }}</a>{% if priority %}<a href="/ui/reports">全部报告</a>{% endif %}</div>
+<section class="page-head"><span class="eyebrow">EVALUATION REPORT</span><h1>Hy3-ContestLens 评测报告</h1><p>Run <code>{{ run_id }}</code>{% if report_available %} · 题目 {{ result.problem_id }} · 停止原因 {{ result.stop_reason|report_label }}{% endif %}</p></section>
+{% if report_available %}
+<div id="report-translation-control" class="translation-notice" data-report-mode="detail" data-run-id="{{ run_id }}" data-priority="{{ 'true' if priority else 'false' }}" data-ready="{{ 'true' if translation.processed else 'false' }}" data-enabled="true" aria-busy="{{ 'false' if translation.processed or translation.status == 'FAILED' else 'true' }}">
+  <div class="actions"><span id="report-activity-spinner" class="activity-spinner" aria-hidden="true" {% if translation.processed or translation.status == 'FAILED' %}hidden{% endif %}></span><strong>报告格式化</strong><span class="translation-badge" data-translation-run-id="{{ run_id }}" data-state="{{ translation.status }}" aria-busy="{{ 'true' if translation.status == 'TRANSLATING' else 'false' }}">{{ translation.label }}</span><button id="retry-report-translation" type="button" {% if translation.status != 'FAILED' %}hidden{% endif %}>重试格式化</button></div>
+  <p id="translation-queue-message" role="status">{% if translation.processed %}格式化完成{% elif translation.status == 'FAILED' %}格式化失败，请重试{% elif priority %}优先处理当前报告{% else %}加载中…{% endif %}</p>
+</div>
+<section class="panel report-document"><h2>能力分离</h2><div class="reports-table-scroll"><table class="report-data-table"><thead><tr><th>阶段</th><th>通过点 / 总点数</th><th>过程正确</th><th>错误类型</th></tr></thead><tbody>
+{% for title, evaluation in [('初次提交', result.initial_submission_result), ('最佳提交', result.best_submission_result)] %}
+{% set check = evaluation.check or {} %}<tr><td>{{ title }}</td><td>{{ check.passed or 0 }} / {{ check.total or 0 }}</td><td>{{ '是' if evaluation.diagnosis.process_correct else '否' }}</td><td>{{ evaluation.diagnosis.error_type|report_label }}</td></tr>
+{% endfor %}</tbody></table></div></section>
+<section class="panel report-document"><h2>最佳版本逐点结果</h2>{% set best_check = result.best_submission_result.check or {} %}
+{% if best_check.tests %}<div class="reports-table-scroll"><table class="report-data-table"><thead><tr><th>测试点</th><th>评测结果</th><th>CPU ms</th><th>实际耗时 ms</th><th>峰值内存 MB</th></tr></thead><tbody>{% for test in best_check.tests %}<tr><td>{{ test.test_id }}</td><td>{{ test.verdict }}</td><td>{{ test.cpu_ms or 0 }}</td><td>{{ test.wall_ms or 0 }}</td><td>{{ test.peak_rss_mb or 0 }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="muted">本次评测没有测试点结果。</p>{% endif %}</section>
+<section class="panel report-document" id="report-chinese-content"><h2>诊断与评审</h2>
+{% if sections %}
+{% for section in sections %}
+<details class="report-review-section" {% if loop.first %}open{% endif %}><summary>{{ section.label }}{% if section.revision_id %}<code>{{ section.revision_id }}</code>{% endif %}</summary><div class="report-review-body">
+  {% set diagnosis = section.diagnosis %}
+  <h3>诊断结论</h3><dl class="diagnosis-facts"><div><dt>错误类型</dt><dd>{{ diagnosis.error_type|report_label }}</dd></div><div><dt>首个错误步骤</dt><dd>{{ diagnosis.first_error_step_id or '未定位' }}</dd></div><div><dt>代码位置</dt><dd>{{ diagnosis.code_location or '未提供' }}</dd></div>{% if diagnosis.confidence is defined %}<div><dt>置信度</dt><dd>{{ (diagnosis.confidence * 100)|round(1) }}%</dd></div>{% endif %}</dl>
+  <h4>诊断依据</h4>{{ evidence(diagnosis.evidence) }}
+  {% if diagnosis.repair_suggestion %}<h4>修复建议</h4><p class="report-prose">{{ diagnosis.repair_suggestion }}</p>{% endif %}
+  {% for critic in section.critics %}{% set review = critic.review %}<article class="critic-review"><h3>{{ critic.label }}</h3>{% if review.summary %}<p class="report-prose">{{ review.summary }}</p>{% endif %}<p class="muted">评审分类：{{ review.error_type|report_label }} · 首个错误步骤：{{ review.first_error_step_id or '未定位' }}{% if review.code_location %} · 代码位置：{{ review.code_location }}{% endif %}</p>
+    {% for assessment in review.assessments or [] %}<div class="critic-assessment"><strong>{{ assessment.step_id }} · {{ assessment.verdict|report_label }}</strong>{% if assessment.confidence is defined %}<span class="muted"> · 置信度 {{ (assessment.confidence * 100)|round(1) }}%</span>{% endif %}{{ evidence(assessment.evidence) }}</div>{% endfor %}
+  </article>{% endfor %}
+  {% if not section.critics %}<p class="muted">此版本未保存独立 Critic 记录。</p>{% endif %}
+  {% if section.repair_plan %}<h3>本轮修复计划</h3>{% for key, title in [('root_cause','根因'), ('repair_scope','修复范围'), ('required_changes','必要修改'), ('regression_risks','回归风险'), ('success_criteria','成功标准')] %}{% set value = section.repair_plan.get(key) %}{% if value %}<h4>{{ title }}</h4>{% if value is string %}<p class="report-prose">{{ value }}</p>{% else %}{{ evidence(value) }}{% endif %}{% endif %}{% endfor %}{% endif %}
+</div></details>
+{% endfor %}
+{% else %}<p class="muted">等待报告格式化</p>{% endif %}
+</section>
+{% else %}<section class="panel"><h2>报告为空</h2>{% if result.error_code %}<p>错误代码：<code>{{ result.error_code }}</code></p>{% endif %}</section>{% endif %}
+<div class="report-navigation"><a class="button" href="{{ back_url }}">← 返回</a></div>
+{% endblock %}
+{% block scripts %}{% if report_available %}<script src="/static/reports.js?v=0.4.0"></script>{% endif %}{% endblock %}

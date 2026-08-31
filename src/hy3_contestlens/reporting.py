@@ -11,6 +11,31 @@ from typing import Any
 from .utils import atomic_write
 
 
+def has_evaluation_report(result: Any) -> bool:
+    """A failure diagnostic alone is not a completed evaluation report."""
+    if not isinstance(result, dict):
+        return False
+    if any(not isinstance(result.get(key), str) for key in ("run_id", "problem_id", "stop_reason")):
+        return False
+    for key in ("initial_submission_result", "best_submission_result"):
+        evaluation = result.get(key)
+        if not isinstance(evaluation, dict):
+            return False
+        diagnosis = evaluation.get("diagnosis")
+        if not isinstance(diagnosis, dict) or not isinstance(diagnosis.get("error_type"), str):
+            return False
+        if not isinstance(diagnosis.get("process_correct"), bool):
+            return False
+        check = evaluation.get("check")
+        if check is not None:
+            if not isinstance(check, dict):
+                return False
+            tests = check.get("tests", [])
+            if not isinstance(tests, list) or any(not isinstance(test, dict) for test in tests):
+                return False
+    return True
+
+
 def render_run_report(result: dict[str, Any]) -> str:
     if "initial_submission_result" not in result:
         return f"""<!doctype html><html lang=\"zh-CN\"><head><meta charset=\"utf-8\"><title>Hy3-ContestLens failure report</title>

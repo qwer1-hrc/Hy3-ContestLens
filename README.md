@@ -169,6 +169,9 @@ reasoning_effort = "medium"
 temperature = 0.2
 top_p = 0.95
 max_tokens = 8192
+response_format = "json_schema"
+max_attempts = 3
+retry_backoff_seconds = 1.0
 ```
 
 `base_url` 必须指向真实的 Hy3 OpenAI-compatible 服务。上例假设模型服务运行在 `8001` 端口；本项目自己的 Web/API 服务默认使用 `8000`，两者不能指向同一个服务进程。
@@ -189,9 +192,25 @@ HY3_REASONING_EFFORT
 HY3_TEMPERATURE
 HY3_TOP_P
 HY3_MAX_TOKENS
+HY3_RESPONSE_FORMAT
+HY3_MAX_ATTEMPTS
+HY3_RETRY_BACKOFF_SECONDS
 ```
 
 `configs/secrets.local.toml` 已被 `.gitignore` 排除。不要把 API Key 写进 README、源码、命令历史、截图或公开仓库。
+
+#### 结构化响应、重试与诊断
+
+- 默认使用 `response_format.type=json_schema`，将实际 Pydantic Schema 传给模型接口，并在本地再次校验。协议格式见[腾讯 TokenHub 混元调用指南](https://cloud.tencent.com/document/product/1823/132252)。Schema 约束不替代算法、源码和评测结果检查。
+- `max_attempts=3` 表示每个模型调用最多请求 3 次（首次 + 2 次重试），允许范围 1–5；这是模型请求重试，不是代码修复轮数。重试可能增加耗时和 API 费用，不会自动增加 `max_tokens`。
+- 缺字段、类型错误、非法 JSON、异常响应结构和 `finish_reason=length` 会带着校验反馈请求完整重生成，不通过填空值伪造成功。超时、连接异常、HTTP 408/429/5xx 会有限重试；其他 HTTP 4xx、拒答和内容过滤不重试。指数退避及数值型 `Retry-After` 的等待时间上限均为 30 秒。
+- 收到取消标记后不会发起下一次模型请求；已经在途的请求仍可能完成并计费。
+- 若旧服务明确不支持 `json_schema`，可显式设置 `response_format="json_object"`，保留本地校验和重试。客户端不会在 400 后静默降低约束；优先检查服务支持范围和返回的错误详情。
+- 每次工作流请求都会写入 `runs/<run_id>/model_calls/<call_id>-<attempt>.json`，并发评审和不同运行相互隔离。失败报告中的 `details.diagnostics` 是相对于本次运行目录的日志路径。
+- 日志保存模型参数、Schema、提示词哈希/长度、请求 ID、HTTP 状态、`finish_reason`、token 用量、响应和校验错误；不保存请求头及提示词正文。响应中的已配置 API Key、常见凭据字段会脱敏，`reasoning_content` 等思考正文会省略；用量中的 reasoning token 计数保留。单次响应记录上限为 200 万字符，超出后明确记录 `body_truncated`、原长度与响应哈希。
+- 日志仅存本地、不通过 Web/API 公开，但仍可能包含题目内容和生成源码，分享前应人工检查。日志写入异常不会掩盖模型结果，会在服务日志告警，并在失败详情的 `diagnostic_log_errors` 中列出。
+
+修改代码或配置后需重启 Web/API 服务。历史失败记录不会被改写，重新发起运行后才会生成上述诊断日志。
 
 ### 5.2 资源根目录
 
@@ -718,3 +737,7 @@ Hy3-ContestLens/
 - `docs/SECURITY.md`：安全模型；
 - `docs/VALIDATION_REPORT.md`：当前验证结果；
 - `docs/TROUBLESHOOTING.md`：排障说明。
+
+## 20. 可选图片理解
+
+题面含图片、扫描页或矢量图形时，可独立配置 `kimi-k3` 等视觉模型，将结构理解后的文字补充给 Hy3。WebUI 在工作流步骤中提供“使用更精确的图片理解 / 不使用，继续运行”选择；不配置、跳过或识别失败均继续原流程。详见 [图片理解配置与使用](docs/IMAGE_UNDERSTANDING.md)。

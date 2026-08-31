@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}资源 · Hy3-ContestLens{% endblock %}
 {% block content %}
-<section class="page-head"><span class="eyebrow">TRUST BOUNDARY</span><h1>题面与测试资源</h1><p>路径校验不会自动授权；文档内容始终按不可信题面数据处理，标准答案内容不会显示。</p></section>
+<section class="page-head"><span class="eyebrow">TRUST BOUNDARY</span><h1>题面与测试资源</h1></section>
 <section class="panel"><h2>授权本地路径</h2><div class="form-row"><input id="resource-path" placeholder="PDF、Markdown 或目录的绝对路径"><button onclick="validatePath()">仅校验</button><button class="primary" onclick="grantPath()">确认并授权</button></div><pre id="resource-result">等待操作</pre></section>
 <section class="panel"><h2>已授权作用域</h2><div class="form-row"><select id="scope-select">{% for scope in scopes %}<option value="{{ scope.scope_id }}">{{ scope.display_name }} · {{ scope.scope_kind }}</option>{% endfor %}</select><select id="discover-problem">{% for problem in problems %}<option value="{{ problem.problem_id }}">{{ problem.title_zh }}</option>{% endfor %}</select><button class="primary" onclick="discoverAssets()">自动发现</button></div><div id="candidate-list"></div></section>
 {% endblock %}
-

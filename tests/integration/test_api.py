@@ -13,7 +13,38 @@ def test_health_openapi_problem_and_webui(settings):
     assert client.get("/openapi.json").status_code == 200
     page = client.get("/")
     assert page.status_code == 200
-    assert "非腾讯官方发布" in page.text
+    assert "非腾讯官方发布" not in page.text
+    assert "<footer>" not in page.text
+    assert 'target="_blank"' in page.text
+    assert "新页面" in page.text
+
+    created = client.app.state.hub.store.create_run(
+        "road",
+        {"problem_id": "road", "repair": {"enabled": True, "max_rounds": 3}},
+    )
+    run_page = client.get(f"/ui/runs/{created['run_id']}")
+    assert run_page.status_code == 200
+    assert "工作流进度" in run_page.text
+    assert "测试点信息" in run_page.text
+    assert 'id="judge-list"' in run_page.text
+    assert 'id="run-activity-spinner"' in run_page.text
+
+
+def test_webui_removes_the_four_explanatory_notes(settings):
+    client = TestClient(create_app(settings))
+    for path, removed in (
+        ("/ui/resources", "路径校验不会自动授权"),
+        ("/ui/runs/new", "运行开始后会冻结题面"),
+        ("/ui/reports", "每次运行都保留在这里"),
+        ("/", "个人 / 犀牛鸟活动作品"),
+    ):
+        response = client.get(path)
+        assert response.status_code == 200
+        assert removed not in response.text
+        assert "<footer>" not in response.text
+    reports = client.get("/ui/reports").text
+    assert "报告格式化" in reports
+    assert "中文化" not in reports
 
 
 def test_readiness_is_componentized(settings):

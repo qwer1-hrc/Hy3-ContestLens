@@ -3,6 +3,8 @@ from __future__ import annotations
 import asyncio
 import difflib
 import json
+import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -10,7 +12,9 @@ from .domain import CheckResult, CompileResult, CriticReview, Diagnosis, ErrorTy
 from .errors import ContestLensError
 from .evaluation import adjudicate, code_review_conflicts_with_compile, improvement_key, is_complete
 from .judge import DockerJudge
+from .image_understanding import ImageUnderstandingClient, StatementImages, augment_document
 from .model import Hy3Client
+from .model_diagnostics import model_run_context
 from .resources import ResourceService
 from .store import Store
 from .utils import atomic_write_json, safe_id, utc_now
@@ -18,13 +22,14 @@ from .workspace import WorkspaceStore
 
 
 class ContestWorkflow:
-    def __init__(self, store: Store, resources: ResourceService, workspace: WorkspaceStore, judge: DockerJudge, model: Hy3Client, manifests: Any):
+    def __init__(self, store: Store, resources: ResourceService, workspace: WorkspaceStore, judge: DockerJudge, model: Hy3Client, manifests: Any, image_model: ImageUnderstandingClient | None = None):
         self.store = store
         self.resources = resources
         self.workspace = workspace
         self.judge = judge
         self.model = model
         self.manifests = manifests
+        self.image_model = image_model
 
     def _write(self, run_id: str, relative: str, data: Any) -> None:
         atomic_write_json(self.workspace.settings.runs_root / run_id / relative, data)
@@ -58,25 +63,177 @@ class ContestWorkflow:
         )
         return rechecked, code_review
 
-    def _judge_revision(self, run_id: str, problem_id: str, submission_id: str, revision_id: str, sha256: str) -> tuple[CompileResult, CheckResult | None, dict[str, Any]]:
+    async def _judge_revision(
+        self,
+        run_id: str,
+        problem_id: str,
+        submission_id: str,
+        revision_id: str,
+        sha256: str,
+        *,
+        phase: str,
+        round_number: int | None = None,
+    ) -> tuple[CompileResult, CheckResult | None, dict[str, Any]]:
         frozen = self.workspace.freeze_cpp_revision(run_id, submission_id, revision_id, sha256)
-        compile_result = self.judge.compile_cpp(problem_id, frozen["source_artifact_id"], frozen["source_sha256"])
+        compile_result = await asyncio.to_thread(
+            self.judge.compile_cpp,
+            problem_id,
+            frozen["source_artifact_id"],
+            frozen["source_sha256"],
+        )
+        event_context = {
+            "phase": phase,
+            "round": round_number,
+            "revision_id": revision_id,
+        }
+        self.store.append_event(
+            run_id,
+            "COMPILE_COMPLETED",
+            {**event_context, "compile": compile_result.model_dump(mode="json")},
+        )
         check = None
         if compile_result.verdict == Verdict.OK and compile_result.compile_artifact_id:
-            check = self.judge.check_answer(compile_result.compile_artifact_id, "noip2018", problem_id)
+            judge_status = RunStatus.JUDGING if phase == "initial" else RunStatus.REJUDGING
+            self._status(run_id, judge_status, **event_context)
+            check = await asyncio.to_thread(
+                self.judge.check_answer,
+                compile_result.compile_artifact_id,
+                "noip2018",
+                problem_id,
+            )
+            self.store.append_event(
+                run_id,
+                "JUDGE_COMPLETED",
+                {**event_context, "check": check.model_dump(mode="json")},
+            )
+        else:
+            self.store.append_event(
+                run_id,
+                "JUDGE_SKIPPED",
+                {
+                    **event_context,
+                    "reason": "compile_failed",
+                    "compile_verdict": compile_result.verdict.value,
+                },
+            )
         return compile_result, check, frozen
 
     async def execute(self, run_id: str) -> None:
         try:
-            await self._execute(run_id)
+            with model_run_context(self.workspace.settings.runs_root, run_id, lambda: self._cancelled(run_id)):
+                await self._execute(run_id)
         except ContestLensError as exc:
+            if self._cancelled(run_id):
+                return
             result = {"error_code": exc.code, "message": exc.message, "details": exc.details, "completed_at": utc_now()}
             self._write(run_id, "failure.json", result)
             self.store.update_run(run_id, RunStatus.FAILED.value, result=result, event={"error_code": exc.code, "message": exc.message})
         except Exception as exc:
+            if self._cancelled(run_id):
+                return
             result = {"error_code": "INTERNAL_ERROR", "message": "Workflow failed", "details": {"type": type(exc).__name__, "reason": str(exc)}, "completed_at": utc_now()}
             self._write(run_id, "failure.json", result)
             self.store.update_run(run_id, RunStatus.FAILED.value, result=result, event={"error_code": "INTERNAL_ERROR"})
+
+    async def _prepare_images(self, run_id: str, binding: dict[str, Any], document: dict[str, Any], mode: str) -> dict[str, Any]:
+        settings = self.workspace.settings.image_understanding
+        images = StatementImages(self.resources, settings)
+        state: dict[str, Any] = {"model": settings.model, "descriptions": [], "warnings": []}
+
+        def save(status: str, **updates: Any) -> None:
+            state.update(status=status, **updates)
+            self.store.put_image_understanding(run_id, state)
+            self._write(run_id, "image_understanding.json", state)
+
+        def skipped(reason: str) -> dict[str, Any]:
+            save("skipped", reason=reason)
+            self.store.append_event(run_id, "IMAGE_UNDERSTANDING_SKIPPED", {"reason": reason, "warnings": state["warnings"]})
+            return document
+
+        try:
+            inspection = await asyncio.to_thread(images.inspect, binding["scope_id"], binding["document"])
+            state.update(inspection)
+        except Exception as exc:
+            # Inspection is optional, including on machines without rendering packages.
+            state["warnings"].append({"error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_INSPECTION_FAILED"})
+            return skipped("inspection_failed")
+        if self._cancelled(run_id):
+            save("cancelled")
+            return document
+        if not state["images"]:
+            return skipped("no_supported_images" if state["warnings"] else "no_images")
+        if mode == "skip":
+            return skipped("user_skipped")
+        if not settings.configured:
+            return skipped("invalid_configuration" if settings.configuration_error else "not_configured")
+
+        if mode == "ask":
+            timeout = settings.decision_timeout_seconds
+            request_id = safe_id("image_choice")
+            save("awaiting_choice", request_id=request_id, choice=None,
+                 expires_at=(datetime.now(timezone.utc) + timedelta(seconds=timeout)).isoformat())
+            self._status(run_id, RunStatus.WAITING_FOR_IMAGE_CONFIRMATION,
+                         request_id=request_id, model=settings.model,
+                         images=[{"label": item["label"], "reasons": item["reasons"]} for item in state["images"]],
+                         timeout_seconds=timeout)
+            deadline = time.monotonic() + timeout
+            while True:
+                current = self.store.get_run(run_id)
+                if current["cancelled"]:
+                    save("cancelled")
+                    return document
+                decision = current["image_understanding"]
+                if decision.get("choice"):
+                    state.update(decision)
+                    break
+                if time.monotonic() >= deadline:
+                    # Use the same atomic decision path as the UI; a simultaneous user click wins safely.
+                    try:
+                        self.store.decide_image_understanding(run_id, request_id, "skip")
+                        state["timed_out"] = True
+                    except ContestLensError:
+                        pass
+                    continue
+                await asyncio.sleep(min(0.25, max(0, deadline - time.monotonic())))
+            if state["choice"] == "skip":
+                document = skipped("decision_timeout" if state.get("timed_out") else "user_skipped")
+                self._status(run_id, RunStatus.ANALYZING)
+                return document
+
+        save("running")
+        self._status(run_id, RunStatus.UNDERSTANDING_IMAGES, model=settings.model, image_count=len(state["images"]))
+        client = self.image_model or ImageUnderstandingClient(settings)
+        for item in state["images"]:
+            if self._cancelled(run_id):
+                save("cancelled")
+                return document
+            try:
+                data_url = await asyncio.to_thread(images.render, binding["scope_id"], binding["document"], item)
+                if self._cancelled(run_id):
+                    save("cancelled")
+                    return document
+                description = await client.describe(data_url, item["label"], document["content"])
+                if self._cancelled(run_id):
+                    save("cancelled")
+                    return document
+                state["descriptions"].append({
+                    "image_id": item["image_id"], "source_label": item["label"], "model": settings.model,
+                    "content_type": "untrusted_problem_content", "text": description,
+                })
+                self.store.append_event(run_id, "IMAGE_DESCRIPTION_READY", {"label": item["label"], "text": description})
+            except Exception as exc:
+                state["warnings"].append({"label": item["label"], "error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_PROCESSING_FAILED"})
+            save("running")
+        if self._cancelled(run_id):
+            save("cancelled")
+            return document
+        outcome = "partial" if state["descriptions"] and state["warnings"] else "completed" if state["descriptions"] else "failed"
+        save(outcome)
+        self.store.append_event(run_id, "IMAGE_UNDERSTANDING_COMPLETED", {
+            "status": outcome, "described": len(state["descriptions"]), "warnings": state["warnings"],
+        })
+        self._status(run_id, RunStatus.ANALYZING)
+        return augment_document(document, state["descriptions"])
 
     async def _execute(self, run_id: str) -> None:
         run = self.store.get_run(run_id)
@@ -92,6 +249,10 @@ class ContestWorkflow:
             following = self.resources.read_problem_document(binding["scope_id"], binding["document"], cursor=document["next_cursor"])
             document["content"] += following["content"]
             document["next_cursor"] = following["next_cursor"]
+        document = await self._prepare_images(run_id, binding, document, request.get("image_understanding", "skip"))
+        if self._cancelled(run_id):
+            return
+        self._write(run_id, "problem_document.json", document)
         public_problem = {
             "problem_id": problem_id, "title_zh": manifest.title_zh, "difficulty": manifest.luogu_difficulty,
             "time_ms": manifest.resource_limits.time_ms, "memory_mb": manifest.resource_limits.memory_mb,
@@ -99,6 +260,9 @@ class ContestWorkflow:
         }
         problem_spec = await self.model.analyze_problem(document, public_problem)
         problem_spec["source"] = public_problem["source"]
+        if document.get("visual_descriptions"):
+            # Retain source evidence for solve/review/repair even if analysis summarizes it away.
+            problem_spec["visual_context"] = document["visual_descriptions"]
         self._write(run_id, "problem_spec.json", problem_spec)
         if self._cancelled(run_id):
             return
@@ -114,10 +278,16 @@ class ContestWorkflow:
             return
         self._status(run_id, RunStatus.REVIEWING, revision_id=revision_id)
         algorithm_review, code_review = await self._reviews(problem_spec, solution, io_basename)
-        self._status(run_id, RunStatus.COMPILING, revision_id=revision_id)
-        compile_result, check, frozen = self._judge_revision(run_id, problem_id, submission_id, revision_id, revision_sha)
-        if compile_result.verdict == Verdict.OK:
-            self._status(run_id, RunStatus.JUDGING, revision_id=revision_id)
+        self._status(run_id, RunStatus.COMPILING, phase="initial", revision_id=revision_id)
+        compile_result, check, frozen = await self._judge_revision(
+            run_id,
+            problem_id,
+            submission_id,
+            revision_id,
+            revision_sha,
+            phase="initial",
+        )
+        self._status(run_id, RunStatus.LOCALIZING, phase="initial", revision_id=revision_id)
         code_review, initial_code_review = await self._recheck_code_review_if_conflicting(
             problem_spec, solution, io_basename, code_review, compile_result
         )
@@ -178,11 +348,39 @@ class ContestWorkflow:
                 run_id, submission_id, best["revision_id"], best["sha256"], diff, round_number, repair_plan_id,
                 repaired.steps[0].statement if repaired.steps else "Hy3 repair",
             )
-            self._status(run_id, RunStatus.REJUDGING, round=round_number, revision_id=revision["revision_id"])
-            compile_result, check, frozen = self._judge_revision(run_id, problem_id, submission_id, revision["revision_id"], revision["sha256"])
+            self._status(
+                run_id,
+                RunStatus.COMPILING,
+                phase="repair",
+                round=round_number,
+                revision_id=revision["revision_id"],
+            )
+            compile_result, check, frozen = await self._judge_revision(
+                run_id,
+                problem_id,
+                submission_id,
+                revision["revision_id"],
+                revision["sha256"],
+                phase="repair",
+                round_number=round_number,
+            )
+            self._status(
+                run_id,
+                RunStatus.REVIEWING,
+                phase="repair",
+                round=round_number,
+                revision_id=revision["revision_id"],
+            )
             algorithm_review, code_review = await self._reviews(problem_spec, repaired, io_basename)
             code_review, initial_code_review = await self._recheck_code_review_if_conflicting(
                 problem_spec, repaired, io_basename, code_review, compile_result
+            )
+            self._status(
+                run_id,
+                RunStatus.LOCALIZING,
+                phase="repair",
+                round=round_number,
+                revision_id=revision["revision_id"],
             )
             diagnosis = adjudicate(algorithm_review, code_review, compile_result.verdict, check)
             current = self._evaluation_record(revision["revision_id"], revision["sha256"], compile_result, check, diagnosis, frozen)

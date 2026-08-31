@@ -48,6 +48,11 @@ CREATE TABLE IF NOT EXISTS events (
   PRIMARY KEY(run_id, seq),
   FOREIGN KEY(run_id) REFERENCES runs(run_id)
 );
+CREATE TABLE IF NOT EXISTS image_understanding (
+  run_id TEXT PRIMARY KEY,
+  state_json TEXT NOT NULL,
+  FOREIGN KEY(run_id) REFERENCES runs(run_id)
+);
 CREATE TABLE IF NOT EXISTS idempotency (
   idempotency_key TEXT PRIMARY KEY,
   operation TEXT NOT NULL,
@@ -159,9 +164,25 @@ class Store:
             self.idempotency_put(idempotency_key, operation, response)
         return response
 
+    def list_runs(self) -> list[dict[str, Any]]:
+        """Return run history newest first, including results used to build reports."""
+        with self.connect() as connection:
+            rows = connection.execute(
+                "SELECT run_id, problem_id, status, created_at, updated_at, result_json "
+                "FROM runs ORDER BY created_at DESC, rowid DESC"
+            ).fetchall()
+        records = []
+        for row in rows:
+            record = dict(row)
+            result_json = record.pop("result_json")
+            record["result"] = json.loads(result_json) if result_json else None
+            records.append(record)
+        return records
+
     def get_run(self, run_id: str) -> dict[str, Any]:
         with self.connect() as connection:
             row = connection.execute("SELECT * FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            image_row = connection.execute("SELECT state_json FROM image_understanding WHERE run_id=?", (run_id,)).fetchone()
         if not row:
             raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
         return {
@@ -169,7 +190,37 @@ class Store:
             "request": json.loads(row["request_json"]),
             "result": json.loads(row["result_json"]) if row["result_json"] else None,
             "cancelled": bool(row["cancelled"]), "created_at": row["created_at"], "updated_at": row["updated_at"],
+            "image_understanding": json.loads(image_row[0]) if image_row else None,
         }
+
+    def put_image_understanding(self, run_id: str, data: dict[str, Any]) -> None:
+        with self.connect() as connection:
+            connection.execute(
+                "INSERT INTO image_understanding VALUES (?, ?) "
+                "ON CONFLICT(run_id) DO UPDATE SET state_json=excluded.state_json",
+                (run_id, canonical_json(data)),
+            )
+
+    def decide_image_understanding(self, run_id: str, request_id: str, choice: str) -> dict[str, Any]:
+        if choice not in {"use", "skip"}:
+            raise ContestLensError("INVALID_IMAGE_CHOICE", "Choose use or skip")
+        # Serialize competing clicks, timeout defaults and decisions from other app workers.
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            run = connection.execute("SELECT status, cancelled FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if not run:
+                raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", status_code=404)
+            row = connection.execute("SELECT state_json FROM image_understanding WHERE run_id=?", (run_id,)).fetchone()
+            data = json.loads(row[0]) if row else {}
+            if data.get("request_id") != request_id or run["cancelled"]:
+                raise ContestLensError("IMAGE_CHOICE_EXPIRED", "Image choice is no longer active", status_code=409)
+            if data.get("choice") == choice:
+                return data
+            if data.get("status") != "awaiting_choice" or data.get("choice") or run["status"] != "WAITING_FOR_IMAGE_CONFIRMATION":
+                raise ContestLensError("IMAGE_CHOICE_EXPIRED", "Image choice is no longer active", status_code=409)
+            data = {**data, "choice": choice, "decided_at": utc_now()}
+            connection.execute("UPDATE image_understanding SET state_json=? WHERE run_id=?", (canonical_json(data), run_id))
+        return data
 
     def update_run(self, run_id: str, status: str, *, result: dict[str, Any] | None = None, event: dict[str, Any] | None = None) -> None:
         now = utc_now()

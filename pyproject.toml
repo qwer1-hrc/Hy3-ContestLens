@@ -21,6 +21,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+vision = ["pypdfium2>=4.30,<6", "Pillow>=10.4,<13"]
 dev = [
   "pytest>=8.3,<9",
   "pytest-asyncio>=0.24,<1",
@@ -38,4 +39,3 @@ packages = ["src/hy3_contestlens"]
 addopts = "-q"
 testpaths = ["tests"]
 pythonpath = ["src", "."]
-

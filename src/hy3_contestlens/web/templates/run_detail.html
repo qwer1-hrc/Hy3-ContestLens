@@ -1,10 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Run {{ run_id }}{% endblock %}
+{% block title %}{{ problem.title_zh }} · 运行中{% endblock %}
 {% block content %}
-<section class="page-head"><span class="eyebrow">LIVE RUN</span><h1>运行详情</h1><p><code>{{ run_id }}</code></p><div class="actions"><button onclick="cancelRun('{{ run_id }}')">取消</button><a class="button" href="/api/v1/runs/{{ run_id }}/report">报告</a></div></section>
+<section class="page-head run-head">
+  <div class="run-head-copy"><span class="eyebrow">LIVE WORKFLOW</span><h1>{{ problem.title_zh }}</h1><span class="run-problem-label"><strong>{{ problem.problem_id }}</strong> · DAY {{ problem.day }} · {{ problem.resource_limits.time_ms }} ms / {{ problem.effective_memory_limit_mb }} MB</span><code class="run-id">{{ run_id }}</code></div>
+  <div class="actions"><button onclick="cancelRun('{{ run_id }}')">取消运行</button><a class="button" href="/api/v1/runs/{{ run_id }}/report?priority=true" target="_blank" rel="noopener">查看报告</a></div>
+</section>
 <section class="metrics"><article><span>状态</span><strong id="run-status">载入中</strong></article><article><span>初次通过</span><strong id="initial-score">—</strong></article><article><span>最佳通过</span><strong id="best-score">—</strong></article><article><span>停止原因</span><strong id="stop-reason">—</strong></article></section>
-<section class="panel"><h2>事件时间线</h2><div id="event-list" class="timeline"></div></section>
-<section class="panel"><h2>诊断与评测结果</h2><pre id="run-result">尚未完成</pre></section>
+<section class="panel workflow-panel">
+  <div class="panel-head"><div><h2>工作流进度</h2><p>新步骤会自动滚动到当前工作；点击任意步骤可展开运行细节。</p></div><div class="panel-tools"><button type="button" onclick="setWorkflowDetails(true)">全部展开</button><button type="button" onclick="setWorkflowDetails(false)">全部折叠</button></div></div>
+  <div id="workflow-current" class="workflow-now" aria-busy="true"><span id="run-activity-spinner" class="activity-spinner" aria-hidden="true"></span><strong>当前工作</strong><span id="current-work" role="status">加载中…</span></div>
+  <div class="timeline-scroll"><p id="event-empty" class="event-empty">等待第一条工作流事件…</p><div id="event-list" class="timeline" aria-live="polite"></div></div>
+</section>
+<section id="judge-section" class="panel" hidden>
+  <div class="panel-head"><div><h2>测试点信息</h2><p>每次 Judge 都独立保留；点击评测轮次或单个测试点可展开详情。</p></div><div class="panel-tools"><button type="button" onclick="setJudgeDetails(true)">全部展开</button><button type="button" onclick="setJudgeDetails(false)">全部折叠</button></div></div>
+  <div id="judge-list" class="judge-list"></div>
+</section>
+<section class="panel raw-result-panel"><h2>诊断与完整结果</h2><details><summary>展开原始 JSON 证据</summary><pre id="run-result">尚未完成</pre></details></section>
 {% endblock %}
 {% block scripts %}<script>watchRun('{{ run_id }}');</script>{% endblock %}
-
