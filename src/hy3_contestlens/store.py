@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import threading
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +38,9 @@ CREATE TABLE IF NOT EXISTS runs (
   request_json TEXT NOT NULL,
   result_json TEXT,
   cancelled INTEGER NOT NULL DEFAULT 0,
+  runner_id TEXT,
+  lease_expires_at TEXT,
+  attempt INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -52,6 +56,12 @@ CREATE TABLE IF NOT EXISTS image_understanding (
   run_id TEXT PRIMARY KEY,
   state_json TEXT NOT NULL,
   FOREIGN KEY(run_id) REFERENCES runs(run_id)
+);
+CREATE TABLE IF NOT EXISTS run_report_preferences (
+  run_id TEXT PRIMARY KEY,
+  hidden INTEGER NOT NULL DEFAULT 0,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY(run_id) REFERENCES runs(run_id) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS idempotency (
   idempotency_key TEXT PRIMARY KEY,
@@ -80,6 +90,14 @@ CREATE TABLE IF NOT EXISTS benchmarks (
 """
 
 
+TERMINAL_RUN_STATUSES = {"COMPLETED", "FAILED", "CANCELLED"}
+RECOVERABLE_RUN_STATUSES = {
+    "QUEUED", "INTERRUPTED", "DISCOVERING_RESOURCES", "WAITING_FOR_RESOURCE_CONFIRMATION",
+    "ANALYZING", "WAITING_FOR_IMAGE_CONFIRMATION", "UNDERSTANDING_IMAGES", "SOLVING",
+    "REVIEWING", "COMPILING", "JUDGING", "LOCALIZING", "REPAIRING", "REJUDGING",
+}
+
+
 class Store:
     def __init__(self, path: Path):
         self.path = path
@@ -87,6 +105,21 @@ class Store:
         self._lock = threading.RLock()
         with self.connect() as connection:
             connection.executescript(SCHEMA)
+            self._migrate(connection)
+
+    @staticmethod
+    def _migrate(connection: sqlite3.Connection) -> None:
+        """Apply additive migrations to databases created by older local builds."""
+        connection.execute("BEGIN IMMEDIATE")
+        columns = {row[1] for row in connection.execute("PRAGMA table_info(runs)").fetchall()}
+        additions = {
+            "runner_id": "TEXT",
+            "lease_expires_at": "TEXT",
+            "attempt": "INTEGER NOT NULL DEFAULT 0",
+        }
+        for name, declaration in additions.items():
+            if name not in columns:
+                connection.execute(f"ALTER TABLE runs ADD COLUMN {name} {declaration}")
 
     def connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self.path, timeout=10, check_same_thread=False)
@@ -156,7 +189,8 @@ class Store:
         response = {"run_id": run_id, "problem_id": problem_id, "status": "CREATED", "created_at": now}
         with self.connect() as connection:
             connection.execute(
-                "INSERT INTO runs VALUES (?, ?, ?, ?, NULL, 0, ?, ?)",
+                "INSERT INTO runs (run_id, problem_id, status, request_json, result_json, cancelled, runner_id, lease_expires_at, attempt, created_at, updated_at) "
+                "VALUES (?, ?, ?, ?, NULL, 0, NULL, NULL, 0, ?, ?)",
                 (run_id, problem_id, "CREATED", canonical_json(request), now, now),
             )
         self.append_event(run_id, "CREATED", {"problem_id": problem_id})
@@ -164,20 +198,70 @@ class Store:
             self.idempotency_put(idempotency_key, operation, response)
         return response
 
-    def list_runs(self) -> list[dict[str, Any]]:
+    def list_runs(self, *, include_hidden: bool = True) -> list[dict[str, Any]]:
         """Return run history newest first, including results used to build reports."""
         with self.connect() as connection:
             rows = connection.execute(
-                "SELECT run_id, problem_id, status, created_at, updated_at, result_json "
-                "FROM runs ORDER BY created_at DESC, rowid DESC"
+                "SELECT r.run_id, r.problem_id, r.status, r.created_at, r.updated_at, r.result_json, "
+                "COALESCE(p.hidden, 0) AS report_hidden FROM runs r "
+                "LEFT JOIN run_report_preferences p ON p.run_id=r.run_id "
+                "WHERE ? OR COALESCE(p.hidden, 0)=0 ORDER BY r.created_at DESC, r.rowid DESC",
+                (include_hidden,),
             ).fetchall()
         records = []
         for row in rows:
             record = dict(row)
             result_json = record.pop("result_json")
             record["result"] = json.loads(result_json) if result_json else None
+            record["report_hidden"] = bool(record["report_hidden"])
             records.append(record)
         return records
+
+    def set_run_report_hidden(self, run_id: str, hidden: bool) -> dict[str, Any]:
+        self.get_run(run_id)
+        with self.connect() as connection:
+            connection.execute(
+                "INSERT INTO run_report_preferences VALUES (?, ?, ?) "
+                "ON CONFLICT(run_id) DO UPDATE SET hidden=excluded.hidden, updated_at=excluded.updated_at",
+                (run_id, int(hidden), utc_now()),
+            )
+        return {"run_id": run_id, "hidden": hidden}
+
+    def delete_run(self, run_id: str) -> dict[str, Any]:
+        run = self.get_run(run_id)
+        if run["status"] not in TERMINAL_RUN_STATUSES:
+            raise ContestLensError("RUN_DELETE_REQUIRES_TERMINAL", "Cancel the run before deleting it", {"status": run["status"]}, 409)
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            # Remove stale create-run idempotency entries that would otherwise return a deleted ID.
+            keys = []
+            for row in connection.execute("SELECT idempotency_key, response_json FROM idempotency WHERE operation='create_run'"):
+                try:
+                    if json.loads(row["response_json"]).get("run_id") == run_id:
+                        keys.append((row["idempotency_key"],))
+                except (AttributeError, ValueError):
+                    continue
+            connection.executemany("DELETE FROM idempotency WHERE idempotency_key=?", keys)
+            # Preserve surviving benchmark runs while removing the deleted run reference.
+            for row in connection.execute("SELECT benchmark_id, benchmark_json FROM benchmarks").fetchall():
+                data = json.loads(row["benchmark_json"])
+                run_ids = data.get("run_ids") or []
+                if run_id not in run_ids:
+                    continue
+                keep = [index for index, value in enumerate(run_ids) if value != run_id]
+                data["run_ids"] = [run_ids[index] for index in keep]
+                problem_ids = data.get("problem_ids") or []
+                if len(problem_ids) == len(run_ids):
+                    data["problem_ids"] = [problem_ids[index] for index in keep]
+                data["deleted_run_ids"] = sorted(set(data.get("deleted_run_ids") or []) | {run_id})
+                connection.execute("UPDATE benchmarks SET benchmark_json=? WHERE benchmark_id=?", (canonical_json(data), row["benchmark_id"]))
+            connection.execute("DELETE FROM events WHERE run_id=?", (run_id,))
+            connection.execute("DELETE FROM image_understanding WHERE run_id=?", (run_id,))
+            connection.execute("DELETE FROM run_report_preferences WHERE run_id=?", (run_id,))
+            cursor = connection.execute("DELETE FROM runs WHERE run_id=?", (run_id,))
+            if cursor.rowcount != 1:
+                raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
+        return {"run_id": run_id, "deleted": True}
 
     def get_run(self, run_id: str) -> dict[str, Any]:
         with self.connect() as connection:
@@ -190,8 +274,111 @@ class Store:
             "request": json.loads(row["request_json"]),
             "result": json.loads(row["result_json"]) if row["result_json"] else None,
             "cancelled": bool(row["cancelled"]), "created_at": row["created_at"], "updated_at": row["updated_at"],
+            "attempt": row["attempt"],
             "image_understanding": json.loads(image_row[0]) if image_row else None,
         }
+
+    def queue_run(self, run_id: str) -> dict[str, Any]:
+        """Persist scheduling intent before an in-memory task is created."""
+        changed = False
+        previous_status = None
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT status, cancelled FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if not row:
+                raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
+            if row["cancelled"]:
+                raise ContestLensError("RUN_CANCELLED", "Cancelled run cannot be restarted", {"run_id": run_id}, 409)
+            if row["status"] in {"CREATED", "FAILED", "INTERRUPTED"}:
+                previous_status = row["status"]
+                now = utc_now()
+                connection.execute(
+                    "UPDATE runs SET status='QUEUED', result_json=NULL, runner_id=NULL, lease_expires_at=NULL, updated_at=? WHERE run_id=?",
+                    (now, run_id),
+                )
+                changed = True
+        if changed:
+            self.append_event(run_id, "QUEUED", {"previous_status": previous_status})
+        return self.get_run(run_id)
+
+    def claim_run(self, run_id: str, runner_id: str, *, lease_seconds: float) -> bool:
+        """Atomically acquire an expired/unowned recoverable run for one service instance."""
+        now_dt = datetime.now(UTC)
+        now = now_dt.isoformat()
+        deadline = (now_dt + timedelta(seconds=lease_seconds)).isoformat()
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute(
+                "SELECT status, cancelled, result_json, runner_id, lease_expires_at FROM runs WHERE run_id=?",
+                (run_id,),
+            ).fetchone()
+            if not row:
+                raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
+            if row["cancelled"] or row["result_json"] is not None or row["status"] not in RECOVERABLE_RUN_STATUSES:
+                return False
+            owned_elsewhere = (
+                row["runner_id"] not in {None, runner_id}
+                and row["lease_expires_at"] is not None
+                and row["lease_expires_at"] > now
+            )
+            if owned_elsewhere:
+                return False
+            connection.execute(
+                "UPDATE runs SET runner_id=?, lease_expires_at=?, attempt=attempt+1, updated_at=? WHERE run_id=?",
+                (runner_id, deadline, now, run_id),
+            )
+        return True
+
+    def renew_run_lease(self, run_id: str, runner_id: str, *, lease_seconds: float) -> bool:
+        now_dt = datetime.now(UTC)
+        deadline = (now_dt + timedelta(seconds=lease_seconds)).isoformat()
+        with self.connect() as connection:
+            cursor = connection.execute(
+                "UPDATE runs SET lease_expires_at=? WHERE run_id=? AND runner_id=? "
+                "AND cancelled=0 AND result_json IS NULL",
+                (deadline, run_id, runner_id),
+            )
+        return cursor.rowcount == 1
+
+    def release_run_lease(self, run_id: str, runner_id: str) -> None:
+        with self.connect() as connection:
+            connection.execute(
+                "UPDATE runs SET runner_id=NULL, lease_expires_at=NULL WHERE run_id=? AND runner_id=?",
+                (run_id, runner_id),
+            )
+
+    def list_recoverable_runs(self) -> list[str]:
+        now = datetime.now(UTC).isoformat()
+        placeholders = ",".join("?" for _ in RECOVERABLE_RUN_STATUSES)
+        with self.connect() as connection:
+            rows = connection.execute(
+                f"SELECT run_id FROM runs WHERE status IN ({placeholders}) AND cancelled=0 AND result_json IS NULL "
+                "AND (runner_id IS NULL OR lease_expires_at IS NULL OR lease_expires_at<=?) ORDER BY created_at",
+                (*sorted(RECOVERABLE_RUN_STATUSES), now),
+            ).fetchall()
+        return [row[0] for row in rows]
+
+    def interrupt_run(self, run_id: str, *, reason: str) -> bool:
+        """Make a stopped worker visible without turning a resumable run into a final failure."""
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT status, cancelled, result_json FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if not row:
+                return False
+            if row["cancelled"] or row["result_json"] is not None or row["status"] in TERMINAL_RUN_STATUSES | {"CREATED", "INTERRUPTED"}:
+                connection.execute(
+                    "UPDATE runs SET runner_id=NULL, lease_expires_at=NULL WHERE run_id=?",
+                    (run_id,),
+                )
+                return False
+            now = utc_now()
+            previous = row["status"]
+            connection.execute(
+                "UPDATE runs SET status='INTERRUPTED', runner_id=NULL, lease_expires_at=NULL, updated_at=? WHERE run_id=?",
+                (now, run_id),
+            )
+        self.append_event(run_id, "INTERRUPTED", {"reason": reason, "previous_status": previous})
+        return True
 
     def put_image_understanding(self, run_id: str, data: dict[str, Any]) -> None:
         with self.connect() as connection:
@@ -224,21 +411,41 @@ class Store:
 
     def update_run(self, run_id: str, status: str, *, result: dict[str, Any] | None = None, event: dict[str, Any] | None = None) -> None:
         now = utc_now()
-        with self.connect() as connection:
-            cursor = connection.execute(
-                "UPDATE runs SET status=?, result_json=COALESCE(?, result_json), updated_at=? WHERE run_id=?",
-                (status, canonical_json(result) if result is not None else None, now, run_id),
-            )
-            if cursor.rowcount != 1:
+        terminal = status in TERMINAL_RUN_STATUSES
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            current = connection.execute("SELECT status, cancelled FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if not current:
                 raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
+            # A late model/Judge response must never revive a cancelled or already
+            # finalized run after another request won the race.
+            if (current["cancelled"] and status != "CANCELLED") or (
+                current["status"] in TERMINAL_RUN_STATUSES and status != current["status"]
+            ):
+                return
+            connection.execute(
+                "UPDATE runs SET status=?, result_json=COALESCE(?, result_json), updated_at=?, "
+                "runner_id=CASE WHEN ? THEN NULL ELSE runner_id END, "
+                "lease_expires_at=CASE WHEN ? THEN NULL ELSE lease_expires_at END WHERE run_id=?",
+                (status, canonical_json(result) if result is not None else None, now, terminal, terminal, run_id),
+            )
         self.append_event(run_id, status, event or {})
 
     def cancel_run(self, run_id: str) -> dict[str, Any]:
-        with self.connect() as connection:
-            cursor = connection.execute("UPDATE runs SET cancelled=1, status='CANCELLED', updated_at=? WHERE run_id=?", (utc_now(), run_id))
-            if cursor.rowcount != 1:
+        changed = False
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            row = connection.execute("SELECT status, cancelled FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if not row:
                 raise ContestLensError("RUN_NOT_FOUND", "Run does not exist", {"run_id": run_id}, 404)
-        self.append_event(run_id, "CANCELLED", {})
+            if row["status"] not in TERMINAL_RUN_STATUSES:
+                connection.execute(
+                    "UPDATE runs SET cancelled=1, status='CANCELLED', runner_id=NULL, lease_expires_at=NULL, updated_at=? WHERE run_id=?",
+                    (utc_now(), run_id),
+                )
+                changed = True
+        if changed:
+            self.append_event(run_id, "CANCELLED", {})
         return self.get_run(run_id)
 
     def append_event(self, run_id: str, event_type: str, data: dict[str, Any]) -> dict[str, Any]:

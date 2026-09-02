@@ -26,21 +26,50 @@ def test_environment_is_fallback(tmp_path: Path, monkeypatch):
     assert settings.hy3.api_key == "env-key"
 
 
+def test_runtime_database_and_runs_paths_can_be_isolated(tmp_path: Path, monkeypatch):
+    database = tmp_path / "state" / "isolated.sqlite3"
+    runs = tmp_path / "artifacts"
+    monkeypatch.setenv("HY3_CONTESTLENS_DATABASE_PATH", str(database))
+    monkeypatch.setenv("HY3_CONTESTLENS_RUNS_ROOT", str(runs))
+    settings = AppSettings.load(Path(__file__).resolve().parents[2])
+    assert settings.database_path == database.resolve()
+    assert settings.runs_root == runs.resolve()
+
+
+def test_streaming_is_configurable_without_changing_solver_budget(tmp_path, monkeypatch):
+    assert Hy3Settings().stream is True
+    monkeypatch.setenv("HY3_STREAM", "false")
+    monkeypatch.setenv("HY3_MAX_TOKENS", "127000")
+    monkeypatch.setenv("HY3_REASONING_EFFORT", "high")
+    settings = AppSettings.load(tmp_path)
+    assert settings.hy3.stream is False
+    assert settings.hy3.max_tokens == 127000 and settings.hy3.reasoning_effort == "high"
+    (tmp_path / "configs").mkdir()
+    (tmp_path / "configs/secrets.local.toml").write_text('[hy3]\nstream=true\n', encoding="utf-8")
+    assert AppSettings.load(tmp_path).hy3.stream is True
+    assert ReportTranslationSettings().model_settings(Hy3Settings()).stream is False
+
+
 def test_model_reliability_defaults_and_environment(tmp_path, monkeypatch):
     assert Hy3Settings().response_format == "json_schema"
     assert Hy3Settings().max_attempts == 3
+    assert Hy3Settings().timeout_seconds == 480
     monkeypatch.setenv("HY3_RESPONSE_FORMAT", "json_object")
     monkeypatch.setenv("HY3_MAX_ATTEMPTS", "2")
     monkeypatch.setenv("HY3_RETRY_BACKOFF_SECONDS", "0.5")
+    monkeypatch.setenv("HY3_TIMEOUT_SECONDS", "1200")
     settings = AppSettings.load(tmp_path)
     assert settings.hy3.response_format == "json_object"
     assert settings.hy3.max_attempts == 2
     assert settings.hy3.retry_backoff_seconds == 0.5
+    assert settings.hy3.timeout_seconds == 1200
 
 
 @pytest.mark.parametrize("options", [
     {"response_format": "text"}, {"max_attempts": 0}, {"max_attempts": 6},
     {"max_attempts": True}, {"max_attempts": 1.5},
+    {"timeout_seconds": 0}, {"timeout_seconds": 3601}, {"timeout_seconds": True},
+    {"timeout_seconds": float("inf")}, {"timeout_seconds": float("nan")},
     {"retry_backoff_seconds": -1}, {"retry_backoff_seconds": 31},
     {"retry_backoff_seconds": float("inf")}, {"retry_backoff_seconds": float("nan")},
 ])
@@ -56,6 +85,7 @@ def test_report_profile_inherits_connection_but_not_solver_budget():
     assert report.api_key == solver.api_key and report.base_url == solver.base_url and report.model == solver.model
     assert report.reasoning_effort == "low" and report.max_tokens == 4096
     assert report.temperature == 0.1 and report.max_attempts == 1
+    assert report.timeout_seconds == options.timeout_seconds
     assert options.max_attempts == 3 and options.batch_max_items == 2 and options.batch_max_chars == 2000
     assert options.max_concurrency == 2
     assert solver.reasoning_effort == "high" and solver.max_tokens == 127000

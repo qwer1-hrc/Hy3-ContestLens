@@ -32,6 +32,20 @@ def test_reports_page_has_useful_empty_state(client):
     assert 'href="/ui/runs/new"' in response.text
 
 
+def test_failed_run_list_displays_phase_and_disconnect_reason_without_raw_error(client):
+    store = client.app.state.hub.store
+    run = store.create_run("money", {})
+    store.update_run(run["run_id"], "FAILED", result={
+        "error_code": "HY3_INVALID_RESPONSE", "message": "PRIVATE_PROVIDER_DETAIL",
+        "details": {"role": "solver", "failure_kind": "transport_error", "attempts": 3,
+                    "reason": "Model transport failed (RemoteProtocolError) PRIVATE_PROVIDER_DETAIL"},
+    })
+    html = client.get("/ui/reports").text
+    assert "生成解法：模型连接被提前关闭（RemoteProtocolError），尝试 3 次后停止" in html
+    assert "查看失败原因" in html
+    assert "PRIVATE_PROVIDER_DETAIL" not in html
+
+
 def test_reports_list_all_runs_newest_first_and_only_link_available_reports(client, monkeypatch):
     store = client.app.state.hub.store
     specifications = [
@@ -166,3 +180,42 @@ def test_report_client_uses_dedicated_options_without_mutating_solver(settings):
     assert report_model.settings.max_attempts == 1
     assert report_model.timeout_seconds == 60
     assert hub.report_translations._worker is None
+
+
+def test_more_menu_hide_restore_export_and_permanent_delete(client, settings):
+    hub = client.app.state.hub
+    run = hub.store.create_run("road", {"problem_id": "road"})
+    result = evaluation_result(run["run_id"], "road")
+    hub.store.update_run(run["run_id"], "COMPLETED", result=result)
+    root = settings.runs_root / run["run_id"]
+    root.mkdir(parents=True, exist_ok=True)
+    (root / "artifact.txt").write_text("delete me", encoding="utf-8")
+    page = client.get("/ui/reports").text
+    assert 'aria-label="更多操作"' in page and 'popover="auto"' in page and "永久删除运行记录" in page
+    assert "<details class=\"run-actions\"" not in page
+    assert f'/report/export?format=html' in page and f'/report/export?format=md' in page
+    for fmt, media in (("html", "text/html"), ("md", "text/markdown")):
+        response = client.get(f'/api/v1/runs/{run["run_id"]}/report/export?format={fmt}')
+        assert response.status_code == 200 and media in response.headers["content-type"]
+        assert "attachment" in response.headers["content-disposition"] and run["run_id"] in response.text
+    token = client.app.state.ui_action_token
+    hidden = client.post(f'/ui/runs/{run["run_id"]}/report-visibility?hidden=true&action_token={token}', follow_redirects=False)
+    assert hidden.status_code == 303 and run["run_id"] not in client.get("/ui/reports").text
+    hidden_page = client.get("/ui/reports?include_hidden=true").text
+    assert run["run_id"] in hidden_page and "恢复显示" in hidden_page
+    assert client.post(f'/ui/runs/{run["run_id"]}/report-visibility?hidden=false&action_token=wrong', follow_redirects=False).status_code == 403
+    restored = client.post(f'/ui/runs/{run["run_id"]}/report-visibility?hidden=false&action_token={token}', follow_redirects=False)
+    assert restored.status_code == 303 and run["run_id"] in client.get("/ui/reports").text
+    deleted = client.post(f'/ui/runs/{run["run_id"]}:delete?confirmation=permanent&action_token={token}', follow_redirects=False)
+    assert deleted.status_code == 303 and not root.exists()
+    assert client.get(f'/api/v1/runs/{run["run_id"]}').status_code == 404
+
+
+def test_permanent_delete_rejects_active_runs(client, settings):
+    run = client.app.state.hub.store.create_run("road", {"problem_id": "road"})
+    root = settings.runs_root / run["run_id"]
+    root.mkdir(parents=True, exist_ok=True)
+    token = client.app.state.ui_action_token
+    response = client.post(f'/ui/runs/{run["run_id"]}:delete?confirmation=permanent&action_token={token}', follow_redirects=False)
+    assert response.status_code == 409 and root.exists()
+    assert client.get(f'/api/v1/runs/{run["run_id"]}').status_code == 200

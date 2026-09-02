@@ -1,9 +1,24 @@
 from pathlib import Path
+import sqlite3
 
 import pytest
 
 from hy3_contestlens.errors import ContestLensError
 from hy3_contestlens.store import Store
+
+
+def test_existing_database_gets_additive_run_lease_migration(tmp_path: Path):
+    path = tmp_path / "legacy.sqlite3"
+    with sqlite3.connect(path) as connection:
+        connection.execute(
+            "CREATE TABLE runs (run_id TEXT PRIMARY KEY, problem_id TEXT NOT NULL, status TEXT NOT NULL, "
+            "request_json TEXT NOT NULL, result_json TEXT, cancelled INTEGER NOT NULL DEFAULT 0, "
+            "created_at TEXT NOT NULL, updated_at TEXT NOT NULL)"
+        )
+    Store(path)
+    with sqlite3.connect(path) as connection:
+        columns = {row[1] for row in connection.execute("PRAGMA table_info(runs)")}
+    assert {"runner_id", "lease_expires_at", "attempt"} <= columns
 
 
 def test_run_events_are_monotonic_and_idempotent(tmp_path: Path):
@@ -39,3 +54,38 @@ def test_run_history_includes_all_states_and_is_stable_for_equal_timestamps(tmp_
     assert history[0]["result"] == failure
     assert history[1]["result"] is None
     assert "request_json" not in history[0] and "result_json" not in history[0]
+
+
+def test_run_lease_is_exclusive_expires_and_preserves_restart_intent(tmp_path: Path):
+    store = Store(tmp_path / "store.sqlite3")
+    run_id = store.create_run("road", {"problem_id": "road"})["run_id"]
+    store.queue_run(run_id)
+
+    assert store.claim_run(run_id, "runner_a", lease_seconds=60)
+    assert not store.claim_run(run_id, "runner_b", lease_seconds=60)
+    assert store.list_recoverable_runs() == []
+
+    # A negative deadline simulates a worker that died without graceful shutdown.
+    assert store.renew_run_lease(run_id, "runner_a", lease_seconds=-1)
+    assert store.list_recoverable_runs() == [run_id]
+    assert store.claim_run(run_id, "runner_b", lease_seconds=60)
+    assert store.get_run(run_id)["attempt"] == 2
+
+    assert store.interrupt_run(run_id, reason="test_shutdown")
+    assert store.get_run(run_id)["status"] == "INTERRUPTED"
+    store.queue_run(run_id)
+    assert store.get_run(run_id)["status"] == "QUEUED"
+
+
+def test_late_worker_updates_cannot_revive_cancelled_or_completed_runs(tmp_path: Path):
+    store = Store(tmp_path / "store.sqlite3")
+    cancelled = store.create_run("road", {})["run_id"]
+    store.queue_run(cancelled)
+    store.cancel_run(cancelled)
+    store.update_run(cancelled, "SOLVING")
+    assert store.get_run(cancelled)["status"] == "CANCELLED"
+
+    completed = store.create_run("road", {})["run_id"]
+    store.update_run(completed, "COMPLETED", result={"stop_reason": "COMPLETED"})
+    store.cancel_run(completed)
+    assert store.get_run(completed)["status"] == "COMPLETED"

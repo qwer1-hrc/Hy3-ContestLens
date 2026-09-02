@@ -62,6 +62,16 @@ test("completion, failure and cancellation stop all workflow animations", () => 
   }
 });
 
+test("an interrupted run is shown as recoverable active work", () => {
+  const ui = setup(["INTERRUPTED"]);
+  ui.context.updateRunSummary({status: "INTERRUPTED", result: null});
+  ui.context.updateWorkflowEventState("INTERRUPTED");
+  assert.match(ui.elements["run-status"].textContent, /中断/);
+  assert.match(ui.elements["current-work"].textContent, /检查点/);
+  assert.equal(ui.elements["run-activity-spinner"].hidden, false);
+  assert.equal(ui.rows[0].tag.textContent, "等待中");
+});
+
 test("a polling failure clears running indicators", async () => {
   const ui = setup(["SOLVING"]);
   ui.context.updateWorkflowEventState("SOLVING");

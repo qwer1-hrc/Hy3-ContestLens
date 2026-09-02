@@ -169,6 +169,7 @@ reasoning_effort = "medium"
 temperature = 0.2
 top_p = 0.95
 max_tokens = 8192
+timeout_seconds = 480
 response_format = "json_schema"
 max_attempts = 3
 retry_backoff_seconds = 1.0
@@ -192,6 +193,7 @@ HY3_REASONING_EFFORT
 HY3_TEMPERATURE
 HY3_TOP_P
 HY3_MAX_TOKENS
+HY3_TIMEOUT_SECONDS
 HY3_RESPONSE_FORMAT
 HY3_MAX_ATTEMPTS
 HY3_RETRY_BACKOFF_SECONDS
@@ -202,6 +204,8 @@ HY3_RETRY_BACKOFF_SECONDS
 #### 结构化响应、重试与诊断
 
 - 默认使用 `response_format.type=json_schema`，将实际 Pydantic Schema 传给模型接口，并在本地再次校验。协议格式见[腾讯 TokenHub 混元调用指南](https://cloud.tencent.com/document/product/1823/132252)。Schema 约束不替代算法、源码和评测结果检查。
+- 主模型默认 `stream=true`，以流式方式接收长响应，完成后再校验 JSON，避免一直等待完整响应才读取数据。兼容非流式端点时可在 `[hy3]` 设置 `stream=false` 或配置 `HY3_STREAM=false`；不会自动降低推理级别、输出预算或关闭 Schema 校验。
+- `timeout_seconds=480` 是每次主模型请求的总耗时上限，允许范围为 1–3600 秒；可在 `[hy3]` 或 `HY3_TIMEOUT_SECONDS` 中调整，修改后需重启服务。
 - `max_attempts=3` 表示每个模型调用最多请求 3 次（首次 + 2 次重试），允许范围 1–5；这是模型请求重试，不是代码修复轮数。重试可能增加耗时和 API 费用，不会自动增加 `max_tokens`。
 - 缺字段、类型错误、非法 JSON、异常响应结构和 `finish_reason=length` 会带着校验反馈请求完整重生成，不通过填空值伪造成功。超时、连接异常、HTTP 408/429/5xx 会有限重试；其他 HTTP 4xx、拒答和内容过滤不重试。指数退避及数值型 `Retry-After` 的等待时间上限均为 30 秒。
 - 收到取消标记后不会发起下一次模型请求；已经在途的请求仍可能完成并计费。
@@ -253,6 +257,8 @@ port = 8000
 local_mode = true
 database_path = "runs/contestlens.sqlite3"
 ```
+
+测试或多环境部署时，可分别使用 `HY3_CONTESTLENS_DATABASE_PATH` 和 `HY3_CONTESTLENS_RUNS_ROOT` 覆盖状态数据库与运行产物目录；相对路径仍以项目根目录为基准。
 
 默认只监听 `127.0.0.1`。如果要暴露到局域网或公网，必须先增加认证、关闭任意本地路径授权并配置反向代理；不要直接把本地模式暴露到外部网络。
 
@@ -383,6 +389,8 @@ conda run --no-capture-output -n hy3-contestlens hy3-contest-api
 7. 下载或打开最终 HTML 报告。
 
 浏览器关闭不会取消后台任务。取消必须显式调用 API 或点击 run 页面的“取消”。
+
+停止 Web/API 服务会把进程内任务持久化为“等待恢复”；重新启动服务后，运行通过数据库租约自动接管，并从 `runs/<run_id>/workflow_checkpoint.json` 中最近完成的阶段继续。题目分析、Solver 输出、评审、Judge 和已完成修复轮次会尽量复用；若进程恰好在尚未落盘的外部请求中断，该单个请求仍可能需要重新执行。多个服务实例共享数据库时，同一 run 只允许一个有效租约持有者执行。
 
 ## 9. CLI 用法
 

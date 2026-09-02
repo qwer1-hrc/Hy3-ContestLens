@@ -307,7 +307,8 @@ async def test_hy3_analysis_and_solver_receive_visual_evidence(settings, monkeyp
 
     async def analyze(doc, metadata):
         received["document"] = doc
-        return {"summary": "analysis may omit the figure"}
+        return {"summary": "analysis may omit the figure", "inputs": ["graph"], "outputs": ["answer"],
+                "constraints": ["three nodes"], "boundary_cases": [], "likely_structures": [], "source_references": ["doc"]}
 
     async def solve(spec, io_basename):
         received["spec"] = spec
@@ -318,6 +319,7 @@ async def test_hy3_analysis_and_solver_receive_visual_evidence(settings, monkeyp
         await workflow._execute(run_id)
     assert "节点 1" in received["document"]["content"]
     assert "节点 1" in received["spec"]["visual_context"][0]["text"]
+    assert received["spec"]["source_document"]["content"] == received["document"]["content"]
     assert received["spec"]["source"]["sha256"] == "source-hash"
     artifact = json.loads((settings.runs_root / run_id / "problem_document.json").read_text(encoding="utf-8"))
     assert artifact == received["document"]

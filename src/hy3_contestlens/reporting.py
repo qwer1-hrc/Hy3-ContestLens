@@ -11,6 +11,36 @@ from typing import Any
 from .utils import atomic_write
 
 
+def run_failure_summary(result: Any) -> str | None:
+    """Public, fixed-vocabulary explanation; never echo model/provider error text."""
+    if not isinstance(result, dict) or not result.get("error_code"):
+        return None
+    details = result.get("details") if isinstance(result.get("details"), dict) else {}
+    phase = {
+        "problem_analyst": "分析题目", "solver": "生成解法", "algorithm_critic": "算法审查",
+        "code_critic": "代码审查", "code_critic_recheck": "代码复查", "code_repair_agent": "修复代码",
+    }.get(str(details.get("role")), "运行")
+    kind = str(details.get("failure_kind"))
+    cause = {
+        "schema_validation": "模型输出字段校验失败", "json_decode": "模型返回的 JSON 无效",
+        "response_shape": "模型响应结构异常", "output_truncated": "模型输出达到上限而被截断",
+        "http_error": "模型接口返回错误", "transport_error": "模型连接中断或超时",
+        "stream_incomplete": "模型连接提前结束，未收到完整结果", "stream_error": "模型在生成过程中返回错误",
+        "refusal": "模型拒绝生成结果",
+    }.get(kind, "运行未完成")
+    if kind == "transport_error" and (details.get("exception_type") == "RemoteProtocolError" or "RemoteProtocolError" in str(details.get("reason", ""))):
+        cause = "模型连接被提前关闭（RemoteProtocolError）"
+    if result.get("error_code") == "HY3_NOT_CONFIGURED":
+        cause = "尚未配置主模型"
+    elif result.get("error_code") == "PROBLEM_ANALYSIS_INCOMPLETE":
+        cause = "题面分析为空或不完整，已阻止生成占位程序"
+    elif result.get("error_code") == "PROBLEM_DOCUMENT_EMPTY":
+        cause = "未读取到题面文字，已停止求解"
+    attempts = details.get("attempts")
+    suffix = f"，尝试 {attempts} 次后停止" if type(attempts) is int and 1 <= attempts <= 5 else ""
+    return f"{phase}：{cause}{suffix}"
+
+
 def has_evaluation_report(result: Any) -> bool:
     """A failure diagnostic alone is not a completed evaluation report."""
     if not isinstance(result, dict):
@@ -65,6 +95,33 @@ def render_run_report(result: dict[str, Any]) -> str:
 
 def write_run_report(path: Path, result: dict[str, Any]) -> None:
     atomic_write(path, render_run_report(result).encode("utf-8"))
+
+
+def render_run_markdown(result: dict[str, Any]) -> str:
+    def esc(value: Any) -> str:
+        return str(value).replace("\\", "\\\\").replace("|", "\\|").replace("<", "&lt;")
+    if "initial_submission_result" not in result:
+        return f"# Hy3-ContestLens 运行失败\n\n- 错误码：`{esc(result.get('error_code', 'UNKNOWN'))}`\n"
+    initial, best = result["initial_submission_result"], result["best_submission_result"]
+    lines = [
+        "# Hy3-ContestLens 评测报告", "",
+        f"- Run：`{esc(result['run_id'])}`", f"- 题目：`{esc(result['problem_id'])}`",
+        f"- 停止原因：`{esc(result['stop_reason'])}`", "", "## 能力分离", "",
+        "| 阶段 | 通过点 | 总点数 | 过程正确 | 错误类型 |", "| --- | ---: | ---: | --- | --- |",
+    ]
+    for title, evaluation in (("初次提交", initial), ("最佳提交", best)):
+        check = evaluation.get("check") or {}
+        diagnosis = evaluation["diagnosis"]
+        lines.append(f"| {title} | {check.get('passed', 0)} | {check.get('total', 0)} | {'是' if diagnosis['process_correct'] else '否'} | {esc(diagnosis['error_type'])} |")
+    lines += ["", "## 最佳版本逐点结果", "", "| 测试点 | Verdict | CPU ms | Wall ms | 峰值 MB |", "| --- | --- | ---: | ---: | ---: |"]
+    for item in (best.get("check") or {}).get("tests", []):
+        lines.append(f"| {esc(item.get('test_id'))} | {esc(item.get('verdict'))} | {item.get('cpu_ms', 0)} | {item.get('wall_ms', 0)} | {item.get('peak_rss_mb', 0)} |")
+    diagnosis = best["diagnosis"]
+    lines += ["", "## 诊断", "", f"- 错误类型：`{esc(diagnosis['error_type'])}`", f"- 首个错误步骤：`{esc(diagnosis.get('first_error_step_id') or '未定位')}`", "", "### 证据", ""]
+    lines += [f"- {esc(item)}" for item in diagnosis.get("evidence", [])] or ["- 无"]
+    if diagnosis.get("repair_suggestion"):
+        lines += ["", "### 修复建议", "", esc(diagnosis["repair_suggestion"])]
+    return "\n".join(lines) + "\n"
 
 
 def aggregate_runs(results: list[dict[str, Any]]) -> dict[str, Any]:

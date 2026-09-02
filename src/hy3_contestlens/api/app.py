@@ -4,19 +4,21 @@ import asyncio
 import csv
 import io
 import json
+import hmac
+import secrets
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 
 import uvicorn
 from fastapi import FastAPI, Header, Request, Response, status
-from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field
 
 from ..errors import ContestLensError
-from ..reporting import aggregate_runs, has_evaluation_report
+from ..reporting import aggregate_runs, has_evaluation_report, render_run_markdown, render_run_report, run_failure_summary
 from ..report_translation import REPORT_LABELS
 from ..service import ServiceHub
 from ..settings import AppSettings
@@ -146,16 +148,15 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
+        await hub.start()
         try:
             yield
         finally:
-            for task in list(hub.background_tasks):
-                task.cancel()
-            await asyncio.gather(*list(hub.background_tasks), return_exceptions=True)
-            await hub.report_translations.close()
+            await hub.close()
 
     app = FastAPI(title="Hy3-ContestLens", version="0.1.0", description="Hy3 process evaluation and error localization for NOIP 2018", lifespan=lifespan)
     app.state.hub = hub
+    app.state.ui_action_token = secrets.token_urlsafe(24)
 
     @app.exception_handler(ContestLensError)
     async def contestlens_error(_: Request, exc: ContestLensError) -> JSONResponse:
@@ -265,7 +266,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     @app.post("/api/v1/runs/{run_id}/start", status_code=202)
     async def start_run(run_id: str) -> dict[str, Any]:
         run = hub.store.get_run(run_id)
-        if run["status"] not in {"CREATED", "FAILED"}:
+        if run["status"] not in {"CREATED", "FAILED", "INTERRUPTED"}:
+            # This also repairs a queued/active run whose previous lease has expired.
+            hub.start_run(run_id, queue_if_needed=False)
             return {"run_id": run_id, "status": run["status"], "idempotent": True}
         hub.start_run(run_id)
         return {"run_id": run_id, "status": "QUEUED"}
@@ -318,6 +321,34 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         response.headers["Cache-Control"] = "no-store"
         return response
 
+    @app.get("/api/v1/runs/{run_id}/report/export")
+    def export_run_report(run_id: str, format: Literal["html", "md"] = "html"):
+        result = run_result(run_id)
+        if not has_evaluation_report(result):
+            raise ContestLensError("REPORT_NOT_AVAILABLE", "Run has no complete report", status_code=409)
+        content = render_run_report(result) if format == "html" else render_run_markdown(result)
+        media = "text/html; charset=utf-8" if format == "html" else "text/markdown; charset=utf-8"
+        filename = f"{result['problem_id']}-{run_id}.{format}"
+        return Response(content, media_type=media, headers={"Content-Disposition": f'attachment; filename="{filename}"'})
+
+    def require_ui_token(token: str) -> None:
+        if not hmac.compare_digest(token, app.state.ui_action_token):
+            raise ContestLensError("UI_ACTION_TOKEN_INVALID", "Refresh the report list and try again", status_code=403)
+
+    @app.post("/ui/runs/{run_id}/report-visibility")
+    def set_report_visibility(run_id: str, hidden: bool, action_token: str, include_hidden: bool = False):
+        require_ui_token(action_token)
+        hub.store.set_run_report_hidden(run_id, hidden)
+        return RedirectResponse(f"/ui/reports?include_hidden={'true' if include_hidden else 'false'}", status_code=303)
+
+    @app.post("/ui/runs/{run_id}:delete")
+    async def delete_run_page(run_id: str, confirmation: str, action_token: str, include_hidden: bool = False):
+        require_ui_token(action_token)
+        if confirmation != "permanent":
+            raise ContestLensError("PERMANENT_CONFIRMATION_REQUIRED", "Permanent deletion must be confirmed", status_code=400)
+        await hub.delete_run(run_id)
+        return RedirectResponse(f"/ui/reports?include_hidden={'true' if include_hidden else 'false'}", status_code=303)
+
     @app.post("/api/v1/report-translations", status_code=202)
     async def start_report_translations(body: ReportTranslationRequest) -> dict[str, Any]:
         return hub.report_translations.enqueue(priority_run_id=body.priority_run_id, retry_run_id=body.retry_run_id)
@@ -347,7 +378,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     @app.post("/api/v1/runs/{run_id}/repair", status_code=202)
     async def trigger_repair(run_id: str) -> dict[str, Any]:
         run = hub.store.get_run(run_id)
-        if run["status"] == "CREATED":
+        if run["status"] in {"CREATED", "INTERRUPTED"}:
             hub.start_run(run_id)
             return {"run_id": run_id, "status": "QUEUED", "mode": "automatic_bounded_loop"}
         raise ContestLensError("REPAIR_ALREADY_MANAGED", "Repair rounds are managed by the active deterministic loop controller", {"status": run["status"]}, 409)
@@ -496,7 +527,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     app.mount("/static", StaticFiles(directory=str(static_root)), name="static")
 
     def page(request: Request, name: str, **context: Any):
-        return templates.TemplateResponse(request=request, name=name, context={"request": request, "problems": [problem_view(item.problem_id) for item in hub.catalog.list()], **context})
+        return templates.TemplateResponse(request=request, name=name, context={"request": request, "problems": [problem_view(item.problem_id) for item in hub.catalog.list()], "ui_action_token": app.state.ui_action_token, **context})
 
     @app.get("/", response_class=HTMLResponse)
     def index(request: Request):
@@ -520,10 +551,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         return page(request, "submission_detail.html", submission_id=submission_id, run_id=run_id)
 
     @app.get("/ui/reports", response_class=HTMLResponse)
-    def reports_page(request: Request):
+    def reports_page(request: Request, include_hidden: bool = False):
         titles = {item.problem_id: item.title_zh for item in hub.catalog.list()}
         status_labels = {
-            "CREATED": "已创建", "DISCOVERING_RESOURCES": "发现资源",
+            "CREATED": "已创建", "QUEUED": "排队中", "INTERRUPTED": "等待恢复", "DISCOVERING_RESOURCES": "发现资源",
             "WAITING_FOR_RESOURCE_CONFIRMATION": "等待资源确认", "ANALYZING": "分析题目",
             "SOLVING": "生成解法", "REVIEWING": "双路盲审", "COMPILING": "编译中",
             "JUDGING": "评测中", "LOCALIZING": "定位错误", "REPAIRING": "修复中",
@@ -531,11 +562,12 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             "CANCELLED": "已取消",
         }
         empty_reasons = {
-            "CREATED": "尚未启动", "FAILED": "运行失败，未生成报告",
+            "CREATED": "尚未启动", "QUEUED": "等待后台接管", "INTERRUPTED": "服务重启后将从检查点恢复", "FAILED": "运行失败，未生成报告",
             "CANCELLED": "已取消，未生成报告", "COMPLETED": "未生成完整评测报告",
         }
         report_rows = []
-        for run in hub.store.list_runs():
+        all_runs = hub.store.list_runs(include_hidden=True)
+        for run in (all_runs if include_hidden else [item for item in all_runs if not item["report_hidden"]]):
             created_at = datetime.fromisoformat(run["created_at"])
             if created_at.tzinfo is None:
                 created_at = created_at.replace(tzinfo=timezone.utc)
@@ -549,10 +581,13 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 "report_available": has_evaluation_report(run["result"]),
                 "translation": hub.report_translations.status(run["run_id"]),
                 "empty_reason": empty_reasons.get(run["status"], "等待运行完成"),
+                "failure_summary": run_failure_summary(run["result"]) if run["status"] == "FAILED" else None,
+                "report_hidden": run["report_hidden"], "terminal": run["status"] in {"COMPLETED", "FAILED", "CANCELLED"},
             })
         return page(
             request, "reports.html", runs=report_rows,
             report_count=sum(row["report_available"] for row in report_rows),
+            include_hidden=include_hidden, hidden_count=sum(run["report_hidden"] for run in all_runs),
         )
 
     @app.get("/ui/annotations/{task_id}", response_class=HTMLResponse)

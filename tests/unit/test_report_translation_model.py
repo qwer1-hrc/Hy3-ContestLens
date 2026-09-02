@@ -13,7 +13,7 @@ def client_for(items, captured):
         captured.append(json.loads(request.content))
         return httpx.Response(200, json={"choices": [{"finish_reason": "stop", "message": {"content": json.dumps({"items": items})}}]})
     profile = ReportTranslationSettings().model_settings(Hy3Settings(api_key="mock-only", reasoning_effort="high", max_tokens=127000))
-    return Hy3Client(profile, timeout_seconds=60, transport=httpx.MockTransport(respond))
+    return Hy3Client(profile, transport=httpx.MockTransport(respond))
 
 
 @pytest.mark.asyncio

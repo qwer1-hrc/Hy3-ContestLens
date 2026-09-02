@@ -1,0 +1,74 @@
+{
+  "additionalProperties": false,
+  "description": "A syntactically valid empty object is not a usable contest specification.",
+  "properties": {
+    "summary": {
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "inputs": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Inputs",
+      "type": "array"
+    },
+    "outputs": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Outputs",
+      "type": "array"
+    },
+    "constraints": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Constraints",
+      "type": "array"
+    },
+    "boundary_cases": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Boundary Cases",
+      "type": "array"
+    },
+    "likely_structures": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Likely Structures",
+      "type": "array"
+    },
+    "source_references": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Source References",
+      "type": "array"
+    }
+  },
+  "required": [
+    "summary",
+    "inputs",
+    "outputs",
+    "constraints",
+    "boundary_cases",
+    "likely_structures",
+    "source_references"
+  ],
+  "title": "Analysis",
+  "type": "object"
+}

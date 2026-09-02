@@ -1,6 +1,6 @@
 const TERMINAL_RUN_STATUSES = new Set(["COMPLETED", "FAILED", "CANCELLED"]);
 const ACTIVE_RUN_STATUSES = new Set([
-  "CREATED", "QUEUED", "DISCOVERING_RESOURCES", "WAITING_FOR_RESOURCE_CONFIRMATION",
+  "CREATED", "QUEUED", "INTERRUPTED", "DISCOVERING_RESOURCES", "WAITING_FOR_RESOURCE_CONFIRMATION",
   "ANALYZING", "SOLVING", "REVIEWING", "COMPILING", "JUDGING", "LOCALIZING", "REPAIRING", "REJUDGING",
   "WAITING_FOR_IMAGE_CONFIRMATION", "UNDERSTANDING_IMAGES",
 ]);
@@ -12,6 +12,16 @@ const WORKFLOW_COPY = {
     title: "评测已创建",
     description: "已固定题目与修复策略，等待后台工作流接管。",
     command: "create_run(problem_id, repair_options)",
+  },
+  QUEUED: {
+    title: "已进入运行队列",
+    description: "调度请求已经持久化，正在等待本服务实例接管。",
+    command: "claim_run(lease)",
+  },
+  INTERRUPTED: {
+    title: "运行曾被中断",
+    description: "上一个服务进程已停止；系统将从最近的持久化检查点自动恢复。",
+    command: "recover_run(checkpoint)",
   },
   ANALYZING: {
     title: "分析题目",
@@ -434,7 +444,7 @@ function updateWorkflowEventState(runStatus) {
     const tag = row.querySelector(".event-running-tag");
     if (tag) {
       tag.hidden = !running;
-      tag.textContent = runStatus === "WAITING_FOR_IMAGE_CONFIRMATION" ? "等待选择" : runStatus === "CREATED" ? "等待中" : "运行中";
+      tag.textContent = runStatus === "WAITING_FOR_IMAGE_CONFIRMATION" ? "等待选择" : ["CREATED", "QUEUED", "INTERRUPTED"].includes(runStatus) ? "等待中" : "运行中";
     }
   });
 }

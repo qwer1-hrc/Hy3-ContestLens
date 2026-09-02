@@ -430,3 +430,15 @@ class ReportTranslationService:
             await asyncio.gather(self._worker, return_exceptions=True)
         self._pending.clear()
         self._rate_limit_until = 0.0
+
+    async def forget_run(self, run_id: str) -> None:
+        """Stop report work before a run and its cache are permanently removed."""
+        self._pending = [value for value in self._pending if value != run_id]
+        self._errors.pop(run_id, None)
+        if self._current == run_id and self._worker is not None:
+            self._worker.cancel()
+            await asyncio.gather(self._worker, return_exceptions=True)
+            self._worker = None
+            self._current = None
+            if self._pending:
+                self._worker = asyncio.create_task(self._drain(), name="report-translations")

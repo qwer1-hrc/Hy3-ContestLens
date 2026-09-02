@@ -157,6 +157,52 @@ class WorkspaceStore:
         audit_id = self._audit(run_id, "create_cpp_submission", {"submission_id": submission_id, "revision_id": revision_id, "sha256": sha256, "created_by": created_by})
         return {"run_id": run_id, "problem_id": problem_id, "submission_id": submission_id, "revision_id": revision_id, "sha256": sha256, "size_bytes": len(data), "audit_id": audit_id}
 
+    def find_cpp_submission(self, run_id: str, problem_id: str, source_code: str, created_by: str = "solver") -> dict[str, Any] | None:
+        """Find a durable initial submission after a crash between creation and checkpointing."""
+        data = validate_cpp(source_code, self.settings.max_source_bytes, problem_id)
+        digest = sha256_bytes(data)
+        root = self._run(run_id) / "workspace" / "submissions"
+        for path in sorted(root.glob("*/metadata.json")) if root.is_dir() else []:
+            try:
+                metadata = json.loads(path.read_text(encoding="utf-8"))
+                initial = metadata["revisions"][0]
+            except (OSError, ValueError, KeyError, IndexError, TypeError):
+                continue
+            if (
+                metadata.get("problem_id") == problem_id
+                and initial.get("revision_id") == "r000"
+                and initial.get("sha256") == digest
+                and initial.get("created_by") == created_by
+            ):
+                return {
+                    "run_id": run_id,
+                    "problem_id": problem_id,
+                    "submission_id": metadata["submission_id"],
+                    "revision_id": "r000",
+                    "sha256": digest,
+                    "size_bytes": initial["size_bytes"],
+                    "recovered": True,
+                }
+        return None
+
+    def get_or_create_cpp_submission(self, run_id: str, problem_id: str, source_code: str, created_by: str = "solver") -> dict[str, Any]:
+        return self.find_cpp_submission(run_id, problem_id, source_code, created_by) or self.create_cpp_submission(
+            run_id, problem_id, source_code, created_by,
+        )
+
+    def find_repair_revision(self, run_id: str, submission_id: str, repair_plan_id: str) -> dict[str, Any] | None:
+        metadata = self._load(run_id, submission_id)
+        revision = next((item for item in metadata["revisions"] if item.get("repair_plan_id") == repair_plan_id), None)
+        if revision is None:
+            return None
+        return {
+            "run_id": run_id,
+            "submission_id": submission_id,
+            "problem_id": metadata["problem_id"],
+            **revision,
+            "recovered": True,
+        }
+
     def _revision(self, metadata: dict[str, Any], revision_id: str) -> dict[str, Any]:
         ensure(bool(REVISION.fullmatch(revision_id)), "INVALID_REVISION_ID", "Invalid revision ID")
         revision = next((item for item in metadata["revisions"] if item["revision_id"] == revision_id), None)

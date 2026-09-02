@@ -4,11 +4,13 @@ import json
 from pathlib import Path
 
 from hy3_contestlens.domain import CheckResult, CompileResult, CriticReview, Diagnosis, ProblemManifest, SolverOutput
+from hy3_contestlens.problem_spec import Analysis
 
 
 PROJECT = Path(__file__).resolve().parents[1]
 OUTPUT = PROJECT / "docs" / "schemas"
 SCHEMAS = {
+    "problem_analysis": Analysis,
     "problem_manifest": ProblemManifest,
     "solver_output": SolverOutput,
     "critic_review": CriticReview,
@@ -27,4 +29,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

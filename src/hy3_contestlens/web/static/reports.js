@@ -1,5 +1,36 @@
 // Only report pages load this script. GET polling never starts translation work.
 (() => {
+  const actionTriggers = [...document.querySelectorAll(".run-action-trigger")];
+  const actionMenus = actionTriggers.map((button) => ({
+    button, menu: document.getElementById(button.getAttribute("popovertarget")),
+  })).filter((item) => item.menu);
+
+  function positionMenu(button, menu) {
+    const rect = button.getBoundingClientRect();
+    const width = menu.offsetWidth || 220;
+    const height = menu.offsetHeight || 180;
+    const left = Math.max(12, Math.min(rect.right - width, window.innerWidth - width - 12));
+    const below = rect.bottom + 8;
+    const top = below + height <= window.innerHeight - 12 ? below : Math.max(12, rect.top - height - 8);
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
+  }
+
+  actionMenus.forEach(({button, menu}) => {
+    button.addEventListener("click", () => {
+      actionMenus.forEach((item) => {
+        if (item.menu !== menu && item.menu.matches(":popover-open")) item.menu.hidePopover();
+      });
+    });
+    menu.addEventListener("toggle", (event) => {
+      const open = event.newState === "open";
+      button.setAttribute("aria-expanded", String(open));
+      if (open) requestAnimationFrame(() => positionMenu(button, menu));
+    });
+  });
+  window.addEventListener("resize", () => actionMenus.forEach(({menu}) => menu.matches(":popover-open") && menu.hidePopover()));
+  window.addEventListener("scroll", () => actionMenus.forEach(({menu}) => menu.matches(":popover-open") && menu.hidePopover()), true);
+
   const control = document.getElementById("report-translation-control");
   if (!control || control.dataset.enabled !== "true") return;
   const message = document.getElementById("translation-queue-message");

@@ -12,31 +12,32 @@
 <section class="panel reports-panel">
   <div class="panel-head">
     <div><h2>全部运行 <span class="reports-count">{{ runs|length }}</span></h2><p>最新运行在前 · {{ report_count }} 份报告可查看 · 时间按北京时间显示</p></div>
-    <a class="button" href="/ui/reports">刷新列表</a>
+    <div class="actions"><a class="button" href="/ui/reports?include_hidden={{ 'false' if include_hidden else 'true' }}">{{ '隐藏已隐藏记录' if include_hidden else '显示已隐藏' }}{% if hidden_count %} · {{ hidden_count }}{% endif %}</a><a class="button" href="/ui/reports?include_hidden={{ 'true' if include_hidden else 'false' }}">刷新列表</a></div>
   </div>
   {% if runs %}
   <div class="reports-table-scroll" role="region" aria-label="运行报告列表" tabindex="0">
     <table class="reports-table">
       <caption>每次运行的题目、创建时间、run_id、状态和报告入口</caption>
-      <thead><tr><th scope="col">评测题目</th><th scope="col">运行时间（创建时间）</th><th scope="col">run_id</th><th scope="col">运行状态</th><th scope="col">报告</th></tr></thead>
+      <thead><tr><th scope="col">评测题目</th><th scope="col">运行时间（创建时间）</th><th scope="col">run_id</th><th scope="col">运行状态</th><th scope="col">报告</th><th scope="col"><span class="visually-hidden">更多操作</span></th></tr></thead>
       <tbody>
       {% for run in runs %}
-        <tr data-run-id="{{ run.run_id }}">
+        <tr data-run-id="{{ run.run_id }}"{% if run.report_hidden %} class="report-row-hidden"{% endif %}>
           <td class="report-problem">
             {% if run.report_available %}<a href="/api/v1/runs/{{ run.run_id }}/report">{{ run.title_zh }}</a>{% else %}<strong>{{ run.title_zh }}</strong>{% endif %}
             <small>{{ run.problem_id }}</small>
           </td>
           <td><time datetime="{{ run.created_at }}">{{ run.created_at_display }}</time></td>
           <td><a class="report-run-link" href="/ui/runs/{{ run.run_id }}" title="查看运行详情"><code>{{ run.run_id }}</code></a></td>
-          <td><span class="report-status report-status-{{ run.status_tone }}">{{ run.status_label }}</span></td>
+          <td><span class="report-status report-status-{{ run.status_tone }}">{{ run.status_label }}</span>{% if run.failure_summary %}<small class="report-empty-reason report-failure-summary">{{ run.failure_summary }}</small>{% endif %}</td>
           <td>
             {% if run.report_available %}
             <a class="report-open-link" href="/api/v1/runs/{{ run.run_id }}/report" aria-label="查看{{ run.title_zh }}的评测报告">查看报告 →</a>
             <small class="translation-badge" data-translation-run-id="{{ run.run_id }}" data-state="{{ run.translation.status }}" aria-busy="{{ 'true' if run.translation.status == 'TRANSLATING' else 'false' }}">{{ run.translation.label }}</small>
             {% else %}
             <span class="report-empty-label">空</span><small class="report-empty-reason">{{ run.empty_reason }}</small>
+            {% if run.failure_summary %}<a class="report-open-link" href="/ui/runs/{{ run.run_id }}">查看失败原因 →</a>{% endif %}
             {% endif %}
-          </td>
+          </td><td class="run-actions-cell"><button type="button" class="run-action-trigger" popovertarget="run-actions-{{ run.run_id }}" aria-haspopup="menu" aria-expanded="false" aria-label="更多操作" title="更多操作"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button><div id="run-actions-{{ run.run_id }}" class="run-action-menu" popover="auto" role="menu">{% if run.report_available %}<a href="/api/v1/runs/{{ run.run_id }}/report/export?format=html">导出 HTML</a><a href="/api/v1/runs/{{ run.run_id }}/report/export?format=md">导出 Markdown</a>{% endif %}<form method="post" action="/ui/runs/{{ run.run_id }}/report-visibility?hidden={{ 'false' if run.report_hidden else 'true' }}&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}"><button type="submit">{{ '恢复显示' if run.report_hidden else '在列表中隐藏' }}</button></form><form method="post" action="/ui/runs/{{ run.run_id }}:delete?confirmation=permanent&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}" onsubmit="return confirm('永久删除此运行记录及全部运行文件？此操作无法撤销。')"><button class="danger-action" type="submit"{% if not run.terminal %} disabled title="请先取消运行"{% endif %}>永久删除运行记录</button></form></div></td>
         </tr>
       {% endfor %}
       </tbody>
@@ -47,4 +48,4 @@
   {% endif %}
 </section>
 {% endblock %}
-{% block scripts %}<script src="/static/reports.js?v=0.4.0"></script>{% endblock %}
+{% block scripts %}<script src="/static/reports.js?v=0.5.0"></script>{% endblock %}

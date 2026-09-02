@@ -23,6 +23,14 @@ def _value(file_data: dict[str, Any], section: str, name: str, env_name: str, de
     return os.getenv(env_name, default)
 
 
+def _boolean(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str) and value.lower() in {"true", "false", "1", "0"}:
+        return value.lower() in {"true", "1"}
+    raise ValueError("Boolean setting must be true or false")
+
+
 @dataclass(slots=True)
 class Hy3Settings:
     api_key: str | None = None
@@ -32,15 +40,21 @@ class Hy3Settings:
     temperature: float = 0.2
     top_p: float = 0.95
     max_tokens: int = 8192
+    timeout_seconds: float = 480
     response_format: str = "json_schema"
     max_attempts: int = 3
     retry_backoff_seconds: float = 1.0
+    stream: bool = True
 
     def __post_init__(self) -> None:
+        if not isinstance(self.stream, bool):
+            raise ValueError("Hy3 stream must be a boolean")
         if self.response_format not in {"json_schema", "json_object"}:
             raise ValueError("Hy3 response_format must be json_schema or json_object")
         if isinstance(self.max_attempts, bool) or not isinstance(self.max_attempts, int) or not 1 <= self.max_attempts <= 5:
             raise ValueError("Hy3 max_attempts must be an integer between 1 and 5")
+        if isinstance(self.timeout_seconds, bool) or not math.isfinite(self.timeout_seconds) or not 1 <= self.timeout_seconds <= 3600:
+            raise ValueError("Hy3 timeout_seconds must be between 1 and 3600")
         if not math.isfinite(self.retry_backoff_seconds) or not 0 <= self.retry_backoff_seconds <= 30:
             raise ValueError("Hy3 retry_backoff_seconds must be between 0 and 30")
 
@@ -55,7 +69,9 @@ class Hy3Settings:
             "model": self.model,
             "reasoning_effort": self.reasoning_effort,
             "response_format": self.response_format,
+            "timeout_seconds": self.timeout_seconds,
             "max_attempts": self.max_attempts,
+            "stream": self.stream,
         }
 
 
@@ -106,8 +122,10 @@ class ReportTranslationSettings:
             reasoning_effort=self.reasoning_effort,
             temperature=self.temperature, top_p=self.top_p, max_tokens=self.max_tokens,
             response_format=self.response_format or solver.response_format,
+            timeout_seconds=self.timeout_seconds,
             # The report queue owns fragment-level retries; avoid nested whole-batch retries.
             max_attempts=1, retry_backoff_seconds=0,
+            stream=False,
         )
 
 
@@ -214,6 +232,11 @@ class AppSettings:
         repair = app_file.get("repair", {})
         docker = app_file.get("docker", {})
         resource = resource_file.get("resources", {})
+        def app_path(environment: str, configured: str) -> Path:
+            raw = os.getenv(environment) or configured
+            path = Path(raw)
+            return path if path.is_absolute() else root / path
+
         roots: list[Path] = []
         for item in resource_file.get("resources", {}).get("roots", []):
             raw = item.get("path", "")
@@ -231,9 +254,11 @@ class AppSettings:
             temperature=float(_value(secret_file, "hy3", "temperature", "HY3_TEMPERATURE", 0.2)),
             top_p=float(_value(secret_file, "hy3", "top_p", "HY3_TOP_P", 0.95)),
             max_tokens=int(_value(secret_file, "hy3", "max_tokens", "HY3_MAX_TOKENS", 8192)),
+            timeout_seconds=float(_value(secret_file, "hy3", "timeout_seconds", "HY3_TIMEOUT_SECONDS", 480)),
             response_format=str(_value(secret_file, "hy3", "response_format", "HY3_RESPONSE_FORMAT", "json_schema")),
             max_attempts=int(_value(secret_file, "hy3", "max_attempts", "HY3_MAX_ATTEMPTS", 3)),
             retry_backoff_seconds=float(_value(secret_file, "hy3", "retry_backoff_seconds", "HY3_RETRY_BACKOFF_SECONDS", 1.0)),
+            stream=_boolean(_value(secret_file, "hy3", "stream", "HY3_STREAM", True)),
         )
         report_data = {"report_translation": {
             **app_file.get("report_translation", {}), **secret_file.get("report_translation", {}),
@@ -280,7 +305,8 @@ class AppSettings:
             host=str(app.get("host", "127.0.0.1")),
             port=int(app.get("port", 8000)),
             local_mode=bool(app.get("local_mode", True)),
-            database_path=root / str(app.get("database_path", "runs/contestlens.sqlite3")),
+            database_path=app_path("HY3_CONTESTLENS_DATABASE_PATH", str(app.get("database_path", "runs/contestlens.sqlite3"))),
+            runs_root=app_path("HY3_CONTESTLENS_RUNS_ROOT", str(app.get("runs_root", "runs"))),
             default_memory_mb=int(app.get("default_memory_mb", 512)),
             max_source_bytes=int(app.get("max_source_bytes", 1_048_576)),
             max_output_bytes=int(app.get("max_output_bytes", 16_777_216)),

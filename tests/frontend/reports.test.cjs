@@ -17,19 +17,34 @@ function setup(dataset, snapshots) {
   const badge = node({dataset: {translationRunId: "run_a"}});
   const control = node({dataset: {enabled: "true", ...dataset}});
   const spinner = node();
+  const actionListeners = [{}, {}];
+  const menus = [0, 1].map((index) => node({
+    id: `menu-${index}`, style: {}, offsetWidth: 220, offsetHeight: 180, open: false,
+    addEventListener: (event, callback) => { actionListeners[index][`menu-${event}`] = callback; },
+    matches: function () { return this.open; },
+    hidePopover: function () { this.open = false; actionListeners[index]["menu-toggle"]?.({newState: "closed"}); },
+  }));
+  const actionButtons = [0, 1].map((index) => node({
+    menuId: `menu-${index}`,
+    addEventListener: (event, callback) => { actionListeners[index][`button-${event}`] = callback; },
+    getAttribute: function (name) { return name === "popovertarget" ? this.menuId : this.attributes[name]; },
+    getBoundingClientRect: () => ({left: 400, right: 436, top: 200, bottom: 236}),
+  }));
   let reloads = 0;
   const elements = {
     "report-translation-control": control,
     "translation-queue-message": message,
     "retry-report-translation": retry,
     "report-activity-spinner": spinner,
+    "menu-0": menus[0], "menu-1": menus[1],
   };
   vm.runInNewContext(script, {
-    document: {getElementById: (id) => elements[id], querySelectorAll: () => [badge]},
-    window: {addEventListener: (event, callback) => { listeners[event] = callback; }},
+    document: {getElementById: (id) => elements[id], querySelectorAll: (selector) => selector === ".run-action-trigger" ? actionButtons : [badge]},
+    window: {innerWidth: 1000, innerHeight: 700, addEventListener: (event, callback) => { listeners[event] = callback; }},
     location: {reload: () => { reloads += 1; }},
     setTimeout: (callback) => { timers.push(callback); return timers.length; },
     clearTimeout: () => {},
+    requestAnimationFrame: (callback) => callback(),
     api: async (url, options) => {
       requests.push({url, options});
       const response = snapshots[Math.min(requests.length - 1, snapshots.length - 1)];
@@ -37,7 +52,7 @@ function setup(dataset, snapshots) {
       return response;
     },
   });
-  return {requests, timers, listeners, retry, message, badge, control, spinner, reloads: () => reloads};
+  return {requests, timers, listeners, retry, message, badge, control, spinner, actionButtons, actionListeners, menus, reloads: () => reloads};
 }
 
 function snapshot(status, busy = false) {
@@ -141,4 +156,21 @@ test("returning from browser history resumes GET polling without another POST", 
   await flush();
   assert.equal(ui.requests.length, 2);
   assert.equal(ui.requests[1].options, undefined);
+});
+
+test("opening another floating action card closes the previous one", async () => {
+  const ui = setup({reportMode: "list"}, [snapshot("READY")]);
+  await flush();
+  ui.actionListeners[0]["button-click"]();
+  ui.menus[0].open = true;
+  ui.actionListeners[0]["menu-toggle"]({newState: "open"});
+  assert.equal(ui.actionButtons[0].getAttribute("aria-expanded"), "true");
+  assert.equal(ui.menus[0].style.left, "216px");
+  ui.actionListeners[1]["button-click"]();
+  assert.equal(ui.menus[0].open, false);
+  ui.menus[1].open = true;
+  ui.actionListeners[1]["menu-toggle"]({newState: "open"});
+  assert.equal(ui.menus.filter((menu) => menu.open).length, 1);
+  assert.equal(ui.actionButtons[0].getAttribute("aria-expanded"), "false");
+  assert.equal(ui.actionButtons[1].getAttribute("aria-expanded"), "true");
 });
