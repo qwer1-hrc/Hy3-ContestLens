@@ -12,22 +12,32 @@ function setup(dataset, snapshots) {
   const requests = [];
   const timers = [];
   const listeners = {};
+  const listenerGroups = {};
+  const documentListeners = {};
+  const viewportListeners = {};
+  function listen(target, event, callback) {
+    target[event] = target[event] || [];
+    target[event].push(callback);
+  }
+  function emit(target, event, value = {}) {
+    (target[event] || []).forEach((callback) => callback(value));
+  }
   const retry = node({hidden: true, addEventListener: (event, callback) => { listeners.retry = callback; }});
   const message = {textContent: ""};
   const badge = node({dataset: {translationRunId: "run_a"}});
   const control = node({dataset: {enabled: "true", ...dataset}});
   const spinner = node();
-  const actionListeners = [{}, {}];
   const menus = [0, 1].map((index) => node({
-    id: `menu-${index}`, style: {}, offsetWidth: 220, offsetHeight: 180, open: false,
-    addEventListener: (event, callback) => { actionListeners[index][`menu-${event}`] = callback; },
-    matches: function () { return this.open; },
-    hidePopover: function () { this.open = false; actionListeners[index]["menu-toggle"]?.({newState: "closed"}); },
+    id: `menu-${index}`, style: {}, offsetWidth: 220, offsetHeight: 180, hidden: true,
+    contains: function (target) { return target === this || target?.menu === this; },
+    focusItem: node({focused: false, focus: function () { this.focused = true; }}),
+    querySelector: function () { return this.focusItem; },
   }));
   const actionButtons = [0, 1].map((index) => node({
-    menuId: `menu-${index}`,
-    addEventListener: (event, callback) => { actionListeners[index][`button-${event}`] = callback; },
-    getAttribute: function (name) { return name === "popovertarget" ? this.menuId : this.attributes[name]; },
+    dataset: {actionMenu: `menu-${index}`}, focused: false,
+    addEventListener: (event, callback) => { listen(listenerGroups, `button-${index}-${event}`, callback); },
+    contains: function (target) { return target === this; },
+    focus: function () { this.focused = true; },
     getBoundingClientRect: () => ({left: 400, right: 436, top: 200, bottom: 236}),
   }));
   let reloads = 0;
@@ -38,9 +48,10 @@ function setup(dataset, snapshots) {
     "report-activity-spinner": spinner,
     "menu-0": menus[0], "menu-1": menus[1],
   };
+  const body = {append: (menu) => { menu.parent = body; }};
   vm.runInNewContext(script, {
-    document: {getElementById: (id) => elements[id], querySelectorAll: (selector) => selector === ".run-action-trigger" ? actionButtons : [badge]},
-    window: {innerWidth: 1000, innerHeight: 700, addEventListener: (event, callback) => { listeners[event] = callback; }},
+    document: {body, getElementById: (id) => elements[id], querySelectorAll: (selector) => selector === ".run-action-trigger" ? actionButtons : selector === ".run-select" ? [] : [badge], addEventListener: (event, callback) => listen(documentListeners, event, callback)},
+    window: {innerWidth: 1000, innerHeight: 700, visualViewport: {addEventListener: (event, callback) => listen(viewportListeners, event, callback)}, addEventListener: (event, callback) => { listen(listenerGroups, event, callback); listeners[event] = (value) => emit(listenerGroups, event, value); }},
     location: {reload: () => { reloads += 1; }},
     setTimeout: (callback) => { timers.push(callback); return timers.length; },
     clearTimeout: () => {},
@@ -52,7 +63,7 @@ function setup(dataset, snapshots) {
       return response;
     },
   });
-  return {requests, timers, listeners, retry, message, badge, control, spinner, actionButtons, actionListeners, menus, reloads: () => reloads};
+  return {requests, timers, listeners, retry, message, badge, control, spinner, actionButtons, menus, documentListeners, viewportListeners, emit, listenerGroups, body, reloads: () => reloads};
 }
 
 function snapshot(status, busy = false) {
@@ -161,16 +172,46 @@ test("returning from browser history resumes GET polling without another POST", 
 test("opening another floating action card closes the previous one", async () => {
   const ui = setup({reportMode: "list"}, [snapshot("READY")]);
   await flush();
-  ui.actionListeners[0]["button-click"]();
-  ui.menus[0].open = true;
-  ui.actionListeners[0]["menu-toggle"]({newState: "open"});
+  ui.emit(ui.listenerGroups, "button-0-click");
+  assert.equal(ui.menus[0].hidden, false);
+  assert.equal(ui.menus[0].parent, ui.body);
+  assert.equal(ui.menus[0].classList.contains("is-floating"), true);
   assert.equal(ui.actionButtons[0].getAttribute("aria-expanded"), "true");
   assert.equal(ui.menus[0].style.left, "216px");
-  ui.actionListeners[1]["button-click"]();
-  assert.equal(ui.menus[0].open, false);
-  ui.menus[1].open = true;
-  ui.actionListeners[1]["menu-toggle"]({newState: "open"});
-  assert.equal(ui.menus.filter((menu) => menu.open).length, 1);
+  ui.emit(ui.listenerGroups, "button-1-click");
+  assert.equal(ui.menus[0].hidden, true);
+  assert.equal(ui.menus.filter((menu) => !menu.hidden).length, 1);
   assert.equal(ui.actionButtons[0].getAttribute("aria-expanded"), "false");
   assert.equal(ui.actionButtons[1].getAttribute("aria-expanded"), "true");
+  ui.emit(ui.listenerGroups, "button-1-click");
+  assert.equal(ui.menus[1].hidden, true);
+});
+
+test("all movement and dismissal paths close the floating card", async () => {
+  const ui = setup({reportMode: "list"}, [snapshot("READY")]);
+  await flush();
+  const open = () => ui.emit(ui.listenerGroups, "button-0-click");
+  for (const [target, event] of [[ui.documentListeners, "scroll"], [ui.documentListeners, "wheel"], [ui.documentListeners, "touchmove"], [ui.listenerGroups, "resize"], [ui.viewportListeners, "scroll"], [ui.viewportListeners, "resize"]]) {
+    open();
+    ui.emit(target, event);
+    assert.equal(ui.menus[0].hidden, true, event);
+  }
+  open();
+  ui.emit(ui.documentListeners, "pointerdown", {target: {outside: true}});
+  assert.equal(ui.menus[0].hidden, true);
+  open();
+  let prevented = false;
+  ui.emit(ui.documentListeners, "keydown", {key: "Escape", preventDefault: () => { prevented = true; }});
+  assert.equal(ui.menus[0].hidden, true);
+  assert.equal(ui.actionButtons[0].focused, true);
+  assert.equal(prevented, true);
+});
+
+test("bottom rows open upward and remain inside the viewport", async () => {
+  const ui = setup({reportMode: "list"}, [snapshot("READY")]);
+  await flush();
+  ui.actionButtons[0].getBoundingClientRect = () => ({left: 900, right: 936, top: 630, bottom: 666});
+  ui.emit(ui.listenerGroups, "button-0-click");
+  assert.equal(ui.menus[0].style.left, "716px");
+  assert.equal(ui.menus[0].style.top, "442px");
 });

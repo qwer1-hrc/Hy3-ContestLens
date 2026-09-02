@@ -432,10 +432,14 @@ class ReportTranslationService:
         self._rate_limit_until = 0.0
 
     async def forget_run(self, run_id: str) -> None:
+        await self.forget_runs({run_id})
+
+    async def forget_runs(self, run_ids: set[str]) -> None:
         """Stop report work before a run and its cache are permanently removed."""
-        self._pending = [value for value in self._pending if value != run_id]
-        self._errors.pop(run_id, None)
-        if self._current == run_id and self._worker is not None:
+        self._pending = [value for value in self._pending if value not in run_ids]
+        for run_id in run_ids:
+            self._errors.pop(run_id, None)
+        if self._current in run_ids and self._worker is not None:
             self._worker.cancel()
             await asyncio.gather(self._worker, return_exceptions=True)
             self._worker = None

@@ -218,14 +218,27 @@ class Store:
         return records
 
     def set_run_report_hidden(self, run_id: str, hidden: bool) -> dict[str, Any]:
-        self.get_run(run_id)
-        with self.connect() as connection:
-            connection.execute(
+        self.set_runs_report_hidden([run_id], hidden)
+        return {"run_id": run_id, "hidden": hidden}
+
+    def set_runs_report_hidden(self, run_ids: list[str], hidden: bool) -> dict[str, Any]:
+        unique = list(dict.fromkeys(run_ids))
+        if not unique:
+            raise ContestLensError("RUN_SELECTION_EMPTY", "Select at least one run")
+        placeholders = ",".join("?" for _ in unique)
+        with self._lock, self.connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            found = {row[0] for row in connection.execute(f"SELECT run_id FROM runs WHERE run_id IN ({placeholders})", unique)}
+            missing = [run_id for run_id in unique if run_id not in found]
+            if missing:
+                raise ContestLensError("RUN_NOT_FOUND", "One or more runs do not exist", {"run_ids": missing}, 404)
+            now = utc_now()
+            connection.executemany(
                 "INSERT INTO run_report_preferences VALUES (?, ?, ?) "
                 "ON CONFLICT(run_id) DO UPDATE SET hidden=excluded.hidden, updated_at=excluded.updated_at",
-                (run_id, int(hidden), utc_now()),
+                [(run_id, int(hidden), now) for run_id in unique],
             )
-        return {"run_id": run_id, "hidden": hidden}
+        return {"run_ids": unique, "hidden": hidden}
 
     def delete_run(self, run_id: str) -> dict[str, Any]:
         run = self.get_run(run_id)

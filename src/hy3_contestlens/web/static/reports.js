@@ -2,8 +2,9 @@
 (() => {
   const actionTriggers = [...document.querySelectorAll(".run-action-trigger")];
   const actionMenus = actionTriggers.map((button) => ({
-    button, menu: document.getElementById(button.getAttribute("popovertarget")),
+    button, menu: document.getElementById(button.dataset.actionMenu),
   })).filter((item) => item.menu);
+  let activeMenu = null;
 
   function positionMenu(button, menu) {
     const rect = button.getBoundingClientRect();
@@ -16,20 +17,149 @@
     menu.style.top = `${top}px`;
   }
 
+  function closeActionMenu({restoreFocus = false} = {}) {
+    if (!activeMenu) return;
+    const {button, menu} = activeMenu;
+    menu.hidden = true;
+    menu.classList.remove("is-floating");
+    button.setAttribute("aria-expanded", "false");
+    activeMenu = null;
+    if (restoreFocus) button.focus({preventScroll: true});
+  }
+
+  function openActionMenu(button, menu) {
+    closeActionMenu();
+    document.body.append(menu);
+    menu.hidden = false;
+    menu.classList.add("is-floating");
+    button.setAttribute("aria-expanded", "true");
+    activeMenu = {button, menu};
+    positionMenu(button, menu);
+    menu.querySelector("a[href],button:not(:disabled)")?.focus({preventScroll: true});
+  }
+
   actionMenus.forEach(({button, menu}) => {
     button.addEventListener("click", () => {
-      actionMenus.forEach((item) => {
-        if (item.menu !== menu && item.menu.matches(":popover-open")) item.menu.hidePopover();
-      });
-    });
-    menu.addEventListener("toggle", (event) => {
-      const open = event.newState === "open";
-      button.setAttribute("aria-expanded", String(open));
-      if (open) requestAnimationFrame(() => positionMenu(button, menu));
+      if (activeMenu?.menu === menu) closeActionMenu({restoreFocus: true});
+      else openActionMenu(button, menu);
     });
   });
-  window.addEventListener("resize", () => actionMenus.forEach(({menu}) => menu.matches(":popover-open") && menu.hidePopover()));
-  window.addEventListener("scroll", () => actionMenus.forEach(({menu}) => menu.matches(":popover-open") && menu.hidePopover()), true);
+  document.addEventListener("pointerdown", (event) => {
+    if (activeMenu && !activeMenu.menu.contains(event.target) && !activeMenu.button.contains(event.target)) closeActionMenu();
+  });
+  document.addEventListener("focusin", (event) => {
+    if (activeMenu && !activeMenu.menu.contains(event.target) && !activeMenu.button.contains(event.target)) closeActionMenu();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && activeMenu) {
+      event.preventDefault();
+      closeActionMenu({restoreFocus: true});
+    }
+  });
+  const closeForMovement = () => closeActionMenu();
+  document.addEventListener("scroll", closeForMovement, true);
+  document.addEventListener("wheel", closeForMovement, {capture: true, passive: true});
+  document.addEventListener("touchmove", closeForMovement, {capture: true, passive: true});
+  window.addEventListener("resize", closeForMovement);
+  window.addEventListener("pagehide", closeForMovement);
+  window.visualViewport?.addEventListener("scroll", closeForMovement);
+  window.visualViewport?.addEventListener("resize", closeForMovement);
+
+  const bulkBar = document.getElementById("bulk-report-actions");
+  const reportsPanel = document.getElementById("reports-panel");
+  const multiSelectToggle = document.getElementById("toggle-multi-select");
+  const selectAll = document.getElementById("select-all-runs");
+  const runSelectors = [...document.querySelectorAll(".run-select")];
+  const bulkStatus = document.getElementById("bulk-action-status");
+
+  function selectedRuns() {
+    return runSelectors.filter((input) => input.checked);
+  }
+
+  function syncBulkActions() {
+    if (!bulkBar || !selectAll) return;
+    const selected = selectedRuns();
+    bulkBar.hidden = selected.length === 0;
+    document.getElementById("bulk-selected-count").textContent = String(selected.length);
+    selectAll.checked = selected.length > 0 && selected.length === runSelectors.length;
+    selectAll.indeterminate = selected.length > 0 && selected.length < runSelectors.length;
+    bulkBar.querySelector('[data-bulk-action="delete"]')?.toggleAttribute("disabled", selected.some((item) => item.dataset.terminal !== "true"));
+    bulkBar.querySelector('[data-bulk-action="hide"]')?.toggleAttribute("disabled", selected.every((item) => item.dataset.hidden === "true"));
+    bulkBar.querySelector('[data-bulk-action="show"]')?.toggleAttribute("disabled", selected.every((item) => item.dataset.hidden !== "true"));
+    bulkBar.querySelectorAll("[data-bulk-export]").forEach((button) => button.toggleAttribute("disabled", !selected.some((item) => item.dataset.report === "true")));
+  }
+
+  function setSelectionMode(active) {
+    if (!reportsPanel || !multiSelectToggle) return;
+    reportsPanel.classList.toggle("selection-mode", active);
+    multiSelectToggle.setAttribute("aria-pressed", String(active));
+    if (!active) {
+      runSelectors.forEach((input) => { input.checked = false; });
+      if (selectAll) {
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+      }
+    }
+    closeActionMenu();
+    syncBulkActions();
+  }
+
+  multiSelectToggle?.addEventListener("click", () => setSelectionMode(!reportsPanel.classList.contains("selection-mode")));
+  setSelectionMode(false);
+
+  selectAll?.addEventListener("change", () => {
+    runSelectors.forEach((input) => { input.checked = selectAll.checked; });
+    syncBulkActions();
+  });
+  runSelectors.forEach((input) => input.addEventListener("change", syncBulkActions));
+
+  async function runBulkAction(action) {
+    const selected = selectedRuns();
+    if (!selected.length) return;
+    if (action === "delete" && !confirm(`永久删除所选 ${selected.length} 条运行记录及全部运行文件？此操作无法撤销。`)) return;
+    bulkStatus.textContent = "处理中…";
+    bulkBar.querySelectorAll("button").forEach((button) => { button.disabled = true; });
+    try {
+      await api("/api/v1/report-actions", {
+        method: "POST",
+        body: JSON.stringify({run_ids: selected.map((item) => item.value), action, action_token: bulkBar.dataset.actionToken, confirmation: action === "delete" ? "permanent" : null}),
+      });
+      location.reload();
+    } catch (error) {
+      bulkStatus.textContent = error.message;
+      syncBulkActions();
+    }
+  }
+
+  async function exportSelected(format) {
+    const selected = selectedRuns();
+    if (!selected.length) return;
+    bulkStatus.textContent = "正在生成压缩包…";
+    try {
+      const response = await fetch("/api/v1/report-exports", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({run_ids: selected.map((item) => item.value), format, action_token: bulkBar.dataset.actionToken}),
+      });
+      if (!response.ok) {
+        let error;
+        try { error = await response.json(); } catch { error = await response.text(); }
+        throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+      }
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(await response.blob());
+      link.download = `contestlens-reports-${format}.zip`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+      bulkStatus.textContent = "导出完成";
+    } catch (error) {
+      bulkStatus.textContent = error.message;
+    }
+  }
+
+  bulkBar?.querySelectorAll("[data-bulk-action]").forEach((button) => button.addEventListener("click", () => runBulkAction(button.dataset.bulkAction)));
+  bulkBar?.querySelectorAll("[data-bulk-export]").forEach((button) => button.addEventListener("click", () => exportSelected(button.dataset.bulkExport)));
 
   const control = document.getElementById("report-translation-control");
   if (!control || control.dataset.enabled !== "true") return;

@@ -148,3 +148,22 @@ class ServiceHub:
             except OSError as exc:
                 raise ContestLensError("RUN_ARTIFACT_DELETE_FAILED", "Run record was deleted but artifact cleanup failed", {"type": type(exc).__name__}, 500) from exc
         return result
+
+    async def delete_runs(self, run_ids: list[str]) -> dict:
+        unique = list(dict.fromkeys(run_ids))
+        runs = [self.store.get_run(run_id) for run_id in unique]
+        invalid = [{"run_id": run["run_id"], "status": run["status"]} for run in runs if run["status"] not in {"COMPLETED", "FAILED", "CANCELLED"}]
+        if invalid:
+            raise ContestLensError("RUN_DELETE_REQUIRES_TERMINAL", "Cancel all selected runs before deleting them", {"runs": invalid}, 409)
+        root = self.settings.runs_root.resolve()
+        for run_id in unique:
+            if not re.fullmatch(r"run_[A-Za-z0-9_-]+", run_id):
+                raise ContestLensError("INVALID_IDENTIFIER", "Invalid run identifier", status_code=400)
+            target = root / run_id
+            if target.exists() and (target.is_symlink() or target.resolve().parent != root):
+                raise ContestLensError("RUN_DELETE_PATH_INVALID", "Run artifacts are outside runs_root", status_code=400)
+        await self.report_translations.forget_runs(set(unique))
+        deleted = []
+        for run_id in unique:
+            deleted.append((await self.delete_run(run_id))["run_id"])
+        return {"run_ids": deleted, "deleted": True}

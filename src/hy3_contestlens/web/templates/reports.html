@@ -9,19 +9,20 @@
   <div class="activity-heading"><span id="report-activity-spinner" class="activity-spinner" aria-hidden="true" {% if not report_count %}hidden{% endif %}></span><strong>报告格式化</strong></div>
   <p id="translation-queue-message" role="status">{{ '加载中…' if report_count else '暂无可格式化报告' }}</p>
 </div>
-<section class="panel reports-panel">
+<section id="reports-panel" class="panel reports-panel">
   <div class="panel-head">
     <div><h2>全部运行 <span class="reports-count">{{ runs|length }}</span></h2><p>最新运行在前 · {{ report_count }} 份报告可查看 · 时间按北京时间显示</p></div>
-    <div class="actions"><a class="button" href="/ui/reports?include_hidden={{ 'false' if include_hidden else 'true' }}">{{ '隐藏已隐藏记录' if include_hidden else '显示已隐藏' }}{% if hidden_count %} · {{ hidden_count }}{% endif %}</a><a class="button" href="/ui/reports?include_hidden={{ 'true' if include_hidden else 'false' }}">刷新列表</a></div>
+    <div class="actions">{% if runs %}<button id="toggle-multi-select" class="multi-select-trigger" type="button" aria-label="多选" title="多选" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="7" rx="1.5"/><path d="m5.2 7.4 1.2 1.2 2.2-2.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="m5.2 17.4 1.2 1.2 2.2-2.5"/><path d="M14 7.5h7M14 17.5h7"/></svg></button>{% endif %}<a class="button" href="/ui/reports?include_hidden={{ 'false' if include_hidden else 'true' }}">{{ '隐藏已隐藏记录' if include_hidden else '显示已隐藏' }}{% if hidden_count %} · {{ hidden_count }}{% endif %}</a><a class="button" href="/ui/reports?include_hidden={{ 'true' if include_hidden else 'false' }}">刷新列表</a></div>
   </div>
+  <div id="bulk-report-actions" class="bulk-report-actions" data-action-token="{{ ui_action_token }}" data-include-hidden="{{ 'true' if include_hidden else 'false' }}" hidden><strong>已选择 <span id="bulk-selected-count">0</span> 项</strong><div class="actions"><button type="button" data-bulk-export="html">导出 HTML</button><button type="button" data-bulk-export="md">导出 Markdown</button><button type="button" data-bulk-action="hide">隐藏</button>{% if include_hidden %}<button type="button" data-bulk-action="show">恢复显示</button>{% endif %}<button type="button" class="danger-action" data-bulk-action="delete">永久删除</button></div><span id="bulk-action-status" role="status"></span></div>
   {% if runs %}
   <div class="reports-table-scroll" role="region" aria-label="运行报告列表" tabindex="0">
     <table class="reports-table">
       <caption>每次运行的题目、创建时间、run_id、状态和报告入口</caption>
-      <thead><tr><th scope="col">评测题目</th><th scope="col">运行时间（创建时间）</th><th scope="col">run_id</th><th scope="col">运行状态</th><th scope="col">报告</th><th scope="col"><span class="visually-hidden">更多操作</span></th></tr></thead>
+      <thead><tr><th scope="col" class="selection-cell"><input id="select-all-runs" type="checkbox" aria-label="选择全部运行"></th><th scope="col">评测题目</th><th scope="col">运行时间（创建时间）</th><th scope="col">run_id</th><th scope="col">运行状态</th><th scope="col">报告</th><th scope="col"><span class="visually-hidden">更多操作</span></th></tr></thead>
       <tbody>
       {% for run in runs %}
-        <tr data-run-id="{{ run.run_id }}"{% if run.report_hidden %} class="report-row-hidden"{% endif %}>
+        <tr data-run-id="{{ run.run_id }}"{% if run.report_hidden %} class="report-row-hidden"{% endif %}><td class="selection-cell"><input class="run-select" type="checkbox" value="{{ run.run_id }}" data-terminal="{{ 'true' if run.terminal else 'false' }}" data-report="{{ 'true' if run.report_available else 'false' }}" data-hidden="{{ 'true' if run.report_hidden else 'false' }}" aria-label="选择 {{ run.title_zh }} {{ run.run_id }}"></td>
           <td class="report-problem">
             {% if run.report_available %}<a href="/api/v1/runs/{{ run.run_id }}/report">{{ run.title_zh }}</a>{% else %}<strong>{{ run.title_zh }}</strong>{% endif %}
             <small>{{ run.problem_id }}</small>
@@ -37,7 +38,7 @@
             <span class="report-empty-label">空</span><small class="report-empty-reason">{{ run.empty_reason }}</small>
             {% if run.failure_summary %}<a class="report-open-link" href="/ui/runs/{{ run.run_id }}">查看失败原因 →</a>{% endif %}
             {% endif %}
-          </td><td class="run-actions-cell"><button type="button" class="run-action-trigger" popovertarget="run-actions-{{ run.run_id }}" aria-haspopup="menu" aria-expanded="false" aria-label="更多操作" title="更多操作"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button><div id="run-actions-{{ run.run_id }}" class="run-action-menu" popover="auto" role="menu">{% if run.report_available %}<a href="/api/v1/runs/{{ run.run_id }}/report/export?format=html">导出 HTML</a><a href="/api/v1/runs/{{ run.run_id }}/report/export?format=md">导出 Markdown</a>{% endif %}<form method="post" action="/ui/runs/{{ run.run_id }}/report-visibility?hidden={{ 'false' if run.report_hidden else 'true' }}&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}"><button type="submit">{{ '恢复显示' if run.report_hidden else '在列表中隐藏' }}</button></form><form method="post" action="/ui/runs/{{ run.run_id }}:delete?confirmation=permanent&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}" onsubmit="return confirm('永久删除此运行记录及全部运行文件？此操作无法撤销。')"><button class="danger-action" type="submit"{% if not run.terminal %} disabled title="请先取消运行"{% endif %}>永久删除运行记录</button></form></div></td>
+          </td><td class="run-actions-cell"><button type="button" class="run-action-trigger" data-action-menu="run-actions-{{ run.run_id }}" aria-controls="run-actions-{{ run.run_id }}" aria-haspopup="menu" aria-expanded="false" aria-label="更多操作" title="更多操作"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button><div id="run-actions-{{ run.run_id }}" class="run-action-menu" role="menu" tabindex="-1" hidden>{% if run.report_available %}<a href="/api/v1/runs/{{ run.run_id }}/report/export?format=html">导出 HTML</a><a href="/api/v1/runs/{{ run.run_id }}/report/export?format=md">导出 Markdown</a>{% endif %}<form method="post" action="/ui/runs/{{ run.run_id }}/report-visibility?hidden={{ 'false' if run.report_hidden else 'true' }}&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}"><button type="submit">{{ '恢复显示' if run.report_hidden else '在列表中隐藏' }}</button></form><form method="post" action="/ui/runs/{{ run.run_id }}:delete?confirmation=permanent&include_hidden={{ 'true' if include_hidden else 'false' }}&action_token={{ ui_action_token }}" onsubmit="return confirm('永久删除此运行记录及全部运行文件？此操作无法撤销。')"><button class="danger-action" type="submit"{% if not run.terminal %} disabled title="请先取消运行"{% endif %}>永久删除运行记录</button></form></div></td>
         </tr>
       {% endfor %}
       </tbody>
@@ -48,4 +49,4 @@
   {% endif %}
 </section>
 {% endblock %}
-{% block scripts %}<script src="/static/reports.js?v=0.5.0"></script>{% endblock %}
+{% block scripts %}<script src="/static/reports.js?v=0.9.0"></script>{% endblock %}

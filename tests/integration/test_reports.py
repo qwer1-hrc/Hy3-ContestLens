@@ -1,4 +1,6 @@
 import asyncio
+import io
+import zipfile
 from types import SimpleNamespace
 
 import pytest
@@ -30,6 +32,7 @@ def test_reports_page_has_useful_empty_state(client):
     assert response.status_code == 200
     assert "暂无运行记录" in response.text
     assert 'href="/ui/runs/new"' in response.text
+    assert 'id="toggle-multi-select"' not in response.text
 
 
 def test_failed_run_list_displays_phase_and_disconnect_reason_without_raw_error(client):
@@ -191,7 +194,10 @@ def test_more_menu_hide_restore_export_and_permanent_delete(client, settings):
     root.mkdir(parents=True, exist_ok=True)
     (root / "artifact.txt").write_text("delete me", encoding="utf-8")
     page = client.get("/ui/reports").text
-    assert 'aria-label="更多操作"' in page and 'popover="auto"' in page and "永久删除运行记录" in page
+    assert 'aria-label="更多操作"' in page and 'data-action-menu=' in page and 'role="menu" tabindex="-1" hidden' in page and "永久删除运行记录" in page
+    assert "popover=" not in page
+    assert 'id="toggle-multi-select"' in page and 'aria-label="多选"' in page and '>多选<' not in page
+    assert 'id="reports-panel"' in page and 'class="selection-cell"' in page
     assert "<details class=\"run-actions\"" not in page
     assert f'/report/export?format=html' in page and f'/report/export?format=md' in page
     for fmt, media in (("html", "text/html"), ("md", "text/markdown")):
@@ -219,3 +225,36 @@ def test_permanent_delete_rejects_active_runs(client, settings):
     response = client.post(f'/ui/runs/{run["run_id"]}:delete?confirmation=permanent&action_token={token}', follow_redirects=False)
     assert response.status_code == 409 and root.exists()
     assert client.get(f'/api/v1/runs/{run["run_id"]}').status_code == 200
+
+
+def test_bulk_hide_export_and_delete_are_atomic_for_active_selection(client, settings):
+    hub = client.app.state.hub
+    complete = hub.store.create_run("road", {"problem_id": "road"})
+    empty = hub.store.create_run("money", {"problem_id": "money"})
+    active = hub.store.create_run("track", {"problem_id": "track"})
+    hub.store.update_run(complete["run_id"], "COMPLETED", result=evaluation_result(complete["run_id"], "road"))
+    hub.store.update_run(empty["run_id"], "FAILED", result={"error_code": "FAILED"})
+    for run in (complete, empty, active):
+        root = settings.runs_root / run["run_id"]
+        root.mkdir(parents=True, exist_ok=True)
+        (root / "artifact.txt").write_text(run["run_id"], encoding="utf-8")
+    token = client.app.state.ui_action_token
+    ids = [complete["run_id"], empty["run_id"]]
+    hidden = client.post("/api/v1/report-actions", json={"run_ids": ids, "action": "hide", "action_token": token})
+    assert hidden.status_code == 200 and all(run_id not in client.get("/ui/reports").text for run_id in ids)
+    shown = client.post("/api/v1/report-actions", json={"run_ids": ids, "action": "show", "action_token": token})
+    assert shown.status_code == 200 and all(run_id in client.get("/ui/reports").text for run_id in ids)
+    exported = client.post("/api/v1/report-exports", json={"run_ids": ids, "format": "md", "action_token": token})
+    assert exported.status_code == 200 and exported.headers["content-type"] == "application/zip"
+    with zipfile.ZipFile(io.BytesIO(exported.content)) as archive:
+        names = archive.namelist()
+        assert any(name.endswith(f'{complete["run_id"]}.md') for name in names)
+        assert "未导出的运行.txt" in names and empty["run_id"] in archive.read("未导出的运行.txt").decode()
+    rejected = client.post("/api/v1/report-actions", json={"run_ids": [complete["run_id"], active["run_id"]], "action": "delete", "action_token": token, "confirmation": "permanent"})
+    assert rejected.status_code == 409
+    assert all(client.get(f'/api/v1/runs/{run_id}').status_code == 200 for run_id in (complete["run_id"], active["run_id"]))
+    hub.store.cancel_run(active["run_id"])
+    deleted = client.post("/api/v1/report-actions", json={"run_ids": [complete["run_id"], active["run_id"]], "action": "delete", "action_token": token, "confirmation": "permanent"})
+    assert deleted.status_code == 200
+    assert all(client.get(f'/api/v1/runs/{run_id}').status_code == 404 for run_id in (complete["run_id"], active["run_id"]))
+    assert all(not (settings.runs_root / run_id).exists() for run_id in (complete["run_id"], active["run_id"]))

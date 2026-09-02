@@ -5,6 +5,7 @@ function node(properties = {}) {
     dataset: {}, hidden: false, disabled: false, textContent: "", attributes,
     setAttribute: (name, value) => { attributes[name] = String(value); },
     getAttribute: (name) => attributes[name],
+    toggleAttribute: function (name, force) { this[name] = force; attributes[name] = String(force); },
     classList: {
       add: (...values) => values.forEach((value) => classes.add(value)),
       remove: (...values) => values.forEach((value) => classes.delete(value)),

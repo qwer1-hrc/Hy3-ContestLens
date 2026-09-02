@@ -6,6 +6,7 @@ import io
 import json
 import hmac
 import secrets
+import zipfile
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
@@ -15,7 +16,7 @@ from fastapi import FastAPI, Header, Request, Response, status
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ..errors import ContestLensError
 from ..reporting import aggregate_runs, has_evaluation_report, render_run_markdown, render_run_report, run_failure_summary
@@ -31,6 +32,33 @@ class APIModel(BaseModel):
 class ReportTranslationRequest(APIModel):
     priority_run_id: str | None = None
     retry_run_id: str | None = None
+
+
+class BulkRunActionRequest(APIModel):
+    run_ids: list[str] = Field(min_length=1, max_length=200)
+    action: Literal["hide", "show", "delete"]
+    action_token: str
+    confirmation: str | None = None
+
+    @field_validator("run_ids")
+    @classmethod
+    def valid_unique_run_ids(cls, values: list[str]) -> list[str]:
+        if len(values) != len(set(values)) or any(not value.startswith("run_") for value in values):
+            raise ValueError("run_ids must be unique run identifiers")
+        return values
+
+
+class BulkReportExportRequest(APIModel):
+    run_ids: list[str] = Field(min_length=1, max_length=200)
+    format: Literal["html", "md"]
+    action_token: str
+
+    @field_validator("run_ids")
+    @classmethod
+    def unique_run_ids(cls, values: list[str]) -> list[str]:
+        if len(values) != len(set(values)):
+            raise ValueError("run_ids must be unique")
+        return values
 
 
 class ValidatePathRequest(APIModel):
@@ -348,6 +376,32 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             raise ContestLensError("PERMANENT_CONFIRMATION_REQUIRED", "Permanent deletion must be confirmed", status_code=400)
         await hub.delete_run(run_id)
         return RedirectResponse(f"/ui/reports?include_hidden={'true' if include_hidden else 'false'}", status_code=303)
+
+    @app.post("/api/v1/report-actions")
+    async def bulk_report_action(body: BulkRunActionRequest) -> dict[str, Any]:
+        require_ui_token(body.action_token)
+        if body.action == "delete":
+            if body.confirmation != "permanent":
+                raise ContestLensError("PERMANENT_CONFIRMATION_REQUIRED", "Permanent deletion must be confirmed", status_code=400)
+            return await hub.delete_runs(body.run_ids)
+        return hub.store.set_runs_report_hidden(body.run_ids, body.action == "hide")
+
+    @app.post("/api/v1/report-exports")
+    def bulk_report_export(body: BulkReportExportRequest) -> Response:
+        require_ui_token(body.action_token)
+        buffer = io.BytesIO()
+        skipped = []
+        with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for run_id in body.run_ids:
+                run = hub.store.get_run(run_id)
+                if not has_evaluation_report(run["result"]):
+                    skipped.append(run_id)
+                    continue
+                content = render_run_report(run["result"]) if body.format == "html" else render_run_markdown(run["result"])
+                archive.writestr(f"{run['problem_id']}-{run_id}.{body.format}", content.encode("utf-8"))
+            if skipped:
+                archive.writestr("未导出的运行.txt", ("以下运行没有完整报告：\n" + "\n".join(skipped) + "\n").encode("utf-8"))
+        return Response(buffer.getvalue(), media_type="application/zip", headers={"Content-Disposition": f'attachment; filename="contestlens-reports-{body.format}.zip"'})
 
     @app.post("/api/v1/report-translations", status_code=202)
     async def start_report_translations(body: ReportTranslationRequest) -> dict[str, Any]:
