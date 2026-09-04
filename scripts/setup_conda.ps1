@@ -27,7 +27,7 @@ try {
     if ($environmentExists) {
         if ($Offline -or $CloneFrom) {
             Write-Host "Refreshing project packages in existing Conda environment '$EnvironmentName' using pip cache/index..."
-            conda run --name $EnvironmentName python -m pip install -e ".[dev]"
+            conda run --name $EnvironmentName python -m pip install -e ".[dev,vision]"
         }
         else {
             Write-Host "Updating Conda environment '$EnvironmentName'..."
@@ -39,14 +39,14 @@ try {
             Write-Host "Cloning Conda environment '$CloneFrom' into '$EnvironmentName' without channel access..."
             conda create --offline --yes --name $EnvironmentName --clone $CloneFrom
             if ($LASTEXITCODE -eq 0) {
-                conda run --name $EnvironmentName python -m pip install -e ".[dev]"
+                conda run --name $EnvironmentName python -m pip install -e ".[dev,vision]"
             }
         }
         elseif ($Offline) {
             Write-Host "Creating minimal Conda environment '$EnvironmentName' from the local package cache..."
             conda create --offline --yes --name $EnvironmentName python=3.12 pip setuptools wheel
             if ($LASTEXITCODE -eq 0) {
-                conda run --name $EnvironmentName python -m pip install -e ".[dev]"
+                conda run --name $EnvironmentName python -m pip install -e ".[dev,vision]"
             }
         }
         else {

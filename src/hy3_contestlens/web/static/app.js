@@ -282,6 +282,40 @@ function compactEventData(event) {
   return data;
 }
 
+function imageWarningText(warning) {
+  const label = warning?.label ? `${warning.label}：` : "";
+  const providerFailure = {
+    engine_overloaded_error: "Kimi 计算节点当前过载。",
+    rate_limit_reached_error: "Kimi 账户触发并发或速率限制。",
+    exceeded_current_quota_error: "Kimi 账户余额、额度或项目预算不足。",
+  }[warning?.provider_error_type];
+  const modelFailure = providerFailure || {
+    stream_incomplete: "图片模型的流式响应提前结束，未收到完整结束标记。",
+    stream_error: "图片模型在流式生成过程中返回错误。",
+    output_truncated: "图片模型输出达到长度上限，描述不完整。",
+    response_shape: "图片模型返回的响应结构不受支持。",
+    refusal: "图片模型拒绝生成描述。",
+  }[warning?.failure_kind] || "图片模型连接或响应失败，未生成描述。";
+  const messages = {
+    IMAGE_DEPENDENCY_MISSING: `缺少图片渲染组件${warning?.missing?.length ? `（${warning.missing.join("、")}）` : "（Pillow 或 pypdfium2）"}，图片没有发送给模型。`,
+    IMAGE_MODEL_FAILED: modelFailure,
+    IMAGE_OUTPUT_TOO_LONG: "图片描述超过长度上限，未注入题面。",
+    IMAGE_PROCESSING_FAILED: "图片渲染或处理失败，未生成描述。",
+    IMAGE_SKIPPED_AFTER_RATE_LIMIT: "前一张图片持续被限流，为避免重复请求，本张未再发送。",
+    IMAGE_LIMIT_REACHED: `超过单次图片数量上限，另有 ${warning?.omitted ?? 0} 项未处理。`,
+    RESOURCE_CHANGED: "题面或图片在绑定后发生变化，未继续处理。",
+  };
+  const detail = [
+    warning?.http_status ? `HTTP ${warning.http_status}` : null,
+    warning?.type || null,
+    warning?.provider_error_type || null,
+    warning?.attempts ? `尝试 ${warning.attempts} 次` : null,
+    warning?.duration_ms ? `${(warning.duration_ms / 1000).toFixed(1)} 秒` : null,
+    warning?.stream?.event_count !== undefined ? `已收到 ${warning.stream.event_count} 个流式事件` : null,
+  ].filter(Boolean);
+  return label + (messages[warning?.error_code] || `图片处理失败（${warning?.error_code || "未知原因"}）。`) + (detail.length ? ` [${detail.join(" · ")}]` : "");
+}
+
 function appendWorkflowEvent(event, runStatus, runId) {
   const list = document.getElementById("event-list");
   const empty = document.getElementById("event-empty");
@@ -357,6 +391,7 @@ function appendWorkflowEvent(event, runStatus, runId) {
     const reasons = {
       no_images: "未检测到需要理解的图片。", no_supported_images: "图片引用不受支持或不在授权范围内。",
       not_configured: "未配置独立图片模型，已自动跳过。", invalid_configuration: "独立图片模型配置无效，已自动跳过。",
+      missing_dependencies: "缺少图片渲染组件，图片没有发送给模型，已继续使用原题面。",
       user_skipped: "已选择不使用图片理解。", decision_timeout: "等待选择超时，已自动跳过。",
       inspection_failed: "图片检查未成功，已回退到原始题面。",
     };
@@ -364,6 +399,11 @@ function appendWorkflowEvent(event, runStatus, runId) {
   }
   if (event.type === "IMAGE_UNDERSTANDING_COMPLETED" && event.data.status !== "completed") {
     body.append(makeElement("p", "", `成功识别 ${event.data.described} 项；其余项目未识别，已回退到原题面文字。详见结构化参数中的警告。`));
+  }
+  if (["IMAGE_UNDERSTANDING_COMPLETED", "IMAGE_UNDERSTANDING_SKIPPED"].includes(event.type) && event.data?.warnings?.length) {
+    const warningList = makeElement("ul", "image-warnings");
+    event.data.warnings.forEach((warning) => warningList.append(makeElement("li", "", imageWarningText(warning))));
+    body.append(warningList);
   }
 
   const payload = compactEventData(event);

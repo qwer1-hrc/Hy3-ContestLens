@@ -35,6 +35,9 @@ compile_timeout_seconds = 30
 
 # Optional image interpretation budget; no effect on the main model or /readyz.
 [image_understanding]
+stream = true
+max_attempts = 3
+retry_backoff_seconds = 10
 max_tokens = 8192
 timeout_seconds = 90
 decision_timeout_seconds = 300

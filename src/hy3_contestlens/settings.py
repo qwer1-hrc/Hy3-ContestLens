@@ -143,8 +143,17 @@ class ImageUnderstandingSettings:
     max_image_side: int = 2400
     max_output_chars: int = 16000
     configuration_error: bool = False
+    stream: bool = True
+    max_attempts: int = 3
+    retry_backoff_seconds: float = 10
 
     def __post_init__(self) -> None:
+        if not isinstance(self.stream, bool):
+            raise ValueError("Image understanding stream must be a boolean")
+        if isinstance(self.max_attempts, bool) or not isinstance(self.max_attempts, int) or not 1 <= self.max_attempts <= 5:
+            raise ValueError("Image understanding max_attempts must be an integer between 1 and 5")
+        if isinstance(self.retry_backoff_seconds, bool) or not math.isfinite(self.retry_backoff_seconds) or not 0 <= self.retry_backoff_seconds <= 60:
+            raise ValueError("Image understanding retry_backoff_seconds must be between 0 and 60")
         if self.api_key is not None and not isinstance(self.api_key, str):
             raise ValueError("Image understanding api_key must be a string")
         if not isinstance(self.model, str):
@@ -171,7 +180,8 @@ class ImageUnderstandingSettings:
     def safe_summary(self) -> dict[str, Any]:
         return {"configured": self.configured, "model": self.model,
                 "configuration_error": self.configuration_error,
-                "decision_timeout_seconds": self.decision_timeout_seconds}
+                "decision_timeout_seconds": self.decision_timeout_seconds,
+                "stream": self.stream, "max_attempts": self.max_attempts}
 
 
 @dataclass(slots=True)
@@ -296,6 +306,9 @@ class AppSettings:
                 )},
                 timeout_seconds=float(image_value("timeout_seconds", 90)),
                 decision_timeout_seconds=float(image_value("decision_timeout_seconds", 300)),
+                stream=_boolean(image_value("stream", True)),
+                max_attempts=int(image_value("max_attempts", 3)),
+                retry_backoff_seconds=float(image_value("retry_backoff_seconds", 10)),
             )
         except (ValueError, TypeError, AttributeError):
             # A bad optional profile must not disable the solver or readiness checks.

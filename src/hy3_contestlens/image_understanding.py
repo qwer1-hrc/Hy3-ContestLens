@@ -3,9 +3,12 @@ from __future__ import annotations
 import asyncio
 import base64
 import io
+import importlib.util
 import json
 import re
 import threading
+import time
+from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from typing import Any
@@ -17,6 +20,7 @@ from pypdf.generic import ContentStream
 
 from .errors import ContestLensError, ensure
 from .model import _completion_content, _ResponseError
+from .model_stream import CompletionStream, StreamResponseError
 from .resources import ALLOWED_DOCUMENT_EXTENSIONS, ResourceService, _is_reparse_point
 from .settings import ImageUnderstandingSettings
 from .utils import sha256_bytes, sha256_file
@@ -25,7 +29,12 @@ from .utils import sha256_bytes, sha256_file
 # PDFium is not thread safe, even for separate documents.
 _PDF_RENDER_LOCK = threading.Lock()
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"}
-_PAINT_OPERATORS = {b"S", b"s", b"f", b"F", b"f*", b"B", b"B*", b"b", b"b*", b"sh"}
+
+
+@dataclass(frozen=True, slots=True)
+class ImageDescriptionResult:
+    text: str
+    diagnostics: dict[str, Any]
 
 
 class _HTMLImages(HTMLParser):
@@ -69,9 +78,11 @@ def _pdf_visual_reasons(page: Any, reader: PdfReader) -> list[str]:
         if hasattr(resources, "get_object"):
             resources = resources.get_object()
         for _, operation in content.operations:
-            if operation in _PAINT_OPERATORS:
-                reasons.add("vector_graphics")
-            elif operation == b"INLINE IMAGE":
+            # PDF path painting is also used for headers, bullets and table borders.
+            # Treating any stroke/fill as a figure causes most typeset statements to
+            # request image understanding, so strict detection only accepts actual
+            # image objects (or a page with too little extractable text below).
+            if operation == b"INLINE IMAGE":
                 reasons.add("embedded_image")
         xobjects = resources.get("/XObject", {}) if resources else {}
         for ref in xobjects.get_object().values() if hasattr(xobjects, "get_object") else xobjects.values():
@@ -101,6 +112,14 @@ class StatementImages:
                "DOCUMENT_TOO_LARGE", "Statement exceeds the document size limit")
         ensure(sha256_file(path) == document["sha256"], "RESOURCE_CHANGED", "Problem document changed after binding")
         return path
+
+    def missing_render_dependencies(self, document: dict[str, Any]) -> list[str]:
+        missing = []
+        if importlib.util.find_spec("PIL") is None:
+            missing.append("Pillow")
+        if Path(document["relative_path"]).suffix.lower() == ".pdf" and importlib.util.find_spec("pypdfium2") is None:
+            missing.append("pypdfium2")
+        return missing
 
     def _image_path(self, scope_id: str, document: dict[str, Any], source: str) -> Path:
         source = unquote(source)
@@ -196,14 +215,45 @@ class ImageUnderstandingClient:
     def __init__(self, settings: ImageUnderstandingSettings, *, transport: httpx.AsyncBaseTransport | None = None):
         self.settings = settings
         self.transport = transport
+        # Image requests can be large. Keep account concurrency at one per app
+        # worker, which also matches the Kimi Tier-0 concurrency limit.
+        self._gate = asyncio.Lock()
 
-    async def describe(self, data_url: str, label: str, context: str) -> str:
+    async def describe(self, data_url: str, label: str, context: str) -> ImageDescriptionResult:
+        history = []
+        async with self._gate:
+            for attempt in range(1, self.settings.max_attempts + 1):
+                try:
+                    result = await self._describe_once(data_url, label, context)
+                    result.diagnostics["attempts"] = attempt
+                    if history:
+                        result.diagnostics["retry_history"] = history
+                    return result
+                except ContestLensError as exc:
+                    details = exc.details if isinstance(exc.details, dict) else {}
+                    history.append({key: details.get(key) for key in (
+                        "type", "duration_ms", "http_status", "request_id", "failure_kind", "provider_error_type",
+                    )})
+                    retryable = details.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"}
+                    if not retryable or attempt >= self.settings.max_attempts:
+                        raise ContestLensError(exc.code, exc.message, {
+                            **details, "attempts": attempt, "retry_exhausted": retryable,
+                            "retry_history": history,
+                        }, exc.status_code) from None
+                    delay = details.get("retry_after_seconds")
+                    if not isinstance(delay, (int, float)) or not 0 <= delay <= 60:
+                        delay = min(60.0, self.settings.retry_backoff_seconds * 2 ** (attempt - 1))
+                    await asyncio.sleep(delay)
+        raise AssertionError("Image max_attempts must be positive")
+
+    async def _describe_once(self, data_url: str, label: str, context: str) -> ImageDescriptionResult:
         ensure(self.settings.configured, "IMAGE_MODEL_NOT_CONFIGURED", "Optional image model is not configured")
         endpoint = self.settings.base_url.rstrip("/")
         if not endpoint.endswith("/chat/completions"):
             endpoint += "/chat/completions"
         payload = {
-            "model": self.settings.model, "max_tokens": self.settings.max_tokens,
+            "model": self.settings.model, "max_completion_tokens": self.settings.max_tokens,
+            "stream": self.settings.stream,
             # Do not copy Hy3 response_format/reasoning/temperature: providers constrain these differently.
             "messages": [
                 {"role": "system", "content": (
@@ -220,19 +270,76 @@ class ImageUnderstandingClient:
                 ]},
             ],
         }
+        if self.settings.stream:
+            payload["stream_options"] = {"include_usage": True}
+        started = time.monotonic()
+        response: httpx.Response | None = None
+        body: Any = None
+        stream: CompletionStream | None = None
         try:
             async with httpx.AsyncClient(timeout=self.settings.timeout_seconds, transport=self.transport, follow_redirects=False) as client:
-                # One bounded attempt; failures fall back to text rather than spending the solver budget.
                 async with asyncio.timeout(self.settings.timeout_seconds):
-                    response = await client.post(endpoint, headers={"Authorization": f"Bearer {self.settings.api_key}"}, json=payload)
-                    response.raise_for_status()
-                    content = _completion_content(response.json()).strip()
-        except (httpx.HTTPError, ValueError, _ResponseError, TimeoutError) as exc:
+                    async with client.stream(
+                        "POST", endpoint, headers={"Authorization": f"Bearer {self.settings.api_key}"}, json=payload,
+                    ) as response:
+                        if response.is_success and "text/event-stream" in response.headers.get("content-type", "").lower():
+                            stream = CompletionStream()
+                            try:
+                                async for line in response.aiter_lines():
+                                    stream.feed(line)
+                                    if stream.done:
+                                        break
+                                stream.finish()
+                            finally:
+                                body = stream.body()
+                        else:
+                            # Keep compatibility with providers that ignore stream=true.
+                            await response.aread()
+                            try:
+                                body = response.json()
+                            except ValueError:
+                                body = None
+                            response.raise_for_status()
+            content = _completion_content(body).strip()
+        except (httpx.HTTPError, ValueError, _ResponseError, StreamResponseError, TimeoutError) as exc:
             # Never persist provider bodies, URLs, credentials or image bytes in failure events.
+            details: dict[str, Any] = {
+                "type": type(exc).__name__, "duration_ms": round((time.monotonic() - started) * 1000),
+                "http_status": response.status_code if response is not None else None,
+                "request_id": next((response.headers.get(key) for key in ("x-request-id", "request-id") if response.headers.get(key)), None) if response is not None else None,
+            }
+            error = body.get("error") if isinstance(body, dict) else None
+            error = error if isinstance(error, dict) else {}
+            provider_error_type = error.get("type")
+            if isinstance(provider_error_type, str) and re.fullmatch(r"[a-z_]{1,80}", provider_error_type):
+                details["provider_error_type"] = provider_error_type
+            message = error.get("message") if isinstance(error.get("message"), str) else ""
+            retry_after = response.headers.get("retry-after") if response is not None else None
+            try:
+                retry_after_seconds = float(retry_after) if retry_after is not None else None
+            except ValueError:
+                retry_after_seconds = None
+            match = re.search(r"try again after\s+(\d+(?:\.\d+)?)", message, re.I)
+            if retry_after_seconds is None and match:
+                retry_after_seconds = float(match.group(1))
+            if retry_after_seconds is not None and 0 <= retry_after_seconds <= 60:
+                details["retry_after_seconds"] = retry_after_seconds
+            if isinstance(exc, (_ResponseError, StreamResponseError)):
+                details["failure_kind"] = exc.kind
+            if stream is not None:
+                details["stream"] = stream.diagnostics()
             raise ContestLensError("IMAGE_MODEL_FAILED", "Image understanding failed; continuing with statement text",
-                                   {"type": type(exc).__name__}) from None
+                                   details) from None
         ensure(len(content) <= self.settings.max_output_chars, "IMAGE_OUTPUT_TOO_LONG", "Image description exceeds the output limit")
-        return content
+        choice = body["choices"][0]
+        diagnostics = {
+            "duration_ms": round((time.monotonic() - started) * 1000),
+            "http_status": response.status_code if response is not None else None,
+            "request_id": next((response.headers.get(key) for key in ("x-request-id", "request-id") if response.headers.get(key)), None) if response is not None else None,
+            "finish_reason": choice.get("finish_reason"), "usage": body.get("usage"),
+            **({"stream": stream.diagnostics()} if stream is not None else {}),
+        }
+        return ImageDescriptionResult(content, diagnostics)
 
 
 def augment_document(document: dict[str, Any], descriptions: list[dict[str, Any]]) -> dict[str, Any]:

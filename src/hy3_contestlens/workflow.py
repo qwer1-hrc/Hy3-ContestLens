@@ -11,7 +11,7 @@ from .domain import CheckResult, CompileResult, CriticReview, Diagnosis, ErrorTy
 from .errors import ContestLensError
 from .evaluation import adjudicate, code_review_conflicts_with_compile, improvement_key, is_complete
 from .judge import DockerJudge
-from .image_understanding import ImageUnderstandingClient, StatementImages, augment_document
+from .image_understanding import ImageDescriptionResult, ImageUnderstandingClient, StatementImages, augment_document
 from .model import Hy3Client
 from .model_diagnostics import model_run_context
 from .problem_spec import build_problem_spec
@@ -198,6 +198,10 @@ class ContestWorkflow:
             return skipped("user_skipped")
         if not settings.configured:
             return skipped("invalid_configuration" if settings.configuration_error else "not_configured")
+        missing_dependencies = images.missing_render_dependencies(binding["document"])
+        if missing_dependencies:
+            state["warnings"].append({"error_code": "IMAGE_DEPENDENCY_MISSING", "missing": missing_dependencies})
+            return skipped("missing_dependencies")
 
         if mode == "ask":
             timeout = settings.decision_timeout_seconds
@@ -244,17 +248,40 @@ class ContestWorkflow:
                 if self._cancelled(run_id):
                     save("cancelled")
                     return document
-                description = await client.describe(data_url, item["label"], document["content"])
+                description_result = await client.describe(data_url, item["label"], document["content"])
+                if isinstance(description_result, ImageDescriptionResult):
+                    description = description_result.text
+                    diagnostics = description_result.diagnostics
+                else:
+                    # Preserve compatibility with simple custom/mock vision clients.
+                    description = description_result
+                    diagnostics = None
                 if self._cancelled(run_id):
                     save("cancelled")
                     return document
-                state["descriptions"].append({
+                description_record = {
                     "image_id": item["image_id"], "source_label": item["label"], "model": settings.model,
                     "content_type": "untrusted_problem_content", "text": description,
-                })
+                }
+                if diagnostics:
+                    description_record["diagnostics"] = diagnostics
+                state["descriptions"].append(description_record)
                 self.store.append_event(run_id, "IMAGE_DESCRIPTION_READY", {"label": item["label"], "text": description})
             except Exception as exc:
-                state["warnings"].append({"label": item["label"], "error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_PROCESSING_FAILED"})
+                warning = {"label": item["label"], "error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_PROCESSING_FAILED"}
+                if isinstance(exc, ContestLensError) and isinstance(exc.details, dict):
+                    warning.update({key: exc.details[key] for key in (
+                        "type", "duration_ms", "http_status", "request_id", "failure_kind", "stream",
+                        "provider_error_type", "retry_after_seconds", "attempts", "retry_exhausted", "retry_history",
+                    ) if key in exc.details})
+                state["warnings"].append(warning)
+                if warning.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"}:
+                    remaining = state["images"][state["images"].index(item) + 1:]
+                    state["warnings"].extend({
+                        "label": remaining_item["label"], "error_code": "IMAGE_SKIPPED_AFTER_RATE_LIMIT",
+                    } for remaining_item in remaining)
+                    save("running")
+                    break
             save("running")
         if self._cancelled(run_id):
             save("cancelled")

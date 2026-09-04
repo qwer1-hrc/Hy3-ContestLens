@@ -162,3 +162,12 @@ test("image choice request failure permits retry and cancellation disables it", 
   ui.context.syncImageChoices({status: "CANCELLED", image_understanding: {request_id: "choice_1", choice: null}});
   assert.ok(panel.buttons.every((button) => button.disabled));
 });
+
+test("image dependency warnings explain that no image was sent", () => {
+  const ui = setup();
+  assert.match(ui.context.imageWarningText({error_code: "IMAGE_DEPENDENCY_MISSING", missing: ["Pillow", "pypdfium2"]}), /Pillow、pypdfium2/);
+  assert.match(ui.context.imageWarningText({label: "PDF 第 4 页", error_code: "IMAGE_MODEL_FAILED"}), /PDF 第 4 页.*模型/);
+  assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", failure_kind: "stream_incomplete", duration_ms: 32800, http_status: 200}), /提前结束.*HTTP 200.*32\.8 秒/);
+  assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", provider_error_type: "engine_overloaded_error", attempts: 3, http_status: 429}), /节点当前过载.*HTTP 429.*engine_overloaded_error.*尝试 3 次/);
+  assert.match(ui.context.imageWarningText({label: "PDF 第 5 页", error_code: "IMAGE_SKIPPED_AFTER_RATE_LIMIT"}), /PDF 第 5 页.*未再发送/);
+});

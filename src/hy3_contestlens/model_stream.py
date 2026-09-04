@@ -100,6 +100,10 @@ class CompletionStream:
                 self._parts.append(content)
             if choice.get("finish_reason") is not None:
                 self.finish_reason = choice["finish_reason"]
+            # Kimi places usage on the terminal choice, while OpenAI-compatible
+            # providers may place it at the chunk root.
+            if choice.get("usage") is not None:
+                self.metadata["usage"] = choice["usage"]
 
     def finish(self) -> None:
         # SSE events are dispatched at blank lines. EOF is not a successful completion.

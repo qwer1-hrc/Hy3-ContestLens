@@ -10,4 +10,4 @@ dependencies:
   - setuptools>=75
   - wheel>=0.44
   - pip:
-      - "-e .[dev]"
+      - "-e .[dev,vision]"

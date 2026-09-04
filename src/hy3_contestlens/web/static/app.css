@@ -1490,3 +1490,4 @@ button.is-loading::before,
 .image-choice .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
 .image-choice-message, .image-model-note { line-height: 1.7; }
 .image-description { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow-y: auto; }
+.image-warnings { margin: 10px 0 0; padding-left: 22px; color: #9b3e2f; line-height: 1.7; }
