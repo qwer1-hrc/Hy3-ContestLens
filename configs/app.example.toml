@@ -33,13 +33,23 @@ compile_image = "hy3-contestlens-compile:local"
 run_image = "hy3-contestlens-run:local"
 compile_timeout_seconds = 30
 
+# Run report Q&A / failure diagnosis. Connection inherits Hy3 unless overridden
+# in [assistant] of secrets.local.toml or HY3_ASSISTANT_API_KEY/BASE_URL/MODEL.
+[assistant]
+max_tokens = 4096
+timeout_seconds = 120
+max_tool_rounds = 4
+max_concurrency = 2
+
 # Optional image interpretation budget; no effect on the main model or /readyz.
 [image_understanding]
 stream = true
 max_attempts = 3
 retry_backoff_seconds = 10
 max_tokens = 8192
-timeout_seconds = 90
+# Total generation budget; ongoing stream activity may exceed the idle budget.
+timeout_seconds = 300
+idle_timeout_seconds = 90
 decision_timeout_seconds = 300
 max_images = 12
 max_image_mb = 8

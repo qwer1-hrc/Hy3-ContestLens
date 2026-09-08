@@ -13,6 +13,33 @@ from hy3_contestlens.workspace import WorkspaceStore
 
 
 @pytest.mark.asyncio
+async def test_localized_markdown_images_reach_vision_model(settings):
+    from hy3_contestlens.service import ServiceHub
+    settings.resources.roots = [settings.project_root.parent / 'contest_data']
+    hub = ServiceHub(settings)
+    scope = hub.store.list_scopes()[0]
+    pid = 'csps2019_senior_tree'
+    found = hub.resources.find_problem_assets(scope['scope_id'], pid)
+    candidate = hub.resources.get_candidate(found['auto_selected_candidate_id'])
+    binding = hub.resources.bind_candidate(scope['scope_id'], pid, candidate)
+    document = hub.resources.read_problem_document(scope['scope_id'], binding['document'])
+    calls = []
+    async def describe(data_url, label, context):
+        calls.append(data_url)
+        return ImageDescriptionResult('图中节点和边的测试描述', {})
+    hub.workflow.image_model = SimpleNamespace(describe=describe)
+    hub.resources.settings.image_understanding.api_key = 'mock-key'
+    rid = hub.store.create_run(pid, {'image_understanding':'use'})['run_id']
+    augmented = await hub.workflow._prepare_images(rid, binding, document, 'use')
+    assert len(calls) == 2
+    assert all(value.startswith('data:image/png;base64,') for value in calls)
+    assert len(augmented['visual_descriptions']) == 2
+    state = hub.store.get_run(rid)['image_understanding']
+    assert state['status'] == 'completed'
+    assert state['warnings'] == []
+
+
+@pytest.mark.asyncio
 async def test_real_game_pdf_pages_are_rendered_described_and_injected(settings):
     settings.image_understanding = ImageUnderstandingSettings(api_key="mock-vision-key")
     store = Store(settings.database_path)

@@ -1,0 +1,289 @@
+{
+  "problem": {
+    "pid": "P1351",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 联合权值",
+    "difficulty": 3,
+    "tags": [
+      6,
+      31,
+      83
+    ],
+    "totalSubmit": 89901,
+    "totalAccepted": 26501,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 联合权值",
+      "background": "NOIP2014 提高组 D1T2",
+      "description": "无向连通图 $G$ 有 $n$ 个点，$n-1$ 条边。点从 $1$ 到 $n$ 依次编号，编号为 $i$ 的点的权值为 $W_i$，每条边的长度均为 $1$。图上两点 $(u, v)$ 的距离定义为 $u$ 点到 $v$ 点的最短距离。对于图 $G$ 上的点对 $(u, v)$，若它们的距离为 $2$，则它们之间会产生 $W_v \\times W_u$ 的联合权值。\n\n请问图 $G$ 上所有可产生联合权值的有序点对中，联合权值最大的是多少？所有联合权值之和是多少？",
+      "formatI": "第一行包含 $1$ 个整数 $n$。\n\n接下来 $n-1$ 行，每行包含 $2$ 个用空格隔开的正整数 $u,v$，表示编号为 $u$ 和编号为 $v$ 的点之间有边相连。\n\n最后 $1$ 行，包含 $n$ 个正整数，每两个正整数之间用一个空格隔开，其中第 $i$ 个整数表示图 $G$ 上编号为 $i$ 的点的权值为 $W_i$。",
+      "formatO": "输出共 $1$ 行，包含 $2$ 个整数，之间用一个空格隔开，依次为图 $G$ 上联合权值的最大值和所有联合权值之和。由于所有联合权值之和可能很大，输出它时要对 $10007$ 取余。",
+      "hint": "**样例解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/5zkpab9k.png)\n\n本例输入的图如上所示，距离为 $2$ 的有序点对有$(1,3)$ 、$(2,4)$ 、$(3,1)$ 、$(3,5) $、$(4,2)$ 、$(5,3) $。\n\n其联合权值分别为 $2,15,2,20,15,20$。其中最大的是 $20$，总和为 $74$。\n\n \n**数据说明**\n\n- 对于 $30\\%$ 的数据，$2 < n \\leq 100$；\n- 对于 $60\\%$ 的数据，$2 < n \\leq 2000$；\n- 对于 $100\\%$ 的数据，$2 < n \\leq 2\\times 10^5$，$0 < W_i \\leq 10000$。\n\n保证一定存在可产生联合权值的有序点对。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 联合权值",
+      "background": "NOIP2014 提高组 D1T2",
+      "description": "无向连通图 $G$ 有 $n$ 个点，$n-1$ 条边。点从 $1$ 到 $n$ 依次编号，编号为 $i$ 的点的权值为 $W_i$，每条边的长度均为 $1$。图上两点 $(u, v)$ 的距离定义为 $u$ 点到 $v$ 点的最短距离。对于图 $G$ 上的点对 $(u, v)$，若它们的距离为 $2$，则它们之间会产生 $W_v \\times W_u$ 的联合权值。\n\n请问图 $G$ 上所有可产生联合权值的有序点对中，联合权值最大的是多少？所有联合权值之和是多少？",
+      "formatI": "第一行包含 $1$ 个整数 $n$。\n\n接下来 $n-1$ 行，每行包含 $2$ 个用空格隔开的正整数 $u,v$，表示编号为 $u$ 和编号为 $v$ 的点之间有边相连。\n\n最后 $1$ 行，包含 $n$ 个正整数，每两个正整数之间用一个空格隔开，其中第 $i$ 个整数表示图 $G$ 上编号为 $i$ 的点的权值为 $W_i$。",
+      "formatO": "输出共 $1$ 行，包含 $2$ 个整数，之间用一个空格隔开，依次为图 $G$ 上联合权值的最大值和所有联合权值之和。由于所有联合权值之和可能很大，输出它时要对 $10007$ 取余。",
+      "hint": "**样例解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/5zkpab9k.png)\n\n本例输入的图如上所示，距离为 $2$ 的有序点对有$(1,3)$ 、$(2,4)$ 、$(3,1)$ 、$(3,5) $、$(4,2)$ 、$(5,3) $。\n\n其联合权值分别为 $2,15,2,20,15,20$。其中最大的是 $20$，总和为 $74$。\n\n \n**数据说明**\n\n- 对于 $30\\%$ 的数据，$2 < n \\leq 100$；\n- 对于 $60\\%$ 的数据，$2 < n \\leq 2000$；\n- 对于 $100\\%$ 的数据，$2 < n \\leq 2\\times 10^5$，$0 < W_i \\leq 10000$。\n\n保证一定存在可产生联合权值的有序点对。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5  \n1 2  \n2 3\n3 4  \n4 5  \n1 5 2 3 10 ",
+        "20 74"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Joint Weight",
+      "background": "NOIP 2014 Senior D1T2.",
+      "description": "An undirected connected graph $G$ has $n$ vertices and $n-1$ edges. The vertices are numbered from $1$ to $n$, and the weight of vertex $i$ is $W_i$. Each edge has length $1$. For any two vertices $u$ and $v$, their distance is defined as the length of the shortest path from $u$ to $v$. For a pair of vertices $(u, v)$ in $G$, if their distance is $2$, then they generate a joint weight of $W_v \\times W_u$.\n\nAmong all ordered pairs in $G$ that can generate a joint weight, what is the maximum joint weight? What is the sum of all joint weights?",
+      "formatI": "The first line contains $1$ integer $n$.\n\nThe next $n-1$ lines each contain $2$ positive integers $u, v$ separated by a space, indicating that there is an edge between vertex $u$ and vertex $v$.\n\nThe last line contains $n$ positive integers separated by single spaces, where the $i$-th integer indicates that the weight of vertex $i$ in $G$ is $W_i$.",
+      "formatO": "Output a single line containing $2$ integers separated by a space: the maximum joint weight on graph $G$ and the sum of all joint weights. Since the sum may be large, output it modulo $10007$.",
+      "hint": "Sample Explanation.\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/5zkpab9k.png)\n\nFor the input in this example, the graph is as shown above. The ordered pairs at distance $2$ are $(1, 3), (2, 4), (3, 1), (3, 5), (4, 2), (5, 3)$.\n\nTheir joint weights are $2, 15, 2, 20, 15, 20$. The maximum is $20$, and the total sum is $74$.\n\nConstraints\n\n- For $30\\%$ of the testdata, $2 < n \\leq 100$.\n- For $60\\%$ of the testdata, $2 < n \\leq 2000$.\n- For $100\\%$ of the testdata, $2 < n \\leq 2 \\times 10^5$, $0 < W_i \\leq 10000$.\n\nIt is guaranteed that there exists at least one ordered pair that can generate a joint weight.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 联合权值",
+      "background": "NOIP2014 提高组 D1T2",
+      "description": "无向连通图 $G$ 有 $n$ 个点，$n-1$ 条边。点从 $1$ 到 $n$ 依次编号，编号为 $i$ 的点的权值为 $W_i$，每条边的长度均为 $1$。图上两点 $(u, v)$ 的距离定义为 $u$ 点到 $v$ 点的最短距离。对于图 $G$ 上的点对 $(u, v)$，若它们的距离为 $2$，则它们之间会产生 $W_v \\times W_u$ 的联合权值。\n\n请问图 $G$ 上所有可产生联合权值的有序点对中，联合权值最大的是多少？所有联合权值之和是多少？",
+      "formatI": "第一行包含 $1$ 个整数 $n$。\n\n接下来 $n-1$ 行，每行包含 $2$ 个用空格隔开的正整数 $u,v$，表示编号为 $u$ 和编号为 $v$ 的点之间有边相连。\n\n最后 $1$ 行，包含 $n$ 个正整数，每两个正整数之间用一个空格隔开，其中第 $i$ 个整数表示图 $G$ 上编号为 $i$ 的点的权值为 $W_i$。",
+      "formatO": "输出共 $1$ 行，包含 $2$ 个整数，之间用一个空格隔开，依次为图 $G$ 上联合权值的最大值和所有联合权值之和。由于所有联合权值之和可能很大，输出它时要对 $10007$ 取余。",
+      "hint": "**样例解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/5zkpab9k.png)\n\n本例输入的图如上所示，距离为 $2$ 的有序点对有$(1,3)$ 、$(2,4)$ 、$(3,1)$ 、$(3,5) $、$(4,2)$ 、$(5,3) $。\n\n其联合权值分别为 $2,15,2,20,15,20$。其中最大的是 $20$，总和为 $74$。\n\n \n**数据说明**\n\n- 对于 $30\\%$ 的数据，$2 < n \\leq 100$；\n- 对于 $60\\%$ 的数据，$2 < n \\leq 2000$；\n- 对于 $100\\%$ 的数据，$2 < n \\leq 2\\times 10^5$，$0 < W_i \\leq 10000$。\n\n保证一定存在可产生联合权值的有序点对。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1941",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "difficulty": 4
+    },
+    {
+      "pid": "P1967",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 货车运输",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2038",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2296",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2312",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 解方程",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P1351 [NOIP 2014 提高组] 联合权值",
+    "type": 2,
+    "slug": "P1351",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368312,
+      "title": "40pts求条闭关，WA#4#5#7，TLE#8#9#10",
+      "author": {
+        "uid": 2161357,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2161357.png",
+        "name": "lyx75122552",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788054053
+    },
+    {
+      "id": 1325784,
+      "title": "警示后人（如果你 WA 40pts）",
+      "author": {
+        "uid": 1529916,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1529916.png",
+        "name": "违规用户名1529916",
+        "slogan": "小舟从此逝，江海寄余生。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/rzivicxp.png"
+      },
+      "time": 1784274221
+    },
+    {
+      "id": 1324485,
+      "title": "70TLE求条闭关",
+      "author": {
+        "uid": 1048914,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1048914.png",
+        "name": "cgy20140502",
+        "slogan": "hhojbv_da29064deb0e 正在学习C++，谁来帮我一把。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/lrw4vlip.png"
+      },
+      "time": 1784185573
+    },
+    {
+      "id": 1324267,
+      "title": "20ptsWA+RE求条",
+      "author": {
+        "uid": 1279390,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1279390.png",
+        "name": "Holy_Cabbage",
+        "slogan": "星陨qwq||HN最最最菜小升初",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/biv9ixky.png"
+      },
+      "time": 1784173889
+    },
+    {
+      "id": 1322605,
+      "title": "赤道打分了",
+      "author": {
+        "uid": 704876,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/704876.png",
+        "name": "DragonAlan",
+        "slogan": "世事浮云外，生涯曲水中，吟魂何处是，明月在苍穹",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784040786
+    },
+    {
+      "id": 1298806,
+      "title": "WA0分求条玄关",
+      "author": {
+        "uid": 600143,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/600143.png",
+        "name": "9gehetao",
+        "slogan": "可以互关哦",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1779973688
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

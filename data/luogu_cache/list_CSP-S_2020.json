@@ -1,0 +1,1518 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 1000,
+    "result": [
+      {
+        "pid": "P7077",
+        "type": "P",
+        "name": "[CSP-S 2020] 函数调用",
+        "difficulty": 6,
+        "tags": [
+          3,
+          5,
+          37,
+          129,
+          159,
+          342
+        ],
+        "totalSubmit": 38489,
+        "totalAccepted": 8894,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7075",
+        "type": "P",
+        "name": "[CSP-S 2020] 儒略日",
+        "difficulty": 4,
+        "tags": [
+          1,
+          5,
+          37,
+          45,
+          342
+        ],
+        "totalSubmit": 88790,
+        "totalAccepted": 16952,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7076",
+        "type": "P",
+        "name": "[CSP-S 2020] 动物园",
+        "difficulty": 3,
+        "tags": [
+          5,
+          7,
+          37,
+          244,
+          314,
+          342
+        ],
+        "totalSubmit": 112871,
+        "totalAccepted": 22030,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7078",
+        "type": "P",
+        "name": "[CSP-S 2020] 贪吃蛇",
+        "difficulty": 7,
+        "tags": [
+          7,
+          13,
+          37,
+          51,
+          288,
+          342
+        ],
+        "totalSubmit": 35808,
+        "totalAccepted": 7133,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5665",
+        "type": "P",
+        "name": "[CSP-S 2019] 划分",
+        "difficulty": 7,
+        "tags": [
+          3,
+          7,
+          36,
+          56,
+          342
+        ],
+        "totalSubmit": 38393,
+        "totalAccepted": 5668,
+        "flag": 5,
+        "provider": {
+          "uid": 401,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+          "name": "soha",
+          "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+          "badge": "空气",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P7915",
+        "type": "P",
+        "name": "[CSP-S 2021] 回文",
+        "difficulty": 4,
+        "tags": [
+          2,
+          7,
+          58,
+          108,
+          342
+        ],
+        "totalSubmit": 62118,
+        "totalAccepted": 13613,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8819",
+        "type": "P",
+        "name": "[CSP-S 2022] 星战",
+        "difficulty": 7,
+        "tags": [
+          6,
+          59,
+          108,
+          235,
+          309,
+          320,
+          342
+        ],
+        "totalSubmit": 45630,
+        "totalAccepted": 11347,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9755",
+        "type": "P",
+        "name": "[CSP-S 2023] 种树",
+        "difficulty": 6,
+        "tags": [
+          7,
+          45,
+          60,
+          108,
+          342
+        ],
+        "totalSubmit": 39217,
+        "totalAccepted": 7270,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P11231",
+        "type": "P",
+        "name": "[CSP-S 2024] 决斗",
+        "difficulty": 2,
+        "tags": [
+          7,
+          61,
+          108,
+          342,
+          364
+        ],
+        "totalSubmit": 74757,
+        "totalAccepted": 35929,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P11233",
+        "type": "P",
+        "name": "[CSP-S 2024] 染色",
+        "difficulty": 5,
+        "tags": [
+          3,
+          42,
+          61,
+          108,
+          146,
+          254,
+          342
+        ],
+        "totalSubmit": 55213,
+        "totalAccepted": 15741,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5687",
+        "type": "P",
+        "name": "[CSP-S 2019 江西] 网格图",
+        "difficulty": 4,
+        "tags": [
+          7,
+          36,
+          161,
+          166,
+          342
+        ],
+        "totalSubmit": 18197,
+        "totalAccepted": 5788,
+        "flag": 5,
+        "provider": {
+          "uid": 51971,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/51971.png",
+          "name": "syksykCCC",
+          "slogan": "相信并抓住那些源于热爱，忠于自我的每一个可能性",
+          "badge": "PAHs",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5688",
+        "type": "P",
+        "name": "[CSP-S 2019 江西] 散步",
+        "difficulty": 7,
+        "tags": [
+          4,
+          36,
+          42,
+          161,
+          342
+        ],
+        "totalSubmit": 3730,
+        "totalAccepted": 751,
+        "flag": 5,
+        "provider": {
+          "uid": 51971,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/51971.png",
+          "name": "syksykCCC",
+          "slogan": "相信并抓住那些源于热爱，忠于自我的每一个可能性",
+          "badge": "PAHs",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5658",
+        "type": "P",
+        "name": "[CSP-S 2019] 括号树",
+        "difficulty": 4,
+        "tags": [
+          3,
+          11,
+          36,
+          230,
+          287,
+          342
+        ],
+        "totalSubmit": 84851,
+        "totalAccepted": 21038,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5690",
+        "type": "P",
+        "name": "[CSP-S 2019 江西] 日期",
+        "difficulty": 2,
+        "tags": [
+          7,
+          36,
+          111,
+          161,
+          342,
+          376
+        ],
+        "totalSubmit": 94804,
+        "totalAccepted": 21823,
+        "flag": 5,
+        "provider": {
+          "uid": 20218,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/20218.png",
+          "name": "zhouwc",
+          "slogan": "千夫诺诺，不如一士谔谔！",
+          "badge": "legends",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/89co3y55.png"
+        }
+      },
+      {
+        "pid": "P7914",
+        "type": "P",
+        "name": "[CSP-S 2021] 括号序列",
+        "difficulty": 6,
+        "tags": [
+          3,
+          58,
+          108,
+          144,
+          342
+        ],
+        "totalSubmit": 32041,
+        "totalAccepted": 11605,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7916",
+        "type": "P",
+        "name": "[CSP-S 2021] 交通规划",
+        "difficulty": 7,
+        "tags": [
+          3,
+          58,
+          79,
+          108,
+          144,
+          155,
+          160,
+          172,
+          198,
+          342
+        ],
+        "totalSubmit": 13531,
+        "totalAccepted": 2693,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8817",
+        "type": "P",
+        "name": "[CSP-S 2022] 假期计划",
+        "difficulty": 5,
+        "tags": [
+          59,
+          108,
+          126,
+          342,
+          380
+        ],
+        "totalSubmit": 72312,
+        "totalAccepted": 13773,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8818",
+        "type": "P",
+        "name": "[CSP-S 2022] 策略游戏",
+        "difficulty": 4,
+        "tags": [
+          7,
+          42,
+          59,
+          108,
+          290,
+          342,
+          376
+        ],
+        "totalSubmit": 76077,
+        "totalAccepted": 17312,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9753",
+        "type": "P",
+        "name": "[CSP-S 2023] 消消乐",
+        "difficulty": 5,
+        "tags": [
+          3,
+          60,
+          108,
+          112,
+          235,
+          287,
+          300,
+          342
+        ],
+        "totalSubmit": 66364,
+        "totalAccepted": 19406,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9754",
+        "type": "P",
+        "name": "[CSP-S 2023] 结构体",
+        "difficulty": 6,
+        "tags": [
+          1,
+          60,
+          108,
+          342
+        ],
+        "totalSubmit": 23274,
+        "totalAccepted": 5924,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P11232",
+        "type": "P",
+        "name": "[CSP-S 2024] 超速检测",
+        "difficulty": 4,
+        "tags": [
+          1,
+          5,
+          7,
+          45,
+          61,
+          108,
+          113,
+          342,
+          376
+        ],
+        "totalSubmit": 81766,
+        "totalAccepted": 15522,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P11234",
+        "type": "P",
+        "name": "[CSP-S 2024] 擂台游戏",
+        "difficulty": 8,
+        "tags": [
+          7,
+          12,
+          54,
+          61,
+          108,
+          127,
+          152,
+          330,
+          342
+        ],
+        "totalSubmit": 16208,
+        "totalAccepted": 2343,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P14362",
+        "type": "P",
+        "name": "[CSP-S 2025] 道路修复",
+        "difficulty": 5,
+        "tags": [
+          6,
+          7,
+          62,
+          108,
+          166,
+          342
+        ],
+        "totalSubmit": 67877,
+        "totalAccepted": 15799,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P14363",
+        "type": "P",
+        "name": "[CSP-S 2025] 谐音替换",
+        "difficulty": 6,
+        "tags": [
+          45,
+          62,
+          108,
+          235,
+          298,
+          300,
+          301,
+          342
+        ],
+        "totalSubmit": 33330,
+        "totalAccepted": 6623,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P14364",
+        "type": "P",
+        "name": "[CSP-S 2025] 员工招聘",
+        "difficulty": 7,
+        "tags": [
+          3,
+          62,
+          108,
+          146,
+          252,
+          259,
+          342
+        ],
+        "totalSubmit": 16341,
+        "totalAccepted": 4139,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5657",
+        "type": "P",
+        "name": "[CSP-S 2019] 格雷码",
+        "difficulty": 2,
+        "tags": [
+          5,
+          36,
+          54,
+          244,
+          314,
+          342
+        ],
+        "totalSubmit": 119456,
+        "totalAccepted": 39631,
+        "flag": 5,
+        "provider": {
+          "uid": 401,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+          "name": "soha",
+          "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+          "badge": "空气",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5659",
+        "type": "P",
+        "name": "[CSP-S 2019] 树上的数",
+        "difficulty": 8,
+        "tags": [
+          11,
+          36,
+          342
+        ],
+        "totalSubmit": 11654,
+        "totalAccepted": 2787,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P9752",
+        "type": "P",
+        "name": "[CSP-S 2023] 密码锁",
+        "difficulty": 2,
+        "tags": [
+          1,
+          60,
+          108,
+          111,
+          342
+        ],
+        "totalSubmit": 66721,
+        "totalAccepted": 27415,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5666",
+        "type": "P",
+        "name": "[CSP-S 2019] 树的重心",
+        "difficulty": 7,
+        "tags": [
+          36,
+          43,
+          55,
+          152,
+          342
+        ],
+        "totalSubmit": 19449,
+        "totalAccepted": 5710,
+        "flag": 5,
+        "provider": {
+          "uid": 401,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+          "name": "soha",
+          "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+          "badge": "空气",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P7913",
+        "type": "P",
+        "name": "[CSP-S 2021] 廊桥分配",
+        "difficulty": 4,
+        "tags": [
+          1,
+          7,
+          58,
+          108,
+          113,
+          148,
+          254,
+          288,
+          342
+        ],
+        "totalSubmit": 98914,
+        "totalAccepted": 23613,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P14361",
+        "type": "P",
+        "name": "[CSP-S 2025] 社团招新",
+        "difficulty": 3,
+        "tags": [
+          7,
+          62,
+          108,
+          113,
+          342,
+          524
+        ],
+        "totalSubmit": 48987,
+        "totalAccepted": 18726,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5664",
+        "type": "P",
+        "name": "[CSP-S 2019] Emiya 家今天的饭",
+        "difficulty": 6,
+        "tags": [
+          3,
+          5,
+          36,
+          259,
+          342
+        ],
+        "totalSubmit": 47831,
+        "totalAccepted": 14904,
+        "flag": 5,
+        "provider": {
+          "uid": 401,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+          "name": "soha",
+          "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+          "badge": "空气",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P5686",
+        "type": "P",
+        "name": "[CSP-S 2019 江西] 和积和",
+        "difficulty": 3,
+        "tags": [
+          5,
+          12,
+          36,
+          72,
+          112,
+          161,
+          254,
+          342
+        ],
+        "totalSubmit": 34462,
+        "totalAccepted": 8278,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5689",
+        "type": "P",
+        "name": "[CSP-S 2019 江西] 多叉堆",
+        "difficulty": 4,
+        "tags": [
+          36,
+          47,
+          161,
+          252,
+          276,
+          342
+        ],
+        "totalSubmit": 6245,
+        "totalAccepted": 3122,
+        "flag": 5,
+        "provider": {
+          "uid": 51971,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/51971.png",
+          "name": "syksykCCC",
+          "slogan": "相信并抓住那些源于热爱，忠于自我的每一个可能性",
+          "badge": "PAHs",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8820",
+        "type": "P",
+        "name": "[CSP-S 2022] 数据传输",
+        "difficulty": 7,
+        "tags": [
+          3,
+          43,
+          59,
+          108,
+          211,
+          228,
+          272,
+          342,
+          376,
+          443
+        ],
+        "totalSubmit": 16456,
+        "totalAccepted": 3400,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8137",
+        "type": "P",
+        "name": "[ICPC 2020 WF] 'S No Problem",
+        "difficulty": 5,
+        "tags": [
+          37,
+          108,
+          335,
+          510
+        ],
+        "totalSubmit": 53,
+        "totalAccepted": 32,
+        "flag": 5,
+        "provider": {
+          "uid": 53062,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/53062.png",
+          "name": "Anguei",
+          "slogan": "俺咕诶",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7073",
+        "type": "P",
+        "name": "[CSP-J 2020] 表达式",
+        "difficulty": 4,
+        "tags": [
+          1,
+          11,
+          37,
+          47,
+          287,
+          343
+        ],
+        "totalSubmit": 69355,
+        "totalAccepted": 16369,
+        "flag": 5,
+        "provider": {
+          "uid": 65363,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/65363.png",
+          "name": "一扶苏一",
+          "slogan": "休息结束。邮箱 yifusuyi@qq.com",
+          "badge": "扶咕咕",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P12860",
+        "type": "P",
+        "name": "[NERC 2020 Online] Kate' s 2021 Celebration",
+        "difficulty": 1,
+        "tags": [
+          1,
+          37,
+          107,
+          108,
+          113,
+          335,
+          500,
+          504
+        ],
+        "totalSubmit": 2914,
+        "totalAccepted": 1459,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P7072",
+        "type": "P",
+        "name": "[CSP-J 2020] 直播获奖",
+        "difficulty": 2,
+        "tags": [
+          1,
+          37,
+          113,
+          343
+        ],
+        "totalSubmit": 224701,
+        "totalAccepted": 86168,
+        "flag": 5,
+        "provider": {
+          "uid": 65363,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/65363.png",
+          "name": "一扶苏一",
+          "slogan": "休息结束。邮箱 yifusuyi@qq.com",
+          "badge": "扶咕咕",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7074",
+        "type": "P",
+        "name": "[CSP-J 2020] 方格取数",
+        "difficulty": 4,
+        "tags": [
+          3,
+          37,
+          343
+        ],
+        "totalSubmit": 136943,
+        "totalAccepted": 41208,
+        "flag": 5,
+        "provider": {
+          "uid": 65363,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/65363.png",
+          "name": "一扶苏一",
+          "slogan": "休息结束。邮箱 yifusuyi@qq.com",
+          "badge": "扶咕咕",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P12910",
+        "type": "P",
+        "name": "[NERC 2020] King's Task",
+        "difficulty": 3,
+        "tags": [
+          37,
+          45,
+          126,
+          335,
+          500
+        ],
+        "totalSubmit": 413,
+        "totalAccepted": 218,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13866",
+        "type": "P",
+        "name": "[SWERC 2020] Daisy 的迷宫",
+        "difficulty": 8,
+        "tags": [
+          37,
+          335
+        ],
+        "totalSubmit": 188,
+        "totalAccepted": 109,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P7071",
+        "type": "P",
+        "name": "[CSP-J 2020] 优秀的拆分",
+        "difficulty": 2,
+        "tags": [
+          1,
+          37,
+          244,
+          343
+        ],
+        "totalSubmit": 242671,
+        "totalAccepted": 100993,
+        "flag": 5,
+        "provider": {
+          "uid": 65363,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/65363.png",
+          "name": "一扶苏一",
+          "slogan": "休息结束。邮箱 yifusuyi@qq.com",
+          "badge": "扶咕咕",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P11581",
+        "type": "P",
+        "name": "[CCC 2020] Surmising a Sprinter's Speed",
+        "difficulty": 2,
+        "tags": [
+          37,
+          107,
+          116
+        ],
+        "totalSubmit": 419,
+        "totalAccepted": 250,
+        "flag": 5,
+        "provider": {
+          "uid": 853792,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/853792.png",
+          "name": "JoeZYQ",
+          "slogan": "我已无退路，每一场都是决战||我  是  终  将  升  起  的  烈  阳",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/b0bjfhpe.png"
+        }
+      },
+      {
+        "pid": "B4090",
+        "type": "B",
+        "name": "[CSP-X2020 山东] 侠盗阿飞",
+        "difficulty": 2,
+        "tags": [
+          7,
+          37,
+          97,
+          111,
+          113,
+          442
+        ],
+        "totalSubmit": 9145,
+        "totalAccepted": 3768,
+        "flag": 5,
+        "provider": {
+          "uid": 516346,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/516346.png",
+          "name": "沉石鱼惊旋",
+          "slogan": "题出的好！覆盖知识点广，题目有着切合实际的背景，解法比较自然。给出题人点赞！更重要的是数据基本正确，符合一道好题的基本标准！",
+          "badge": "哀兵必胜",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/nvfo54dz.png"
+        }
+      },
+      {
+        "pid": "B4091",
+        "type": "B",
+        "name": "[CSP-X2020 山东] 分糖果",
+        "difficulty": 3,
+        "tags": [
+          1,
+          7,
+          37,
+          97,
+          113,
+          442
+        ],
+        "totalSubmit": 4263,
+        "totalAccepted": 1557,
+        "flag": 5,
+        "provider": {
+          "uid": 516346,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/516346.png",
+          "name": "沉石鱼惊旋",
+          "slogan": "题出的好！覆盖知识点广，题目有着切合实际的背景，解法比较自然。给出题人点赞！更重要的是数据基本正确，符合一道好题的基本标准！",
+          "badge": "哀兵必胜",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/nvfo54dz.png"
+        }
+      },
+      {
+        "pid": "P5886",
+        "type": "P",
+        "name": "Hello, 2020!",
+        "difficulty": 1,
+        "tags": [
+          337
+        ],
+        "totalSubmit": 23879,
+        "totalAccepted": 7767,
+        "flag": 5,
+        "provider": {
+          "uid": 1422,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1422.png",
+          "name": "Snakes",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6708",
+        "type": "P",
+        "name": "[CCC 2020] Josh's Double Bacon Deluxe",
+        "difficulty": 7,
+        "tags": [
+          3,
+          37,
+          107,
+          116,
+          270
+        ],
+        "totalSubmit": 279,
+        "totalAccepted": 107,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "B4089",
+        "type": "B",
+        "name": "[CSP-X2020 山东] 勇敢的津津",
+        "difficulty": 2,
+        "tags": [
+          3,
+          7,
+          37,
+          97,
+          442
+        ],
+        "totalSubmit": 6072,
+        "totalAccepted": 2433,
+        "flag": 5,
+        "provider": {
+          "uid": 516346,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/516346.png",
+          "name": "沉石鱼惊旋",
+          "slogan": "题出的好！覆盖知识点广，题目有着切合实际的背景，解法比较自然。给出题人点赞！更重要的是数据基本正确，符合一道好题的基本标准！",
+          "badge": "哀兵必胜",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/nvfo54dz.png"
+        }
+      },
+      {
+        "pid": "B4088",
+        "type": "B",
+        "name": "[CSP-X2020 山东] 最大回文数",
+        "difficulty": 1,
+        "tags": [
+          1,
+          37,
+          97,
+          355,
+          357,
+          442
+        ],
+        "totalSubmit": 20607,
+        "totalAccepted": 6466,
+        "flag": 5,
+        "provider": {
+          "uid": 516346,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/516346.png",
+          "name": "沉石鱼惊旋",
+          "slogan": "题出的好！覆盖知识点广，题目有着切合实际的背景，解法比较自然。给出题人点赞！更重要的是数据基本正确，符合一道好题的基本标准！",
+          "badge": "哀兵必胜",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/nvfo54dz.png"
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "CSP-S 2020",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

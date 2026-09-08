@@ -1,4 +1,5 @@
 import pytest
+from types import SimpleNamespace
 
 from hy3_contestlens.domain import CheckResult, CompileResult, TestResult as JudgeTestResult, Verdict
 from hy3_contestlens.workflow import ContestWorkflow
@@ -61,7 +62,7 @@ async def test_judge_revision_emits_live_compile_and_test_point_events():
         workspace=FrozenWorkspace(),
         judge=SuccessfulJudge(),
         model=None,
-        manifests=None,
+        manifests=SimpleNamespace(get=lambda _: SimpleNamespace(dataset_id="noip2018")),
     )
 
     compile_result, check, _ = await workflow._judge_revision(

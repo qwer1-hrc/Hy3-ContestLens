@@ -1,0 +1,335 @@
+{
+  "problem": {
+    "pid": "P5664",
+    "type": "P",
+    "name": "[CSP-S 2019] Emiya 家今天的饭",
+    "difficulty": 6,
+    "tags": [
+      3,
+      5,
+      36,
+      259,
+      342
+    ],
+    "totalSubmit": 47831,
+    "totalAccepted": 14904,
+    "flag": 5,
+    "provider": {
+      "uid": 401,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+      "name": "soha",
+      "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+      "badge": "空气",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "background": "",
+      "description": "Emiya 是个擅长做菜的高中生，他共掌握 $n$ 种**烹饪方法**，且会使用 $m$ 种**主要食材**做菜。为了方便叙述，我们对烹饪方法从 $1 \\sim n$ 编号，对主要食材从 $1 \\sim m$ 编号。\n\nEmiya 做的每道菜都将使用**恰好一种**烹饪方法与**恰好一种**主要食材。更具体地，Emiya 会做 $a_{i,j}$ 道不同的使用烹饪方法 $i$ 和主要食材 $j$ 的菜（$1 \\leq i \\leq n$、$1 \\leq j \\leq m$），这也意味着 Emiya 总共会做 $\\sum\\limits_{i=1}^{n} \\sum\\limits_{j=1}^{m} a_{i,j}$ 道不同的菜。\n\nEmiya 今天要准备一桌饭招待 Yazid 和 Rin 这对好朋友，然而三个人对菜的搭配有不同的要求，更具体地，对于一种包含 $k$ 道菜的搭配方案而言：\n- Emiya 不会让大家饿肚子，所以将做**至少一道菜**，即 $k \\geq 1$\n- Rin 希望品尝不同烹饪方法做出的菜，因此她要求每道菜的**烹饪方法互不相同**\n- Yazid 不希望品尝太多同一食材做出的菜，因此他要求每种**主要食材**至多在**一半**的菜（即 $\\lfloor \\frac{k}{2} \\rfloor$ 道菜）中被使用\n\n这里的 $\\lfloor x \\rfloor$ 为下取整函数，表示不超过 $x$ 的最大整数。\n\n这些要求难不倒 Emiya，但他想知道共有多少种不同的符合要求的搭配方案。两种方案不同，当且仅当存在至少一道菜在一种方案中出现，而不在另一种方案中出现。\n\nEmiya 找到了你，请你帮他计算，你只需要告诉他符合所有要求的搭配方案数对质数 $998,244,353$ 取模的结果。",
+      "formatI": "第 1 行两个用单个空格隔开的整数 $n,m$。\n\n第 2 行至第 $n + 1$ 行，每行 $m$ 个用单个空格隔开的整数，其中第 $i + 1$ 行的 $m$ 个数依次为 $a_{i,1}, a_{i,2}, \\cdots, a_{i,m}$。",
+      "formatO": "仅一行一个整数，表示所求方案数对 $998,244,353$ 取模的结果。",
+      "hint": "【样例 1 解释】\n\n由于在这个样例中，对于每组 $i, j$，Emiya 都最多只会做一道菜，因此我们直接通过给出烹饪方法、主要食材的编号来描述一道菜。\n\n符合要求的方案包括：\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 2 的菜\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 3 的菜\n- 做一道用烹饪方法 1、主要食材 3 的菜和一道用烹饪方法 2、主要食材 2 的菜\n\n因此输出结果为 $3 \\bmod 998,244,353 = 3$。 需要注意的是，所有只包含一道菜的方案都是不符合要求的，因为唯一的主要食材在超过一半的菜中出现，这不满足 Yazid 的要求。\n\n【样例 2 解释】\n\nEmiya 必须至少做 $2$ 道菜。\n\n做 $2$ 道菜的符合要求的方案数为 $100$。\n\n做 $3$ 道菜的符合要求的方案数为 $90$。\n\n因此符合要求的方案数为 $100 + 90 = 190$。\n\n【数据范围】\n\n::cute-table{tuack}\n\n| 测试点编号  |  $n=$ | $m=$  | $a_{i,j}<$  |\n|:-:|:-:|:-:|:-:|\n| $1$  | $2$ | $2$  | $2$  |\n| $2$  | ^  | $3$  | ^  |\n| $3$  |  $5$ | $2$  | ^  |\n| $4$  | ^  | $3$  |  ^ |\n| $5$  | $10$  | $2$  |^   |\n| $6$  | ^  | $3$  |  ^ |\n| $7$  | $10$  | $2$  | $1000$  |\n| $8$  | ^  | $3$  | ^  |\n| $9\\sim 12$  | $40$  | $2$  |   ^|\n| $13\\sim16$  | ^  | $3$  |   ^|\n| $17\\sim21$  |  ^ | $500$  |  ^ |\n| $22\\sim25$  | $100$  | $2000$  | $998,244,353$  |\n\n\n对于所有测试点，保证 $1 \\leq n \\leq 100$，$1 \\leq m \\leq 2000$，$0 \\leq a_{i,j} \\lt 998,244,353$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "background": "",
+      "description": "Emiya 是个擅长做菜的高中生，他共掌握 $n$ 种**烹饪方法**，且会使用 $m$ 种**主要食材**做菜。为了方便叙述，我们对烹饪方法从 $1 \\sim n$ 编号，对主要食材从 $1 \\sim m$ 编号。\n\nEmiya 做的每道菜都将使用**恰好一种**烹饪方法与**恰好一种**主要食材。更具体地，Emiya 会做 $a_{i,j}$ 道不同的使用烹饪方法 $i$ 和主要食材 $j$ 的菜（$1 \\leq i \\leq n$、$1 \\leq j \\leq m$），这也意味着 Emiya 总共会做 $\\sum\\limits_{i=1}^{n} \\sum\\limits_{j=1}^{m} a_{i,j}$ 道不同的菜。\n\nEmiya 今天要准备一桌饭招待 Yazid 和 Rin 这对好朋友，然而三个人对菜的搭配有不同的要求，更具体地，对于一种包含 $k$ 道菜的搭配方案而言：\n- Emiya 不会让大家饿肚子，所以将做**至少一道菜**，即 $k \\geq 1$\n- Rin 希望品尝不同烹饪方法做出的菜，因此她要求每道菜的**烹饪方法互不相同**\n- Yazid 不希望品尝太多同一食材做出的菜，因此他要求每种**主要食材**至多在**一半**的菜（即 $\\lfloor \\frac{k}{2} \\rfloor$ 道菜）中被使用\n\n这里的 $\\lfloor x \\rfloor$ 为下取整函数，表示不超过 $x$ 的最大整数。\n\n这些要求难不倒 Emiya，但他想知道共有多少种不同的符合要求的搭配方案。两种方案不同，当且仅当存在至少一道菜在一种方案中出现，而不在另一种方案中出现。\n\nEmiya 找到了你，请你帮他计算，你只需要告诉他符合所有要求的搭配方案数对质数 $998,244,353$ 取模的结果。",
+      "formatI": "第 1 行两个用单个空格隔开的整数 $n,m$。\n\n第 2 行至第 $n + 1$ 行，每行 $m$ 个用单个空格隔开的整数，其中第 $i + 1$ 行的 $m$ 个数依次为 $a_{i,1}, a_{i,2}, \\cdots, a_{i,m}$。",
+      "formatO": "仅一行一个整数，表示所求方案数对 $998,244,353$ 取模的结果。",
+      "hint": "【样例 1 解释】\n\n由于在这个样例中，对于每组 $i, j$，Emiya 都最多只会做一道菜，因此我们直接通过给出烹饪方法、主要食材的编号来描述一道菜。\n\n符合要求的方案包括：\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 2 的菜\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 3 的菜\n- 做一道用烹饪方法 1、主要食材 3 的菜和一道用烹饪方法 2、主要食材 2 的菜\n\n因此输出结果为 $3 \\bmod 998,244,353 = 3$。 需要注意的是，所有只包含一道菜的方案都是不符合要求的，因为唯一的主要食材在超过一半的菜中出现，这不满足 Yazid 的要求。\n\n【样例 2 解释】\n\nEmiya 必须至少做 $2$ 道菜。\n\n做 $2$ 道菜的符合要求的方案数为 $100$。\n\n做 $3$ 道菜的符合要求的方案数为 $90$。\n\n因此符合要求的方案数为 $100 + 90 = 190$。\n\n【数据范围】\n\n::cute-table{tuack}\n\n| 测试点编号  |  $n=$ | $m=$  | $a_{i,j}<$  |\n|:-:|:-:|:-:|:-:|\n| $1$  | $2$ | $2$  | $2$  |\n| $2$  | ^  | $3$  | ^  |\n| $3$  |  $5$ | $2$  | ^  |\n| $4$  | ^  | $3$  |  ^ |\n| $5$  | $10$  | $2$  |^   |\n| $6$  | ^  | $3$  |  ^ |\n| $7$  | $10$  | $2$  | $1000$  |\n| $8$  | ^  | $3$  | ^  |\n| $9\\sim 12$  | $40$  | $2$  |   ^|\n| $13\\sim16$  | ^  | $3$  |   ^|\n| $17\\sim21$  |  ^ | $500$  |  ^ |\n| $22\\sim25$  | $100$  | $2000$  | $998,244,353$  |\n\n\n对于所有测试点，保证 $1 \\leq n \\leq 100$，$1 \\leq m \\leq 2000$，$0 \\leq a_{i,j} \\lt 998,244,353$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 3 \n1 0 1\n0 1 1",
+        "3"
+      ],
+      [
+        "3 3\n1 2 3\n4 5 0\n6 0 0",
+        "190"
+      ],
+      [
+        "5 5\n1 0 0 1 1\n0 1 0 1 0\n1 1 1 1 0\n1 0 1 0 1\n0 1 1 0 1",
+        "742"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2019] Emiya’s Meal Today",
+      "background": "",
+      "description": "Emiya is a high school student who is good at cooking. He has mastered $n$ kinds of **cooking methods**, and uses $m$ kinds of **main ingredients**. For convenience, we number cooking methods from $1$ to $n$, and main ingredients from $1$ to $m$.\n\nEvery dish Emiya makes will use **exactly one** cooking method and **exactly one** main ingredient. More specifically, Emiya can make $a_{i,j}$ different dishes that use cooking method $i$ and main ingredient $j$ ($1 \\leq i \\leq n$, $1 \\leq j \\leq m$). This also means Emiya can make a total of $\\sum\\limits_{i=1}^{n} \\sum\\limits_{j=1}^{m} a_{i,j}$ different dishes.\n\nToday, Emiya is going to prepare a meal to treat his good friends Yazid and Rin. However, the three of them have different requirements for how the dishes are combined. More specifically, for a plan (a selection) that contains $k$ dishes:\n- Emiya will not let everyone go hungry, so he will make **at least one dish**, i.e. $k \\geq 1$.\n- Rin wants to taste dishes made with different cooking methods, so she requires that the **cooking methods of all dishes are pairwise different**.\n- Yazid does not want to taste too many dishes made from the same ingredient, so he requires that each **main ingredient** is used in at most **half** of the dishes (i.e. at most $\\lfloor \\frac{k}{2} \\rfloor$ dishes).\n\nHere, $\\lfloor x \\rfloor$ is the floor function, meaning the greatest integer not exceeding $x$.\n\nThese requirements are not hard for Emiya, but he wants to know how many different plans satisfy them. Two plans are different if and only if there exists at least one dish that appears in one plan but not in the other.\n\nEmiya asks you for help. Please compute the number of valid plans, and output the result modulo the prime $998,244,353$.",
+      "formatI": "The first line contains two integers $n, m$ separated by a single space.\n\nLines $2$ to $n + 1$ each contain $m$ integers separated by single spaces. On line $i + 1$, the $m$ numbers are $a_{i,1}, a_{i,2}, \\cdots, a_{i,m}$ in order.",
+      "formatO": "Output a single integer: the number of valid plans modulo $998,244,353$.",
+      "hint": "[Sample 1 Explanation]\n\nIn this sample, for every pair $i, j$, Emiya can make at most one dish, so we directly describe a dish by giving the indices of its cooking method and main ingredient.\n\nValid plans include:\n- Make one dish using cooking method $1$ and main ingredient $1$, and one dish using cooking method $2$ and main ingredient $2$.\n- Make one dish using cooking method $1$ and main ingredient $1$, and one dish using cooking method $2$ and main ingredient $3$.\n- Make one dish using cooking method $1$ and main ingredient $3$, and one dish using cooking method $2$ and main ingredient $2$.\n\nTherefore the output is $3 \\bmod 998,244,353 = 3$. Note that all plans that contain only one dish are invalid, because the only main ingredient appears in more than half of the dishes, which does not satisfy Yazid’s requirement.\n\n[Sample 2 Explanation]\n\nEmiya must make at least $2$ dishes.\n\nThe number of valid plans with $2$ dishes is $100$.\n\nThe number of valid plans with $3$ dishes is $90$.\n\nTherefore the total number of valid plans is $100 + 90 = 190$.\n\n[Constraints]\n\n::cute-table{tuack}\n\n| Test Point ID | $n=$ | $m=$ | $a_{i,j}<$ |\n|:-:|:-:|:-:|:-:|\n| $1$ | $2$ | $2$ | $2$ |\n| $2$ | ^ | $3$ | ^ |\n| $3$ | $5$ | $2$ | ^ |\n| $4$ | ^ | $3$ | ^ |\n| $5$ | $10$ | $2$ | ^ |\n| $6$ | ^ | $3$ | ^ |\n| $7$ | $10$ | $2$ | $1000$ |\n| $8$ | ^ | $3$ | ^ |\n| $9\\sim 12$ | $40$ | $2$ | ^ |\n| $13\\sim16$ | ^ | $3$ | ^ |\n| $17\\sim21$ | ^ | $500$ | ^ |\n| $22\\sim25$ | $100$ | $2000$ | $998,244,353$ |\n\nFor all test points, it is guaranteed that $1 \\leq n \\leq 100$, $1 \\leq m \\leq 2000$, $0 \\leq a_{i,j} \\lt 998,244,353$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "background": "",
+      "description": "Emiya 是个擅长做菜的高中生，他共掌握 $n$ 种**烹饪方法**，且会使用 $m$ 种**主要食材**做菜。为了方便叙述，我们对烹饪方法从 $1 \\sim n$ 编号，对主要食材从 $1 \\sim m$ 编号。\n\nEmiya 做的每道菜都将使用**恰好一种**烹饪方法与**恰好一种**主要食材。更具体地，Emiya 会做 $a_{i,j}$ 道不同的使用烹饪方法 $i$ 和主要食材 $j$ 的菜（$1 \\leq i \\leq n$、$1 \\leq j \\leq m$），这也意味着 Emiya 总共会做 $\\sum\\limits_{i=1}^{n} \\sum\\limits_{j=1}^{m} a_{i,j}$ 道不同的菜。\n\nEmiya 今天要准备一桌饭招待 Yazid 和 Rin 这对好朋友，然而三个人对菜的搭配有不同的要求，更具体地，对于一种包含 $k$ 道菜的搭配方案而言：\n- Emiya 不会让大家饿肚子，所以将做**至少一道菜**，即 $k \\geq 1$\n- Rin 希望品尝不同烹饪方法做出的菜，因此她要求每道菜的**烹饪方法互不相同**\n- Yazid 不希望品尝太多同一食材做出的菜，因此他要求每种**主要食材**至多在**一半**的菜（即 $\\lfloor \\frac{k}{2} \\rfloor$ 道菜）中被使用\n\n这里的 $\\lfloor x \\rfloor$ 为下取整函数，表示不超过 $x$ 的最大整数。\n\n这些要求难不倒 Emiya，但他想知道共有多少种不同的符合要求的搭配方案。两种方案不同，当且仅当存在至少一道菜在一种方案中出现，而不在另一种方案中出现。\n\nEmiya 找到了你，请你帮他计算，你只需要告诉他符合所有要求的搭配方案数对质数 $998,244,353$ 取模的结果。",
+      "formatI": "第 1 行两个用单个空格隔开的整数 $n,m$。\n\n第 2 行至第 $n + 1$ 行，每行 $m$ 个用单个空格隔开的整数，其中第 $i + 1$ 行的 $m$ 个数依次为 $a_{i,1}, a_{i,2}, \\cdots, a_{i,m}$。",
+      "formatO": "仅一行一个整数，表示所求方案数对 $998,244,353$ 取模的结果。",
+      "hint": "【样例 1 解释】\n\n由于在这个样例中，对于每组 $i, j$，Emiya 都最多只会做一道菜，因此我们直接通过给出烹饪方法、主要食材的编号来描述一道菜。\n\n符合要求的方案包括：\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 2 的菜\n- 做一道用烹饪方法 1、主要食材 1 的菜和一道用烹饪方法 2、主要食材 3 的菜\n- 做一道用烹饪方法 1、主要食材 3 的菜和一道用烹饪方法 2、主要食材 2 的菜\n\n因此输出结果为 $3 \\bmod 998,244,353 = 3$。 需要注意的是，所有只包含一道菜的方案都是不符合要求的，因为唯一的主要食材在超过一半的菜中出现，这不满足 Yazid 的要求。\n\n【样例 2 解释】\n\nEmiya 必须至少做 $2$ 道菜。\n\n做 $2$ 道菜的符合要求的方案数为 $100$。\n\n做 $3$ 道菜的符合要求的方案数为 $90$。\n\n因此符合要求的方案数为 $100 + 90 = 190$。\n\n【数据范围】\n\n::cute-table{tuack}\n\n| 测试点编号  |  $n=$ | $m=$  | $a_{i,j}<$  |\n|:-:|:-:|:-:|:-:|\n| $1$  | $2$ | $2$  | $2$  |\n| $2$  | ^  | $3$  | ^  |\n| $3$  |  $5$ | $2$  | ^  |\n| $4$  | ^  | $3$  |  ^ |\n| $5$  | $10$  | $2$  |^   |\n| $6$  | ^  | $3$  |  ^ |\n| $7$  | $10$  | $2$  | $1000$  |\n| $8$  | ^  | $3$  | ^  |\n| $9\\sim 12$  | $40$  | $2$  |   ^|\n| $13\\sim16$  | ^  | $3$  |   ^|\n| $17\\sim21$  |  ^ | $500$  |  ^ |\n| $22\\sim25$  | $100$  | $2000$  | $998,244,353$  |\n\n\n对于所有测试点，保证 $1 \\leq n \\leq 100$，$1 \\leq m \\leq 2000$，$0 \\leq a_{i,j} \\lt 998,244,353$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 24103,
+    "startTime": 1573876800,
+    "endTime": 1574481600,
+    "name": "CSP2019-S2 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1450",
+      "type": "P",
+      "name": "[HAOI2008] 硬币购物",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5658",
+      "type": "P",
+      "name": "[CSP-S 2019] 括号树",
+      "difficulty": 4
+    },
+    {
+      "pid": "P5665",
+      "type": "P",
+      "name": "[CSP-S 2019] 划分",
+      "difficulty": 7
+    },
+    {
+      "pid": "P5666",
+      "type": "P",
+      "name": "[CSP-S 2019] 树的重心",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P5664 [CSP-S 2019] Emiya 家今天的饭",
+    "type": 2,
+    "slug": "P5664",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1365010,
+      "title": "警示后人",
+      "author": {
+        "uid": 793807,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/793807.png",
+        "name": "SamHH0912",
+        "slogan": "夕阳无限好，人间重晚晴",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/l840nyin.png"
+      },
+      "time": 1787716623
+    },
+    {
+      "id": 1335602,
+      "title": "84pts TLE",
+      "author": {
+        "uid": 1802594,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1802594.png",
+        "name": "Stick_Man_",
+        "slogan": "불락",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/o3rw0o3p.png"
+      },
+      "time": 1785076530
+    },
+    {
+      "id": 1330891,
+      "title": "被卡常求调谢谢喵",
+      "author": {
+        "uid": 1652382,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1652382.png",
+        "name": "Onlycanzzzz",
+        "slogan": "越是艰难处，越是修心时",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/mnhxvzvr.png"
+      },
+      "time": 1784693313
+    },
+    {
+      "id": 1323145,
+      "title": "警示后人，正解 84 pts WA",
+      "author": {
+        "uid": 643483,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/643483.png",
+        "name": "allen2010",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784097467
+    },
+    {
+      "id": 1296840,
+      "title": "今世猴人 ( 如果你24pts )",
+      "author": {
+        "uid": 862681,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/862681.png",
+        "name": "NoNameForMonkey",
+        "slogan": "你指望一只猴子能说出什么高深的话吗",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/a76h9um2.png"
+      },
+      "time": 1779594770
+    },
+    {
+      "id": 1288418,
+      "title": "求条玄关",
+      "author": {
+        "uid": 1027663,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1027663.png",
+        "name": "weistars",
+        "slogan": "或许，我只是路过人间。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1778053720
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

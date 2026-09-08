@@ -9,15 +9,15 @@ Hy3-ContestLens 是一个面向算法竞赛学习、教学和大模型评测的�
 
 > 本项目是个人 / 犀牛鸟活动作品，并非腾讯或腾讯混元官方发布。项目通过 Hy3 调用模型能力，不训练或微调模型。
 
-当前数据范围固定为 NOIP2018 提高组 day1/day2 的 6 道题、120 个测试点。六题的洛谷七档难度尚待用户提供；在收到人工映射前，界面与报告只显示“待标注”，不会根据题名、通过率或模型表现自行推断。
+当前题库覆盖本地 NOIP 与 CSP-S 资料，共 74 题；按比赛、年份、组别和题号组织，已查询并标注洛谷当前难度。2025 年仅有附加样例，CSP-S2020 四题测试数据已完整导入，NOIP2014《解方程》仅有 10/20 个测试点。详细目录、导入方式和限制见 [比赛题库说明](docs/CONTEST_COLLECTION.md)。
 
 ## 1. 功能概览
 
 - **Problem Resources MCP**：创建只读资源 scope，安全读取 PDF/Markdown，自动发现题面与测试目录，检查 `.in`、`.out`、`.ans` 配对；
 - **Code Workspace MCP**：创建 C++ submission，保存只增不改的 revision，通过 `base_sha256` 阻止过期修改，支持完整替换和 unified diff patch；
 - **Judge MCP**：只编译冻结后的源码 artifact，在 Linux Docker 中逐点执行，检查 CE、WA、TLE、MLE、RE、OLE 和 I/O 冲突；
-- **多 Agent 工作流**：Problem Analyst、Solver、Algorithm Critic、Code Critic、Judge、Adjudicator、Repair Agent；
-- **有界修复**：默认最多 3 轮、硬上限 5 轮，保留初次、逐轮、最佳和最终结果；
+- **多 Agent 工作流**：Problem Analyst、Solver、Algorithm Critic、Code Critic、Judge、Adjudicator、Repair Agent；非 AC 代码会在 Judge 后接受一次带确定性运行证据的 Code Critic 复审；
+- **有界修复**：默认最多 3 轮、硬上限 5 轮，保留初次、逐轮、最佳和最终结果；逐测试点回归门禁禁止丢失已经通过的测试点；
 - **四种入口**：REST API、`hy3-contest` CLI、三个 MCP Server、无需 Node.js 构建的 WebUI；
 - **评测产物**：SQLite、JSON、JSONL、CSV、可打印 HTML 报告、OpenAPI 和 JSON Schema；
 - **有效性验证**：72 条过程案例模板、首错定位准确率和误报率计算工具、双人盲标与仲裁接口。
@@ -41,7 +41,7 @@ NOIP2018 data  frozen source   compile + run
         JSON / CSV / HTML reports
 ```
 
-WebUI、CLI 和 REST 最终调用同一组服务。Workspace MCP 不读取正式答案；Judge MCP 不接受用户传入的源码路径或答案路径；模型只会接触题面、公开元数据和经过裁剪的判题证据。
+WebUI、CLI 和 REST 最终调用同一组服务。Workspace MCP 不读取正式答案；Judge MCP 不接受用户传入的源码路径或答案路径；模型只会接触题面、公开元数据和经过裁剪的判题证据。运行证据包含逐点 verdict、CPU/实际耗时、内存、限制标志、退出码、终止信号和输出字节数，但不包含私有输入或标准答案内容。Critic 的逐步骤 assessment、error type、首错步骤和代码位置还会经过结构一致性门禁，不能仅在自然语言 summary 中声称发现缺陷。
 
 ## 3. 环境要求
 
@@ -443,6 +443,12 @@ hy3-contest --json check --compile-artifact <compile_artifact_id> --problem road
 `compile` 会先冻结指定 revision；Judge 不接受工作区内仍可变化的源码。
 
 ## 10. MCP Server 用法
+
+### 评测助手
+
+运行详情页与报告详情页已提供“评测助手”，支持使用 Function Calling 按需查询当前运行的报告、版本变化、Critic 评审和失败诊断。点击发送才调用模型；回答附实际查询证据，支持连续追问。助手使用独立预算和只读工具，不改变评测工作流。配置、接口与使用范围见 [评测助手说明](docs/RUN_ASSISTANT.md)。
+
+### 外部 MCP 客户端
 
 项目提供三个独立 stdio MCP Server：
 

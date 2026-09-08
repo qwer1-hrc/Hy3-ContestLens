@@ -1,0 +1,319 @@
+{
+  "problem": {
+    "pid": "P8865",
+    "type": "P",
+    "name": "[NOIP2022] 种花",
+    "difficulty": 4,
+    "tags": [
+      5,
+      59,
+      83,
+      108,
+      111,
+      252,
+      254
+    ],
+    "totalSubmit": 50989,
+    "totalAccepted": 12360,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2022] 种花",
+      "background": "",
+      "description": "小 C 决定在他的花园里种出 $\\texttt{CCF}$ 字样的图案，因此他想知道 $\\texttt C$ 和 $\\texttt F$ 两个字母各自有多少种种花的方案；不幸的是，花园中有一些土坑，这些位置无法种花，因此他希望你能帮助他解决这个问题。\n\n花园可以看作有 $n\\times m$ 个位置的网格图，从上到下分别为第 $1$ 到第 $n$ 行，从左到右分别为第 $1$ 列到第 $m$ 列，其中每个位置有可能是土坑，也有可能不是，可以用 $a_{i,j} = 1$ 表示第 $i$ 行第 $j$ 列这个位置有土坑，否则用 $a_{i,j} = 0$ 表示这个位置没土坑。\n\n一种种花方案被称为 $\\texttt{C-}$ **形**的，如果存在 $x_1, x_2 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_2$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n一种种花方案被称为 $\\texttt{F-}$ **形**的，如果存在 $x_1, x_2, x_3 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2 < x_3$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_3$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n样例一解释中给出了 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案的图案示例。\n\n现在小 C 想知道，给定 $n, m$ 以及表示每个位置是否为土坑的值 $\\{a_{i,j}\\}$，$\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案分别有多少种可能？由于答案可能非常之大，你只需要输出其对 $998244353$ 取模的结果即可，具体输出结果请看输出格式部分。",
+      "formatI": "第一行包含两个整数 $T, id$，分别表示数据组数和测试点编号。如果数据为样例则保证 $id = 0$。\n\n接下来一共 $T$ 组数据，在每组数据中：\n\n第一行包含四个整数 $n, m, c, f$，其中 $n, m$ 分别表示花园的行数、列数，对于 $c, f$ 的含义见输出格式部分。\n\n接下来 $n$ 行，每行包含一个长度为 $m$ 且仅包含 $0$ 和 $1$ 的字符串，其中第 $i$ 个串的第 $j$ 个字符表示 $a_{i,j}$，即花园里的第 $i$ 行第 $j$ 列是不是一个土坑。",
+      "formatO": "设花园中 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形的种花方案分别有 $V_C$ 和 $V_F$ 种，则你需要对每一组数据输出一行用一个空格隔开的两个非负整数，分别表示 $(c \\times V_C) \\bmod 998244353$，$(f \\times V_F ) \\bmod 998244353$ ，其中 $a \\bmod P$ 表示 $a$ 对 $P$ 取模后的结果。",
+      "hint": "**【样例 1 解释】**\n\n四个 $\\texttt{C-}$ 形种花方案为：\n\n```plain\n**1 **1 **1 **1\n*10 *10 *10 *10\n**0 *** *00 *00\n000 000 **0 ***\n```\n\n其中 $\\texttt*$ 表示在这个位置种花。注意 $\\texttt C$ 的两横可以不一样长。\n\n类似的，两个 $\\texttt{F-}$ 形种花方案为：\n\n```plain\n**1 **1\n*10 *10\n**0 ***\n*00 *00\n```\n\n**【样例 2】**\n\n见附件下的 $\\texttt{plant/plant2.in}$ 与 $\\texttt{plant/plant2.ans}$。\n\n**【样例 3】**\n\n见附件下的 $\\texttt{plant/plant3.in}$ 与 $\\texttt{plant/plant3.ans}$。\n\n**【数据范围】**\n\n对于所有数据，保证：$1 \\leq T \\leq 5$，$1 \\leq n, m \\leq 10^3$，$0 \\leq c, f \\leq 1$，$a_{i,j} \\in \\{0, 1\\}$。\n\n| 测试点编号 | $n$ | $m$ | $c=$ | $f=$ | 特殊性质 | 测试点分值 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| $1$ | $\\leq 1000$ | $\\leq 1000$ | $0$ | $0$ | 无 | $1$ |\n| $2$ | $=3$ | $=2$ | $1$ | $1$ | 无 | $2$ |\n| $3$ | $=4$ | $=2$ | $1$ | $1$ | 无 | $3$ |\n| $4$ | $\\leq 1000$ | $=2$ | $1$ | $1$ | 无 | $4$ |\n| $5$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | A | $4$ |\n| $6$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | B | $6$ |\n| $7$ | $\\leq 10$ | $\\leq 10$ | $1$ | $1$ | 无 | $10$ |\n| $8$ | $\\leq 20$ | $\\leq 20$ | $1$ | $1$ | 无 | $6$ |\n| $9$ | $\\leq 30$ | $\\leq 30$ | $1$ | $1$ | 无 | $6$ |\n| $10$ | $\\leq 50$ | $\\leq 50$ | $1$ | $1$ | 无 | $8$ |\n| $11$ | $\\leq 100$ | $\\leq 100$ | $1$ | $1$ | 无 | $10$ |\n| $12$ | $\\leq 200$ | $\\leq 200$ | $1$ | $1$ | 无 | $6$ |\n| $13$ | $\\leq 300$ | $\\leq 300$ | $1$ | $1$ | 无 | $6$ |\n| $14$ | $\\leq 500$ | $\\leq 500$ | $1$ | $1$ | 无 | $8$ |\n| $15$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $0$ | 无 | $6$ |\n| $16$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | 无 | $14$ |\n\n特殊性质 A：$\\forall 1 \\leq i \\leq n, 1 \\leq j \\leq \\left\\lfloor \\frac{m}{3} \\right\\rfloor$，$a_{i, 3 j} = 1$；\n\n特殊性质 B：$\\forall 1 \\leq i \\leq \\left\\lfloor \\frac{n}{4} \\right\\rfloor, 1 \\leq j \\leq m$，$a_{4 i, j} = 1$；",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2022] 种花",
+      "background": "",
+      "description": "小 C 决定在他的花园里种出 $\\texttt{CCF}$ 字样的图案，因此他想知道 $\\texttt C$ 和 $\\texttt F$ 两个字母各自有多少种种花的方案；不幸的是，花园中有一些土坑，这些位置无法种花，因此他希望你能帮助他解决这个问题。\n\n花园可以看作有 $n\\times m$ 个位置的网格图，从上到下分别为第 $1$ 到第 $n$ 行，从左到右分别为第 $1$ 列到第 $m$ 列，其中每个位置有可能是土坑，也有可能不是，可以用 $a_{i,j} = 1$ 表示第 $i$ 行第 $j$ 列这个位置有土坑，否则用 $a_{i,j} = 0$ 表示这个位置没土坑。\n\n一种种花方案被称为 $\\texttt{C-}$ **形**的，如果存在 $x_1, x_2 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_2$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n一种种花方案被称为 $\\texttt{F-}$ **形**的，如果存在 $x_1, x_2, x_3 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2 < x_3$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_3$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n样例一解释中给出了 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案的图案示例。\n\n现在小 C 想知道，给定 $n, m$ 以及表示每个位置是否为土坑的值 $\\{a_{i,j}\\}$，$\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案分别有多少种可能？由于答案可能非常之大，你只需要输出其对 $998244353$ 取模的结果即可，具体输出结果请看输出格式部分。",
+      "formatI": "第一行包含两个整数 $T, id$，分别表示数据组数和测试点编号。如果数据为样例则保证 $id = 0$。\n\n接下来一共 $T$ 组数据，在每组数据中：\n\n第一行包含四个整数 $n, m, c, f$，其中 $n, m$ 分别表示花园的行数、列数，对于 $c, f$ 的含义见输出格式部分。\n\n接下来 $n$ 行，每行包含一个长度为 $m$ 且仅包含 $0$ 和 $1$ 的字符串，其中第 $i$ 个串的第 $j$ 个字符表示 $a_{i,j}$，即花园里的第 $i$ 行第 $j$ 列是不是一个土坑。",
+      "formatO": "设花园中 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形的种花方案分别有 $V_C$ 和 $V_F$ 种，则你需要对每一组数据输出一行用一个空格隔开的两个非负整数，分别表示 $(c \\times V_C) \\bmod 998244353$，$(f \\times V_F ) \\bmod 998244353$ ，其中 $a \\bmod P$ 表示 $a$ 对 $P$ 取模后的结果。",
+      "hint": "**【样例 1 解释】**\n\n四个 $\\texttt{C-}$ 形种花方案为：\n\n```plain\n**1 **1 **1 **1\n*10 *10 *10 *10\n**0 *** *00 *00\n000 000 **0 ***\n```\n\n其中 $\\texttt*$ 表示在这个位置种花。注意 $\\texttt C$ 的两横可以不一样长。\n\n类似的，两个 $\\texttt{F-}$ 形种花方案为：\n\n```plain\n**1 **1\n*10 *10\n**0 ***\n*00 *00\n```\n\n**【样例 2】**\n\n见附件下的 $\\texttt{plant/plant2.in}$ 与 $\\texttt{plant/plant2.ans}$。\n\n**【样例 3】**\n\n见附件下的 $\\texttt{plant/plant3.in}$ 与 $\\texttt{plant/plant3.ans}$。\n\n**【数据范围】**\n\n对于所有数据，保证：$1 \\leq T \\leq 5$，$1 \\leq n, m \\leq 10^3$，$0 \\leq c, f \\leq 1$，$a_{i,j} \\in \\{0, 1\\}$。\n\n| 测试点编号 | $n$ | $m$ | $c=$ | $f=$ | 特殊性质 | 测试点分值 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| $1$ | $\\leq 1000$ | $\\leq 1000$ | $0$ | $0$ | 无 | $1$ |\n| $2$ | $=3$ | $=2$ | $1$ | $1$ | 无 | $2$ |\n| $3$ | $=4$ | $=2$ | $1$ | $1$ | 无 | $3$ |\n| $4$ | $\\leq 1000$ | $=2$ | $1$ | $1$ | 无 | $4$ |\n| $5$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | A | $4$ |\n| $6$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | B | $6$ |\n| $7$ | $\\leq 10$ | $\\leq 10$ | $1$ | $1$ | 无 | $10$ |\n| $8$ | $\\leq 20$ | $\\leq 20$ | $1$ | $1$ | 无 | $6$ |\n| $9$ | $\\leq 30$ | $\\leq 30$ | $1$ | $1$ | 无 | $6$ |\n| $10$ | $\\leq 50$ | $\\leq 50$ | $1$ | $1$ | 无 | $8$ |\n| $11$ | $\\leq 100$ | $\\leq 100$ | $1$ | $1$ | 无 | $10$ |\n| $12$ | $\\leq 200$ | $\\leq 200$ | $1$ | $1$ | 无 | $6$ |\n| $13$ | $\\leq 300$ | $\\leq 300$ | $1$ | $1$ | 无 | $6$ |\n| $14$ | $\\leq 500$ | $\\leq 500$ | $1$ | $1$ | 无 | $8$ |\n| $15$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $0$ | 无 | $6$ |\n| $16$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | 无 | $14$ |\n\n特殊性质 A：$\\forall 1 \\leq i \\leq n, 1 \\leq j \\leq \\left\\lfloor \\frac{m}{3} \\right\\rfloor$，$a_{i, 3 j} = 1$；\n\n特殊性质 B：$\\forall 1 \\leq i \\leq \\left\\lfloor \\frac{n}{4} \\right\\rfloor, 1 \\leq j \\leq m$，$a_{4 i, j} = 1$；",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "j3xgtq9p",
+        "filename": "plant.zip",
+        "size": 728,
+        "uploadTime": 1669441985,
+        "downloadLink": "/fe/api/problem/downloadAttachment/j3xgtq9p"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1 0\n4 3 1 1\n001\n010\n000\n000",
+        "4 2"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2022] Planting Flowers",
+      "background": "",
+      "description": "Xiao C decides to plant a pattern of the letters $\\texttt{CCF}$ in his garden, so he wants to know how many planting schemes there are for the letters $\\texttt C$ and $\\texttt F$ respectively. Unfortunately, there are some pits in the garden where flowers cannot be planted, so he hopes you can help solve this problem.\n\nThe garden can be viewed as a grid with $n \\times m$ positions, with rows numbered $1$ to $n$ from top to bottom, and columns numbered $1$ to $m$ from left to right. Each position may be a pit or not. Use $a_{i,j} = 1$ to indicate that there is a pit at row $i$, column $j$, and use $a_{i,j} = 0$ otherwise.\n\nA planting scheme is called $\\texttt{C-}$ shaped if there exist $x_1, x_2 \\in [1, n]$ and $y_0, y_1, y_2 \\in [1, m]$, satisfying $x_1 + 1 < x_2$ and $y_0 < y_1, y_2 \\leq m$, such that the segments from columns $y_0$ to $y_1$ on row $x_1$, from columns $y_0$ to $y_2$ on row $x_2$, and from rows $x_1$ to $x_2$ on column $y_0$ are all not pits, and flowers are planted only on these positions.\n\nA planting scheme is called $\\texttt{F-}$ shaped if there exist $x_1, x_2, x_3 \\in [1, n]$ and $y_0, y_1, y_2 \\in [1, m]$, satisfying $x_1 + 1 < x_2 < x_3$ and $y_0 < y_1, y_2 \\leq m$, such that the segments from columns $y_0$ to $y_1$ on row $x_1$, from columns $y_0$ to $y_2$ on row $x_2$, and from rows $x_1$ to $x_3$ on column $y_0$ are all not pits, and flowers are planted only on these positions.\n\nExamples of $\\texttt{C-}$ shaped and $\\texttt{F-}$ shaped planting schemes are shown in the explanation of Sample 1.\n\nNow Xiao C wants to know, given $n$, $m$, and the values $\\{a_{i,j}\\}$ indicating whether each position is a pit, how many possible $\\texttt{C-}$ shaped and $\\texttt{F-}$ shaped planting schemes there are, respectively. Since the answer may be very large, you only need to output the result modulo $998244353$. See the output format section for details.",
+      "formatI": "The first line contains two integers $T, id$, denoting the number of test cases and the test point ID, respectively. If the input is a sample, it is guaranteed that $id = 0$.\n\nThen there are $T$ test cases. In each test case:\n\n- The first line contains four integers $n, m, c, f$, where $n$ and $m$ denote the number of rows and columns of the garden, respectively. The meanings of $c$ and $f$ are described in the output format section.\n- The next $n$ lines each contain a string of length $m$ consisting only of $0$ and $1$. The $j$-th character of the $i$-th string denotes $a_{i,j}$, i.e., whether the cell at row $i$, column $j$ in the garden is a pit.",
+      "formatO": "Let the numbers of $\\texttt{C-}$ shaped and $\\texttt{F-}$ shaped planting schemes in the garden be $V_C$ and $V_F$, respectively. For each test case, output one line with two non-negative integers separated by a space, representing $(c \\times V_C) \\bmod 998244353$ and $(f \\times V_F ) \\bmod 998244353$, respectively, where $a \\bmod P$ denotes $a$ modulo $P$.",
+      "hint": "【Explanation of Sample 1】\n\nThe four $\\texttt{C-}$ shaped planting schemes are:\n\n```plain\n**1 **1 **1 **1\n*10 *10 *10 *10\n**0 *** *00 *00\n000 000 **0 ***\n```\n\nHere $\\texttt*$ denotes planting a flower at that position. Note that the two horizontal strokes of $\\texttt C$ do not need to have the same length.\n\nSimilarly, the two $\\texttt{F-}$ shaped planting schemes are:\n\n```plain\n**1 **1\n*10 *10\n**0 ***\n*00 *00\n```\n\n【Sample 2】\n\nSee the attachments $\\texttt{plant/plant2.in}$ and $\\texttt{plant/plant2.ans}$.\n\n【Sample 3】\n\nSee the attachments $\\texttt{plant/plant3.in}$ and $\\texttt{plant/plant3.ans}$.\n\n【Constraints】\n\nFor all test cases, it is guaranteed that $1 \\leq T \\leq 5$, $1 \\leq n, m \\leq 10^3$, $0 \\leq c, f \\leq 1$, and $a_{i,j} \\in \\{0, 1\\}$.\n\n| Test point ID | $n$ | $m$ | $c=$ | $f=$ | Special property | Score |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| $1$ | $\\leq 1000$ | $\\leq 1000$ | $0$ | $0$ | None | $1$ |\n| $2$ | $=3$ | $=2$ | $1$ | $1$ | None | $2$ |\n| $3$ | $=4$ | $=2$ | $1$ | $1$ | None | $3$ |\n| $4$ | $\\leq 1000$ | $=2$ | $1$ | $1$ | None | $4$ |\n| $5$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | A | $4$ |\n| $6$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | B | $6$ |\n| $7$ | $\\leq 10$ | $\\leq 10$ | $1$ | $1$ | None | $10$ |\n| $8$ | $\\leq 20$ | $\\leq 20$ | $1$ | $1$ | None | $6$ |\n| $9$ | $\\leq 30$ | $\\leq 30$ | $1$ | $1$ | None | $6$ |\n| $10$ | $\\leq 50$ | $\\leq 50$ | $1$ | $1$ | None | $8$ |\n| $11$ | $\\leq 100$ | $\\leq 100$ | $1$ | $1$ | None | $10$ |\n| $12$ | $\\leq 200$ | $\\leq 200$ | $1$ | $1$ | None | $6$ |\n| $13$ | $\\leq 300$ | $\\leq 300$ | $1$ | $1$ | None | $6$ |\n| $14$ | $\\leq 500$ | $\\leq 500$ | $1$ | $1$ | None | $8$ |\n| $15$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $0$ | None | $6$ |\n| $16$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | None | $14$ |\n\nSpecial property A: $\\forall 1 \\leq i \\leq n, 1 \\leq j \\leq \\left\\lfloor \\frac{m}{3} \\right\\rfloor$, $a_{i, 3 j} = 1$.\n\nSpecial property B: $\\forall 1 \\leq i \\leq \\left\\lfloor \\frac{n}{4} \\right\\rfloor, 1 \\leq j \\leq m$, $a_{4 i, j} = 1$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2022] 种花",
+      "background": "",
+      "description": "小 C 决定在他的花园里种出 $\\texttt{CCF}$ 字样的图案，因此他想知道 $\\texttt C$ 和 $\\texttt F$ 两个字母各自有多少种种花的方案；不幸的是，花园中有一些土坑，这些位置无法种花，因此他希望你能帮助他解决这个问题。\n\n花园可以看作有 $n\\times m$ 个位置的网格图，从上到下分别为第 $1$ 到第 $n$ 行，从左到右分别为第 $1$ 列到第 $m$ 列，其中每个位置有可能是土坑，也有可能不是，可以用 $a_{i,j} = 1$ 表示第 $i$ 行第 $j$ 列这个位置有土坑，否则用 $a_{i,j} = 0$ 表示这个位置没土坑。\n\n一种种花方案被称为 $\\texttt{C-}$ **形**的，如果存在 $x_1, x_2 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_2$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n一种种花方案被称为 $\\texttt{F-}$ **形**的，如果存在 $x_1, x_2, x_3 \\in [1, n]$，以及 $y_0, y_1, y_2 \\in [1, m]$，满足 $x_1 + 1 < x_2 < x_3$，并且 $y_0 < y_1, y_2 \\leq m$，使得第 $x_1$ **行**的第 $y_0$ 到第 $y_1$ **列**、第 $x_2$ **行**的第 $y_0$ 到第 $y_2$ **列**以及第 $y_0$ **列**的第 $x_1$ 到第 $x_3$ **行**都**不为土坑**，且只在上述这些位置上种花。\n\n样例一解释中给出了 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案的图案示例。\n\n现在小 C 想知道，给定 $n, m$ 以及表示每个位置是否为土坑的值 $\\{a_{i,j}\\}$，$\\texttt{C-}$ 形和 $\\texttt{F-}$ 形种花方案分别有多少种可能？由于答案可能非常之大，你只需要输出其对 $998244353$ 取模的结果即可，具体输出结果请看输出格式部分。",
+      "formatI": "第一行包含两个整数 $T, id$，分别表示数据组数和测试点编号。如果数据为样例则保证 $id = 0$。\n\n接下来一共 $T$ 组数据，在每组数据中：\n\n第一行包含四个整数 $n, m, c, f$，其中 $n, m$ 分别表示花园的行数、列数，对于 $c, f$ 的含义见输出格式部分。\n\n接下来 $n$ 行，每行包含一个长度为 $m$ 且仅包含 $0$ 和 $1$ 的字符串，其中第 $i$ 个串的第 $j$ 个字符表示 $a_{i,j}$，即花园里的第 $i$ 行第 $j$ 列是不是一个土坑。",
+      "formatO": "设花园中 $\\texttt{C-}$ 形和 $\\texttt{F-}$ 形的种花方案分别有 $V_C$ 和 $V_F$ 种，则你需要对每一组数据输出一行用一个空格隔开的两个非负整数，分别表示 $(c \\times V_C) \\bmod 998244353$，$(f \\times V_F ) \\bmod 998244353$ ，其中 $a \\bmod P$ 表示 $a$ 对 $P$ 取模后的结果。",
+      "hint": "**【样例 1 解释】**\n\n四个 $\\texttt{C-}$ 形种花方案为：\n\n```plain\n**1 **1 **1 **1\n*10 *10 *10 *10\n**0 *** *00 *00\n000 000 **0 ***\n```\n\n其中 $\\texttt*$ 表示在这个位置种花。注意 $\\texttt C$ 的两横可以不一样长。\n\n类似的，两个 $\\texttt{F-}$ 形种花方案为：\n\n```plain\n**1 **1\n*10 *10\n**0 ***\n*00 *00\n```\n\n**【样例 2】**\n\n见附件下的 $\\texttt{plant/plant2.in}$ 与 $\\texttt{plant/plant2.ans}$。\n\n**【样例 3】**\n\n见附件下的 $\\texttt{plant/plant3.in}$ 与 $\\texttt{plant/plant3.ans}$。\n\n**【数据范围】**\n\n对于所有数据，保证：$1 \\leq T \\leq 5$，$1 \\leq n, m \\leq 10^3$，$0 \\leq c, f \\leq 1$，$a_{i,j} \\in \\{0, 1\\}$。\n\n| 测试点编号 | $n$ | $m$ | $c=$ | $f=$ | 特殊性质 | 测试点分值 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| $1$ | $\\leq 1000$ | $\\leq 1000$ | $0$ | $0$ | 无 | $1$ |\n| $2$ | $=3$ | $=2$ | $1$ | $1$ | 无 | $2$ |\n| $3$ | $=4$ | $=2$ | $1$ | $1$ | 无 | $3$ |\n| $4$ | $\\leq 1000$ | $=2$ | $1$ | $1$ | 无 | $4$ |\n| $5$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | A | $4$ |\n| $6$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | B | $6$ |\n| $7$ | $\\leq 10$ | $\\leq 10$ | $1$ | $1$ | 无 | $10$ |\n| $8$ | $\\leq 20$ | $\\leq 20$ | $1$ | $1$ | 无 | $6$ |\n| $9$ | $\\leq 30$ | $\\leq 30$ | $1$ | $1$ | 无 | $6$ |\n| $10$ | $\\leq 50$ | $\\leq 50$ | $1$ | $1$ | 无 | $8$ |\n| $11$ | $\\leq 100$ | $\\leq 100$ | $1$ | $1$ | 无 | $10$ |\n| $12$ | $\\leq 200$ | $\\leq 200$ | $1$ | $1$ | 无 | $6$ |\n| $13$ | $\\leq 300$ | $\\leq 300$ | $1$ | $1$ | 无 | $6$ |\n| $14$ | $\\leq 500$ | $\\leq 500$ | $1$ | $1$ | 无 | $8$ |\n| $15$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $0$ | 无 | $6$ |\n| $16$ | $\\leq 1000$ | $\\leq 1000$ | $1$ | $1$ | 无 | $14$ |\n\n特殊性质 A：$\\forall 1 \\leq i \\leq n, 1 \\leq j \\leq \\left\\lfloor \\frac{m}{3} \\right\\rfloor$，$a_{i, 3 j} = 1$；\n\n特殊性质 B：$\\forall 1 \\leq i \\leq \\left\\lfloor \\frac{n}{4} \\right\\rfloor, 1 \\leq j \\leq m$，$a_{4 i, j} = 1$；",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 93176,
+    "startTime": 1669442400,
+    "endTime": 1670076000,
+    "name": "NOIP 2022 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [],
+  "forum": {
+    "name": "P8865 [NOIP2022] 种花",
+    "type": 2,
+    "slug": "P8865",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1353082,
+      "title": "TLE80求优化",
+      "author": {
+        "uid": 1379302,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1379302.png",
+        "name": "Angel_one",
+        "slogan": "先天下之乐而乐，后天下之忧而忧||   讨厌dp和贪心||   一个忠厚朴实的PVZ和MC玩家||   很菜||   终于有钩了——2025.11.24||   终于红了——2026.1.4||   我关的不回关就取关",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/2ei005vs.png"
+      },
+      "time": 1786674994
+    },
+    {
+      "id": 1349620,
+      "title": "RE qt",
+      "author": {
+        "uid": 1262434,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1262434.png",
+        "name": "KALEIDXSCOPE",
+        "slogan": "音游人/术术人 求壶关！|| @一扶苏一: 教我舞萌 || @Prophesy_One : 世界真小，认出来+1|| @一扶苏一 : 被人在机厅看到了 id 然后问是不是洛谷的一扶苏一，遂落荒而逃",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qtxl7bv0.png"
+      },
+      "time": 1786409797
+    },
+    {
+      "id": 1325444,
+      "title": "一分求调",
+      "author": {
+        "uid": 1165586,
+        "avatar": "https://cdn.luogu.com.cn/images/banned.png",
+        "name": "#SUSPENDED#",
+        "slogan": null,
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": true,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": null
+      },
+      "time": 1784257734
+    },
+    {
+      "id": 1321084,
+      "title": "二刷，警示后入（26pts）",
+      "author": {
+        "uid": 1807311,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1807311.png",
+        "name": "Amethyzhe",
+        "slogan": "喵呜……",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/tdt5z1ak.png"
+      },
+      "time": 1783941964
+    },
+    {
+      "id": 1301315,
+      "title": "斤氏后人",
+      "author": {
+        "uid": 2001209,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2001209.png",
+        "name": "DWZ_fuhang",
+        "slogan": "⎛⎝≥⏝福夯⏝≤⎛⎝",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/9iqlb8w8.png"
+      },
+      "time": 1780402522
+    },
+    {
+      "id": 1300417,
+      "title": "RE，求条币冠",
+      "author": {
+        "uid": 1551411,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1551411.png",
+        "name": "Eternity_A",
+        "slogan": "偏我去时花满城，偏我来时不逢春 | qq 3868194748",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/zes7owu3.png"
+      },
+      "time": 1780211966
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

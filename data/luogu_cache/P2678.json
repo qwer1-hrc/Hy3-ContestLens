@@ -1,0 +1,297 @@
+{
+  "problem": {
+    "pid": "P2678",
+    "type": "P",
+    "name": "[NOIP 2015 提高组] 跳石头",
+    "difficulty": 3,
+    "tags": [
+      7,
+      32,
+      45,
+      83
+    ],
+    "totalSubmit": 444993,
+    "totalAccepted": 151117,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 提高组] 跳石头",
+      "background": "NOIP2015 Day2T1",
+      "description": "一年一度的“跳石头”比赛又要开始了！\n\n这项比赛将在一条笔直的河道中进行，河道中分布着一些巨大岩石。组委会已经选择好了两块岩石作为比赛起点和终点。在起点和终点之间，有 $N$ 块岩石（不含起点和终点的岩石）。在比赛过程中，选手们将从起点出发，每一步跳向相邻的岩石，直至到达终点。\n\n为了提高比赛难度，组委会计划移走一些岩石，使得选手们在比赛过程中的最短跳跃距离尽可能长。由于预算限制，组委会至多从起点和终点之间移走 $M$ 块岩石（不能移走起点和终点的岩石）。",
+      "formatI": "第一行包含三个整数 $L,N,M$，分别表示起点到终点的距离，起点和终点之间的岩石数，以及组委会至多移走的岩石数。保证 $L \\geq 1$ 且 $N \\geq M \\geq 0$。\n\n接下来 $N$ 行，每行一个整数，第 $i$ 行的整数 $D_i\\,( 0 < D_i < L)$， 表示第 $i$ 块岩石与起点的距离。这些岩石按与起点距离从小到大的顺序给出，且不会有两个岩石出现在同一个位置。",
+      "formatO": "一个整数，即最短跳跃距离的最大值。",
+      "hint": "### 输入输出样例 1 说明\n\n将与起点距离为 $2$ 和 $14$ 的两个岩石移走后，最短的跳跃距离为 $4$（从与起点距离 $17$ 的岩石跳到距离 $21$ 的岩石，或者从距离 $21$ 的岩石跳到终点）。\n\n### 数据规模与约定\n\n对于 $20\\%$的数据，$0 \\le M \\le N \\le 10$。    \n对于 $50\\%$ 的数据，$0 \\le M \\le N \\le 100$。  \n对于 $100\\%$ 的数据，$0 \\le M \\le N \\le 50000,1 \\le L \n \\le 10^9$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 提高组] 跳石头",
+      "background": "NOIP2015 Day2T1",
+      "description": "一年一度的“跳石头”比赛又要开始了！\n\n这项比赛将在一条笔直的河道中进行，河道中分布着一些巨大岩石。组委会已经选择好了两块岩石作为比赛起点和终点。在起点和终点之间，有 $N$ 块岩石（不含起点和终点的岩石）。在比赛过程中，选手们将从起点出发，每一步跳向相邻的岩石，直至到达终点。\n\n为了提高比赛难度，组委会计划移走一些岩石，使得选手们在比赛过程中的最短跳跃距离尽可能长。由于预算限制，组委会至多从起点和终点之间移走 $M$ 块岩石（不能移走起点和终点的岩石）。",
+      "formatI": "第一行包含三个整数 $L,N,M$，分别表示起点到终点的距离，起点和终点之间的岩石数，以及组委会至多移走的岩石数。保证 $L \\geq 1$ 且 $N \\geq M \\geq 0$。\n\n接下来 $N$ 行，每行一个整数，第 $i$ 行的整数 $D_i\\,( 0 < D_i < L)$， 表示第 $i$ 块岩石与起点的距离。这些岩石按与起点距离从小到大的顺序给出，且不会有两个岩石出现在同一个位置。",
+      "formatO": "一个整数，即最短跳跃距离的最大值。",
+      "hint": "### 输入输出样例 1 说明\n\n将与起点距离为 $2$ 和 $14$ 的两个岩石移走后，最短的跳跃距离为 $4$（从与起点距离 $17$ 的岩石跳到距离 $21$ 的岩石，或者从距离 $21$ 的岩石跳到终点）。\n\n### 数据规模与约定\n\n对于 $20\\%$的数据，$0 \\le M \\le N \\le 10$。    \n对于 $50\\%$ 的数据，$0 \\le M \\le N \\le 100$。  \n对于 $100\\%$ 的数据，$0 \\le M \\le N \\le 50000,1 \\le L \n \\le 10^9$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "25 5 2 \n2\n11\n14\n17 \n21",
+        "4"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Senior] Jumping Stones",
+      "background": "NOIP 2015 Day 2 T1.",
+      "description": "The annual \"Jumping Stones\" competition is about to begin.\n\nThe competition takes place in a straight river channel where some huge rocks are distributed. The organizing committee has chosen two rocks as the start and the finish. Between the start and the finish, there are $N$ rocks (excluding the start and finish rocks). During the competition, participants start from the start rock and jump to an adjacent rock at each step until they reach the finish.\n\nTo increase the difficulty, the committee plans to remove some rocks so that the minimum jump distance during the competition is as large as possible. Due to budget limits, the committee can remove at most $M$ rocks between the start and the finish (the start and finish rocks cannot be removed).",
+      "formatI": "The first line contains three integers $L, N, M$, representing the distance from the start to the finish, the number of rocks between the start and the finish, and the maximum number of rocks the committee may remove, respectively. It is guaranteed that $L \\geq 1$ and $N \\geq M \\geq 0$.\n\nThe next $N$ lines each contain one integer. On the $i$-th line, the integer $D_i\\,(0 < D_i < L)$ denotes the distance from the start to the $i$-th rock. These rocks are given in increasing order of distance from the start, and no two rocks are at the same position.",
+      "formatO": "Output a single integer, which is the maximum possible minimum jump distance.",
+      "hint": "### Explanation for Sample Input/Output 1\n\nAfter removing the two rocks at distances $2$ and $14$ from the start, the minimum jump distance becomes $4$ (either when jumping from the rock at distance $17$ to the rock at distance $21$, or from the rock at distance $21$ to the finish).\n\n### Constraints\n\n- For $20\\%$ of the testdata, $0 \\le M \\le N \\le 10$.\n- For $50\\%$ of the testdata, $0 \\le M \\le N \\le 100$.\n- For $100\\%$ of the testdata, $0 \\le M \\le N \\le 50000$, $1 \\le L \\le 10^9$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 提高组] 跳石头",
+      "background": "NOIP2015 Day2T1",
+      "description": "一年一度的“跳石头”比赛又要开始了！\n\n这项比赛将在一条笔直的河道中进行，河道中分布着一些巨大岩石。组委会已经选择好了两块岩石作为比赛起点和终点。在起点和终点之间，有 $N$ 块岩石（不含起点和终点的岩石）。在比赛过程中，选手们将从起点出发，每一步跳向相邻的岩石，直至到达终点。\n\n为了提高比赛难度，组委会计划移走一些岩石，使得选手们在比赛过程中的最短跳跃距离尽可能长。由于预算限制，组委会至多从起点和终点之间移走 $M$ 块岩石（不能移走起点和终点的岩石）。",
+      "formatI": "第一行包含三个整数 $L,N,M$，分别表示起点到终点的距离，起点和终点之间的岩石数，以及组委会至多移走的岩石数。保证 $L \\geq 1$ 且 $N \\geq M \\geq 0$。\n\n接下来 $N$ 行，每行一个整数，第 $i$ 行的整数 $D_i\\,( 0 < D_i < L)$， 表示第 $i$ 块岩石与起点的距离。这些岩石按与起点距离从小到大的顺序给出，且不会有两个岩石出现在同一个位置。",
+      "formatO": "一个整数，即最短跳跃距离的最大值。",
+      "hint": "### 输入输出样例 1 说明\n\n将与起点距离为 $2$ 和 $14$ 的两个岩石移走后，最短的跳跃距离为 $4$（从与起点距离 $17$ 的岩石跳到距离 $21$ 的岩石，或者从距离 $21$ 的岩石跳到终点）。\n\n### 数据规模与约定\n\n对于 $20\\%$的数据，$0 \\le M \\le N \\le 10$。    \n对于 $50\\%$ 的数据，$0 \\le M \\le N \\le 100$。  \n对于 $100\\%$ 的数据，$0 \\le M \\le N \\le 50000,1 \\le L \n \\le 10^9$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 302,
+    "startTime": 1446859800,
+    "endTime": 1447507800,
+    "name": "NOIp2015提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1182",
+      "type": "P",
+      "name": "数列分段 Section II",
+      "difficulty": 3
+    },
+    {
+      "pid": "P1873",
+      "type": "P",
+      "name": "[COCI 2011/2012 #5] EKO / 砍树",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2440",
+      "type": "P",
+      "name": "木材加工",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2679",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 子串",
+      "difficulty": 4
+    },
+    {
+      "pid": "P3853",
+      "type": "P",
+      "name": "[TJOI2007] 路标设置",
+      "difficulty": 3
+    }
+  ],
+  "forum": {
+    "name": "P2678 [NOIP 2015 提高组] 跳石头",
+    "type": 2,
+    "slug": "P2678",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1364048,
+      "title": "关于如何解释红100调教后的代码的喵",
+      "author": {
+        "uid": 1768452,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1768452.png",
+        "name": "ZL_zhongyi",
+        "slogan": "洛魄谷中寒风吹，WA蝉鸣TLE归",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/v4bm20tm.png"
+      },
+      "time": 1787630635
+    },
+    {
+      "id": 1362073,
+      "title": "100pts求条",
+      "author": {
+        "uid": 2187696,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2187696.png",
+        "name": "_cjz_",
+        "slogan": "！？人人！？|| 支持壶关 || 没有小号",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dmbb5ecj.png"
+      },
+      "time": 1787410981
+    },
+    {
+      "id": 1362065,
+      "title": "四倍经验",
+      "author": {
+        "uid": 1971065,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1971065.png",
+        "name": "lhy_666667",
+        "slogan": "666演都不演了",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787409483
+    },
+    {
+      "id": 1359153,
+      "title": "红100求调必关",
+      "author": {
+        "uid": 2217891,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2217891.png",
+        "name": "LjzDxl",
+        "slogan": "这入爱玩mcbi(四叶草服务器被封号了，我啥也不知道封了30天)(并非连点器纯手搓)",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/lv8vvixm.png"
+      },
+      "time": 1787188694
+    },
+    {
+      "id": 1356830,
+      "title": "兢拾候任",
+      "author": {
+        "uid": 1152751,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1152751.png",
+        "name": "fl0ppy_",
+        "slogan": "说点什么好呢",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/mlxnqrdy.png"
+      },
+      "time": 1787015483
+    },
+    {
+      "id": 1356479,
+      "title": "我会找最大间隔但不会找最短跳跃距离的最大值，求调",
+      "author": {
+        "uid": 1062945,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1062945.png",
+        "name": "wang101109",
+        "slogan": "一个无用的小废物~~",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/su7m8t0k.png"
+      },
+      "time": 1786965442
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

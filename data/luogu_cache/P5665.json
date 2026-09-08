@@ -1,0 +1,335 @@
+{
+  "problem": {
+    "pid": "P5665",
+    "type": "P",
+    "name": "[CSP-S 2019] 划分",
+    "difficulty": 7,
+    "tags": [
+      3,
+      7,
+      36,
+      56,
+      342
+    ],
+    "totalSubmit": 38393,
+    "totalAccepted": 5668,
+    "flag": 5,
+    "provider": {
+      "uid": 401,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+      "name": "soha",
+      "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+      "badge": "空气",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2019] 划分",
+      "background": "",
+      "description": "2048 年，第三十届 CSP 认证的考场上，作为选手的小明打开了第一题。这个题的样例有 $n$ 组数据，数据从 $1 \\sim n$ 编号，$i$ 号数据的规模为 $a_i$。\n\n小明对该题设计出了一个暴力程序，对于一组规模为 $u$ 的数据，该程序的**运行时间**为 $u^2$。然而这个程序运行完一组规模为 $u$ 的数据之后，它将在任何一组规模**小于** $u$ 的数据上运行错误。样例中的 $a_i$ 不一定递增，但小明又想在不修改程序的情况下正确运行样例，于是小明决定使用一种非常原始的解决方案：将所有数据划分成若干个数据段，段内数据编号**连续**，接着将同一段内的数据合并成新数据，其规模等于段内原数据的**规模之和**，小明将让新数据的规模能够递增。\n\n也就是说，小明需要找到一些分界点 $1 \\leq k_1 \\lt k_2 \\lt \\cdots \\lt k_p \\lt n$，使得\n\n$$ \\sum_{i=1}^{k_1} a_i \\leq \\sum_{i=k_1+1}^{k_2} a_i \\leq \\cdots \\leq \\sum_{i=k_p+1}^{n} a_i $$\n\n注意 $p$ 可以为 $0$ 且此时 $k_0 = 0$，也就是小明可以将所有数据合并在一起运行。\n\n小明希望他的程序在正确运行样例情况下，运行时间也能尽量小，也就是**最小化**：\n\n$$ \\left(\\sum_{i=1}^{k_1} a_i\\right)^2 + \\left(\\sum_{i=k_1+1}^{k_2} a_i\\right)^2 + \\cdots + \\left(\\sum_{i=k_p+1}^{n} a_i\\right)^2 $$\n\n小明觉得这个问题非常有趣，并向你请教：给定 $n$ 和 $a_i$，请你求出最优划分方案下，小明的程序的最小运行时间。",
+      "formatI": "**由于本题的数据范围较大，部分测试点的 $a_i$ 将在程序内生成。**\n\n第一行两个整数 $n, type$。$n$ 的意义见题目描述，$type$ 表示输入方式。\n1. 若 $type = 0$，则该测试点的 $a_i$ **直接给出**。输入文件接下来：第二行 $n$ 个以空格分隔的整数 $a_i$，表示每组数据的规模。\n2. 若 $type = 1$，则该测试点的 $a_i$ 将**特殊生成**，生成方式见后文。输入文件接下来：第二行六个以空格分隔的整数 $x, y, z, b_1, b_2, m$。接下来 $m$ 行中，第 $i (1 \\leq i \\leq m)$ 行包含三个以空格分隔的正整数 $p_i, l_i, r_i$。\n\n对于 $type = 1$ 的 $23 \\sim 25$ 号测试点，$a_i$ 的生成方式如下：\n\n给定整数 $x, y, z, b_1, b_2, m$，以及 $m$ 个三元组 $(p_i, l_i, r_i)$。\n\n保证 $n \\geq 2$。若 $n \\gt 2$，则 $\\forall 3 \\leq i \\leq n, b_i = (x \\times b_{i−1} + y \\times b_{i−2} + z) \\bmod 2^{30}$。\n\n保证 $1 \\leq p_i \\leq n, p_m = n$。令 $p_0 = 0$，则 $p_i$ 还满足 $\\forall 0 \\leq i \\lt m$ 有 $p_i \\lt p_{i+1}$。\n\n对于所有 $1 \\leq j \\leq m$，若下标值 $i (1 \\leq i \\leq n)$ 满足 $p_{j−1} \\lt i \\leq p_j$，则有\n\n$$a_i = \\left(b_i \\bmod \\left( r_j − l_j + 1 \\right) \\right) + l_j$$\n\n**上述数据生成方式仅是为了减少输入量大小，标准算法不依赖于该生成方式。**",
+      "formatO": "输出一行一个整数，表示答案。",
+      "hint": "【样例 1 解释】\n\n最优的划分方案为 $\\{5,1\\}, \\{7\\}, \\{9\\}, \\{9\\}$。由 $5 + 1 \\leq 7 \\leq 9 \\leq 9$ 知该方案合法。\n\n答案为 $(5 + 1)^2 + 7^2 + 9^2 + 9^2 = 247$。\n\n虽然划分方案 $\\{5\\}, \\{1\\}, \\{7\\}, \\{9\\}, \\{9\\}$ 对应的运行时间比 $247$ 小，但它不是一组合法方案，因为 $5 \\gt 1$。\n\n虽然划分方案 $\\{5\\}, \\{1,7\\}, \\{9\\}, \\{9\\}$ 合法，但该方案对应的运行时间为 $251$，比 $247$ 大。\n\n【样例 2 解释】\n\n最优的划分方案为 $\\{5\\}, \\{6\\}, \\{7\\}, \\{7\\}, \\{4,6,2\\}, \\{13\\}, \\{19,9\\}$。\n\n【数据范围】\n\n::cute-table[]{tuack}\n| 测试点编号 | $n \\leq$ | $a_i \\leq$ | $type =$ |\n| :--: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $10$ | $10$ | $0$ |\n| $4 \\sim 6$ | $50$ | $10^3$ | ^ |\n| $7 \\sim 9$ | $400$ | $10^4$ | ^ |\n| $10 \\sim 16$ | $5000$ | $10^5$ | ^ |\n| $17 \\sim 22$ | $5 \\times 10^5$ | $10^6$ | ^ |\n| $23 \\sim 25$ | $4 \\times 10^7$ | $10^9$ | $1$ |\n\n对于 $type=0$ 的所有测试点，保证最后输出的答案 $\\leq 4 \\times 10^{18}$。\n\n所有测试点满足：$type \\in \\{0,1\\}$，$2 \\leq n \\leq 4 \\times 10^7$，$1 \\leq a_i \\leq 10^9$，$1 \\leq m \\leq 10^5$，$1 \\leq l_i \\leq r_i \\leq 10^9$，$0 \\leq x,y,z,b_1,b_2 \\lt 2^{30}$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2019] 划分",
+      "background": "",
+      "description": "2048 年，第三十届 CSP 认证的考场上，作为选手的小明打开了第一题。这个题的样例有 $n$ 组数据，数据从 $1 \\sim n$ 编号，$i$ 号数据的规模为 $a_i$。\n\n小明对该题设计出了一个暴力程序，对于一组规模为 $u$ 的数据，该程序的**运行时间**为 $u^2$。然而这个程序运行完一组规模为 $u$ 的数据之后，它将在任何一组规模**小于** $u$ 的数据上运行错误。样例中的 $a_i$ 不一定递增，但小明又想在不修改程序的情况下正确运行样例，于是小明决定使用一种非常原始的解决方案：将所有数据划分成若干个数据段，段内数据编号**连续**，接着将同一段内的数据合并成新数据，其规模等于段内原数据的**规模之和**，小明将让新数据的规模能够递增。\n\n也就是说，小明需要找到一些分界点 $1 \\leq k_1 \\lt k_2 \\lt \\cdots \\lt k_p \\lt n$，使得\n\n$$ \\sum_{i=1}^{k_1} a_i \\leq \\sum_{i=k_1+1}^{k_2} a_i \\leq \\cdots \\leq \\sum_{i=k_p+1}^{n} a_i $$\n\n注意 $p$ 可以为 $0$ 且此时 $k_0 = 0$，也就是小明可以将所有数据合并在一起运行。\n\n小明希望他的程序在正确运行样例情况下，运行时间也能尽量小，也就是**最小化**：\n\n$$ \\left(\\sum_{i=1}^{k_1} a_i\\right)^2 + \\left(\\sum_{i=k_1+1}^{k_2} a_i\\right)^2 + \\cdots + \\left(\\sum_{i=k_p+1}^{n} a_i\\right)^2 $$\n\n小明觉得这个问题非常有趣，并向你请教：给定 $n$ 和 $a_i$，请你求出最优划分方案下，小明的程序的最小运行时间。",
+      "formatI": "**由于本题的数据范围较大，部分测试点的 $a_i$ 将在程序内生成。**\n\n第一行两个整数 $n, type$。$n$ 的意义见题目描述，$type$ 表示输入方式。\n1. 若 $type = 0$，则该测试点的 $a_i$ **直接给出**。输入文件接下来：第二行 $n$ 个以空格分隔的整数 $a_i$，表示每组数据的规模。\n2. 若 $type = 1$，则该测试点的 $a_i$ 将**特殊生成**，生成方式见后文。输入文件接下来：第二行六个以空格分隔的整数 $x, y, z, b_1, b_2, m$。接下来 $m$ 行中，第 $i (1 \\leq i \\leq m)$ 行包含三个以空格分隔的正整数 $p_i, l_i, r_i$。\n\n对于 $type = 1$ 的 $23 \\sim 25$ 号测试点，$a_i$ 的生成方式如下：\n\n给定整数 $x, y, z, b_1, b_2, m$，以及 $m$ 个三元组 $(p_i, l_i, r_i)$。\n\n保证 $n \\geq 2$。若 $n \\gt 2$，则 $\\forall 3 \\leq i \\leq n, b_i = (x \\times b_{i−1} + y \\times b_{i−2} + z) \\bmod 2^{30}$。\n\n保证 $1 \\leq p_i \\leq n, p_m = n$。令 $p_0 = 0$，则 $p_i$ 还满足 $\\forall 0 \\leq i \\lt m$ 有 $p_i \\lt p_{i+1}$。\n\n对于所有 $1 \\leq j \\leq m$，若下标值 $i (1 \\leq i \\leq n)$ 满足 $p_{j−1} \\lt i \\leq p_j$，则有\n\n$$a_i = \\left(b_i \\bmod \\left( r_j − l_j + 1 \\right) \\right) + l_j$$\n\n**上述数据生成方式仅是为了减少输入量大小，标准算法不依赖于该生成方式。**",
+      "formatO": "输出一行一个整数，表示答案。",
+      "hint": "【样例 1 解释】\n\n最优的划分方案为 $\\{5,1\\}, \\{7\\}, \\{9\\}, \\{9\\}$。由 $5 + 1 \\leq 7 \\leq 9 \\leq 9$ 知该方案合法。\n\n答案为 $(5 + 1)^2 + 7^2 + 9^2 + 9^2 = 247$。\n\n虽然划分方案 $\\{5\\}, \\{1\\}, \\{7\\}, \\{9\\}, \\{9\\}$ 对应的运行时间比 $247$ 小，但它不是一组合法方案，因为 $5 \\gt 1$。\n\n虽然划分方案 $\\{5\\}, \\{1,7\\}, \\{9\\}, \\{9\\}$ 合法，但该方案对应的运行时间为 $251$，比 $247$ 大。\n\n【样例 2 解释】\n\n最优的划分方案为 $\\{5\\}, \\{6\\}, \\{7\\}, \\{7\\}, \\{4,6,2\\}, \\{13\\}, \\{19,9\\}$。\n\n【数据范围】\n\n::cute-table[]{tuack}\n| 测试点编号 | $n \\leq$ | $a_i \\leq$ | $type =$ |\n| :--: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $10$ | $10$ | $0$ |\n| $4 \\sim 6$ | $50$ | $10^3$ | ^ |\n| $7 \\sim 9$ | $400$ | $10^4$ | ^ |\n| $10 \\sim 16$ | $5000$ | $10^5$ | ^ |\n| $17 \\sim 22$ | $5 \\times 10^5$ | $10^6$ | ^ |\n| $23 \\sim 25$ | $4 \\times 10^7$ | $10^9$ | $1$ |\n\n对于 $type=0$ 的所有测试点，保证最后输出的答案 $\\leq 4 \\times 10^{18}$。\n\n所有测试点满足：$type \\in \\{0,1\\}$，$2 \\leq n \\leq 4 \\times 10^7$，$1 \\leq a_i \\leq 10^9$，$1 \\leq m \\leq 10^5$，$1 \\leq l_i \\leq r_i \\leq 10^9$，$0 \\leq x,y,z,b_1,b_2 \\lt 2^{30}$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5 0\n5 1 7 9 9",
+        "247"
+      ],
+      [
+        "10 0\n5 6 7 7 4 6 2 13 19 9",
+        "1256"
+      ],
+      [
+        "10000000 1\n123 456 789 12345 6789 3\n2000000 123456789 987654321\n7000000 234567891 876543219\n10000000 456789123 567891234",
+        "4972194419293431240859891640"
+      ]
+    ],
+    "limits": {
+      "time": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ],
+      "memory": [
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2019] Partition",
+      "background": "",
+      "description": "In 2048, at the exam site of the 30th CSP certification, contestant Xiaoming opened the first problem. The sample of this problem has $n$ groups of testdata, numbered from $1 \\sim n$, and the size of the $i$-th testdata is $a_i$.\n\nXiaoming designed a brute-force program for this problem. For a piece of testdata of size $u$, the **running time** of the program is $u^2$. However, after the program finishes running on a piece of testdata of size $u$, it will produce wrong results on any piece of testdata whose size is **less than** $u$. The $a_i$ in the sample are not necessarily increasing, but Xiaoming wants to run the sample correctly without modifying the program. So he decided to use a very primitive solution: divide all testdata into several segments, where the indices within each segment are **continuous**. Then, merge the testdata within the same segment into new testdata whose size equals the **sum of sizes** of the original testdata in that segment. Xiaoming will make the sizes of the new testdata non-decreasing.\n\nThat is, Xiaoming needs to find some split points $1 \\leq k_1 \\lt k_2 \\lt \\cdots \\lt k_p \\lt n$ such that\n\n$$ \\sum_{i=1}^{k_1} a_i \\leq \\sum_{i=k_1+1}^{k_2} a_i \\leq \\cdots \\leq \\sum_{i=k_p+1}^{n} a_i $$\n\nNote that $p$ can be $0$, and in this case $k_0 = 0$, meaning Xiaoming can merge all testdata together and run it once.\n\nXiaoming hopes that, while running the sample correctly, the running time can be as small as possible, i.e., **minimize**:\n\n$$ \\left(\\sum_{i=1}^{k_1} a_i\\right)^2 + \\left(\\sum_{i=k_1+1}^{k_2} a_i\\right)^2 + \\cdots + \\left(\\sum_{i=k_p+1}^{n} a_i\\right)^2 $$\n\nXiaoming finds this problem very interesting and asks you for help: given $n$ and $a_i$, please compute the minimum running time of Xiaoming's program under the optimal partition.",
+      "formatI": "**Because the Constraints of this problem are large, for some test points, $a_i$ will be generated inside the program.**\n\nThe first line contains two integers $n, type$. The meaning of $n$ is described above, and $type$ indicates the input method.\n\n1. If $type = 0$, then $a_i$ for this test point are **given directly**. The input then contains: on the second line, $n$ integers $a_i$ separated by spaces, representing the size of each group of testdata.\n2. If $type = 1$, then $a_i$ for this test point will be **generated specially**; the generation method is given later. The input then contains: on the second line, six integers $x, y, z, b_1, b_2, m$ separated by spaces. In the next $m$ lines, the $i$-th line $(1 \\leq i \\leq m)$ contains three positive integers $p_i, l_i, r_i$ separated by spaces.\n\nFor test points $23 \\sim 25$ with $type = 1$, $a_i$ are generated as follows:\n\nGiven integers $x, y, z, b_1, b_2, m$, and $m$ triples $(p_i, l_i, r_i)$.\n\nIt is guaranteed that $n \\geq 2$. If $n \\gt 2$, then for all $3 \\leq i \\leq n$, $b_i = (x \\times b_{i−1} + y \\times b_{i−2} + z) \\bmod 2^{30}$.\n\nIt is guaranteed that $1 \\leq p_i \\leq n$ and $p_m = n$. Let $p_0 = 0$, then $p_i$ also satisfies: for all $0 \\leq i \\lt m$, $p_i \\lt p_{i+1}$.\n\nFor all $1 \\leq j \\leq m$, if the index $i (1 \\leq i \\leq n)$ satisfies $p_{j−1} \\lt i \\leq p_j$, then\n\n$$a_i = \\left(b_i \\bmod \\left( r_j − l_j + 1 \\right) \\right) + l_j$$\n\n**The above data generation method is only to reduce the input size; the standard algorithm does not depend on this generation method.**",
+      "formatO": "Output one integer in one line, representing the answer.",
+      "hint": "[Sample 1 Explanation]\n\nThe optimal partition is $\\{5,1\\}, \\{7\\}, \\{9\\}, \\{9\\}$. Since $5 + 1 \\leq 7 \\leq 9 \\leq 9$, this partition is valid.\n\nThe answer is $(5 + 1)^2 + 7^2 + 9^2 + 9^2 = 247$.\n\nAlthough the partition $\\{5\\}, \\{1\\}, \\{7\\}, \\{9\\}, \\{9\\}$ has a running time smaller than $247$, it is not valid because $5 \\gt 1$.\n\nAlthough the partition $\\{5\\}, \\{1,7\\}, \\{9\\}, \\{9\\}$ is valid, its running time is $251$, which is larger than $247$.\n\n[Sample 2 Explanation]\n\nThe optimal partition is $\\{5\\}, \\{6\\}, \\{7\\}, \\{7\\}, \\{4,6,2\\}, \\{13\\}, \\{19,9\\}$.\n\n[Constraints]\n\n::cute-table[]{tuack}\n| Test Point ID | $n \\leq$ | $a_i \\leq$ | $type =$ |\n| :--: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $10$ | $10$ | $0$ |\n| $4 \\sim 6$ | $50$ | $10^3$ | ^ |\n| $7 \\sim 9$ | $400$ | $10^4$ | ^ |\n| $10 \\sim 16$ | $5000$ | $10^5$ | ^ |\n| $17 \\sim 22$ | $5 \\times 10^5$ | $10^6$ | ^ |\n| $23 \\sim 25$ | $4 \\times 10^7$ | $10^9$ | $1$ |\n\nFor all test points with $type=0$, it is guaranteed that the final output answer $\\leq 4 \\times 10^{18}$.\n\nAll test points satisfy: $type \\in \\{0,1\\}$, $2 \\leq n \\leq 4 \\times 10^7$, $1 \\leq a_i \\leq 10^9$, $1 \\leq m \\leq 10^5$, $1 \\leq l_i \\leq r_i \\leq 10^9$, $0 \\leq x,y,z,b_1,b_2 \\lt 2^{30}$。\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2019] 划分",
+      "background": "",
+      "description": "2048 年，第三十届 CSP 认证的考场上，作为选手的小明打开了第一题。这个题的样例有 $n$ 组数据，数据从 $1 \\sim n$ 编号，$i$ 号数据的规模为 $a_i$。\n\n小明对该题设计出了一个暴力程序，对于一组规模为 $u$ 的数据，该程序的**运行时间**为 $u^2$。然而这个程序运行完一组规模为 $u$ 的数据之后，它将在任何一组规模**小于** $u$ 的数据上运行错误。样例中的 $a_i$ 不一定递增，但小明又想在不修改程序的情况下正确运行样例，于是小明决定使用一种非常原始的解决方案：将所有数据划分成若干个数据段，段内数据编号**连续**，接着将同一段内的数据合并成新数据，其规模等于段内原数据的**规模之和**，小明将让新数据的规模能够递增。\n\n也就是说，小明需要找到一些分界点 $1 \\leq k_1 \\lt k_2 \\lt \\cdots \\lt k_p \\lt n$，使得\n\n$$ \\sum_{i=1}^{k_1} a_i \\leq \\sum_{i=k_1+1}^{k_2} a_i \\leq \\cdots \\leq \\sum_{i=k_p+1}^{n} a_i $$\n\n注意 $p$ 可以为 $0$ 且此时 $k_0 = 0$，也就是小明可以将所有数据合并在一起运行。\n\n小明希望他的程序在正确运行样例情况下，运行时间也能尽量小，也就是**最小化**：\n\n$$ \\left(\\sum_{i=1}^{k_1} a_i\\right)^2 + \\left(\\sum_{i=k_1+1}^{k_2} a_i\\right)^2 + \\cdots + \\left(\\sum_{i=k_p+1}^{n} a_i\\right)^2 $$\n\n小明觉得这个问题非常有趣，并向你请教：给定 $n$ 和 $a_i$，请你求出最优划分方案下，小明的程序的最小运行时间。",
+      "formatI": "**由于本题的数据范围较大，部分测试点的 $a_i$ 将在程序内生成。**\n\n第一行两个整数 $n, type$。$n$ 的意义见题目描述，$type$ 表示输入方式。\n1. 若 $type = 0$，则该测试点的 $a_i$ **直接给出**。输入文件接下来：第二行 $n$ 个以空格分隔的整数 $a_i$，表示每组数据的规模。\n2. 若 $type = 1$，则该测试点的 $a_i$ 将**特殊生成**，生成方式见后文。输入文件接下来：第二行六个以空格分隔的整数 $x, y, z, b_1, b_2, m$。接下来 $m$ 行中，第 $i (1 \\leq i \\leq m)$ 行包含三个以空格分隔的正整数 $p_i, l_i, r_i$。\n\n对于 $type = 1$ 的 $23 \\sim 25$ 号测试点，$a_i$ 的生成方式如下：\n\n给定整数 $x, y, z, b_1, b_2, m$，以及 $m$ 个三元组 $(p_i, l_i, r_i)$。\n\n保证 $n \\geq 2$。若 $n \\gt 2$，则 $\\forall 3 \\leq i \\leq n, b_i = (x \\times b_{i−1} + y \\times b_{i−2} + z) \\bmod 2^{30}$。\n\n保证 $1 \\leq p_i \\leq n, p_m = n$。令 $p_0 = 0$，则 $p_i$ 还满足 $\\forall 0 \\leq i \\lt m$ 有 $p_i \\lt p_{i+1}$。\n\n对于所有 $1 \\leq j \\leq m$，若下标值 $i (1 \\leq i \\leq n)$ 满足 $p_{j−1} \\lt i \\leq p_j$，则有\n\n$$a_i = \\left(b_i \\bmod \\left( r_j − l_j + 1 \\right) \\right) + l_j$$\n\n**上述数据生成方式仅是为了减少输入量大小，标准算法不依赖于该生成方式。**",
+      "formatO": "输出一行一个整数，表示答案。",
+      "hint": "【样例 1 解释】\n\n最优的划分方案为 $\\{5,1\\}, \\{7\\}, \\{9\\}, \\{9\\}$。由 $5 + 1 \\leq 7 \\leq 9 \\leq 9$ 知该方案合法。\n\n答案为 $(5 + 1)^2 + 7^2 + 9^2 + 9^2 = 247$。\n\n虽然划分方案 $\\{5\\}, \\{1\\}, \\{7\\}, \\{9\\}, \\{9\\}$ 对应的运行时间比 $247$ 小，但它不是一组合法方案，因为 $5 \\gt 1$。\n\n虽然划分方案 $\\{5\\}, \\{1,7\\}, \\{9\\}, \\{9\\}$ 合法，但该方案对应的运行时间为 $251$，比 $247$ 大。\n\n【样例 2 解释】\n\n最优的划分方案为 $\\{5\\}, \\{6\\}, \\{7\\}, \\{7\\}, \\{4,6,2\\}, \\{13\\}, \\{19,9\\}$。\n\n【数据范围】\n\n::cute-table[]{tuack}\n| 测试点编号 | $n \\leq$ | $a_i \\leq$ | $type =$ |\n| :--: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $10$ | $10$ | $0$ |\n| $4 \\sim 6$ | $50$ | $10^3$ | ^ |\n| $7 \\sim 9$ | $400$ | $10^4$ | ^ |\n| $10 \\sim 16$ | $5000$ | $10^5$ | ^ |\n| $17 \\sim 22$ | $5 \\times 10^5$ | $10^6$ | ^ |\n| $23 \\sim 25$ | $4 \\times 10^7$ | $10^9$ | $1$ |\n\n对于 $type=0$ 的所有测试点，保证最后输出的答案 $\\leq 4 \\times 10^{18}$。\n\n所有测试点满足：$type \\in \\{0,1\\}$，$2 \\leq n \\leq 4 \\times 10^7$，$1 \\leq a_i \\leq 10^9$，$1 \\leq m \\leq 10^5$，$1 \\leq l_i \\leq r_i \\leq 10^9$，$0 \\leq x,y,z,b_1,b_2 \\lt 2^{30}$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 24103,
+    "startTime": 1573876800,
+    "endTime": 1574481600,
+    "name": "CSP2019-S2 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1973",
+      "type": "P",
+      "name": "[NOI2011] NOI 嘉年华",
+      "difficulty": 7
+    },
+    {
+      "pid": "P5659",
+      "type": "P",
+      "name": "[CSP-S 2019] 树上的数",
+      "difficulty": 8
+    },
+    {
+      "pid": "P5658",
+      "type": "P",
+      "name": "[CSP-S 2019] 括号树",
+      "difficulty": 4
+    },
+    {
+      "pid": "P5664",
+      "type": "P",
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "difficulty": 6
+    },
+    {
+      "pid": "P5666",
+      "type": "P",
+      "name": "[CSP-S 2019] 树的重心",
+      "difficulty": 7
+    }
+  ],
+  "forum": {
+    "name": "P5665 [CSP-S 2019] 划分",
+    "type": 2,
+    "slug": "P5665",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1360831,
+      "title": "警示后人if you WA 88pts and 第三个样例WA",
+      "author": {
+        "uid": 1329138,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1329138.png",
+        "name": "JadeFox2012",
+        "slogan": "夕阳无限好，只是近黄昏",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/yavsqz4x.png"
+      },
+      "time": 1787303512
+    },
+    {
+      "id": 1352427,
+      "title": "求卡玄关",
+      "author": {
+        "uid": 1850593,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1850593.png",
+        "name": "OMNPOTENTCAT",
+        "slogan": "Stay true to myself 我才对得起我的天赋||尽我所能，保持真实",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/v9dqx1bt.png"
+      },
+      "time": 1786607190
+    },
+    {
+      "id": 1302516,
+      "title": "问：两份相同的代码为什么在本题有不同结果？",
+      "author": {
+        "uid": 1276842,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1276842.png",
+        "name": "Zhao114",
+        "slogan": "雄关漫道真如铁……||SD-HZ-HZYZ",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1780739189
+    },
+    {
+      "id": 1277037,
+      "title": "进食后入",
+      "author": {
+        "uid": 814145,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/814145.png",
+        "name": "XXh0919",
+        "slogan": "开始吧。| | 不拿钩 7 不改签",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/uevp8q08.png"
+      },
+      "time": 1775986296
+    },
+    {
+      "id": 1274938,
+      "title": "被卡求助",
+      "author": {
+        "uid": 957205,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/957205.png",
+        "name": "Frommyvalleyuphard",
+        "slogan": "已然残钢而破灭也，弗若任于人，于浮木之中题瓶而上路径。故此无后者越前者乎，仅此FMVH而不断前进。以其实为证，以其能为明，而似于歧路徘徊也。通过此，歧路徘徊而不再追忆，迷茫者得其意。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/lmoudyic.png"
+      },
+      "time": 1775715962
+    },
+    {
+      "id": 1266661,
+      "title": "警示后人，如果你样例3用__int128是-x-x-x之类的",
+      "author": {
+        "uid": 717476,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/717476.png",
+        "name": "Gaochenxi103_QAQ",
+        "slogan": "liven？",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dff6o9bo.png"
+      },
+      "time": 1774335274
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

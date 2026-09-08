@@ -1,0 +1,328 @@
+{
+  "problem": {
+    "pid": "P7961",
+    "type": "P",
+    "name": "[NOIP2021] 数列",
+    "difficulty": 6,
+    "tags": [
+      3,
+      58,
+      83,
+      108,
+      253
+    ],
+    "totalSubmit": 31322,
+    "totalAccepted": 9031,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2021] 数列",
+      "background": "",
+      "description": "给定整数 $n, m, k$，和一个长度为 $m + 1$ 的正整数数组 $v_0, v_1, \\ldots, v_m$。\n\n对于一个长度为 $n$，下标从 $1$ 开始且每个元素均不超过 $m$ 的非负整数序列 $\\{a_i\\}$，我们定义它的权值为 $v_{a_1} \\times v_{a_2} \\times \\cdots \\times v_{a_n}$。\n\n当这样的序列 $\\{a_i\\}$ 满足整数 $S = 2^{a_1} + 2^{a_2} + \\cdots + 2^{a_n}$ 的二进制表示中 $1$ 的个数不超过 $k$ 时，我们认为 $\\{a_i\\}$ 是一个合法序列。\n\n计算所有合法序列 $\\{a_i\\}$ 的权值和对 $998244353$ 取模的结果。",
+      "formatI": "输入第一行是三个整数 $n, m, k$。\n\n第二行 $m + 1$ 个整数，分别是 $v_0, v_1, \\ldots, v_m$。",
+      "formatO": "仅一行一个整数，表示所有合法序列的权值和对 $998244353$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n由于 $k = 1$，而且由 $n \\leq S \\leq n \\times 2^m$ 知道 $5 \\leq S \\leq 10$，合法的 $S$ 只有一种可能：$S = 8$，这要求 $a$ 中必须有 $2$ 个 $0$ 和 $3$ 个 $1$，于是有 $\\binom{5}{2} = 10$ 种可能的序列，每种序列的贡献都是 $v_0^2 v_1^3 = 4$，权值和为 $10 \\times 4 = 40$。\n\n**【数据范围】**\n\n对所有测试点保证 $1 \\leq k \\leq n \\leq 30$，$0 \\leq m \\leq 100$，$1 \\leq v_i < 998244353$。\n\n::cute-table{tuack}\n\n|    测试点    |  $n$  |   $k$    |  $m$   |\n| :----------: | :---: | :------: | :----: |\n|  $1 \\sim 4$  | $=8$  | $\\leq n$ |  $=9$  |\n|  $5 \\sim 7$  | $=30$ | ^ |  $=7$  |\n| $8 \\sim 10$  | ^ | ^ | $=12$  |\n| $11 \\sim 13$ | ^ |   $=1$   | $=100$ |\n| $14 \\sim 15$ | $=5$  | $\\leq n$ | $=50$  |\n|     $16$     | $=15$ | ^ | $=100$ |\n| $17 \\sim 18$ | $=30$ | ^ | $=30$  |\n| $19 \\sim 20$ | ^ | ^ | $=100$ |",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2021] 数列",
+      "background": "",
+      "description": "给定整数 $n, m, k$，和一个长度为 $m + 1$ 的正整数数组 $v_0, v_1, \\ldots, v_m$。\n\n对于一个长度为 $n$，下标从 $1$ 开始且每个元素均不超过 $m$ 的非负整数序列 $\\{a_i\\}$，我们定义它的权值为 $v_{a_1} \\times v_{a_2} \\times \\cdots \\times v_{a_n}$。\n\n当这样的序列 $\\{a_i\\}$ 满足整数 $S = 2^{a_1} + 2^{a_2} + \\cdots + 2^{a_n}$ 的二进制表示中 $1$ 的个数不超过 $k$ 时，我们认为 $\\{a_i\\}$ 是一个合法序列。\n\n计算所有合法序列 $\\{a_i\\}$ 的权值和对 $998244353$ 取模的结果。",
+      "formatI": "输入第一行是三个整数 $n, m, k$。\n\n第二行 $m + 1$ 个整数，分别是 $v_0, v_1, \\ldots, v_m$。",
+      "formatO": "仅一行一个整数，表示所有合法序列的权值和对 $998244353$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n由于 $k = 1$，而且由 $n \\leq S \\leq n \\times 2^m$ 知道 $5 \\leq S \\leq 10$，合法的 $S$ 只有一种可能：$S = 8$，这要求 $a$ 中必须有 $2$ 个 $0$ 和 $3$ 个 $1$，于是有 $\\binom{5}{2} = 10$ 种可能的序列，每种序列的贡献都是 $v_0^2 v_1^3 = 4$，权值和为 $10 \\times 4 = 40$。\n\n**【数据范围】**\n\n对所有测试点保证 $1 \\leq k \\leq n \\leq 30$，$0 \\leq m \\leq 100$，$1 \\leq v_i < 998244353$。\n\n::cute-table{tuack}\n\n|    测试点    |  $n$  |   $k$    |  $m$   |\n| :----------: | :---: | :------: | :----: |\n|  $1 \\sim 4$  | $=8$  | $\\leq n$ |  $=9$  |\n|  $5 \\sim 7$  | $=30$ | ^ |  $=7$  |\n| $8 \\sim 10$  | ^ | ^ | $=12$  |\n| $11 \\sim 13$ | ^ |   $=1$   | $=100$ |\n| $14 \\sim 15$ | $=5$  | $\\leq n$ | $=50$  |\n|     $16$     | $=15$ | ^ | $=100$ |\n| $17 \\sim 18$ | $=30$ | ^ | $=30$  |\n| $19 \\sim 20$ | ^ | ^ | $=100$ |",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "gav0uclm",
+        "filename": "sequence.zip",
+        "size": 666,
+        "uploadTime": 1637419331,
+        "downloadLink": "/fe/api/problem/downloadAttachment/gav0uclm"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5 1 1\n2 1\n",
+        "40\n"
+      ],
+      [
+        "见附件中的 sequence/sequence2.in",
+        "见附件中的 sequence/sequence2.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2021] Sequence.",
+      "background": "",
+      "description": "You are given integers $n, m, k$, and a positive integer array $v_0, v_1, \\ldots, v_m$ of length $m + 1$.\n\nFor a non-negative integer sequence $\\{a_i\\}$ of length $n$ (indexed from $1$) where each element is at most $m$, we define its weight as $v_{a_1} \\times v_{a_2} \\times \\cdots \\times v_{a_n}$.\n\nIf such a sequence $\\{a_i\\}$ satisfies that, in the binary representation of the integer $S = 2^{a_1} + 2^{a_2} + \\cdots + 2^{a_n}$, the number of $1$ bits is at most $k$, then we call $\\{a_i\\}$ a valid sequence.\n\nCompute the sum of weights of all valid sequences $\\{a_i\\}$ modulo $998244353$.",
+      "formatI": "The first line contains three integers $n, m, k$.\n\nThe second line contains $m + 1$ integers: $v_0, v_1, \\ldots, v_m$.",
+      "formatO": "Output a single integer, representing the sum of weights of all valid sequences modulo $998244353$.",
+      "hint": "**[Sample Explanation #1]**\n\nSince $k = 1$, and from $n \\leq S \\leq n \\times 2^m$ we know $5 \\leq S \\leq 10$, there is only one possible valid $S$: $S = 8$. This requires that $a$ must contain $2$ zeros and $3$ ones. Therefore, there are $\\binom{5}{2} = 10$ possible sequences. Each sequence contributes $v_0^2 v_1^3 = 4$, so the sum of weights is $10 \\times 4 = 40$.\n\n**[Constraints]**\n\nFor all testdata, it is guaranteed that $1 \\leq k \\leq n \\leq 30$, $0 \\leq m \\leq 100$, and $1 \\leq v_i < 998244353$.\n\n::cute-table{tuack}\n\n|    Test Point    |  $n$  |   $k$    |  $m$   |\n| :--------------: | :---: | :------: | :----: |\n|   $1 \\sim 4$     | $=8$  | $\\leq n$ |  $=9$  |\n|   $5 \\sim 7$     | $=30$ | ^ |  $=7$  |\n|  $8 \\sim 10$     | ^ | ^ | $=12$  |\n|  $11 \\sim 13$    | ^ |   $=1$   | $=100$ |\n|  $14 \\sim 15$    | $=5$  | $\\leq n$ | $=50$  |\n|      $16$        | $=15$ | ^ | $=100$ |\n|  $17 \\sim 18$    | $=30$ | ^ | $=30$  |\n|  $19 \\sim 20$    | ^ | ^ | $=100$ |\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2021] 数列",
+      "background": "",
+      "description": "给定整数 $n, m, k$，和一个长度为 $m + 1$ 的正整数数组 $v_0, v_1, \\ldots, v_m$。\n\n对于一个长度为 $n$，下标从 $1$ 开始且每个元素均不超过 $m$ 的非负整数序列 $\\{a_i\\}$，我们定义它的权值为 $v_{a_1} \\times v_{a_2} \\times \\cdots \\times v_{a_n}$。\n\n当这样的序列 $\\{a_i\\}$ 满足整数 $S = 2^{a_1} + 2^{a_2} + \\cdots + 2^{a_n}$ 的二进制表示中 $1$ 的个数不超过 $k$ 时，我们认为 $\\{a_i\\}$ 是一个合法序列。\n\n计算所有合法序列 $\\{a_i\\}$ 的权值和对 $998244353$ 取模的结果。",
+      "formatI": "输入第一行是三个整数 $n, m, k$。\n\n第二行 $m + 1$ 个整数，分别是 $v_0, v_1, \\ldots, v_m$。",
+      "formatO": "仅一行一个整数，表示所有合法序列的权值和对 $998244353$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n由于 $k = 1$，而且由 $n \\leq S \\leq n \\times 2^m$ 知道 $5 \\leq S \\leq 10$，合法的 $S$ 只有一种可能：$S = 8$，这要求 $a$ 中必须有 $2$ 个 $0$ 和 $3$ 个 $1$，于是有 $\\binom{5}{2} = 10$ 种可能的序列，每种序列的贡献都是 $v_0^2 v_1^3 = 4$，权值和为 $10 \\times 4 = 40$。\n\n**【数据范围】**\n\n对所有测试点保证 $1 \\leq k \\leq n \\leq 30$，$0 \\leq m \\leq 100$，$1 \\leq v_i < 998244353$。\n\n::cute-table{tuack}\n\n|    测试点    |  $n$  |   $k$    |  $m$   |\n| :----------: | :---: | :------: | :----: |\n|  $1 \\sim 4$  | $=8$  | $\\leq n$ |  $=9$  |\n|  $5 \\sim 7$  | $=30$ | ^ |  $=7$  |\n| $8 \\sim 10$  | ^ | ^ | $=12$  |\n| $11 \\sim 13$ | ^ |   $=1$   | $=100$ |\n| $14 \\sim 15$ | $=5$  | $\\leq n$ | $=50$  |\n|     $16$     | $=15$ | ^ | $=100$ |\n| $17 \\sim 18$ | $=30$ | ^ | $=30$  |\n| $19 \\sim 20$ | ^ | ^ | $=100$ |",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 57025,
+    "startTime": 1637391600,
+    "endTime": 1637575200,
+    "name": "NOIP2021 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7114",
+      "type": "P",
+      "name": "[NOIP2020] 字符串匹配",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7914",
+      "type": "P",
+      "name": "[CSP-S 2021] 括号序列",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7960",
+      "type": "P",
+      "name": "[NOIP2021] 报数",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7962",
+      "type": "P",
+      "name": "[NOIP2021] 方差",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7963",
+      "type": "P",
+      "name": "[NOIP2021] 棋局",
+      "difficulty": 8
+    }
+  ],
+  "forum": {
+    "name": "P7961 [NOIP2021] 数列",
+    "type": 2,
+    "slug": "P7961",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1356233,
+      "title": "如果你 20 pts",
+      "author": {
+        "uid": 710840,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/710840.png",
+        "name": "DeadDreamX",
+        "slogan": "不停地追逐着温柔月光 奔跑下去吧",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jgarlobl.png"
+      },
+      "time": 1786952159
+    },
+    {
+      "id": 1338479,
+      "title": "警示后人（TLE）",
+      "author": {
+        "uid": 1180231,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1180231.png",
+        "name": "H_dream",
+        "slogan": "我重生了",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785325805
+    },
+    {
+      "id": 1254383,
+      "title": "如果你 RE 60pts",
+      "author": {
+        "uid": 1717150,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1717150.png",
+        "name": "Aurelia_Veil",
+        "slogan": "月色真美啊！&Yore_Snow |QQ 521141214|phigros rks15.33课题金40，前红45",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/b9xc0uoc.png"
+      },
+      "time": 1772156830
+    },
+    {
+      "id": 1205850,
+      "title": "竟是后人",
+      "author": {
+        "uid": 735416,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/735416.png",
+        "name": "Wy_x",
+        "slogan": "AFO 99%",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/mctvimrz.png"
+      },
+      "time": 1764165501
+    },
+    {
+      "id": 1205356,
+      "title": "求问关于这一类dp题",
+      "author": {
+        "uid": 1145046,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1145046.png",
+        "name": "chenzifan7497",
+        "slogan": "不是因为被拯救而相信，而是因为相信而被拯救",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/heprmp08.png"
+      },
+      "time": 1764136031
+    },
+    {
+      "id": 1204704,
+      "title": "样例过了，0pts求调",
+      "author": {
+        "uid": 1080079,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1080079.png",
+        "name": "liu_yiding",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1764054176
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

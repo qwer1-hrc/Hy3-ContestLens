@@ -1,0 +1,300 @@
+{
+  "problem": {
+    "pid": "P2010",
+    "type": "P",
+    "name": "[NOIP 2016 普及组] 回文日期",
+    "difficulty": 2,
+    "tags": [
+      33,
+      82,
+      111
+    ],
+    "totalSubmit": 199873,
+    "totalAccepted": 69021,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 普及组] 回文日期",
+      "background": "NOIP2016 普及组 T2",
+      "description": "在日常生活中，通过年、月、日这三个要素可以表示出一个唯一确定的日期。\n\n牛牛习惯用 $8$ 位数字表示一个日期，其中，前 $4$ 位代表年份，接下来 $2$ 位代表月份，最后 $2$ 位代表日期。显然：一个日期只有一种表示方法，而两个不同的日期的表示方法不会相同。\n\n牛牛认为，一个日期是回文的，当且仅当表示这个日期的 $8$ 位数字是回文的。现在，牛牛想知道：在他指定的两个日期之间（包含这两个日期本身），有多少个真实存在的日期是回文的。\n\n一个 $8$ 位数字是回文的，当且仅当对于所有的 $i$（$1  \\le i \\le 8$）从左向右数的第 $i$ 个数字和第 $9-i$ 个数字（即从右向左数的第 $i$ 个数字）是相同的。\n\n例如：\n\n- 对于 2016 年 11 月 19 日，用 $8$ 位数字 $20161119$ 表示，它不是回文的。\n- 对于 2010 年 1 月 2 日，用 $8$ 位数字 $20100102$ 表示，它是回文的。\n- 对于 2010 年 10 月 2 日，用 $8$ 位数字 $20101002$ 表示，它不是回文的。\n\n每一年中都有 $12$ 个月份：\n\n其中，$1, 3, 5, 7, 8, 10, 12$ 月每个月有 $31$ 天；$4, 6, 9, 11$ 月每个月有 $30$ 天；而对于 $2$ 月，闰年时有 $29$ 天，平年时有 $28$ 天。\n\n一个年份是闰年当且仅当它满足下列两种情况其中的一种：\n\n1. 这个年份是 $4$ 的整数倍，但不是 $100$ 的整数倍；\n2. 这个年份是 $400$ 的整数倍。\n\n例如：\n\n- 以下几个年份都是闰年：$2000, 2012, 2016$。\n- 以下几个年份是平年：$1900, 2011, 2014$。",
+      "formatI": "两行，每行包括一个 $8$ 位数字。\n\n第一行表示牛牛指定的起始日期。\n\n第二行表示牛牛指定的终止日期。\n\n保证 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 都是真实存在的日期，且年份部分一定为 $4$ 位数字，且首位数字不为 $0$。\n\n保证 $\\mathit{date}_1$ 一定不晚于 $\\mathit{date}_2$。",
+      "formatO": "一个整数，表示在 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 之间，有多少个日期是回文的。",
+      "hint": "**【样例说明】**\n\n对于样例 1，符合条件的日期是 $20111102$。\n\n对于样例 2，符合条件的日期是 $20011002$ 和 $20100102$。\n\n**【子任务】**\n\n对于 $60 \\%$ 的数据，满足 $\\mathit{date}_1 = \\mathit{date}_2$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 普及组] 回文日期",
+      "background": "NOIP2016 普及组 T2",
+      "description": "在日常生活中，通过年、月、日这三个要素可以表示出一个唯一确定的日期。\n\n牛牛习惯用 $8$ 位数字表示一个日期，其中，前 $4$ 位代表年份，接下来 $2$ 位代表月份，最后 $2$ 位代表日期。显然：一个日期只有一种表示方法，而两个不同的日期的表示方法不会相同。\n\n牛牛认为，一个日期是回文的，当且仅当表示这个日期的 $8$ 位数字是回文的。现在，牛牛想知道：在他指定的两个日期之间（包含这两个日期本身），有多少个真实存在的日期是回文的。\n\n一个 $8$ 位数字是回文的，当且仅当对于所有的 $i$（$1  \\le i \\le 8$）从左向右数的第 $i$ 个数字和第 $9-i$ 个数字（即从右向左数的第 $i$ 个数字）是相同的。\n\n例如：\n\n- 对于 2016 年 11 月 19 日，用 $8$ 位数字 $20161119$ 表示，它不是回文的。\n- 对于 2010 年 1 月 2 日，用 $8$ 位数字 $20100102$ 表示，它是回文的。\n- 对于 2010 年 10 月 2 日，用 $8$ 位数字 $20101002$ 表示，它不是回文的。\n\n每一年中都有 $12$ 个月份：\n\n其中，$1, 3, 5, 7, 8, 10, 12$ 月每个月有 $31$ 天；$4, 6, 9, 11$ 月每个月有 $30$ 天；而对于 $2$ 月，闰年时有 $29$ 天，平年时有 $28$ 天。\n\n一个年份是闰年当且仅当它满足下列两种情况其中的一种：\n\n1. 这个年份是 $4$ 的整数倍，但不是 $100$ 的整数倍；\n2. 这个年份是 $400$ 的整数倍。\n\n例如：\n\n- 以下几个年份都是闰年：$2000, 2012, 2016$。\n- 以下几个年份是平年：$1900, 2011, 2014$。",
+      "formatI": "两行，每行包括一个 $8$ 位数字。\n\n第一行表示牛牛指定的起始日期。\n\n第二行表示牛牛指定的终止日期。\n\n保证 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 都是真实存在的日期，且年份部分一定为 $4$ 位数字，且首位数字不为 $0$。\n\n保证 $\\mathit{date}_1$ 一定不晚于 $\\mathit{date}_2$。",
+      "formatO": "一个整数，表示在 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 之间，有多少个日期是回文的。",
+      "hint": "**【样例说明】**\n\n对于样例 1，符合条件的日期是 $20111102$。\n\n对于样例 2，符合条件的日期是 $20011002$ 和 $20100102$。\n\n**【子任务】**\n\n对于 $60 \\%$ 的数据，满足 $\\mathit{date}_1 = \\mathit{date}_2$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "20110101\n20111231\n",
+        "1\n"
+      ],
+      [
+        "20000101\n20101231\n",
+        "2\n"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Junior] Palindromic Date",
+      "background": "NOIP 2016 Junior T2.",
+      "description": "In daily life, a unique date can be specified by the three components: year, month, and day.\n\nNiuniu habitually uses an 8-digit number to represent a date, where the first 4 digits denote the year, the next 2 digits denote the month, and the last 2 digits denote the day. Clearly, a date has only one representation, and two different dates do not share the same representation.\n\nNiuniu considers a date to be palindromic if and only if the 8-digit number representing this date is a palindrome. Now Niuniu wants to know: between the two dates he specifies (including both endpoints), how many real dates are palindromic.\n\nAn 8-digit number is palindromic if and only if, for all $i$ ($1 \\le i \\le 8$), the $i$-th digit from the left is the same as the $(9 - i)$-th digit (that is, the $i$-th digit from the right).\n\nFor example:\n- For November 19, 2016, represented by the 8-digit number $20161119$, it is not palindromic.\n- For January 2, 2010, represented by the 8-digit number $20100102$, it is palindromic.\n- For October 2, 2010, represented by the 8-digit number $20101002$, it is not palindromic.\n\nEach year has 12 months:\n\nAmong them, months $1, 3, 5, 7, 8, 10, 12$ each have $31$ days; months $4, 6, 9, 11$ each have $30$ days; and for February, there are $29$ days in a leap year and $28$ days in a common year.\n\nA year is a leap year if and only if it satisfies one of the following:\n1. The year is a multiple of $4$ but not a multiple of $100$;\n2. The year is a multiple of $400$.\n\nFor example:\n- The following years are leap years: $2000, 2012, 2016$.\n- The following years are common years: $1900, 2011, 2014$.",
+      "formatI": "Two lines, each containing an 8-digit number.\n\nThe first line is the start date specified by Niuniu.\n\nThe second line is the end date specified by Niuniu.\n\nIt is guaranteed that $\\mathit{date}_1$ and $\\mathit{date}_2$ are real dates, the year part always has 4 digits with a nonzero first digit, and $\\mathit{date}_1$ is not later than $\\mathit{date}_2$.",
+      "formatO": "Output a single integer, representing how many dates between $\\mathit{date}_1$ and $\\mathit{date}_2$ (inclusive) are palindromic.",
+      "hint": "Sample Explanation:\n\n- For sample 1, the valid date is $20111102$.\n- For sample 2, the valid dates are $20011002$ and $20100102$.\n\nSubtasks:\n\n- For $60\\%$ of the testdata, $\\mathit{date}_1 = \\mathit{date}_2$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 普及组] 回文日期",
+      "background": "NOIP2016 普及组 T2",
+      "description": "在日常生活中，通过年、月、日这三个要素可以表示出一个唯一确定的日期。\n\n牛牛习惯用 $8$ 位数字表示一个日期，其中，前 $4$ 位代表年份，接下来 $2$ 位代表月份，最后 $2$ 位代表日期。显然：一个日期只有一种表示方法，而两个不同的日期的表示方法不会相同。\n\n牛牛认为，一个日期是回文的，当且仅当表示这个日期的 $8$ 位数字是回文的。现在，牛牛想知道：在他指定的两个日期之间（包含这两个日期本身），有多少个真实存在的日期是回文的。\n\n一个 $8$ 位数字是回文的，当且仅当对于所有的 $i$（$1  \\le i \\le 8$）从左向右数的第 $i$ 个数字和第 $9-i$ 个数字（即从右向左数的第 $i$ 个数字）是相同的。\n\n例如：\n\n- 对于 2016 年 11 月 19 日，用 $8$ 位数字 $20161119$ 表示，它不是回文的。\n- 对于 2010 年 1 月 2 日，用 $8$ 位数字 $20100102$ 表示，它是回文的。\n- 对于 2010 年 10 月 2 日，用 $8$ 位数字 $20101002$ 表示，它不是回文的。\n\n每一年中都有 $12$ 个月份：\n\n其中，$1, 3, 5, 7, 8, 10, 12$ 月每个月有 $31$ 天；$4, 6, 9, 11$ 月每个月有 $30$ 天；而对于 $2$ 月，闰年时有 $29$ 天，平年时有 $28$ 天。\n\n一个年份是闰年当且仅当它满足下列两种情况其中的一种：\n\n1. 这个年份是 $4$ 的整数倍，但不是 $100$ 的整数倍；\n2. 这个年份是 $400$ 的整数倍。\n\n例如：\n\n- 以下几个年份都是闰年：$2000, 2012, 2016$。\n- 以下几个年份是平年：$1900, 2011, 2014$。",
+      "formatI": "两行，每行包括一个 $8$ 位数字。\n\n第一行表示牛牛指定的起始日期。\n\n第二行表示牛牛指定的终止日期。\n\n保证 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 都是真实存在的日期，且年份部分一定为 $4$ 位数字，且首位数字不为 $0$。\n\n保证 $\\mathit{date}_1$ 一定不晚于 $\\mathit{date}_2$。",
+      "formatO": "一个整数，表示在 $\\mathit{date}_1$ 和 $\\mathit{date}_2$ 之间，有多少个日期是回文的。",
+      "hint": "**【样例说明】**\n\n对于样例 1，符合条件的日期是 $20111102$。\n\n对于样例 2，符合条件的日期是 $20011002$ 和 $20100102$。\n\n**【子任务】**\n\n对于 $60 \\%$ 的数据，满足 $\\mathit{date}_1 = \\mathit{date}_2$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1265,
+    "startTime": 1479384000,
+    "endTime": 1480054800,
+    "name": "NOIP2016普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1012",
+      "type": "P",
+      "name": "[NOIP 1998 提高组] 拼数",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2058",
+      "type": "P",
+      "name": "[NOIP 2016 普及组] 海港",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2118",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 比例简化",
+      "difficulty": 2
+    },
+    {
+      "pid": "P3955",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 图书管理员",
+      "difficulty": 2
+    },
+    {
+      "pid": "P5016",
+      "type": "P",
+      "name": "[NOIP 2018 普及组] 龙虎斗",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P2010 [NOIP 2016 普及组] 回文日期",
+    "type": 2,
+    "slug": "P2010",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1369357,
+      "title": "90，TLE",
+      "author": {
+        "uid": 1792235,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1792235.png",
+        "name": "zsk007008",
+        "slogan": "再见，洛谷(the best 21k)",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/83hg3jht.png"
+      },
+      "time": 1788240995
+    },
+    {
+      "id": 1368078,
+      "title": "WA 6//70pts//求条闭关",
+      "author": {
+        "uid": 2153298,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2153298.png",
+        "name": "Roy340522",
+        "slogan": "这个家伙不懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/o9hryynr.png"
+      },
+      "time": 1788005374
+    },
+    {
+      "id": 1363614,
+      "title": "还是30pts，求条，玄壶关",
+      "author": {
+        "uid": 1772959,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1772959.png",
+        "name": "Wong_Ka_Kui",
+        "slogan": "Hcm+香港铁路迷+香港地铁迷||驹迷||可以看我的自创题目||支持壶关||意味深刻：https://v.douyin.com/xH5Fd0zh8JY/",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jy3t8yo2.png"
+      },
+      "time": 1787574266
+    },
+    {
+      "id": 1363564,
+      "title": "30pts求条，玄关",
+      "author": {
+        "uid": 1772959,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1772959.png",
+        "name": "Wong_Ka_Kui",
+        "slogan": "Hcm+香港铁路迷+香港地铁迷||驹迷||可以看我的自创题目||支持壶关||意味深刻：https://v.douyin.com/xH5Fd0zh8JY/",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jy3t8yo2.png"
+      },
+      "time": 1787571905
+    },
+    {
+      "id": 1356595,
+      "title": "60分求条，会关注的。。。o(TヘTo)",
+      "author": {
+        "uid": 1861411,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1861411.png",
+        "name": "FUNENGGE",
+        "slogan": "我不是给",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/12zv3jhu.png"
+      },
+      "time": 1786970539
+    },
+    {
+      "id": 1351144,
+      "title": "求条，完全眼睛目害看不出来错哪了",
+      "author": {
+        "uid": 2042424,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2042424.png",
+        "name": "charlie_rubia",
+        "slogan": "共情是一种劳动 温柔是一种苦衷 善良是一种沉重 原谅是一种纵容||《反深代词》神专大卖！！！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786515722
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

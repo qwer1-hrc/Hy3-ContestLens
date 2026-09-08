@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "csps2019_senior",
+  "problem_id": "csps2019_senior_partition",
+  "title_zh": "划分",
+  "day": 2,
+  "contest": "CSP-S",
+  "year": 2019,
+  "group": "senior",
+  "task_number": 2,
+  "luogu_id": "P5665",
+  "luogu_difficulty": "省选/NOI−",
+  "difficulty_checked_at": "2026-09-05T05:10:56.316878+00:00",
+  "data_status": "official",
+  "test_count": 25,
+  "judge_note": null,
+  "statement_relative_path": "csps/2019/senior/day2/02_partition/statement.md",
+  "resource_limits": {
+    "time_ms": 2000,
+    "memory_mb": 1024,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "partition",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 4.0
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "problem": {
+    "pid": "P1909",
+    "type": "P",
+    "name": "[NOIP 2016 普及组] 买铅笔",
+    "difficulty": 1,
+    "tags": [
+      1,
+      33,
+      82
+    ],
+    "totalSubmit": 680385,
+    "totalAccepted": 309923,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 普及组] 买铅笔",
+      "background": "NOIP2016 普及组 T1",
+      "description": "P 老师需要去商店买 $n$ 支铅笔作为小朋友们参加 NOIP 的礼物。她发现商店一共有 $3$ 种包装的铅笔，不同包装内的铅笔数量有可能不同，价格也有可能不同。为了公平起见，P 老师决定只买同一种包装的铅笔。\n\n商店不允许将铅笔的包装拆开，因此 P 老师可能需要购买超过 $n$ 支铅笔才够给小朋友们发礼物。\n\n现在 P 老师想知道，在商店每种包装的数量都足够的情况下，要买够至少 $n$ 支铅笔最少需要花费多少钱。\n",
+      "formatI": "第一行包含一个正整数 $n$，表示需要的铅笔数量。\n\n接下来三行，每行用 $2$ 个正整数描述一种包装的铅笔：其中第 $1$ 个整数表示这种包装内铅笔的数量，第 $2$ 个整数表示这种包装的价格。\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n",
+      "formatO": "$1$ 个整数，表示 P 老师最少需要花费的钱。\n",
+      "hint": "铅笔的三种包装分别是：\n\n- $2$ 支装，价格为 $2$;\n- $50$ 支装，价格为 $30$;\n- $30$ 支装，价格为 $27$。\n\nP 老师需要购买至少 $57$ 支铅笔。\n\n如果她选择购买第一种包装，那么她需要购买 $29$ 份，共计 $2 \\times 29 = 58$ 支，需要花费的钱为 $2 \\times 29 = 58$。\n\n实际上，P 老师会选择购买第三种包装，这样需要买 $2$ 份。虽然最后买到的铅笔数量更多了，为 $30 \\times 2 = 60$ 支，但花费却减少为 $27 \\times 2 = 54$，比第一种少。\n\n对于第二种包装，虽然每支铅笔的价格是最低的，但要够发必须买 $2$ 份，实际的花费达到了 $30  \\times 2 = 60$，因此 P 老师也不会选择。\n\n所以最后输出的答案是 $54$。\n\n**数据范围**\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/dlgsz3h4.png)\n\n上表中“整倍数”的意义为：若为 $K$，表示对应数据所需要的铅笔数量 $n$ —定是每种包装铅笔数量的整倍数（这意味着一定可以不用多买铅笔）。\n\n于 2022 年 12 月 23 日新加 Hack 数据三组。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 普及组] 买铅笔",
+      "background": "NOIP2016 普及组 T1",
+      "description": "P 老师需要去商店买 $n$ 支铅笔作为小朋友们参加 NOIP 的礼物。她发现商店一共有 $3$ 种包装的铅笔，不同包装内的铅笔数量有可能不同，价格也有可能不同。为了公平起见，P 老师决定只买同一种包装的铅笔。\n\n商店不允许将铅笔的包装拆开，因此 P 老师可能需要购买超过 $n$ 支铅笔才够给小朋友们发礼物。\n\n现在 P 老师想知道，在商店每种包装的数量都足够的情况下，要买够至少 $n$ 支铅笔最少需要花费多少钱。\n",
+      "formatI": "第一行包含一个正整数 $n$，表示需要的铅笔数量。\n\n接下来三行，每行用 $2$ 个正整数描述一种包装的铅笔：其中第 $1$ 个整数表示这种包装内铅笔的数量，第 $2$ 个整数表示这种包装的价格。\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n",
+      "formatO": "$1$ 个整数，表示 P 老师最少需要花费的钱。\n",
+      "hint": "铅笔的三种包装分别是：\n\n- $2$ 支装，价格为 $2$;\n- $50$ 支装，价格为 $30$;\n- $30$ 支装，价格为 $27$。\n\nP 老师需要购买至少 $57$ 支铅笔。\n\n如果她选择购买第一种包装，那么她需要购买 $29$ 份，共计 $2 \\times 29 = 58$ 支，需要花费的钱为 $2 \\times 29 = 58$。\n\n实际上，P 老师会选择购买第三种包装，这样需要买 $2$ 份。虽然最后买到的铅笔数量更多了，为 $30 \\times 2 = 60$ 支，但花费却减少为 $27 \\times 2 = 54$，比第一种少。\n\n对于第二种包装，虽然每支铅笔的价格是最低的，但要够发必须买 $2$ 份，实际的花费达到了 $30  \\times 2 = 60$，因此 P 老师也不会选择。\n\n所以最后输出的答案是 $54$。\n\n**数据范围**\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/dlgsz3h4.png)\n\n上表中“整倍数”的意义为：若为 $K$，表示对应数据所需要的铅笔数量 $n$ —定是每种包装铅笔数量的整倍数（这意味着一定可以不用多买铅笔）。\n\n于 2022 年 12 月 23 日新加 Hack 数据三组。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "57\n2 2\n50 30\n30 27",
+        "54"
+      ],
+      [
+        "9998\n128 233\n128 2333\n128 666",
+        "18407"
+      ],
+      [
+        "9999\n101 1111\n1 9999\n1111 9999",
+        "89991"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Junior] Buy Pencils",
+      "background": "NOIP 2016 Junior T1.",
+      "description": "Teacher P needs to go to the store to buy $n$ pencils as gifts for children participating in NOIP. She finds that the store has $3$ types of packaging; different packages may contain different numbers of pencils, and their prices may also differ. For fairness, Teacher P decides to buy only one type of package.\n\nThe store does not allow opening packages, so Teacher P may need to buy more than $n$ pencils to have enough gifts for the children.\n\nNow Teacher P wants to know, assuming there is sufficient stock for each package type, what is the minimum amount of money needed to buy at least $n$ pencils.",
+      "formatI": "The first line contains a positive integer $n$, indicating the required number of pencils.\n\nThe next three lines each describe one type of package with $2$ positive integers: the first integer is the number of pencils in that package, and the second integer is the price of that package.\n\nIt is guaranteed that all $7$ numbers are positive integers not exceeding $10000$.",
+      "formatO": "$1$ integer, indicating the minimum amount of money Teacher P needs to spend.",
+      "hint": "The three package types are:\n\n- $2$-pack, price $2$.\n- $50$-pack, price $30$.\n- $30$-pack, price $27$.\n\nTeacher P needs to buy at least $57$ pencils.\n\nIf she chooses the first package type, then she needs to buy $29$ packs, totaling $2 \\times 29 = 58$ pencils, and the cost is $2 \\times 29 = 58$.\n\nIn fact, Teacher P will choose the third package type, in which case she needs to buy $2$ packs. Although the final number of pencils is more, $30 \\times 2 = 60$, the cost is reduced to $27 \\times 2 = 54$, which is less than the first option.\n\nFor the second package type, although the price per pencil is the lowest, to have enough she must buy $2$ packs, and the actual cost reaches $30 \\times 2 = 60$, so Teacher P will not choose it.\n\nTherefore, the final output is $54$.\n\n**Constraints**\n\nIt is guaranteed that all $7$ numbers are positive integers not exceeding $10000$.\n\n**Subtasks**\n\nSubtasks provide characteristics of some testdata. If you find the problem difficult, you can try to solve only part of the testdata.\n\nThe data scale and characteristics for each test point are shown in the table below:\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/dlgsz3h4.png)\n\nIn the table above, the meaning of “exact multiple” is: if it is $K$, it means the required number of pencils $n$ is an exact multiple of the number of pencils in each package type (which means you can avoid buying extra pencils).\n\nThree Hack testdata groups were newly added on December 23, 2022.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 普及组] 买铅笔",
+      "background": "NOIP2016 普及组 T1",
+      "description": "P 老师需要去商店买 $n$ 支铅笔作为小朋友们参加 NOIP 的礼物。她发现商店一共有 $3$ 种包装的铅笔，不同包装内的铅笔数量有可能不同，价格也有可能不同。为了公平起见，P 老师决定只买同一种包装的铅笔。\n\n商店不允许将铅笔的包装拆开，因此 P 老师可能需要购买超过 $n$ 支铅笔才够给小朋友们发礼物。\n\n现在 P 老师想知道，在商店每种包装的数量都足够的情况下，要买够至少 $n$ 支铅笔最少需要花费多少钱。\n",
+      "formatI": "第一行包含一个正整数 $n$，表示需要的铅笔数量。\n\n接下来三行，每行用 $2$ 个正整数描述一种包装的铅笔：其中第 $1$ 个整数表示这种包装内铅笔的数量，第 $2$ 个整数表示这种包装的价格。\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n",
+      "formatO": "$1$ 个整数，表示 P 老师最少需要花费的钱。\n",
+      "hint": "铅笔的三种包装分别是：\n\n- $2$ 支装，价格为 $2$;\n- $50$ 支装，价格为 $30$;\n- $30$ 支装，价格为 $27$。\n\nP 老师需要购买至少 $57$ 支铅笔。\n\n如果她选择购买第一种包装，那么她需要购买 $29$ 份，共计 $2 \\times 29 = 58$ 支，需要花费的钱为 $2 \\times 29 = 58$。\n\n实际上，P 老师会选择购买第三种包装，这样需要买 $2$ 份。虽然最后买到的铅笔数量更多了，为 $30 \\times 2 = 60$ 支，但花费却减少为 $27 \\times 2 = 54$，比第一种少。\n\n对于第二种包装，虽然每支铅笔的价格是最低的，但要够发必须买 $2$ 份，实际的花费达到了 $30  \\times 2 = 60$，因此 P 老师也不会选择。\n\n所以最后输出的答案是 $54$。\n\n**数据范围**\n\n保证所有的 $7$ 个数都是不超过 $10000$ 的正整数。\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/dlgsz3h4.png)\n\n上表中“整倍数”的意义为：若为 $K$，表示对应数据所需要的铅笔数量 $n$ —定是每种包装铅笔数量的整倍数（这意味着一定可以不用多买铅笔）。\n\n于 2022 年 12 月 23 日新加 Hack 数据三组。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1265,
+    "startTime": 1479384000,
+    "endTime": 1480054800,
+    "name": "NOIP2016普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1008",
+      "type": "P",
+      "name": "[NOIP 1998 普及组] 三连击",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1055",
+      "type": "P",
+      "name": "[NOIP 2008 普及组] ISBN 号码",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1422",
+      "type": "P",
+      "name": "小玉家的电费",
+      "difficulty": 1
+    },
+    {
+      "pid": "P1424",
+      "type": "P",
+      "name": "小鱼的航程（改进版）",
+      "difficulty": 1
+    },
+    {
+      "pid": "P5717",
+      "type": "P",
+      "name": "【深基3.习8】三角形分类",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P1909 [NOIP 2016 普及组] 买铅笔",
+    "type": 2,
+    "slug": "P1909",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1360070,
+      "title": "如何做",
+      "author": {
+        "uid": 2198409,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2198409.png",
+        "name": "dc0120",
+        "slogan": "普及--实力",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787230006
+    },
+    {
+      "id": 1360045,
+      "title": "???",
+      "author": {
+        "uid": 2198409,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2198409.png",
+        "name": "dc0120",
+        "slogan": "普及--实力",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787229258
+    },
+    {
+      "id": 1355142,
+      "title": "进食后人",
+      "author": {
+        "uid": 1752699,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1752699.png",
+        "name": "LCZ141022",
+        "slogan": "Ciallo～(∠・ω< )⌒★",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786857117
+    },
+    {
+      "id": 1340408,
+      "title": "46分，求调闭关",
+      "author": {
+        "uid": 2131438,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2131438.png",
+        "name": "_Mr_Beast_",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/psaal9vq.png"
+      },
+      "time": 1785504382
+    },
+    {
+      "id": 1338305,
+      "title": "近视后人",
+      "author": {
+        "uid": 1344894,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1344894.png",
+        "name": "wideriver",
+        "slogan": "这个家伙很懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785316354
+    },
+    {
+      "id": 1337630,
+      "title": "建议一定要把一开始的最低价格设定很高，我在这里摔了好几次T^T",
+      "author": {
+        "uid": 2159308,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2159308.png",
+        "name": "Ziheng2014",
+        "slogan": "意气风发少年郎，万万人中第一仙！| 我是天下第一FW！| 求关T^T | 一只初一的小蒟蒻",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785248899
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

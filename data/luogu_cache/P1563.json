@@ -1,0 +1,318 @@
+{
+  "problem": {
+    "pid": "P1563",
+    "type": "P",
+    "name": "[NOIP 2016 提高组] 玩具谜题",
+    "difficulty": 2,
+    "tags": [
+      1,
+      33,
+      83
+    ],
+    "totalSubmit": 313629,
+    "totalAccepted": 126113,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 提高组] 玩具谜题",
+      "background": "NOIP2016 提高组 D1T1",
+      "description": "小南有一套可爱的玩具小人，它们各有不同的职业。\n\n有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png) \n\n这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 $3$ 个玩具小人的右数第 $1$ 个玩具小人的左数第 $2$ 个玩具小人那里。”\n\n小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。\n\n小南一边艰难地辨认着玩具小人，一边数着:\n\nsinger 朝内，左数第 $3$ 个是 archer。\n\narcher 朝外，右数第 $1$ 个是 thinker。\n\nthinker 朝外，左数第 $2$ 个是 writer。\n\n所以眼镜藏在 writer 这里！\n\n虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜题具体可以描述为：\n\n有 $n$ 个玩具小人围成一圈，已知它们的职业和朝向。现在第 $1$ 个玩具小人告诉小南一个包含 $m$ 条指令的谜题，其中第 $z$ 条指令形如“向左数/右数第 $s$ 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。",
+      "formatI": "输入的第一行包含两个正整数 $n,m$，表示玩具小人的个数和指令的条数。\n\n接下来 $n$ 行，每行包含一个整数和一个字符串，以逆时针为顺序给出每个玩具小人的朝向和职业。其中 $0$ 表示朝向圈内，$1$ 表示朝向圈外。保证不会出现其他的数。字符串长度不超过 $10$ 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。\n\n接下来 $m$ 行，其中第 $i$ 行包含两个整数 $a_i,s_i$，表示第 $i$ 条指令。若 $a_i=0$，表示向左数 $s_i$ 个人；若 $a_i=1$，表示向右数 $s_i$ 个人。 保证 $a_i$ 不会出现其他的数，$1 \\le s_i < n$。",
+      "formatO": "输出一个字符串，表示从第一个读入的小人开始，依次数完 $m$ 条指令后到达的小人的职业。",
+      "hint": "**样例 1 说明**\n\n这组数据就是【题目描述】中提到的例子。\n\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表:\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $m$ | 全朝内 | 全左数 | $s_i=1$ | 职业长度为 $1$ |\n|:-:|:-:|:-:|:-:|:-:|:-:|:-:|\n| $1$ | $20$ | $1000$ | $\\surd$ | $\\surd$ | $\\surd$ | $\\surd$ |\n| $2$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $3$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $4$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $5$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $6$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $7$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $8$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $9$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\surd$ | $\\times$ |\n| $10$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $11$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $12$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $13$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $14$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $15$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $16$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $17$ | $10^5$ | $10^5$ | $\\surd$ | $\\surd$ | ^ | ^ |\n| $18$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $19$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $20$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n\n其中一些简写的列意义如下:\n\n- 全朝内：若为 $\\surd$，表示该测试点保证所有的玩具小人都朝向圈内；\n\n- 全左数：若为 $\\surd$，表示该测试点保证所有的指令都向左数，即对任意的 $1\\leq z\\leq m, a_i=0$；\n\n- $s=1$：若为 $\\surd$，表示该测试点保证所有的指令都只数 $1$ 个，即对任意的 $1\\leq z\\leq m,s_i=1$；\n\n职业长度为 $1$：若为 $\\surd$，表示该测试点保证所有玩具小人的职业一定是一个长度为 $1$ 的字符串。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 提高组] 玩具谜题",
+      "background": "NOIP2016 提高组 D1T1",
+      "description": "小南有一套可爱的玩具小人，它们各有不同的职业。\n\n有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png) \n\n这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 $3$ 个玩具小人的右数第 $1$ 个玩具小人的左数第 $2$ 个玩具小人那里。”\n\n小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。\n\n小南一边艰难地辨认着玩具小人，一边数着:\n\nsinger 朝内，左数第 $3$ 个是 archer。\n\narcher 朝外，右数第 $1$ 个是 thinker。\n\nthinker 朝外，左数第 $2$ 个是 writer。\n\n所以眼镜藏在 writer 这里！\n\n虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜题具体可以描述为：\n\n有 $n$ 个玩具小人围成一圈，已知它们的职业和朝向。现在第 $1$ 个玩具小人告诉小南一个包含 $m$ 条指令的谜题，其中第 $z$ 条指令形如“向左数/右数第 $s$ 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。",
+      "formatI": "输入的第一行包含两个正整数 $n,m$，表示玩具小人的个数和指令的条数。\n\n接下来 $n$ 行，每行包含一个整数和一个字符串，以逆时针为顺序给出每个玩具小人的朝向和职业。其中 $0$ 表示朝向圈内，$1$ 表示朝向圈外。保证不会出现其他的数。字符串长度不超过 $10$ 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。\n\n接下来 $m$ 行，其中第 $i$ 行包含两个整数 $a_i,s_i$，表示第 $i$ 条指令。若 $a_i=0$，表示向左数 $s_i$ 个人；若 $a_i=1$，表示向右数 $s_i$ 个人。 保证 $a_i$ 不会出现其他的数，$1 \\le s_i < n$。",
+      "formatO": "输出一个字符串，表示从第一个读入的小人开始，依次数完 $m$ 条指令后到达的小人的职业。",
+      "hint": "**样例 1 说明**\n\n这组数据就是【题目描述】中提到的例子。\n\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表:\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $m$ | 全朝内 | 全左数 | $s_i=1$ | 职业长度为 $1$ |\n|:-:|:-:|:-:|:-:|:-:|:-:|:-:|\n| $1$ | $20$ | $1000$ | $\\surd$ | $\\surd$ | $\\surd$ | $\\surd$ |\n| $2$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $3$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $4$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $5$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $6$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $7$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $8$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $9$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\surd$ | $\\times$ |\n| $10$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $11$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $12$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $13$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $14$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $15$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $16$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $17$ | $10^5$ | $10^5$ | $\\surd$ | $\\surd$ | ^ | ^ |\n| $18$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $19$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $20$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n\n其中一些简写的列意义如下:\n\n- 全朝内：若为 $\\surd$，表示该测试点保证所有的玩具小人都朝向圈内；\n\n- 全左数：若为 $\\surd$，表示该测试点保证所有的指令都向左数，即对任意的 $1\\leq z\\leq m, a_i=0$；\n\n- $s=1$：若为 $\\surd$，表示该测试点保证所有的指令都只数 $1$ 个，即对任意的 $1\\leq z\\leq m,s_i=1$；\n\n职业长度为 $1$：若为 $\\surd$，表示该测试点保证所有玩具小人的职业一定是一个长度为 $1$ 的字符串。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "7 3\n0 singer\n0 reader\n0 mengbier \n1 thinker\n1 archer\n0 writer\n1 mogician \n0 3\n1 1\n0 2",
+        "writer"
+      ],
+      [
+        "10 10\n1 C\n0 r\n0 P\n1 d\n1 e\n1 m\n1 t\n1 y\n1 u\n0 V\n1 7\n1 1\n1 4\n0 5\n0 3\n0 1\n1 6\n1 2\n0 8\n0 4",
+        "y"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Senior] Toy Riddle",
+      "background": "NOIP 2016 Senior D1T1",
+      "description": "Xiao Nan has a set of cute toy figures, each with a different profession.\n\nOne day, these toy figures hid Xiao Nan’s glasses. Xiao Nan found that the toy figures stood in a circle; some were facing inward, and some were facing outward. As shown in the figure:\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png)\n\nAt this moment, singer told Xiao Nan a riddle: “The glasses are with the toy figure reached by: counting $3$ to the left from me, then $1$ to the right, then $2$ to the left.”\n\nXiao Nan found that the orientation of the toy figures is crucial in this riddle, because the notions of left and right are opposite for inward- and outward-facing figures: for a toy figure facing inward, its left is the clockwise direction and its right is the counterclockwise direction; for a toy figure facing outward, its left is the counterclockwise direction and its right is the clockwise direction.\n\nWhile struggling to recognize the toy figures, Xiao Nan counted:\n\nsinger is facing inward; the $3$rd to the left is archer.\n\narcher is facing outward; the $1$st to the right is thinker.\n\nthinker is facing outward; the $2$nd to the left is writer.\n\nSo the glasses are with writer!\n\nAlthough he found his glasses, Xiao Nan was still worried. If next time there are more toy figures hiding his glasses, or the riddle is longer, he might not be able to find them. So Xiao Nan hopes you can write a program to solve similar riddles. Specifically:\n\nThere are $n$ toy figures standing in a circle, and their professions and orientations are known. Now the $1$st toy figure gives Xiao Nan a riddle consisting of $m$ instructions, where the $z$-th instruction is of the form “count $s$ toy figures to the left/right.” You need to output the profession of the toy figure you end up at after performing these instructions in order.",
+      "formatI": "The first line contains two positive integers $n,m$, the number of toy figures and the number of instructions.\n\nThe next $n$ lines each contain an integer and a string, giving each toy figure’s orientation and profession in counterclockwise order. Here $0$ indicates facing inward, and $1$ indicates facing outward. No other numbers will appear. The string length is at most $10$, consists only of English letters, is non-empty, and all strings are pairwise distinct. There is exactly one space between the integer and the string.\n\nThe next $m$ lines each contain two integers $a_i,s_i$, describing the $i$-th instruction. If $a_i=0$, count $s_i$ people to the left; if $a_i=1$, count $s_i$ people to the right. It is guaranteed that no other numbers appear for $a_i$, and $1 \\le s_i < n$.",
+      "formatO": "Output a single string: starting from the first toy figure read, the profession of the toy figure reached after performing all $m$ instructions in order.",
+      "hint": "Sample 1 explanation\n\nThis set of testdata is exactly the example mentioned in the Description.\n\nSubtasks\n\nSubtasks specify characteristics of some testdata. If you have difficulty solving the full problem, you can try to solve only part of the testdata.\n\nThe scale and characteristics for each test point are shown in the table below:\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/7su06u3r.png)\n\nSome abbreviated columns mean:\n\n- All facing inward: If $\\surd$, this test point guarantees all toy figures face inward.\n- All count to the left: If $\\surd$, this test point guarantees all instructions count to the left, i.e., for any $1\\leq z\\leq m, a_i=0$.\n- $s=1$: If $\\surd$, this test point guarantees all instructions count exactly $1$ person, i.e., for any $1\\leq z\\leq m,s_i=1$.\n- Profession length is $1$: If $\\surd$, this test point guarantees every toy figure’s profession is a string of length $1$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 提高组] 玩具谜题",
+      "background": "NOIP2016 提高组 D1T1",
+      "description": "小南有一套可爱的玩具小人，它们各有不同的职业。\n\n有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png) \n\n这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 $3$ 个玩具小人的右数第 $1$ 个玩具小人的左数第 $2$ 个玩具小人那里。”\n\n小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。\n\n小南一边艰难地辨认着玩具小人，一边数着:\n\nsinger 朝内，左数第 $3$ 个是 archer。\n\narcher 朝外，右数第 $1$ 个是 thinker。\n\nthinker 朝外，左数第 $2$ 个是 writer。\n\n所以眼镜藏在 writer 这里！\n\n虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜题具体可以描述为：\n\n有 $n$ 个玩具小人围成一圈，已知它们的职业和朝向。现在第 $1$ 个玩具小人告诉小南一个包含 $m$ 条指令的谜题，其中第 $z$ 条指令形如“向左数/右数第 $s$ 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。",
+      "formatI": "输入的第一行包含两个正整数 $n,m$，表示玩具小人的个数和指令的条数。\n\n接下来 $n$ 行，每行包含一个整数和一个字符串，以逆时针为顺序给出每个玩具小人的朝向和职业。其中 $0$ 表示朝向圈内，$1$ 表示朝向圈外。保证不会出现其他的数。字符串长度不超过 $10$ 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。\n\n接下来 $m$ 行，其中第 $i$ 行包含两个整数 $a_i,s_i$，表示第 $i$ 条指令。若 $a_i=0$，表示向左数 $s_i$ 个人；若 $a_i=1$，表示向右数 $s_i$ 个人。 保证 $a_i$ 不会出现其他的数，$1 \\le s_i < n$。",
+      "formatO": "输出一个字符串，表示从第一个读入的小人开始，依次数完 $m$ 条指令后到达的小人的职业。",
+      "hint": "**样例 1 说明**\n\n这组数据就是【题目描述】中提到的例子。\n\n\n**子任务**\n\n子任务会给出部分测试数据的特点。如果你在解决题目中遇到了困难，可以尝试只解决一部分测试数据。\n\n每个测试点的数据规模及特点如下表:\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $m$ | 全朝内 | 全左数 | $s_i=1$ | 职业长度为 $1$ |\n|:-:|:-:|:-:|:-:|:-:|:-:|:-:|\n| $1$ | $20$ | $1000$ | $\\surd$ | $\\surd$ | $\\surd$ | $\\surd$ |\n| $2$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $3$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $4$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $5$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $6$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $7$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $8$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $9$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\surd$ | $\\times$ |\n| $10$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $11$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $12$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $13$ | ^ | ^ | $\\surd$ | $\\surd$ | $\\times$ | ^ |\n| $14$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $15$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $16$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $17$ | $10^5$ | $10^5$ | $\\surd$ | $\\surd$ | ^ | ^ |\n| $18$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n| $19$ | ^ | ^ | $\\surd$ | $\\times$ | ^ | ^ |\n| $20$ | ^ | ^ | $\\times$ | ^ | ^ | ^ |\n\n其中一些简写的列意义如下:\n\n- 全朝内：若为 $\\surd$，表示该测试点保证所有的玩具小人都朝向圈内；\n\n- 全左数：若为 $\\surd$，表示该测试点保证所有的指令都向左数，即对任意的 $1\\leq z\\leq m, a_i=0$；\n\n- $s=1$：若为 $\\surd$，表示该测试点保证所有的指令都只数 $1$ 个，即对任意的 $1\\leq z\\leq m,s_i=1$；\n\n职业长度为 $1$：若为 $\\surd$，表示该测试点保证所有玩具小人的职业一定是一个长度为 $1$ 的字符串。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1266,
+    "startTime": 1479424080,
+    "endTime": 1480054800,
+    "name": "NOIP2016提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1042",
+      "type": "P",
+      "name": "[NOIP 2003 普及组] 乒乓球",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1303",
+      "type": "P",
+      "name": "A*B Problem",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1328",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1601",
+      "type": "P",
+      "name": "高精度加法",
+      "difficulty": 2
+    },
+    {
+      "pid": "P4924",
+      "type": "P",
+      "name": "[1007] 魔法少女小Scarlet",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P1563 [NOIP 2016 提高组] 玩具谜题",
+    "type": 2,
+    "slug": "P1563",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1370814,
+      "title": "75pts,求条闭关",
+      "author": {
+        "uid": 2161357,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2161357.png",
+        "name": "lyx75122552",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788541258
+    },
+    {
+      "id": 1366673,
+      "title": "TLE（qwq）",
+      "author": {
+        "uid": 1388209,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1388209.png",
+        "name": "FJ_Szy",
+        "slogan": "你永远追不上她",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/rez7wv6y.png"
+      },
+      "time": 1787839818
+    },
+    {
+      "id": 1358903,
+      "title": "80pts，求调",
+      "author": {
+        "uid": 2080168,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2080168.png",
+        "name": "wydWYD1",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/u1kgbt2z.png"
+      },
+      "time": 1787143463
+    },
+    {
+      "id": 1351695,
+      "title": "10pts求调",
+      "author": {
+        "uid": 2187792,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2187792.png",
+        "name": "zaizaogonghe",
+        "slogan": "事已至此，先冲二等吧||AFO 8.25",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/twk1swlp.png"
+      },
+      "time": 1786537137
+    },
+    {
+      "id": 1347262,
+      "title": "为什么才20分啊！求调",
+      "author": {
+        "uid": 1827777,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1827777.png",
+        "name": "wabslyh",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786174538
+    },
+    {
+      "id": 1341582,
+      "title": "95分，求调！必关！",
+      "author": {
+        "uid": 1384800,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1384800.png",
+        "name": "王展硕2014",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785650492
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -1,0 +1,320 @@
+{
+  "problem": {
+    "pid": "P2822",
+    "type": "P",
+    "name": "[NOIP 2016 提高组] 组合数问题",
+    "difficulty": 3,
+    "tags": [
+      5,
+      33,
+      83,
+      252,
+      254
+    ],
+    "totalSubmit": 131492,
+    "totalAccepted": 41681,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 提高组] 组合数问题",
+      "background": "NOIP2016 提高组 D2T1",
+      "description": "组合数 $\\binom{n}{m}$ 表示的是从 $n$ 个物品中选出 $m$ 个物品的方案数。举个例子，从 $(1,2,3)$ 三个物品中选择两个物品可以有 $(1,2),(1,3),(2,3)$ 这三种选择方法。根据组合数的定义，我们可以给出计算组合数 $\\binom{n}{m}$ 的一般公式：\n\n$$\\binom{n}{m}=\\frac{n!}{m!(n-m)!}$$\n\n其中 $n!=1\\times2\\times\\cdots\\times n$；特别地，定义 $0!=1$。\n\n小葱想知道如果给定 $n,m$ 和 $k$，对于所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "formatI": "第一行有两个整数 $t,k$，其中 $t$ 代表该测试点总共有多少组测试数据，$k$ 的意义见问题描述。\n\n接下来 $t$ 行每行两个整数 $n,m$，其中 $n,m$ 的意义见问题描述。",
+      "formatO": "共 $t$ 行，每行一个整数代表所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 中有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "hint": "【样例1说明】\n\n在所有可能的情况中，只有 $\\binom{2}{1} = 2$ 一种情况是 $2$ 的倍数。\n\n【子任务】\n\n::cute-table{tuack}\n\n|测试点|$n$|$m$|$k$|$t$|\n|:-:|:-:|:-:|:-:|:-:|\n|$1$|$\\le3$|$\\le3$|$=2$|$=1$|\n|$2$|^|^|$=3$|$\\le10^4$|\n|$3$|$\\le7$|$\\le7$|$=4$|$=1$|\n|$4$|^|^|$=5$|$\\le10^4$|\n|$5$|$\\le10$|$\\le10$|$=6$|$=1$|\n|$6$|^|^|$=7$|$\\le10^4$|\n|$7$|$\\le20$|$\\le100$|$=8$|$=1$|\n|$8$|^|^|$=9$|$\\le10^4$|\n|$9$|$\\le25$|$\\le2000$|$=10$|$=1$|\n|$10$|^|^|$=11$|$\\le10^4$|\n|$11$|$\\le60$|$\\le20$|$=12$|$=1$|\n|$12$|^|^|$=13$|$\\le10^4$|\n|$13$|$\\le100$|$\\le25$|$=14$|$=1$|\n|$14$|^|^|$=15$|$\\le10^4$|\n|$15$|^|$\\le60$|$=16$|$=1$|\n|$16$|^|^|$=17$|$\\le10^4$|\n|$17$|$\\le2000$|$\\le100$|$=18$|$=1$|\n|$18$|^|^|$=19$|$\\le10^4$|\n|$19$|^|$\\le2000$|$=20$|$=1$|\n|$20$|^|^|$=21$|$\\le10^4$|\n\n- 对于全部的测试点，保证 $0 \\leq n, m \\leq 2 \\times 10^3$，$1 \\leq t \\leq 10^4$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 提高组] 组合数问题",
+      "background": "NOIP2016 提高组 D2T1",
+      "description": "组合数 $\\binom{n}{m}$ 表示的是从 $n$ 个物品中选出 $m$ 个物品的方案数。举个例子，从 $(1,2,3)$ 三个物品中选择两个物品可以有 $(1,2),(1,3),(2,3)$ 这三种选择方法。根据组合数的定义，我们可以给出计算组合数 $\\binom{n}{m}$ 的一般公式：\n\n$$\\binom{n}{m}=\\frac{n!}{m!(n-m)!}$$\n\n其中 $n!=1\\times2\\times\\cdots\\times n$；特别地，定义 $0!=1$。\n\n小葱想知道如果给定 $n,m$ 和 $k$，对于所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "formatI": "第一行有两个整数 $t,k$，其中 $t$ 代表该测试点总共有多少组测试数据，$k$ 的意义见问题描述。\n\n接下来 $t$ 行每行两个整数 $n,m$，其中 $n,m$ 的意义见问题描述。",
+      "formatO": "共 $t$ 行，每行一个整数代表所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 中有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "hint": "【样例1说明】\n\n在所有可能的情况中，只有 $\\binom{2}{1} = 2$ 一种情况是 $2$ 的倍数。\n\n【子任务】\n\n::cute-table{tuack}\n\n|测试点|$n$|$m$|$k$|$t$|\n|:-:|:-:|:-:|:-:|:-:|\n|$1$|$\\le3$|$\\le3$|$=2$|$=1$|\n|$2$|^|^|$=3$|$\\le10^4$|\n|$3$|$\\le7$|$\\le7$|$=4$|$=1$|\n|$4$|^|^|$=5$|$\\le10^4$|\n|$5$|$\\le10$|$\\le10$|$=6$|$=1$|\n|$6$|^|^|$=7$|$\\le10^4$|\n|$7$|$\\le20$|$\\le100$|$=8$|$=1$|\n|$8$|^|^|$=9$|$\\le10^4$|\n|$9$|$\\le25$|$\\le2000$|$=10$|$=1$|\n|$10$|^|^|$=11$|$\\le10^4$|\n|$11$|$\\le60$|$\\le20$|$=12$|$=1$|\n|$12$|^|^|$=13$|$\\le10^4$|\n|$13$|$\\le100$|$\\le25$|$=14$|$=1$|\n|$14$|^|^|$=15$|$\\le10^4$|\n|$15$|^|$\\le60$|$=16$|$=1$|\n|$16$|^|^|$=17$|$\\le10^4$|\n|$17$|$\\le2000$|$\\le100$|$=18$|$=1$|\n|$18$|^|^|$=19$|$\\le10^4$|\n|$19$|^|$\\le2000$|$=20$|$=1$|\n|$20$|^|^|$=21$|$\\le10^4$|\n\n- 对于全部的测试点，保证 $0 \\leq n, m \\leq 2 \\times 10^3$，$1 \\leq t \\leq 10^4$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1 2\n3 3",
+        "1"
+      ],
+      [
+        "2 5\n4 5\n6 7",
+        "0\n7\n"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Senior] Binomial Coefficient Problem",
+      "background": "NOIP 2016 Senior D2T1.",
+      "description": "The binomial coefficient $\\binom{n}{m}$ represents the number of ways to choose $m$ items from $n$ items. For example, when choosing two items from three items $(1, 2, 3)$, there are three choices: $(1, 2)$, $(1, 3)$, and $(2, 3)$. By definition, the general formula for computing the binomial coefficient $\\binom{n}{m}$ is:\n\n$$\\binom{n}{m}=\\frac{n!}{m!(n-m)!}$$\n\nwhere $n!=1\\times2\\times\\cdots\\times n$. In particular, $0!=1$.\n\nXiaocong wants to know, given $n$, $m$, and $k$, among all $0 \\leq i \\leq n$, $0 \\leq j \\leq \\min \\left ( i, m \\right )$, how many pairs $(i, j)$ satisfy $k \\mid \\binom{i}{j}$.",
+      "formatI": "The first line contains two integers $t, k$, where $t$ is the number of test cases in this testdata, and $k$ is as described in the problem.\n\nEach of the next $t$ lines contains two integers $n, m$, where $n$ and $m$ are as described in the problem.",
+      "formatO": "Output $t$ lines. Each line contains a single integer representing how many pairs $(i, j)$ among all $0 \\leq i \\leq n$, $0 \\leq j \\leq \\min \\left ( i, m \\right )$ satisfy $k \\mid \\binom{i}{j}$.",
+      "hint": "Sample 1 Explanation.\n\nAmong all possible cases, only $\\binom{2}{1} = 2$ is a multiple of $2$.\n\nSubtasks.\n\n| Testpoint | $n$ | $m$ | $k$ | $t$ |\n|:-:|:-:|:-:|:-:|:-:|\n| $1$ | $\\le 3$ | $\\le 3$ | $=2$ | $=1$ |\n| $2$ | ^ | ^ | $=3$ | $\\le 10^4$ |\n| $3$ | $\\le 7$ | $\\le 7$ | $=4$ | $=1$ |\n| $4$ | ^ | ^ | $=5$ | $\\le 10^4$ |\n| $5$ | $\\le 10$ | $\\le 10$ | $=6$ | $=1$ |\n| $6$ | ^ | ^ | $=7$ | $\\le 10^4$ |\n| $7$ | $\\le 20$ | $\\le 100$ | $=8$ | $=1$ |\n| $8$ | ^ | ^ | $=9$ | $\\le 10^4$ |\n| $9$ | $\\le 25$ | $\\le 2000$ | $=10$ | $=1$ |\n| $10$ | ^ | ^ | $=11$ | $\\le 10^4$ |\n| $11$ | $\\le 60$ | $\\le 20$ | $=12$ | $=1$ |\n| $12$ | ^ | ^ | $=13$ | $\\le 10^4$ |\n| $13$ | $\\le 100$ | $\\le 25$ | $=14$ | $=1$ |\n| $14$ | ^ | ^ | $=15$ | $\\le 10^4$ |\n| $15$ | ^ | $\\le 60$ | $=16$ | $=1$ |\n| $16$ | ^ | ^ | $=17$ | $\\le 10^4$ |\n| $17$ | $\\le 2000$ | $\\le 100$ | $=18$ | $=1$ |\n| $18$ | ^ | ^ | $=19$ | $\\le 10^4$ |\n| $19$ | ^ | $\\le 2000$ | $=20$ | $=1$ |\n| $20$ | ^ | ^ | $=21$ | $\\le 10^4$ |\n\nConstraints.\n\nFor all testdata, it is guaranteed that $0 \\leq n, m \\leq 2 \\times 10^3$, $1 \\leq t \\leq 10^4$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 提高组] 组合数问题",
+      "background": "NOIP2016 提高组 D2T1",
+      "description": "组合数 $\\binom{n}{m}$ 表示的是从 $n$ 个物品中选出 $m$ 个物品的方案数。举个例子，从 $(1,2,3)$ 三个物品中选择两个物品可以有 $(1,2),(1,3),(2,3)$ 这三种选择方法。根据组合数的定义，我们可以给出计算组合数 $\\binom{n}{m}$ 的一般公式：\n\n$$\\binom{n}{m}=\\frac{n!}{m!(n-m)!}$$\n\n其中 $n!=1\\times2\\times\\cdots\\times n$；特别地，定义 $0!=1$。\n\n小葱想知道如果给定 $n,m$ 和 $k$，对于所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "formatI": "第一行有两个整数 $t,k$，其中 $t$ 代表该测试点总共有多少组测试数据，$k$ 的意义见问题描述。\n\n接下来 $t$ 行每行两个整数 $n,m$，其中 $n,m$ 的意义见问题描述。",
+      "formatO": "共 $t$ 行，每行一个整数代表所有的 $0\\leq i\\leq n,0\\leq j\\leq \\min \\left ( i, m \\right )$ 中有多少对 $(i,j)$ 满足 $k\\mid\\binom{i}{j}$。",
+      "hint": "【样例1说明】\n\n在所有可能的情况中，只有 $\\binom{2}{1} = 2$ 一种情况是 $2$ 的倍数。\n\n【子任务】\n\n::cute-table{tuack}\n\n|测试点|$n$|$m$|$k$|$t$|\n|:-:|:-:|:-:|:-:|:-:|\n|$1$|$\\le3$|$\\le3$|$=2$|$=1$|\n|$2$|^|^|$=3$|$\\le10^4$|\n|$3$|$\\le7$|$\\le7$|$=4$|$=1$|\n|$4$|^|^|$=5$|$\\le10^4$|\n|$5$|$\\le10$|$\\le10$|$=6$|$=1$|\n|$6$|^|^|$=7$|$\\le10^4$|\n|$7$|$\\le20$|$\\le100$|$=8$|$=1$|\n|$8$|^|^|$=9$|$\\le10^4$|\n|$9$|$\\le25$|$\\le2000$|$=10$|$=1$|\n|$10$|^|^|$=11$|$\\le10^4$|\n|$11$|$\\le60$|$\\le20$|$=12$|$=1$|\n|$12$|^|^|$=13$|$\\le10^4$|\n|$13$|$\\le100$|$\\le25$|$=14$|$=1$|\n|$14$|^|^|$=15$|$\\le10^4$|\n|$15$|^|$\\le60$|$=16$|$=1$|\n|$16$|^|^|$=17$|$\\le10^4$|\n|$17$|$\\le2000$|$\\le100$|$=18$|$=1$|\n|$18$|^|^|$=19$|$\\le10^4$|\n|$19$|^|$\\le2000$|$=20$|$=1$|\n|$20$|^|^|$=21$|$\\le10^4$|\n\n- 对于全部的测试点，保证 $0 \\leq n, m \\leq 2 \\times 10^3$，$1 \\leq t \\leq 10^4$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1266,
+    "startTime": 1479424080,
+    "endTime": 1480054800,
+    "name": "NOIP2016提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1850",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 换教室",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2789",
+      "type": "P",
+      "name": "直线交点数",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2831",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2827",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3807",
+      "type": "P",
+      "name": "【模板】卢卡斯定理 / Lucas 定理",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P2822 [NOIP 2016 提高组] 组合数问题",
+    "type": 2,
+    "slug": "P2822",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1361043,
+      "title": "20分，求给浩哥调题",
+      "author": {
+        "uid": 2205387,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2205387.png",
+        "name": "wdsj_haochen",
+        "slogan": "AFO",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/vos06fz9.png"
+      },
+      "time": 1787316774
+    },
+    {
+      "id": 1352485,
+      "title": "95pts,求调",
+      "author": {
+        "uid": 1485964,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1485964.png",
+        "name": "wuchenxuan1",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/h6c1ftjw.png"
+      },
+      "time": 1786609876
+    },
+    {
+      "id": 1302705,
+      "title": "洛谷 P2822 组合数求调闭关",
+      "author": {
+        "uid": 1797503,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1797503.png",
+        "name": "pixiaodian",
+        "slogan": "开心|冲红名",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xunqulhv.png"
+      },
+      "time": 1780754708
+    },
+    {
+      "id": 1298873,
+      "title": "0pts 求条",
+      "author": {
+        "uid": 1637301,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1637301.png",
+        "name": "CR400AF_0027",
+        "slogan": "B站网址：https://space.bilibili.com/491723149?spm_id_from=333.337.0.0",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/k2sdz0y1.png"
+      },
+      "time": 1779979768
+    },
+    {
+      "id": 1289634,
+      "title": "95ptsTLE求条",
+      "author": {
+        "uid": 1053874,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1053874.png",
+        "name": "zhongyuan2023",
+        "slogan": "不上橙不改了",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/2ni1d3h3.png"
+      },
+      "time": 1778317765
+    },
+    {
+      "id": 1276359,
+      "title": "最后一个点TLE",
+      "author": {
+        "uid": 1735511,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1735511.png",
+        "name": "eurotruck",
+        "slogan": "蒟蒻一个||小小橙名一个||在线状态：true",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/ewj020v0.png"
+      },
+      "time": 1775902061
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -1,0 +1,337 @@
+{
+  "problem": {
+    "pid": "P7076",
+    "type": "P",
+    "name": "[CSP-S 2020] 动物园",
+    "difficulty": 3,
+    "tags": [
+      5,
+      7,
+      37,
+      244,
+      314,
+      342
+    ],
+    "totalSubmit": 112871,
+    "totalAccepted": 22030,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[CSP-S 2020] 动物园",
+      "background": null,
+      "description": "动物园里饲养了很多动物，饲养员小 A 会根据饲养动物的情况，按照《饲养指南》购买不同种类的饲料，并将购买清单发给采购员小 B。 \n\n具体而言，动物世界里存在 $2^k$ 种不同的动物，它们被编号为 $0 \\sim 2^k - 1$。动物园里饲养了其中的 $n$ 种，其中第 $i$ 种动物的编号为 $a_i$。\n\n《饲养指南》中共有 $m$ 条要求，第 $j$ 条要求形如“如果动物园中饲养着某种动物，满足其编号的二进制表示的第 $p_j$ 位为 $1$，则必须购买第 $q_j$ 种饲料”。其中饲料共有 $c$ 种，它们从 $1 \\sim c$ 编号。本题中我们将动物编号的二进制表示视为一个 $k$ 位 01 串，第 $0$ 位是最低位，第 $k - 1$ 位是最高位。 \n\n根据《饲养指南》，小 A 将会制定饲料清单交给小 B，由小 B 购买饲料。清单形如一个 $c$ 位 $01$ 串，第 $i$ 位为 $1$ 时，表示需要购买第 $i$ 种饲料；第 $i$ 位为 $0$ 时，表示不需要购买第 $i$ 种饲料。 实际上根据购买到的饲料，动物园可能可以饲养更多的动物。更具体地，如果将当前未被饲养的编号为 $x$ 的动物加入动物园饲养后，饲料清单没有变化，那么我们认为动物园当前还能饲养编号为 $x$ 的动物。\n\n现在小 B 想请你帮忙算算，动物园目前还能饲养多少种动物。",
+      "formatI": "第一行包含四个以空格分隔的整数 $n, m, c, k$。  \n\n分别表示动物园中动物数量、《饲养指南》要求数、饲料种数与动物编号的二进制表示位数。   \n\n第二行 $n$ 个以空格分隔的整数，其中第 $i$ 个整数表示 $a_i$。  \n\n接下来 $m$ 行，每行两个整数 $p_i, q_i$ 表示一条要求。  \n\n数据保证所有 $a_i$ 互不相同，所有的 $q_i$ 互不相同。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n动物园里饲养了编号为 $1, 4, 6$ 的三种动物，《饲养指南》上的三条要求为：\n\n1. 若饲养的某种动物的编号的第 $0$ 个二进制位为 $1$，则需购买第 $3$ 种饲料。\n2. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $4$ 种饲料。\n3. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $5$ 种饲料。 \n\n饲料购买情况为：\n\n1. 编号为 $1$ 的动物的第 $0$ 个二进制位为 $1$，因此需要购买第 $3$ 种饲料；\n2. 编号为 $4, 6$ 的动物的第 $2$ 个二进制位为 $1$，因此需要购买第 $4, 5$ 种饲料。 \n\n由于在当前动物园中加入一种编号为 $0, 2, 3, 5, 7, 8, \\ldots , 15$ 之一的动物，购物清单都不会改变，因此答案为 $13$。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$k \\le n \\le 5$，$m \\le 10$，$c \\le 10$，所有的 $p_i$ 互不相同。  \n\n对于 $40 \\%$ 的数据，$n \\le 15$，$k \\le 20$，$m \\le 20$，$c \\le 20$。  \n\n对于 $60 \\%$ 的数据，$n \\le 30$，$k \\le 30$，$m \\le 1000$。  \n\n对于 $100 \\%$ 的数据，$0 \\le n, m \\le 10^6$，$0 \\le k \\le 64$，$1 \\le c \\le 10^8$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2020] 动物园",
+      "background": null,
+      "description": "动物园里饲养了很多动物，饲养员小 A 会根据饲养动物的情况，按照《饲养指南》购买不同种类的饲料，并将购买清单发给采购员小 B。 \n\n具体而言，动物世界里存在 $2^k$ 种不同的动物，它们被编号为 $0 \\sim 2^k - 1$。动物园里饲养了其中的 $n$ 种，其中第 $i$ 种动物的编号为 $a_i$。\n\n《饲养指南》中共有 $m$ 条要求，第 $j$ 条要求形如“如果动物园中饲养着某种动物，满足其编号的二进制表示的第 $p_j$ 位为 $1$，则必须购买第 $q_j$ 种饲料”。其中饲料共有 $c$ 种，它们从 $1 \\sim c$ 编号。本题中我们将动物编号的二进制表示视为一个 $k$ 位 01 串，第 $0$ 位是最低位，第 $k - 1$ 位是最高位。 \n\n根据《饲养指南》，小 A 将会制定饲料清单交给小 B，由小 B 购买饲料。清单形如一个 $c$ 位 $01$ 串，第 $i$ 位为 $1$ 时，表示需要购买第 $i$ 种饲料；第 $i$ 位为 $0$ 时，表示不需要购买第 $i$ 种饲料。 实际上根据购买到的饲料，动物园可能可以饲养更多的动物。更具体地，如果将当前未被饲养的编号为 $x$ 的动物加入动物园饲养后，饲料清单没有变化，那么我们认为动物园当前还能饲养编号为 $x$ 的动物。\n\n现在小 B 想请你帮忙算算，动物园目前还能饲养多少种动物。",
+      "formatI": "第一行包含四个以空格分隔的整数 $n, m, c, k$。  \n\n分别表示动物园中动物数量、《饲养指南》要求数、饲料种数与动物编号的二进制表示位数。   \n\n第二行 $n$ 个以空格分隔的整数，其中第 $i$ 个整数表示 $a_i$。  \n\n接下来 $m$ 行，每行两个整数 $p_i, q_i$ 表示一条要求。  \n\n数据保证所有 $a_i$ 互不相同，所有的 $q_i$ 互不相同。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n动物园里饲养了编号为 $1, 4, 6$ 的三种动物，《饲养指南》上的三条要求为：\n\n1. 若饲养的某种动物的编号的第 $0$ 个二进制位为 $1$，则需购买第 $3$ 种饲料。\n2. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $4$ 种饲料。\n3. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $5$ 种饲料。 \n\n饲料购买情况为：\n\n1. 编号为 $1$ 的动物的第 $0$ 个二进制位为 $1$，因此需要购买第 $3$ 种饲料；\n2. 编号为 $4, 6$ 的动物的第 $2$ 个二进制位为 $1$，因此需要购买第 $4, 5$ 种饲料。 \n\n由于在当前动物园中加入一种编号为 $0, 2, 3, 5, 7, 8, \\ldots , 15$ 之一的动物，购物清单都不会改变，因此答案为 $13$。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$k \\le n \\le 5$，$m \\le 10$，$c \\le 10$，所有的 $p_i$ 互不相同。  \n\n对于 $40 \\%$ 的数据，$n \\le 15$，$k \\le 20$，$m \\le 20$，$c \\le 20$。  \n\n对于 $60 \\%$ 的数据，$n \\le 30$，$k \\le 30$，$m \\le 1000$。  \n\n对于 $100 \\%$ 的数据，$0 \\le n, m \\le 10^6$，$0 \\le k \\le 64$，$1 \\le c \\le 10^8$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "y0dlfjz5",
+        "filename": "zoo.zip",
+        "size": 2449,
+        "uploadTime": 1604754976,
+        "downloadLink": "/fe/api/problem/downloadAttachment/y0dlfjz5"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 3 5 4\n1 4 6\n0 3\n2 4\n2 5",
+        "13"
+      ],
+      [
+        "2 2 4 3\n1 2\n1 3\n2 4",
+        "2"
+      ],
+      [
+        "见附件中的 zoo/zoo3.in",
+        "见附件中的 zoo/zoo3.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2020] Zoo",
+      "background": "",
+      "description": "The zoo keeps many animals. Zookeeper A will buy different types of feed according to the animals being kept, following the “Feeding Guide”, and will send the purchase list to buyer B.\n\nSpecifically, there are $2^k$ different kinds of animals in the animal world, numbered from $0$ to $2^k - 1$. The zoo keeps $n$ of them, and the ID of the $i$-th animal is $a_i$.\n\nThere are $m$ rules in the “Feeding Guide”. The $j$-th rule is of the form: “If the zoo keeps some animal such that the $p_j$-th bit of its binary representation is $1$, then it must buy the $q_j$-th type of feed.” There are $c$ types of feed in total, numbered from $1$ to $c$. In this problem, we treat an animal ID’s binary representation as a $k$-bit 01 string: bit $0$ is the lowest bit, and bit $k - 1$ is the highest bit.\n\nAccording to the “Feeding Guide”, A will make a feed list and hand it to B, who will buy the feed. The list is a $c$-bit 01 string: if the $i$-th bit is $1$, it means the $i$-th type of feed needs to be bought; if the $i$-th bit is $0$, it means it does not need to be bought. In fact, based on the feed that has been bought, the zoo may be able to keep more animals. More specifically, if adding a currently unkept animal with ID $x$ to the zoo does not change the feed list, then we say that the zoo can currently also keep the animal with ID $x$.\n\nNow B wants you to help compute how many kinds of animals the zoo can still keep at the moment.",
+      "formatI": "The first line contains four integers $n, m, c, k$ separated by spaces.  \nThey represent the number of animals currently kept in the zoo, the number of rules in the “Feeding Guide”, the number of feed types, and the number of bits in the binary representation of an animal ID.  \nThe second line contains $n$ integers separated by spaces, where the $i$-th integer is $a_i$.  \nThe next $m$ lines each contain two integers $p_i, q_i$, describing one rule.  \nThe data guarantees that all $a_i$ are pairwise distinct, and all $q_i$ are pairwise distinct.",
+      "formatO": "Output one integer in a single line, representing the answer.",
+      "hint": "**[Sample #1 Explanation]**\n\nThe zoo keeps three kinds of animals with IDs $1, 4, 6$. The “Feeding Guide” contains three rules:\n\n1. If some kept animal has the $0$-th binary bit equal to $1$, then feed type $3$ must be bought.\n2. If some kept animal has the $2$-th binary bit equal to $1$, then feed type $4$ must be bought.\n3. If some kept animal has the $2$-th binary bit equal to $1$, then feed type $5$ must be bought.\n\nThe feed purchase situation is:\n\n1. The animal with ID $1$ has the $0$-th binary bit equal to $1$, so feed type $3$ needs to be bought.\n2. The animals with IDs $4, 6$ have the $2$-th binary bit equal to $1$, so feed types $4, 5$ need to be bought.\n\nSince adding an animal with ID being one of $0, 2, 3, 5, 7, 8, \\ldots , 15$ will not change the shopping list, the answer is $13$.\n\n**[Constraints]**\n\nFor $20\\%$ of the testdata, $k \\le n \\le 5$, $m \\le 10$, $c \\le 10$, and all $p_i$ are pairwise distinct.  \nFor $40\\%$ of the testdata, $n \\le 15$, $k \\le 20$, $m \\le 20$, $c \\le 20$.  \nFor $60\\%$ of the testdata, $n \\le 30$, $k \\le 30$, $m \\le 1000$.  \nFor $100\\%$ of the testdata, $0 \\le n, m \\le 10^6$, $0 \\le k \\le 64$, $1 \\le c \\le 10^8$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2020] 动物园",
+      "background": null,
+      "description": "动物园里饲养了很多动物，饲养员小 A 会根据饲养动物的情况，按照《饲养指南》购买不同种类的饲料，并将购买清单发给采购员小 B。 \n\n具体而言，动物世界里存在 $2^k$ 种不同的动物，它们被编号为 $0 \\sim 2^k - 1$。动物园里饲养了其中的 $n$ 种，其中第 $i$ 种动物的编号为 $a_i$。\n\n《饲养指南》中共有 $m$ 条要求，第 $j$ 条要求形如“如果动物园中饲养着某种动物，满足其编号的二进制表示的第 $p_j$ 位为 $1$，则必须购买第 $q_j$ 种饲料”。其中饲料共有 $c$ 种，它们从 $1 \\sim c$ 编号。本题中我们将动物编号的二进制表示视为一个 $k$ 位 01 串，第 $0$ 位是最低位，第 $k - 1$ 位是最高位。 \n\n根据《饲养指南》，小 A 将会制定饲料清单交给小 B，由小 B 购买饲料。清单形如一个 $c$ 位 $01$ 串，第 $i$ 位为 $1$ 时，表示需要购买第 $i$ 种饲料；第 $i$ 位为 $0$ 时，表示不需要购买第 $i$ 种饲料。 实际上根据购买到的饲料，动物园可能可以饲养更多的动物。更具体地，如果将当前未被饲养的编号为 $x$ 的动物加入动物园饲养后，饲料清单没有变化，那么我们认为动物园当前还能饲养编号为 $x$ 的动物。\n\n现在小 B 想请你帮忙算算，动物园目前还能饲养多少种动物。",
+      "formatI": "第一行包含四个以空格分隔的整数 $n, m, c, k$。  \n\n分别表示动物园中动物数量、《饲养指南》要求数、饲料种数与动物编号的二进制表示位数。   \n\n第二行 $n$ 个以空格分隔的整数，其中第 $i$ 个整数表示 $a_i$。  \n\n接下来 $m$ 行，每行两个整数 $p_i, q_i$ 表示一条要求。  \n\n数据保证所有 $a_i$ 互不相同，所有的 $q_i$ 互不相同。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n动物园里饲养了编号为 $1, 4, 6$ 的三种动物，《饲养指南》上的三条要求为：\n\n1. 若饲养的某种动物的编号的第 $0$ 个二进制位为 $1$，则需购买第 $3$ 种饲料。\n2. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $4$ 种饲料。\n3. 若饲养的某种动物的编号的第 $2$ 个二进制位为 $1$，则需购买第 $5$ 种饲料。 \n\n饲料购买情况为：\n\n1. 编号为 $1$ 的动物的第 $0$ 个二进制位为 $1$，因此需要购买第 $3$ 种饲料；\n2. 编号为 $4, 6$ 的动物的第 $2$ 个二进制位为 $1$，因此需要购买第 $4, 5$ 种饲料。 \n\n由于在当前动物园中加入一种编号为 $0, 2, 3, 5, 7, 8, \\ldots , 15$ 之一的动物，购物清单都不会改变，因此答案为 $13$。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$k \\le n \\le 5$，$m \\le 10$，$c \\le 10$，所有的 $p_i$ 互不相同。  \n\n对于 $40 \\%$ 的数据，$n \\le 15$，$k \\le 20$，$m \\le 20$，$c \\le 20$。  \n\n对于 $60 \\%$ 的数据，$n \\le 30$，$k \\le 30$，$m \\le 1000$。  \n\n对于 $100 \\%$ 的数据，$0 \\le n, m \\le 10^6$，$0 \\le k \\le 64$，$1 \\le c \\le 10^8$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 37022,
+    "startTime": 1604678400,
+    "endTime": 1605024000,
+    "name": "CSP2020 S-2 组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P5658",
+      "type": "P",
+      "name": "[CSP-S 2019] 括号树",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7075",
+      "type": "P",
+      "name": "[CSP-S 2020] 儒略日",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7913",
+      "type": "P",
+      "name": "[CSP-S 2021] 廊桥分配",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P7076 [CSP-S 2020] 动物园",
+    "type": 2,
+    "slug": "P7076",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1362070,
+      "title": "60分求条",
+      "author": {
+        "uid": 2216511,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2216511.png",
+        "name": "ljz_AK_IOI",
+        "slogan": "我是大炸弹（dzd），快给我7891万rmb！不给就让你禁赛1145141919810年！||粉福：U719196||支持无条件壶关，忘关请私信",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/rfhrdmms.png"
+      },
+      "time": 1787410101
+    },
+    {
+      "id": 1361482,
+      "title": "秔貰腄㻰",
+      "author": {
+        "uid": 1398586,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1398586.png",
+        "name": "wangganlin",
+        "slogan": "稻花香里说丰年，听取RE声一片 ——2026.08.10",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787378034
+    },
+    {
+      "id": 1354340,
+      "title": "警示后人（if you WA 100pts）",
+      "author": {
+        "uid": 1241180,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1241180.png",
+        "name": "SBro",
+        "slogan": "我会亲手写下句点。 | 偶遇，爱上OI     ——SBro",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jto0gw18.png"
+      },
+      "time": 1786777453
+    },
+    {
+      "id": 1344232,
+      "title": "本蒟蒻有个疑问",
+      "author": {
+        "uid": 1485644,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1485644.png",
+        "name": "Achieve_Success",
+        "slogan": "你不炸我不炸，鱼儿何时能长大 || 加法直接模，减法先加模，乘法先扩型（*1LL），然后再取模ਰ",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/0dxuubnp.png"
+      },
+      "time": 1785914222
+    },
+    {
+      "id": 1342991,
+      "title": "WA100求调",
+      "author": {
+        "uid": 1416859,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1416859.png",
+        "name": "wangsinuo1",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785805804
+    },
+    {
+      "id": 1325470,
+      "title": "进食后入（若Wa80）",
+      "author": {
+        "uid": 1648693,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1648693.png",
+        "name": "Luck_Begin",
+        "slogan": "不要忘了初始化",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784258584
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

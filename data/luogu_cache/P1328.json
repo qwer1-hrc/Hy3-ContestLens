@@ -1,0 +1,293 @@
+{
+  "problem": {
+    "pid": "P1328",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+    "difficulty": 2,
+    "tags": [
+      1,
+      31,
+      83
+    ],
+    "totalSubmit": 198984,
+    "totalAccepted": 114326,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+      "background": "NOIP2014 提高组 D1T1",
+      "description": "石头剪刀布是常见的猜拳游戏：石头胜剪刀，剪刀胜布，布胜石头。如果两个人出拳一样，则不分胜负。在《生活大爆炸》第二季第 8 集中出现了一种石头剪刀布的升级版游戏。\n\n升级版游戏在传统的石头剪刀布游戏的基础上，增加了两个新手势：\n\n斯波克:《星际迷航》主角之一。\n\n蜥蜴人:《星际迷航》中的反面角色。\n\n这五种手势的胜负关系如表一所示,表中列出的是甲对乙的游戏结果。\n\n![](https://cdn.luogu.com.cn/upload/pic/1346.png)\n\n现在，小 A 和小 B 尝试玩这种升级版的猜拳游戏。已知他们的出拳都是有周期性规律的，但周期长度不一定相等。例如：如果小 A 以 `石头-布-石头-剪刀-蜥蜴人-斯波克` 长度为 $6$ 的周期出拳,那么他的出拳序列就是 `石头-布-石头-剪刀-蜥蜴人-斯波克-石头-布-石头-剪刀-蜥蜴人-斯波克-...`，而如果小 B 以 `剪刀-石头-布-斯波克-蜥蜴人` 长度为 $5$ 的周期出拳,那么他出拳的序列就是 `剪刀-石头-布-斯波克-蜥蜴人-剪刀-石头-布-斯波克-蜥蜴人-...`。\n\n已知小 A 和小 B 一共进行 $N$ 次猜拳。每一次赢的人得 $1$ 分，输的得 $0$ 分；平局两人都得 $0$ 分。现请你统计 $N$ 次猜拳结束之后两人的得分。",
+      "formatI": "第一行包含三个整数：$N,N_A,N_B$，分别表示共进行 $N$ 次猜拳、小 A 出拳的周期长度，小 B 出拳的周期长度。数与数之间以一个空格分隔。\n\n第二行包含 $N_A$ 个整数,表示小 A 出拳的规律,第三行包含 $N_B$ 个整数，表示小 B 出拳的规律。其中，$0$ 表示 `剪刀`，$1$ 表示 `石头`，$2$ 表示 `布`，$3$ 表示 `蜥蜴人`，$4$ 表示 `斯波克`。数与数之间以一个空格分隔。",
+      "formatO": "输出一行，包含两个整数，以一个空格分隔，分别表示小 A、小 B 的得分。",
+      "hint": "对于 $100\\%$ 的数据，$0 < N \\leq 200, 0 < N_A \\leq 200, 0 < N_B \\leq 200$ 。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+      "background": "NOIP2014 提高组 D1T1",
+      "description": "石头剪刀布是常见的猜拳游戏：石头胜剪刀，剪刀胜布，布胜石头。如果两个人出拳一样，则不分胜负。在《生活大爆炸》第二季第 8 集中出现了一种石头剪刀布的升级版游戏。\n\n升级版游戏在传统的石头剪刀布游戏的基础上，增加了两个新手势：\n\n斯波克:《星际迷航》主角之一。\n\n蜥蜴人:《星际迷航》中的反面角色。\n\n这五种手势的胜负关系如表一所示,表中列出的是甲对乙的游戏结果。\n\n![](https://cdn.luogu.com.cn/upload/pic/1346.png)\n\n现在，小 A 和小 B 尝试玩这种升级版的猜拳游戏。已知他们的出拳都是有周期性规律的，但周期长度不一定相等。例如：如果小 A 以 `石头-布-石头-剪刀-蜥蜴人-斯波克` 长度为 $6$ 的周期出拳,那么他的出拳序列就是 `石头-布-石头-剪刀-蜥蜴人-斯波克-石头-布-石头-剪刀-蜥蜴人-斯波克-...`，而如果小 B 以 `剪刀-石头-布-斯波克-蜥蜴人` 长度为 $5$ 的周期出拳,那么他出拳的序列就是 `剪刀-石头-布-斯波克-蜥蜴人-剪刀-石头-布-斯波克-蜥蜴人-...`。\n\n已知小 A 和小 B 一共进行 $N$ 次猜拳。每一次赢的人得 $1$ 分，输的得 $0$ 分；平局两人都得 $0$ 分。现请你统计 $N$ 次猜拳结束之后两人的得分。",
+      "formatI": "第一行包含三个整数：$N,N_A,N_B$，分别表示共进行 $N$ 次猜拳、小 A 出拳的周期长度，小 B 出拳的周期长度。数与数之间以一个空格分隔。\n\n第二行包含 $N_A$ 个整数,表示小 A 出拳的规律,第三行包含 $N_B$ 个整数，表示小 B 出拳的规律。其中，$0$ 表示 `剪刀`，$1$ 表示 `石头`，$2$ 表示 `布`，$3$ 表示 `蜥蜴人`，$4$ 表示 `斯波克`。数与数之间以一个空格分隔。",
+      "formatO": "输出一行，包含两个整数，以一个空格分隔，分别表示小 A、小 B 的得分。",
+      "hint": "对于 $100\\%$ 的数据，$0 < N \\leq 200, 0 < N_A \\leq 200, 0 < N_B \\leq 200$ 。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "10 5 6\n0 1 2 3 4\n0 3 4 2 1 0\n",
+        "6 2\n"
+      ],
+      [
+        "9 5 5\n0 1 2 3 4\n1 0 3 2 4\n",
+        "4 4"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Rock-Paper-Scissors-Lizard-Spock",
+      "background": "NOIP 2014 Senior D1T1.",
+      "description": "Rock-paper-scissors is a common hand game: rock beats scissors, scissors beat paper, and paper beats rock. If two players show the same gesture, it is a draw. In Season 2, Episode 8 of “The Big Bang Theory,” an upgraded version of the game appears.\n\nOn top of the traditional rock-paper-scissors game, the upgraded version adds two new gestures:\n\nSpock: one of the main characters in Star Trek.\n\nLizard: a villain in Star Trek.\n\nThe win–loss relationships among the five gestures are shown in Table 1. The table lists the result of player A versus player B.\n\n![](https://cdn.luogu.com.cn/upload/pic/1346.png)\n\nNow, Xiao A and Xiao B are trying this upgraded hand game. It is known that their moves follow periodic patterns, though their period lengths may differ. For example: if Xiao A plays with the period `石头-布-石头-剪刀-蜥蜴人-斯波克` of length $6$, then his sequence of moves is `石头-布-石头-剪刀-蜥蜴人-斯波克-石头-布-石头-剪刀-蜥蜴人-斯波克-...`; and if Xiao B plays with the period `剪刀-石头-布-斯波克-蜥蜴人` of length $5$, then his sequence of moves is `剪刀-石头-布-斯波克-蜥蜴人-剪刀-石头-布-斯波克-蜥蜴人-...`.\n\nThey will play a total of $N$ rounds. In each round, the winner gets $1$ point, the loser gets $0$ points; in a draw, both get $0$ points. Please compute the scores of the two players after $N$ rounds.",
+      "formatI": "The first line contains three integers: $N, N_A, N_B$, representing the total number of rounds, the period length of Xiao A’s moves, and the period length of Xiao B’s moves, respectively. The numbers are separated by a space.\n\nThe second line contains $N_A$ integers representing Xiao A’s pattern, and the third line contains $N_B$ integers representing Xiao B’s pattern. Here, $0$ denotes `剪刀`, $1$ denotes `石头`, $2$ denotes `布`, $3$ denotes `蜥蜴人`, and $4$ denotes `斯波克`. The numbers are separated by a space.",
+      "formatO": "Output a single line containing two integers separated by a space, representing the scores of Xiao A and Xiao B, respectively.",
+      "hint": "For $100\\%$ of the testdata, $0 < N \\leq 200, 0 < N_A \\leq 200, 0 < N_B \\leq 200$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+      "background": "NOIP2014 提高组 D1T1",
+      "description": "石头剪刀布是常见的猜拳游戏：石头胜剪刀，剪刀胜布，布胜石头。如果两个人出拳一样，则不分胜负。在《生活大爆炸》第二季第 8 集中出现了一种石头剪刀布的升级版游戏。\n\n升级版游戏在传统的石头剪刀布游戏的基础上，增加了两个新手势：\n\n斯波克:《星际迷航》主角之一。\n\n蜥蜴人:《星际迷航》中的反面角色。\n\n这五种手势的胜负关系如表一所示,表中列出的是甲对乙的游戏结果。\n\n![](https://cdn.luogu.com.cn/upload/pic/1346.png)\n\n现在，小 A 和小 B 尝试玩这种升级版的猜拳游戏。已知他们的出拳都是有周期性规律的，但周期长度不一定相等。例如：如果小 A 以 `石头-布-石头-剪刀-蜥蜴人-斯波克` 长度为 $6$ 的周期出拳,那么他的出拳序列就是 `石头-布-石头-剪刀-蜥蜴人-斯波克-石头-布-石头-剪刀-蜥蜴人-斯波克-...`，而如果小 B 以 `剪刀-石头-布-斯波克-蜥蜴人` 长度为 $5$ 的周期出拳,那么他出拳的序列就是 `剪刀-石头-布-斯波克-蜥蜴人-剪刀-石头-布-斯波克-蜥蜴人-...`。\n\n已知小 A 和小 B 一共进行 $N$ 次猜拳。每一次赢的人得 $1$ 分，输的得 $0$ 分；平局两人都得 $0$ 分。现请你统计 $N$ 次猜拳结束之后两人的得分。",
+      "formatI": "第一行包含三个整数：$N,N_A,N_B$，分别表示共进行 $N$ 次猜拳、小 A 出拳的周期长度，小 B 出拳的周期长度。数与数之间以一个空格分隔。\n\n第二行包含 $N_A$ 个整数,表示小 A 出拳的规律,第三行包含 $N_B$ 个整数，表示小 B 出拳的规律。其中，$0$ 表示 `剪刀`，$1$ 表示 `石头`，$2$ 表示 `布`，$3$ 表示 `蜥蜴人`，$4$ 表示 `斯波克`。数与数之间以一个空格分隔。",
+      "formatO": "输出一行，包含两个整数，以一个空格分隔，分别表示小 A、小 B 的得分。",
+      "hint": "对于 $100\\%$ 的数据，$0 < N \\leq 200, 0 < N_A \\leq 200, 0 < N_B \\leq 200$ 。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1067",
+      "type": "P",
+      "name": "[NOIP 2009 普及组] 多项式输出",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1098",
+      "type": "P",
+      "name": "[NOIP 2007 提高组] 字符串的展开",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1518",
+      "type": "P",
+      "name": "[USACO2.4] 两只塔姆沃斯牛 The Tamworth Two",
+      "difficulty": 3
+    },
+    {
+      "pid": "P1563",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 玩具谜题",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2038",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P1328 [NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+    "type": 2,
+    "slug": "P1328",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1360868,
+      "title": "60pts，求条，闭关",
+      "author": {
+        "uid": 1127064,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1127064.png",
+        "name": "Emoji_happy",
+        "slogan": "这个家伙很菜，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xcrgvxq6.png"
+      },
+      "time": 1787306076
+    },
+    {
+      "id": 1355149,
+      "title": "警示后入，不然60pts",
+      "author": {
+        "uid": 2077141,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2077141.png",
+        "name": "little_apple666",
+        "slogan": "WA 是绝望，CE 是白忙， RE 猝不及防，MLE 熬断肠 ，AC 落榜，AK 才敢收枪。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786858128
+    },
+    {
+      "id": 1354343,
+      "title": "申请降红",
+      "author": {
+        "uid": 1896157,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1896157.png",
+        "name": "hezhoujun",
+        "slogan": "众所周知，威龙是龙， 龙会飞 很正常，有野人在吃保险，你们同意吗，反正我不同意，给你个滑膛枪，这野人魔了，是个魔人，来接电话来",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786777714
+    },
+    {
+      "id": 1323574,
+      "title": "10",
+      "author": {
+        "uid": 1778413,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1778413.png",
+        "name": "WANG371702",
+        "slogan": "⎛⎝≥⏝⏝≤⎛⎝喵~~~",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/z4ff08l1.png"
+      },
+      "time": 1784110652
+    },
+    {
+      "id": 1302224,
+      "title": "60分WA求调，必关。",
+      "author": {
+        "uid": 2170459,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2170459.png",
+        "name": "yyf214312",
+        "slogan": "phi音游 rks14.29 || 进击2029CSP-S",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/wlz0yptu.png"
+      },
+      "time": 1780716394
+    },
+    {
+      "id": 1261283,
+      "title": "wa??",
+      "author": {
+        "uid": 1275531,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1275531.png",
+        "name": "wang_ze_lin",
+        "slogan": "青春猪头少年不会梦到橘色瞪眼小猫",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1773403002
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

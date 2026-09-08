@@ -29,6 +29,14 @@ class ModelRunContext:
     run_id: str
     directory: Path
     cancelled: Callable[[], bool] | None = None
+    progress: Callable[[dict[str, Any]], None] | None = None
+
+    def emit_progress(self, data: dict[str, Any]) -> None:
+        if self.progress is not None:
+            try:
+                self.progress(data)
+            except Exception:
+                logger.warning("Model progress update failed", exc_info=False)
 
     def check_cancelled(self) -> None:
         if self.cancelled is not None and self.cancelled():
@@ -41,6 +49,7 @@ current_model_run: ContextVar[ModelRunContext | None] = ContextVar("model_run", 
 @contextmanager
 def model_run_context(
     runs_root: Path, run_id: str, cancelled: Callable[[], bool] | None = None,
+    progress: Callable[[dict[str, Any]], None] | None = None,
 ) -> Iterator[ModelRunContext]:
     if not re.fullmatch(r"run_[A-Za-z0-9_-]+", run_id):
         raise ValueError("Invalid run ID for model diagnostics")
@@ -48,7 +57,7 @@ def model_run_context(
     directory = (root / run_id / "model_calls").resolve()
     if not directory.is_relative_to(root):
         raise ValueError("Model diagnostics must stay inside runs_root")
-    context = ModelRunContext(run_id, directory, cancelled)
+    context = ModelRunContext(run_id, directory, cancelled, progress)
     token = current_model_run.set(context)
     try:
         yield context

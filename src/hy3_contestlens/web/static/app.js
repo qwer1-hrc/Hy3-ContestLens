@@ -289,13 +289,17 @@ function imageWarningText(warning) {
     rate_limit_reached_error: "Kimi 账户触发并发或速率限制。",
     exceeded_current_quota_error: "Kimi 账户余额、额度或项目预算不足。",
   }[warning?.provider_error_type];
+  const failureKind = warning?.failure_kind || (warning?.type === "TimeoutError" ? "total_timeout" : null);
   const modelFailure = providerFailure || {
+    total_timeout: "图片理解达到本地总时限，未收到完整描述；HTTP 200 不代表生成完成。",
+    transport_timeout: "图片模型连接或等待后续数据超时，未收到完整描述。",
+    transport_error: "图片模型连接中断，未收到完整描述。",
     stream_incomplete: "图片模型的流式响应提前结束，未收到完整结束标记。",
     stream_error: "图片模型在流式生成过程中返回错误。",
     output_truncated: "图片模型输出达到长度上限，描述不完整。",
     response_shape: "图片模型返回的响应结构不受支持。",
     refusal: "图片模型拒绝生成描述。",
-  }[warning?.failure_kind] || "图片模型连接或响应失败，未生成描述。";
+  }[failureKind] || "图片模型连接或响应失败，未生成描述。";
   const messages = {
     IMAGE_DEPENDENCY_MISSING: `缺少图片渲染组件${warning?.missing?.length ? `（${warning.missing.join("、")}）` : "（Pillow 或 pypdfium2）"}，图片没有发送给模型。`,
     IMAGE_MODEL_FAILED: modelFailure,
@@ -317,6 +321,10 @@ function imageWarningText(warning) {
 }
 
 function appendWorkflowEvent(event, runStatus, runId) {
+  if (event.type === "MODEL_CALL_PROGRESS") {
+    appendModelProgress(event);
+    return;
+  }
   const list = document.getElementById("event-list");
   const empty = document.getElementById("event-empty");
   if (!list || document.querySelector(`[data-event-seq="${event.seq}"]`)) return;
@@ -470,6 +478,7 @@ function setRunActivity(busy) {
 }
 
 function updateWorkflowEventState(runStatus) {
+  if (typeof updateModelProgressState === "function") updateModelProgressState(runStatus);
   const busy = ACTIVE_RUN_STATUSES.has(runStatus);
   setRunActivity(busy && runStatus !== "WAITING_FOR_IMAGE_CONFIRMATION");
   const list = document.getElementById("event-list");
@@ -490,7 +499,7 @@ function updateWorkflowEventState(runStatus) {
 }
 
 function setWorkflowDetails(open) {
-  document.querySelectorAll("#event-list .event-details").forEach((details) => {
+  document.querySelectorAll("#event-list .event-details, #event-list .model-call, #event-list .model-attempt").forEach((details) => {
     details.open = open;
   });
 }
@@ -563,6 +572,14 @@ function renderJudgeCheck(check, meta = {}) {
   context.append(makeElement("code", "", check.check_id || "check pending"));
   if (meta.revisionId) context.append(makeElement("span", "", `版本 ${meta.revisionId}`));
   context.append(makeElement("span", "", `通过率 ${ratio}%`));
+  if (meta.qualityGate) {
+    const regressions = meta.qualityGate.regressed_tests || [];
+    const fixed = meta.qualityGate.fixed_tests || [];
+    context.append(makeElement(
+      "span", "",
+      `质量门禁 ${meta.qualityGate.passed ? "通过" : "拒绝"} · 修复 ${fixed.length} 点 · 回归 ${regressions.length} 点`,
+    ));
+  }
   content.append(context);
 
   const tests = Array.isArray(check.tests) ? check.tests : [];
@@ -581,6 +598,19 @@ function renderJudgeCheck(check, meta = {}) {
       appendTestDetail(extra, "测试点", test.test_id || `#${index + 1}`);
       appendTestDetail(extra, "CPU", `${test.cpu_ms ?? 0} ms`);
       appendTestDetail(extra, "退出码", test.exit_code ?? "—");
+      const decodedSignal = test.termination_signal
+        ?? (Number.isInteger(test.exit_code) && test.exit_code > 128 && test.exit_code <= 192 ? test.exit_code - 128 : null);
+      const signalName = {6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"}[decodedSignal];
+      appendTestDetail(extra, "终止信号", signalName || (decodedSignal ? `SIG ${decodedSignal}` : "—"));
+      const limitFlags = [
+        test.timed_out ? "超时" : null,
+        test.memory_limited ? "内存" : null,
+        test.output_limited ? "输出" : null,
+      ].filter(Boolean).join("、");
+      const hasLimitEvidence = [test.timed_out, test.memory_limited, test.output_limited]
+        .some((value) => value !== undefined && value !== null);
+      appendTestDetail(extra, "限制标志", limitFlags || (hasLimitEvidence ? "无" : "—"));
+      appendTestDetail(extra, "输出字节", `stdout ${test.stdout_bytes ?? "—"} / 文件 ${test.file_output_bytes ?? "—"} / stderr ${test.stderr_bytes ?? "—"}`);
       appendTestDetail(extra, "内存上限", `${test.memory_limit_mb ?? "—"} MB`);
       if (test.first_diff) {
         const diff = makeElement("details", "test-diff");
@@ -612,6 +642,7 @@ function renderJudgeHistory(result) {
         phase: "repair",
         round: index + 1,
         revisionId: round.new_revision_id,
+        qualityGate: round.quality_gate,
       });
     }
   }

@@ -1,0 +1,27 @@
+.model-progress-group { margin-top: 18px; border-top: 1px solid var(--border, #dfe5e9); padding-top: 10px; }
+.model-call { margin: 6px 0; border-radius: 10px; background: rgba(125, 145, 160, .04); }
+.model-call-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px; cursor: pointer; list-style: none; }
+.model-call-summary::-webkit-details-marker { display: none; }
+.model-call-summary::after { content: '›'; font-size: 20px; color: #80909c; transition: transform .18s ease; }
+.model-call[open] > .model-call-summary::after { transform: rotate(90deg); }
+.model-call-status, .model-call-duration, .model-attempt-status { font-size: 12px; color: #667785; }
+.model-call-duration { margin-left: auto; font-variant-numeric: tabular-nums; }
+.model-progress-indicator { width: 9px; height: 9px; border-radius: 50%; background: #879ba8; flex-shrink: 0; }
+.model-call.is-active > summary .model-progress-indicator { background: #168c89; animation: model-pulse 1.6s ease-in-out infinite; }
+.model-call.is-error > summary .model-progress-indicator { background: #c56b4e; }
+.model-call-body { padding: 0 14px 12px 31px; }
+.model-attempt { border-left: 1px solid #d8e1e6; padding-left: 14px; margin: 4px 0 10px; }
+.model-attempt > summary { cursor: pointer; font-size: 13px; padding: 6px 0; }
+.model-attempt-status { margin-left: 12px; }
+.model-phase-list { list-style: none; margin: 6px 0 0; padding: 0; }
+.model-phase { display: flex; gap: 10px; color: #788793; font-size: 12px; line-height: 1.7; padding: 5px 0; overflow-wrap: anywhere; }
+.model-phase::before { content: '✓'; flex-shrink: 0; opacity: .6; }
+.model-phase.is-warning { color: #a06837; }
+.model-phase.is-warning::before { content: '!'; }
+.model-phase.is-active { color: #197d7c; }
+.model-phase.is-active::before { content: ''; width: 10px; height: 10px; margin-top: 4px; border: 1.5px solid #b4d9d6; border-top-color: #168c89; border-radius: 50%; animation: model-spin 1s linear infinite; }
+.model-stage-summary { display: block; color: #218582; font-size: 12px; margin-top: 5px; font-weight: 400; }
+@keyframes model-pulse { 50% { opacity: .4; box-shadow: 0 0 0 4px rgba(22, 140, 137, .12); } }
+@keyframes model-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .model-call *, .model-call *::before { animation: none !important; transition: none !important; } }
+@media (max-width: 600px) { .model-call-duration { margin-left: 0; } .model-call-body { padding-left: 14px; } .model-attempt-status { display: block; margin-left: 14px; } }

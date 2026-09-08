@@ -1,0 +1,6 @@
+.catalog-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
+.card[hidden] { display: none !important; }
+.statement-text { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; background: transparent; max-height: none; }
+#problem-cards .card-top { flex-wrap: wrap; gap: 8px; }
+#problem-cards .card .actions { margin-top: auto; }
+@media (max-width: 760px) { .catalog-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

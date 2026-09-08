@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "csps2020_senior",
+  "problem_id": "csps2020_senior_julian",
+  "title_zh": "儒略日",
+  "day": 1,
+  "contest": "CSP-S",
+  "year": 2020,
+  "group": "senior",
+  "task_number": 1,
+  "luogu_id": "P7075",
+  "luogu_difficulty": "普及+/提高−",
+  "difficulty_checked_at": "2026-09-05T05:10:58.997261+00:00",
+  "data_status": "official",
+  "test_count": 10,
+  "judge_note": null,
+  "statement_relative_path": "csps/2020/senior/01_julian/statement.md",
+  "resource_limits": {
+    "time_ms": 1000,
+    "memory_mb": 256,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "julian",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 10.0
+  }
+}

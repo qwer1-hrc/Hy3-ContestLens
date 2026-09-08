@@ -230,11 +230,13 @@ def test_source_includes_initial_round_and_best_critics_but_not_hidden_tests(set
         "new_revision_id": "v2", "process_evaluation": {"evidence": ["Repaired evidence."]},
         "code_review": {"summary": "Repaired code review."},
         "repair_plan": {"root_cause": ["Wrong boundary."], "required_changes": ["Fix boundary."]},
+        "quality_gate": {"passed": True, "fixed_tests": ["game1"], "regressed_tests": []},
     }]
     result["best_submission_result"] = {**result["best_submission_result"], "revision_id": "v2"}
     result["private_expected_output"] = "SECRET ANSWER"
     sections = report_sections(result, root)
     assert sections[0]["critics"][0]["review"]["summary"] == "Repaired code review."
+    assert sections[2]["quality_gate"]["fixed_tests"] == ["game1"]
     texts = list(narrative_texts(sections).values())
     assert "Initial algorithm review." in texts and "An invariant holds." in texts
     assert "Fix boundary." in texts and "Repaired evidence." in texts

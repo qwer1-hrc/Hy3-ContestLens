@@ -1,0 +1,321 @@
+{
+  "problem": {
+    "pid": "P2668",
+    "type": "P",
+    "name": "[NOIP 2015 提高组] 斗地主",
+    "difficulty": 5,
+    "tags": [
+      1,
+      4,
+      7,
+      32,
+      83,
+      127
+    ],
+    "totalSubmit": 47562,
+    "totalAccepted": 11811,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 提高组] 斗地主",
+      "background": "NOIP2015 Day1T3",
+      "description": "牛牛最近迷上了一种叫斗地主的扑克游戏。斗地主是一种使用黑桃、红心、梅花、方片的 $A$ 到 $K$ 加上大小王的共 $54$ 张牌来进行的扑克牌游戏。在斗地主中，牌的大小关系根据牌的数码表示如下：$3<4<5<6<7<8<9<10<J<Q<K<A<2<\\text{小王}<\\text{大王}$，而花色并不对牌的大小产生影响。每一局游戏中，一副手牌由 $n$ 张牌组成。游戏者每次可以根据规定的牌型进行出牌，首先打光自己的手牌一方取得游戏的胜利。\n\n现在，牛牛只想知道，对于自己的若干组手牌，分别最少需要多少次出牌可以将它们打光。请你帮他解决这个问题。\n\n需要注意的是，本题中游戏者每次可以出手的牌型与一般的斗地主相似而略有不同。具体规则如下：\n\n ![](https://cdn.luogu.com.cn/upload/pic/1827.png) \n\n**本题数据随机，不支持hack，要hack或强力数据请点击[这里](https://www.luogu.org/problem/P2540)**。\n",
+      "formatI": "第一行包含用空格隔开的 $2$ 个正整数 $T,n$，表示手牌的组数以及每组手牌的张数。\n\n接下来 $T$ 组数据，每组数据 $n$ 行，每行一个非负整数对 $a_i,b_i$，表示一张牌，其中 $a_i$ 表示牌的数码，$b_i$ 表示牌的花色，中间用空格隔开。特别的，我们用 $1$ 来表示数码 $A$，$11$ 表示数码 $J$，$12$ 表示数码 $Q$，$13$ 表示数码 $K$；黑桃、红心、梅花、方片分别用 $1-4$ 来表示；小王的表示方法为 `0 1`，大王的表示方法为 `0 2`。",
+      "formatO": "共 $T$ 行，每行一个整数，表示打光第 $i$ 组手牌的最少次数。",
+      "hint": "**样例 1 说明**\n\n共有 $1$ 组手牌，包含 $8$ 张牌：方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$，黑桃 $5$，方片 $A$ 以及黑桃 $A$。可以通过打单顺子（方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$），单张牌（黑桃 $5$）以及对子牌（黑桃 $A$以及方片 $A$）在 $3$ 次内打光。\n\n对于不同的测试点， 我们约定手牌组数 $T$ 与张数 $n$ 的规模如下：\n\n| 测试点编号 | $T=$ | $n=$ |\n| :------: | :----: | :----: |\n|  1       |  $100$   |  $2$  |\n|  2       |  $100$   |  $2$  |\n|  3       |  $100$   |  $3$  |\n|  4       |  $100$   |  $3$  |\n|  5       |  $100$   |  $4$  |\n|  6       |  $100$   |  $4$  |\n|  7       |  $100$   |  $10$  |\n|  8       |  $100$   |  $11$  |\n|  9       |  $100$   |  $12$  |\n|  10       |  $100$   |  $13$  |\n|  11       |  $100$   |  $14$  |\n|  12       |  $100$   |  $15$  |\n|  13       |  $10$   |  $16$  |\n|  14       |  $10$   |  $17$  |\n|  15       |  $10$   |  $18$  |\n|  16       |  $10$   |  $19$  |\n|  17       |  $10$   |  $20$  |\n|  18       |  $10$   |  $21$  |\n|  19       |  $10$   |  $22$  |\n|  20       |  $10$   |  $23$  |\n\n数据保证：所有的手牌都是随机生成的。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 提高组] 斗地主",
+      "background": "NOIP2015 Day1T3",
+      "description": "牛牛最近迷上了一种叫斗地主的扑克游戏。斗地主是一种使用黑桃、红心、梅花、方片的 $A$ 到 $K$ 加上大小王的共 $54$ 张牌来进行的扑克牌游戏。在斗地主中，牌的大小关系根据牌的数码表示如下：$3<4<5<6<7<8<9<10<J<Q<K<A<2<\\text{小王}<\\text{大王}$，而花色并不对牌的大小产生影响。每一局游戏中，一副手牌由 $n$ 张牌组成。游戏者每次可以根据规定的牌型进行出牌，首先打光自己的手牌一方取得游戏的胜利。\n\n现在，牛牛只想知道，对于自己的若干组手牌，分别最少需要多少次出牌可以将它们打光。请你帮他解决这个问题。\n\n需要注意的是，本题中游戏者每次可以出手的牌型与一般的斗地主相似而略有不同。具体规则如下：\n\n ![](https://cdn.luogu.com.cn/upload/pic/1827.png) \n\n**本题数据随机，不支持hack，要hack或强力数据请点击[这里](https://www.luogu.org/problem/P2540)**。\n",
+      "formatI": "第一行包含用空格隔开的 $2$ 个正整数 $T,n$，表示手牌的组数以及每组手牌的张数。\n\n接下来 $T$ 组数据，每组数据 $n$ 行，每行一个非负整数对 $a_i,b_i$，表示一张牌，其中 $a_i$ 表示牌的数码，$b_i$ 表示牌的花色，中间用空格隔开。特别的，我们用 $1$ 来表示数码 $A$，$11$ 表示数码 $J$，$12$ 表示数码 $Q$，$13$ 表示数码 $K$；黑桃、红心、梅花、方片分别用 $1-4$ 来表示；小王的表示方法为 `0 1`，大王的表示方法为 `0 2`。",
+      "formatO": "共 $T$ 行，每行一个整数，表示打光第 $i$ 组手牌的最少次数。",
+      "hint": "**样例 1 说明**\n\n共有 $1$ 组手牌，包含 $8$ 张牌：方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$，黑桃 $5$，方片 $A$ 以及黑桃 $A$。可以通过打单顺子（方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$），单张牌（黑桃 $5$）以及对子牌（黑桃 $A$以及方片 $A$）在 $3$ 次内打光。\n\n对于不同的测试点， 我们约定手牌组数 $T$ 与张数 $n$ 的规模如下：\n\n| 测试点编号 | $T=$ | $n=$ |\n| :------: | :----: | :----: |\n|  1       |  $100$   |  $2$  |\n|  2       |  $100$   |  $2$  |\n|  3       |  $100$   |  $3$  |\n|  4       |  $100$   |  $3$  |\n|  5       |  $100$   |  $4$  |\n|  6       |  $100$   |  $4$  |\n|  7       |  $100$   |  $10$  |\n|  8       |  $100$   |  $11$  |\n|  9       |  $100$   |  $12$  |\n|  10       |  $100$   |  $13$  |\n|  11       |  $100$   |  $14$  |\n|  12       |  $100$   |  $15$  |\n|  13       |  $10$   |  $16$  |\n|  14       |  $10$   |  $17$  |\n|  15       |  $10$   |  $18$  |\n|  16       |  $10$   |  $19$  |\n|  17       |  $10$   |  $20$  |\n|  18       |  $10$   |  $21$  |\n|  19       |  $10$   |  $22$  |\n|  20       |  $10$   |  $23$  |\n\n数据保证：所有的手牌都是随机生成的。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1 8\n7 4\n8 4\n9 1\n10 4\n11 1\n5 1\n1 4\n1 1",
+        "3\n"
+      ],
+      [
+        "1 17\n12 3\n4 3\n2 3\n5 4\n10 2\n3 3\n12 2\n0 1\n1 3\n10 1\n6 2\n12 1\n11 3\n5 2\n12 4\n2 2\n7 2\n",
+        "6\n"
+      ]
+    ],
+    "limits": {
+      "time": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ],
+      "memory": [
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000,
+        1024000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Senior] Dou Dizhu",
+      "background": "NOIP 2015 Day 1 T3.",
+      "description": "Niuniu has recently become obsessed with a card game called Dou Dizhu. Dou Dizhu is a card game played with a standard deck consisting of spades, hearts, clubs, and diamonds from $A$ to $K$, plus the two jokers, for a total of $54$ cards. In Dou Dizhu, the rank order of the cards is represented by their face values as follows: $3<4<5<6<7<8<9<10<J<Q<K<A<2<\\text{small Joker}<\\text{big Joker}$, and suits do not affect the rank. In each round, a hand consists of $n$ cards. Each turn, a player may play according to the allowed patterns. The first player to play all of their cards wins the game.\n\nNow, Niuniu only wants to know, for several sets of hands, the minimum number of plays required to play out each of them. Please help him solve this problem.\n\nNote that in this problem, the playable patterns per turn are similar to those in standard Dou Dizhu but slightly different. The specific rules are as follows:\n\n ![](https://cdn.luogu.com.cn/upload/pic/1827.png) \n\nThe testdata for this problem is random and hacks are not supported. To hack or use stronger testdata please click [here](https://www.luogu.org/problem/P2540).",
+      "formatI": "The first line contains two positive integers $T, n$ separated by a space, representing the number of hand sets and the number of cards in each hand.\n\nThen follow $T$ groups of data. Each group contains $n$ lines, each line containing a pair of nonnegative integers $a_i, b_i$ representing a card, where $a_i$ is the rank and $b_i$ is the suit, separated by a space. Specifically, we use $1$ to represent rank $A$, $11$ to represent rank $J$, $12$ to represent rank $Q$, and $13$ to represent rank $K$; spades, hearts, clubs, and diamonds are represented by $1$–$4$, respectively; the small joker is represented by `0 1`, and the big joker is represented by `0 2`.",
+      "formatO": "Output $T$ lines. Each line contains an integer representing the minimum number of plays needed to play out the $i$-th hand set.",
+      "hint": "Sample 1 explanation:\n\nThere is $1$ hand set with $8$ cards: diamond $7$, diamond $8$, spade $9$, diamond $10$, spade $J$, spade $5$, diamond $A$, and spade $A$. You can finish in $3$ plays by playing a straight of singles (diamond $7$, diamond $8$, spade $9$, diamond $10$, spade $J$), a single (spade $5$), and a pair (spade $A$ and diamond $A$).\n\nFor different test points, we define the scales of the number of hand sets $T$ and the number of cards $n$ as follows:\n\n| Test point ID | $T=$ | $n=$ |\n| :------: | :----: | :----: |\n|  1       |  $100$   |  $2$  |\n|  2       |  $100$   |  $2$  |\n|  3       |  $100$   |  $3$  |\n|  4       |  $100$   |  $3$  |\n|  5       |  $100$   |  $4$  |\n|  6       |  $100$   |  $4$  |\n|  7       |  $100$   |  $10$  |\n|  8       |  $100$   |  $11$  |\n|  9       |  $100$   |  $12$  |\n|  10       |  $100$   |  $13$  |\n|  11       |  $100$   |  $14$  |\n|  12       |  $100$   |  $15$  |\n|  13       |  $10$   |  $16$  |\n|  14       |  $10$   |  $17$  |\n|  15       |  $10$   |  $18$  |\n|  16       |  $10$   |  $19$  |\n|  17       |  $10$   |  $20$  |\n|  18       |  $10$   |  $21$  |\n|  19       |  $10$   |  $22$  |\n|  20       |  $10$   |  $23$  |\n\nIt is guaranteed that all hands are randomly generated.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 提高组] 斗地主",
+      "background": "NOIP2015 Day1T3",
+      "description": "牛牛最近迷上了一种叫斗地主的扑克游戏。斗地主是一种使用黑桃、红心、梅花、方片的 $A$ 到 $K$ 加上大小王的共 $54$ 张牌来进行的扑克牌游戏。在斗地主中，牌的大小关系根据牌的数码表示如下：$3<4<5<6<7<8<9<10<J<Q<K<A<2<\\text{小王}<\\text{大王}$，而花色并不对牌的大小产生影响。每一局游戏中，一副手牌由 $n$ 张牌组成。游戏者每次可以根据规定的牌型进行出牌，首先打光自己的手牌一方取得游戏的胜利。\n\n现在，牛牛只想知道，对于自己的若干组手牌，分别最少需要多少次出牌可以将它们打光。请你帮他解决这个问题。\n\n需要注意的是，本题中游戏者每次可以出手的牌型与一般的斗地主相似而略有不同。具体规则如下：\n\n ![](https://cdn.luogu.com.cn/upload/pic/1827.png) \n\n**本题数据随机，不支持hack，要hack或强力数据请点击[这里](https://www.luogu.org/problem/P2540)**。\n",
+      "formatI": "第一行包含用空格隔开的 $2$ 个正整数 $T,n$，表示手牌的组数以及每组手牌的张数。\n\n接下来 $T$ 组数据，每组数据 $n$ 行，每行一个非负整数对 $a_i,b_i$，表示一张牌，其中 $a_i$ 表示牌的数码，$b_i$ 表示牌的花色，中间用空格隔开。特别的，我们用 $1$ 来表示数码 $A$，$11$ 表示数码 $J$，$12$ 表示数码 $Q$，$13$ 表示数码 $K$；黑桃、红心、梅花、方片分别用 $1-4$ 来表示；小王的表示方法为 `0 1`，大王的表示方法为 `0 2`。",
+      "formatO": "共 $T$ 行，每行一个整数，表示打光第 $i$ 组手牌的最少次数。",
+      "hint": "**样例 1 说明**\n\n共有 $1$ 组手牌，包含 $8$ 张牌：方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$，黑桃 $5$，方片 $A$ 以及黑桃 $A$。可以通过打单顺子（方片 $7$，方片 $8$，黑桃 $9$，方片 $10$，黑桃 $J$），单张牌（黑桃 $5$）以及对子牌（黑桃 $A$以及方片 $A$）在 $3$ 次内打光。\n\n对于不同的测试点， 我们约定手牌组数 $T$ 与张数 $n$ 的规模如下：\n\n| 测试点编号 | $T=$ | $n=$ |\n| :------: | :----: | :----: |\n|  1       |  $100$   |  $2$  |\n|  2       |  $100$   |  $2$  |\n|  3       |  $100$   |  $3$  |\n|  4       |  $100$   |  $3$  |\n|  5       |  $100$   |  $4$  |\n|  6       |  $100$   |  $4$  |\n|  7       |  $100$   |  $10$  |\n|  8       |  $100$   |  $11$  |\n|  9       |  $100$   |  $12$  |\n|  10       |  $100$   |  $13$  |\n|  11       |  $100$   |  $14$  |\n|  12       |  $100$   |  $15$  |\n|  13       |  $10$   |  $16$  |\n|  14       |  $10$   |  $17$  |\n|  15       |  $10$   |  $18$  |\n|  16       |  $10$   |  $19$  |\n|  17       |  $10$   |  $20$  |\n|  18       |  $10$   |  $21$  |\n|  19       |  $10$   |  $22$  |\n|  20       |  $10$   |  $23$  |\n\n数据保证：所有的手牌都是随机生成的。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 302,
+    "startTime": 1446859800,
+    "endTime": 1447507800,
+    "name": "NOIp2015提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P2540",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 斗地主 加强版",
+      "difficulty": 7
+    },
+    {
+      "pid": "P2678",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 跳石头",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2679",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 子串",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2680",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 运输计划",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2831",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P2668 [NOIP 2015 提高组] 斗地主",
+    "type": 2,
+    "slug": "P2668",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1370378,
+      "title": "95",
+      "author": {
+        "uid": 1228503,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1228503.png",
+        "name": "_StArWaLk_",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788449340
+    },
+    {
+      "id": 1360055,
+      "title": "求斗地主先顺子后带牌更优的证明",
+      "author": {
+        "uid": 1126119,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1126119.png",
+        "name": "QWQ_3090nehciyuh",
+        "slogan": "DP搜索99！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/we84juoa.png"
+      },
+      "time": 1787229610
+    },
+    {
+      "id": 1345255,
+      "title": "35wa",
+      "author": {
+        "uid": 559506,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/559506.png",
+        "name": "BestFriend",
+        "slogan": "南梁后是北朝",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/s3pli08p.png"
+      },
+      "time": 1785998316
+    },
+    {
+      "id": 1306519,
+      "title": "警示后人",
+      "author": {
+        "uid": 589961,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/589961.png",
+        "name": "steambird",
+        "slogan": "AFO / OI-Ende || Seabird Starch Gunnhildr || 风生水起，无限可能",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/gvbgbuai.png"
+      },
+      "time": 1781584416
+    },
+    {
+      "id": 1276261,
+      "title": "当你全部 TLE",
+      "author": {
+        "uid": 1228460,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1228460.png",
+        "name": "lzycoding",
+        "slogan": "时空将你我分开，信息将你我连结。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/83jz79lm.png"
+      },
+      "time": 1775895155
+    },
+    {
+      "id": 1244832,
+      "title": "30pts 求调",
+      "author": {
+        "uid": 1491280,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1491280.png",
+        "name": "Snoip_Kalan",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/cq9r9iff.png"
+      },
+      "time": 1770468679
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

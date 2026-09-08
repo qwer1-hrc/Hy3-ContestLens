@@ -1,0 +1,312 @@
+{
+  "problem": {
+    "pid": "P7075",
+    "type": "P",
+    "name": "[CSP-S 2020] 儒略日",
+    "difficulty": 4,
+    "tags": [
+      1,
+      5,
+      37,
+      45,
+      342
+    ],
+    "totalSubmit": 88790,
+    "totalAccepted": 16952,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[CSP-S 2020] 儒略日",
+      "background": "",
+      "description": "为了简便计算，天文学家们使用儒略日（Julian day）来表达时间。所谓儒略日，其定义为从**公元前 4713 年 1 月 1 日正午 12 点到此后某一时刻间所经过的天数**，不满一天者用小数表达。若利用这一天文学历法，则每一个时刻都将被均匀的映射到数轴上，从而得以很方便的计算它们的差值。\n\n现在，给定一个不含小数部分的儒略日，请你帮忙计算出该儒略日（一定是某一天的中午 12 点）所对应的公历日期。\n\n我们现行的公历为格里高利历（Gregorian calendar），它是在公元 1582 年由教皇格里高利十三世在原有的儒略历（Julian calendar）的基础上修改得到的（注：儒略历与儒略日并无直接关系）。具体而言，现行的公历日期按照以下规则计算：\n\n1. 公元 1582 年 10 月 15 日（含）以后：适用格里高利历，每年一月 $31$ 天、 二月 $28$ 天或 $29$ 天、三月 $31$ 天、四月 $30$ 天、五月 $31$ 天、六月 $30$ 天、七月 $31$ 天、八月 $31$ 天、九月 $30$ 天、十月 $31$ 天、十一月 $30$ 天、十二月 $31$ 天。其中，闰年的二月为 $29$ 天，平年为 $28$ 天。当年份是 $400$ 的倍数，或日期年份是 $4$ 的倍数但不是 $100$ 的倍数时，该年为闰年。\n2. 公元 1582 年 10 月 5 日（含）至 10 月 14 日（含）：不存在，这些日期被删除，该年 10 月 4 日之后为 10 月 15 日。\n3. 公元 1582 年 10 月 4 日（含）以前：适用儒略历，每月天数与格里高利历相同，但只要年份是 $4$ 的倍数就是闰年。\n4. 尽管儒略历于公元前 45 年才开始实行，且初期经过若干次调整，但今天人类习惯于按照儒略历最终的规则反推一切 1582 年 10 月 4 日之前的时间。注意，**公元零年并不存在**，即公元前 1 年的下一年是公元 1 年。因此公元前 1 年、前 5 年、前 9 年、前 13 年……以此类推的年份应视为闰年。",
+      "formatI": "第一行一个整数 $Q$，表示询问的组数。  \n接下来 $Q$ 行，每行一个非负整数 $r_i$，表示一个儒略日。",
+      "formatO": "对于每一个儒略日 $r_i$，输出一行表示日期的字符串 $s_i$。共计 $Q$ 行。 $s_i$ 的格式如下：\n\n1. 若年份为公元后，输出格式为 `Day Month Year`。其中日（Day）、月（Month）、年（Year）均不含前导零，中间用一个空格隔开。例如：公元\n2020 年 11 月 7 日正午 12 点，输出为 `7 11 2020`。\n2. 若年份为公元前，输出格式为 `Day Month Year BC`。其中年（Year）输出该年份的数值，其余与公元后相同。例如：公元前 841 年 2 月 1 日正午 12\n点，输出为 `1 2 841 BC`。",
+      "hint": "**【数据范围】**\n\n| 测试点编号 | $Q =$ | $r_i \\le$ |\n|:-:|:-:|:-:|\n| $1$ | $1000$ | $365$ |\n| $2$ | $1000$ | $10^4$ |\n| $3$ | $1000$ | $10^5$ |\n| $4$ | $10000$ | $3\\times 10^5$ |\n| $5$ | $10000$ | $2.5\\times 10^6$ |\n| $6$ | $10^5$ | $2.5\\times 10^6$ |\n| $7$ | $10^5$ | $5\\times 10^6$ |\n| $8$ | $10^5$ | $10^7$ |\n| $9$ | $10^5$ | $10^9$ |\n| $10$ | $10^5$ | 年份答案不超过 $10^9$ |",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2020] 儒略日",
+      "background": "",
+      "description": "为了简便计算，天文学家们使用儒略日（Julian day）来表达时间。所谓儒略日，其定义为从**公元前 4713 年 1 月 1 日正午 12 点到此后某一时刻间所经过的天数**，不满一天者用小数表达。若利用这一天文学历法，则每一个时刻都将被均匀的映射到数轴上，从而得以很方便的计算它们的差值。\n\n现在，给定一个不含小数部分的儒略日，请你帮忙计算出该儒略日（一定是某一天的中午 12 点）所对应的公历日期。\n\n我们现行的公历为格里高利历（Gregorian calendar），它是在公元 1582 年由教皇格里高利十三世在原有的儒略历（Julian calendar）的基础上修改得到的（注：儒略历与儒略日并无直接关系）。具体而言，现行的公历日期按照以下规则计算：\n\n1. 公元 1582 年 10 月 15 日（含）以后：适用格里高利历，每年一月 $31$ 天、 二月 $28$ 天或 $29$ 天、三月 $31$ 天、四月 $30$ 天、五月 $31$ 天、六月 $30$ 天、七月 $31$ 天、八月 $31$ 天、九月 $30$ 天、十月 $31$ 天、十一月 $30$ 天、十二月 $31$ 天。其中，闰年的二月为 $29$ 天，平年为 $28$ 天。当年份是 $400$ 的倍数，或日期年份是 $4$ 的倍数但不是 $100$ 的倍数时，该年为闰年。\n2. 公元 1582 年 10 月 5 日（含）至 10 月 14 日（含）：不存在，这些日期被删除，该年 10 月 4 日之后为 10 月 15 日。\n3. 公元 1582 年 10 月 4 日（含）以前：适用儒略历，每月天数与格里高利历相同，但只要年份是 $4$ 的倍数就是闰年。\n4. 尽管儒略历于公元前 45 年才开始实行，且初期经过若干次调整，但今天人类习惯于按照儒略历最终的规则反推一切 1582 年 10 月 4 日之前的时间。注意，**公元零年并不存在**，即公元前 1 年的下一年是公元 1 年。因此公元前 1 年、前 5 年、前 9 年、前 13 年……以此类推的年份应视为闰年。",
+      "formatI": "第一行一个整数 $Q$，表示询问的组数。  \n接下来 $Q$ 行，每行一个非负整数 $r_i$，表示一个儒略日。",
+      "formatO": "对于每一个儒略日 $r_i$，输出一行表示日期的字符串 $s_i$。共计 $Q$ 行。 $s_i$ 的格式如下：\n\n1. 若年份为公元后，输出格式为 `Day Month Year`。其中日（Day）、月（Month）、年（Year）均不含前导零，中间用一个空格隔开。例如：公元\n2020 年 11 月 7 日正午 12 点，输出为 `7 11 2020`。\n2. 若年份为公元前，输出格式为 `Day Month Year BC`。其中年（Year）输出该年份的数值，其余与公元后相同。例如：公元前 841 年 2 月 1 日正午 12\n点，输出为 `1 2 841 BC`。",
+      "hint": "**【数据范围】**\n\n| 测试点编号 | $Q =$ | $r_i \\le$ |\n|:-:|:-:|:-:|\n| $1$ | $1000$ | $365$ |\n| $2$ | $1000$ | $10^4$ |\n| $3$ | $1000$ | $10^5$ |\n| $4$ | $10000$ | $3\\times 10^5$ |\n| $5$ | $10000$ | $2.5\\times 10^6$ |\n| $6$ | $10^5$ | $2.5\\times 10^6$ |\n| $7$ | $10^5$ | $5\\times 10^6$ |\n| $8$ | $10^5$ | $10^7$ |\n| $9$ | $10^5$ | $10^9$ |\n| $10$ | $10^5$ | 年份答案不超过 $10^9$ |",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "4h186sh9",
+        "filename": "julian.zip",
+        "size": 982760,
+        "uploadTime": 1604754480,
+        "downloadLink": "/fe/api/problem/downloadAttachment/4h186sh9"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3\n10\n100\n1000",
+        "11 1 4713 BC\n10 4 4713 BC\n27 9 4711 BC"
+      ],
+      [
+        "3\n2000000\n3000000\n4000000",
+        "14 9 763\n15 8 3501\n12 7 6239"
+      ],
+      [
+        "见附件中的 julian/julian3.in",
+        "见附件中的 julian/julian3.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2020] Julian Day",
+      "background": null,
+      "description": "To make calculations easier, astronomers use the Julian day to represent time. A Julian day is defined as the number of days that have passed from **12:00 noon on January 1, 4713 BC to some later moment**. If it is less than one full day, it is written as a decimal. With this astronomical calendar, every moment is mapped evenly onto a number line, so it is convenient to compute differences between times.\n\nNow you are given a Julian day with no fractional part. Please compute the corresponding Gregorian calendar date for that Julian day (it must be 12:00 noon of some day).\n\nThe calendar we use today is the Gregorian calendar. It was introduced in AD 1582 by Pope Gregory XIII as a modification of the earlier Julian calendar (note: the Julian calendar is not directly related to the Julian day). Specifically, dates are determined by the following rules:\n\n1. On and after October 15, 1582 (inclusive): use the Gregorian calendar. The number of days in each month is: January $31$ days, February $28$ or $29$ days, March $31$ days, April $30$ days, May $31$ days, June $30$ days, July $31$ days, August $31$ days, September $30$ days, October $31$ days, November $30$ days, December $31$ days. In leap years, February has $29$ days; otherwise it has $28$ days. A year is a leap year if it is a multiple of $400$, or if it is a multiple of $4$ but not a multiple of $100$.\n2. October 5, 1582 (inclusive) to October 14, 1582 (inclusive): these dates do not exist. These dates were removed, so the day after October 4 is October 15.\n3. On and before October 4, 1582 (inclusive): use the Julian calendar. The days in each month are the same as in the Gregorian calendar, but a year is a leap year as long as it is a multiple of $4$.\n4. Although the Julian calendar was only introduced in 45 BC, and there were some adjustments in its early period, today people are used to extending the final Julian calendar rules backward for all dates before October 4, 1582. Note that **there is no year 0**, i.e., the year after 1 BC is AD 1. Therefore, years such as 1 BC, 5 BC, 9 BC, 13 BC, ... should be treated as leap years.",
+      "formatI": "The first line contains an integer $Q$, the number of queries.  \nThen follow $Q$ lines, each containing a non-negative integer $r_i$, representing a Julian day.",
+      "formatO": "For each Julian day $r_i$, output one line with a date string $s_i$. There are $Q$ lines in total. The format of $s_i$ is as follows:\n\n1. If the year is AD, output `Day Month Year`. The day (Day), month (Month), and year (Year) have no leading zeros, and are separated by one space. For example, for 12:00 noon on November 7, 2020 AD, output `7 11 2020`.\n2. If the year is BC, output `Day Month Year BC`. The year (Year) should be the numeric value of that year; the rest is the same as the AD format. For example, for 12:00 noon on February 1, 841 BC, output `1 2 841 BC`.",
+      "hint": "**Constraints**\n\n| Test Point ID | $Q =$ | $r_i \\le$ |\n|:-:|:-:|:-:|\n| $1$ | $1000$ | $365$ |\n| $2$ | $1000$ | $10^4$ |\n| $3$ | $1000$ | $10^5$ |\n| $4$ | $10000$ | $3\\times 10^5$ |\n| $5$ | $10000$ | $2.5\\times 10^6$ |\n| $6$ | $10^5$ | $2.5\\times 10^6$ |\n| $7$ | $10^5$ | $5\\times 10^6$ |\n| $8$ | $10^5$ | $10^7$ |\n| $9$ | $10^5$ | $10^9$ |\n| $10$ | $10^5$ | the answer year does not exceed $10^9$ |\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2020] 儒略日",
+      "background": "",
+      "description": "为了简便计算，天文学家们使用儒略日（Julian day）来表达时间。所谓儒略日，其定义为从**公元前 4713 年 1 月 1 日正午 12 点到此后某一时刻间所经过的天数**，不满一天者用小数表达。若利用这一天文学历法，则每一个时刻都将被均匀的映射到数轴上，从而得以很方便的计算它们的差值。\n\n现在，给定一个不含小数部分的儒略日，请你帮忙计算出该儒略日（一定是某一天的中午 12 点）所对应的公历日期。\n\n我们现行的公历为格里高利历（Gregorian calendar），它是在公元 1582 年由教皇格里高利十三世在原有的儒略历（Julian calendar）的基础上修改得到的（注：儒略历与儒略日并无直接关系）。具体而言，现行的公历日期按照以下规则计算：\n\n1. 公元 1582 年 10 月 15 日（含）以后：适用格里高利历，每年一月 $31$ 天、 二月 $28$ 天或 $29$ 天、三月 $31$ 天、四月 $30$ 天、五月 $31$ 天、六月 $30$ 天、七月 $31$ 天、八月 $31$ 天、九月 $30$ 天、十月 $31$ 天、十一月 $30$ 天、十二月 $31$ 天。其中，闰年的二月为 $29$ 天，平年为 $28$ 天。当年份是 $400$ 的倍数，或日期年份是 $4$ 的倍数但不是 $100$ 的倍数时，该年为闰年。\n2. 公元 1582 年 10 月 5 日（含）至 10 月 14 日（含）：不存在，这些日期被删除，该年 10 月 4 日之后为 10 月 15 日。\n3. 公元 1582 年 10 月 4 日（含）以前：适用儒略历，每月天数与格里高利历相同，但只要年份是 $4$ 的倍数就是闰年。\n4. 尽管儒略历于公元前 45 年才开始实行，且初期经过若干次调整，但今天人类习惯于按照儒略历最终的规则反推一切 1582 年 10 月 4 日之前的时间。注意，**公元零年并不存在**，即公元前 1 年的下一年是公元 1 年。因此公元前 1 年、前 5 年、前 9 年、前 13 年……以此类推的年份应视为闰年。",
+      "formatI": "第一行一个整数 $Q$，表示询问的组数。  \n接下来 $Q$ 行，每行一个非负整数 $r_i$，表示一个儒略日。",
+      "formatO": "对于每一个儒略日 $r_i$，输出一行表示日期的字符串 $s_i$。共计 $Q$ 行。 $s_i$ 的格式如下：\n\n1. 若年份为公元后，输出格式为 `Day Month Year`。其中日（Day）、月（Month）、年（Year）均不含前导零，中间用一个空格隔开。例如：公元\n2020 年 11 月 7 日正午 12 点，输出为 `7 11 2020`。\n2. 若年份为公元前，输出格式为 `Day Month Year BC`。其中年（Year）输出该年份的数值，其余与公元后相同。例如：公元前 841 年 2 月 1 日正午 12\n点，输出为 `1 2 841 BC`。",
+      "hint": "**【数据范围】**\n\n| 测试点编号 | $Q =$ | $r_i \\le$ |\n|:-:|:-:|:-:|\n| $1$ | $1000$ | $365$ |\n| $2$ | $1000$ | $10^4$ |\n| $3$ | $1000$ | $10^5$ |\n| $4$ | $10000$ | $3\\times 10^5$ |\n| $5$ | $10000$ | $2.5\\times 10^6$ |\n| $6$ | $10^5$ | $2.5\\times 10^6$ |\n| $7$ | $10^5$ | $5\\times 10^6$ |\n| $8$ | $10^5$ | $10^7$ |\n| $9$ | $10^5$ | $10^9$ |\n| $10$ | $10^5$ | 年份答案不超过 $10^9$ |",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 37022,
+    "startTime": 1604678400,
+    "endTime": 1605024000,
+    "name": "CSP2020 S-2 组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7073",
+      "type": "P",
+      "name": "[CSP-J 2020] 表达式",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7076",
+      "type": "P",
+      "name": "[CSP-S 2020] 动物园",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7913",
+      "type": "P",
+      "name": "[CSP-S 2021] 廊桥分配",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P7075 [CSP-S 2020] 儒略日",
+    "type": 2,
+    "slug": "P7075",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1370267,
+      "title": "儒略日玄关求调",
+      "author": {
+        "uid": 1042346,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1042346.png",
+        "name": "DongDYang",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788439174
+    },
+    {
+      "id": 1354853,
+      "title": "问关于题解1",
+      "author": {
+        "uid": 1489148,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1489148.png",
+        "name": "victory_star",
+        "slogan": "生有涯，艺无涯",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/fdnbeiy7.png"
+      },
+      "time": 1786804802
+    },
+    {
+      "id": 1337903,
+      "title": "70pts,求条",
+      "author": {
+        "uid": 1785829,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1785829.png",
+        "name": "Arq835_IL",
+        "slogan": "支持壶关 || 微信：dsz77889911 || 不打NOI不改签 || 不拿蓝钩不改签",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/bud5d1ry.png"
+      },
+      "time": 1785296635
+    },
+    {
+      "id": 1329329,
+      "title": "后入好吃",
+      "author": {
+        "uid": 1711095,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1711095.png",
+        "name": "songhaoxuan12345678",
+        "slogan": "无法AK尼姑入门赛的虫且||HN最菜新六||周1~周5在线时间:6:00~7:30,9:00~9:30",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784550617
+    },
+    {
+      "id": 1329035,
+      "title": "90pts求掉（玄关）",
+      "author": {
+        "uid": 1711095,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1711095.png",
+        "name": "songhaoxuan12345678",
+        "slogan": "无法AK尼姑入门赛的虫且||HN最菜新六||周1~周5在线时间:6:00~7:30,9:00~9:30",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784538084
+    },
+    {
+      "id": 1327789,
+      "title": "uds",
+      "author": {
+        "uid": 1785565,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1785565.png",
+        "name": "EleanorMia",
+        "slogan": "你只有非常努力，才能看起来毫不费力！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/2i6ht5u4.png"
+      },
+      "time": 1784439288
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -9,7 +9,7 @@ def test_health_openapi_problem_and_webui(settings):
     problems = client.get("/api/v1/datasets/noip2018/problems")
     assert problems.status_code == 200
     assert len(problems.json()) == 6
-    assert all(item["luogu_difficulty"] is None for item in problems.json())
+    assert all(item["luogu_difficulty"] and item["luogu_id"] for item in problems.json())
     assert client.get("/openapi.json").status_code == 200
     page = client.get("/")
     assert page.status_code == 200

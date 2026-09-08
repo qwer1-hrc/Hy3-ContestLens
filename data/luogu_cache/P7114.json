@@ -1,0 +1,346 @@
+{
+  "problem": {
+    "pid": "P7114",
+    "type": "P",
+    "name": "[NOIP2020] 字符串匹配",
+    "difficulty": 6,
+    "tags": [
+      2,
+      37,
+      43,
+      53,
+      83,
+      235,
+      411,
+      474
+    ],
+    "totalSubmit": 40408,
+    "totalAccepted": 9411,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2020] 字符串匹配",
+      "background": "",
+      "description": "小 C 学习完了字符串匹配的相关内容，现在他正在做一道习题。\n\n对于一个字符串 $S$，题目要求他找到 $S$ 的所有具有下列形式的拆分方案数：\n\n$S = ABC$，$S = ABABC$，$S = ABAB \\ldots ABC$，其中 $A$，$B$，$C$ 均是非空字符串，且 $A$ 中出现奇数次的字符数量不超过 $C$ 中出现奇数次的字符数量。\n\n更具体地，我们可以定义 $AB$ 表示两个字符串 $A$，$B$ 相连接，例如 $A = \\texttt{aab}$，$B = \\texttt{ab}$，则 $AB = \\texttt{aabab}$。\n\n并递归地定义 $A^1=A$，$A^n = A^{n - 1} A$（$n \\ge 2$ 且为正整数）。例如 $A = \\texttt{abb}$，则 $A^3=\\texttt{abbabbabb}$。\n\n则小 C 的习题是求 $S = {(AB)}^iC$ 的方案数，其中 $F(A) \\le F(C)$，$F(S)$ 表示字符串 $S$ 中出现奇数次的字符的数量。两种方案不同当且仅当拆分出的 $A$、$B$、$C$ 中有至少一个字符串不同。\n\n小 C 并不会做这道题，只好向你求助，请你帮帮他。",
+      "formatI": "本题有多组数据，输入文件第一行一个正整数 $T$ 表示数据组数。\n\n每组数据仅一行一个字符串 $S$，意义见题目描述。$S$ 仅由英文小写字母构成。",
+      "formatO": "对于每组数据输出一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n对于第一组数据，所有的方案为\n\n1. $A=\\texttt{n}$，$B=\\texttt{nr}$，$C=\\texttt{nnr}$。\n2. $A=\\texttt{n}$，$B=\\texttt{nrn}$，$C=\\texttt{nr}$。\n3. $A=\\texttt{n}$，$B=\\texttt{nrnn}$，$C=\\texttt{r}$。\n4. $A=\\texttt{nn}$，$B=\\texttt{r}$，$C=\\texttt{nnr}$。\n5. $A=\\texttt{nn}$，$B=\\texttt{rn}$，$C=\\texttt{nr}$。\n6. $A=\\texttt{nn}$，$B=\\texttt{rnn}$，$C=\\texttt{r}$。\n7. $A=\\texttt{nnr}$，$B=\\texttt{n}$，$C=\\texttt{nr}$。\n8. $A=\\texttt{nnr}$，$B=\\texttt{nn}$，$C=\\texttt{r}$。\n\n**【数据范围】**\n\n| 测试点编号 | $\\lvert S \\rvert \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 4$ | $10$ | 无 |\n| $5 \\sim 8$ | $100$ | 无 |\n| $9 \\sim 12$ | $1000$ | 无 |\n| $13 \\sim 14$ | $2^{15}$ | $S$ 中只包含一种字符 |\n| $15 \\sim 17$ | $2^{16}$ | $S$ 中只包含两种字符 |\n| $18 \\sim 21$ | $2^{17}$ | 无 |\n| $22 \\sim 25$ | $2^{20}$ | 无 |\n\n对于所有测试点，保证 $1 \\le T \\le 5$，$1 \\le |S| \\le 2^{20}$。 ",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2020] 字符串匹配",
+      "background": "",
+      "description": "小 C 学习完了字符串匹配的相关内容，现在他正在做一道习题。\n\n对于一个字符串 $S$，题目要求他找到 $S$ 的所有具有下列形式的拆分方案数：\n\n$S = ABC$，$S = ABABC$，$S = ABAB \\ldots ABC$，其中 $A$，$B$，$C$ 均是非空字符串，且 $A$ 中出现奇数次的字符数量不超过 $C$ 中出现奇数次的字符数量。\n\n更具体地，我们可以定义 $AB$ 表示两个字符串 $A$，$B$ 相连接，例如 $A = \\texttt{aab}$，$B = \\texttt{ab}$，则 $AB = \\texttt{aabab}$。\n\n并递归地定义 $A^1=A$，$A^n = A^{n - 1} A$（$n \\ge 2$ 且为正整数）。例如 $A = \\texttt{abb}$，则 $A^3=\\texttt{abbabbabb}$。\n\n则小 C 的习题是求 $S = {(AB)}^iC$ 的方案数，其中 $F(A) \\le F(C)$，$F(S)$ 表示字符串 $S$ 中出现奇数次的字符的数量。两种方案不同当且仅当拆分出的 $A$、$B$、$C$ 中有至少一个字符串不同。\n\n小 C 并不会做这道题，只好向你求助，请你帮帮他。",
+      "formatI": "本题有多组数据，输入文件第一行一个正整数 $T$ 表示数据组数。\n\n每组数据仅一行一个字符串 $S$，意义见题目描述。$S$ 仅由英文小写字母构成。",
+      "formatO": "对于每组数据输出一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n对于第一组数据，所有的方案为\n\n1. $A=\\texttt{n}$，$B=\\texttt{nr}$，$C=\\texttt{nnr}$。\n2. $A=\\texttt{n}$，$B=\\texttt{nrn}$，$C=\\texttt{nr}$。\n3. $A=\\texttt{n}$，$B=\\texttt{nrnn}$，$C=\\texttt{r}$。\n4. $A=\\texttt{nn}$，$B=\\texttt{r}$，$C=\\texttt{nnr}$。\n5. $A=\\texttt{nn}$，$B=\\texttt{rn}$，$C=\\texttt{nr}$。\n6. $A=\\texttt{nn}$，$B=\\texttt{rnn}$，$C=\\texttt{r}$。\n7. $A=\\texttt{nnr}$，$B=\\texttt{n}$，$C=\\texttt{nr}$。\n8. $A=\\texttt{nnr}$，$B=\\texttt{nn}$，$C=\\texttt{r}$。\n\n**【数据范围】**\n\n| 测试点编号 | $\\lvert S \\rvert \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 4$ | $10$ | 无 |\n| $5 \\sim 8$ | $100$ | 无 |\n| $9 \\sim 12$ | $1000$ | 无 |\n| $13 \\sim 14$ | $2^{15}$ | $S$ 中只包含一种字符 |\n| $15 \\sim 17$ | $2^{16}$ | $S$ 中只包含两种字符 |\n| $18 \\sim 21$ | $2^{17}$ | 无 |\n| $22 \\sim 25$ | $2^{20}$ | 无 |\n\n对于所有测试点，保证 $1 \\le T \\le 5$，$1 \\le |S| \\le 2^{20}$。 ",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "rxmegad9",
+        "filename": "string.zip",
+        "size": 133091,
+        "uploadTime": 1607160993,
+        "downloadLink": "/fe/api/problem/downloadAttachment/rxmegad9"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3\nnnrnnr\nzzzaab\nmmlmmlo\n",
+        "8\n9\n16\n"
+      ],
+      [
+        "5\nkkkkkkkkkkkkkkkkkkkk\nlllllllllllllrrlllrr\ncccccccccccccxcxxxcc\nccccccccccccccaababa\nggggggggggggggbaabab\n",
+        "156\n138\n138\n147\n194\n"
+      ],
+      [
+        "见附件中的 string/string3.in",
+        "见附件中的 string/string3.ans"
+      ],
+      [
+        "见附件中的 string/string4.in",
+        "见附件中的 string/string4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2020] String Matching",
+      "background": "",
+      "description": "After learning about string matching, Little C is now working on a problem.\n\nFor a string $S$, the task asks him to find the number of all split plans of $S$ that have one of the following forms:\n\n$S = ABC$, $S = ABABC$, $S = ABAB \\ldots ABC$, where $A$, $B$, and $C$ are all non-empty strings, and the number of characters that appear an odd number of times in $A$ is not greater than the number of characters that appear an odd number of times in $C$.\n\nMore specifically, we define $AB$ as the concatenation of two strings $A$ and $B$. For example, if $A = \\texttt{aab}$ and $B = \\texttt{ab}$, then $AB = \\texttt{aabab}$.\n\nWe also define recursively $A^1 = A$ and $A^n = A^{n - 1} A$ ($n \\ge 2$ and $n$ is a positive integer). For example, if $A = \\texttt{abb}$, then $A^3 = \\texttt{abbabbabb}$.\n\nThen Little C's exercise is to find the number of plans such that $S = {(AB)}^i C$, where $F(A) \\le F(C)$. Here, $F(S)$ denotes the number of characters that appear an odd number of times in the string $S$. Two plans are different if and only if at least one of the split strings $A$, $B$, and $C$ is different.\n\nLittle C cannot solve this problem, so he asks you for help. Please help him.",
+      "formatI": "This problem contains multiple test cases. The first line of the input file contains a positive integer $T$, indicating the number of test cases.\n\nEach test case contains one line with a string $S$, as described above. $S$ consists only of lowercase English letters.",
+      "formatO": "For each test case, output one integer per line, representing the answer.",
+      "hint": "**【Sample #1 Explanation】**\n\nFor the first test case, all valid plans are:\n\n1. $A = \\texttt{n}$, $B = \\texttt{nr}$, $C = \\texttt{nnr}$.\n2. $A = \\texttt{n}$, $B = \\texttt{nrn}$, $C = \\texttt{nr}$.\n3. $A = \\texttt{n}$, $B = \\texttt{nrnn}$, $C = \\texttt{r}$.\n4. $A = \\texttt{nn}$, $B = \\texttt{r}$, $C = \\texttt{nnr}$.\n5. $A = \\texttt{nn}$, $B = \\texttt{rn}$, $C = \\texttt{nr}$.\n6. $A = \\texttt{nn}$, $B = \\texttt{rnn}$, $C = \\texttt{r}$.\n7. $A = \\texttt{nnr}$, $B = \\texttt{n}$, $C = \\texttt{nr}$.\n8. $A = \\texttt{nnr}$, $B = \\texttt{nn}$, $C = \\texttt{r}$.\n\n**【Constraints】**\n\n| Test Point ID | $\\lvert S \\rvert \\le$ | Special Property |\n|:-:|:-:|:-:|\n| $1 \\sim 4$ | $10$ | None |\n| $5 \\sim 8$ | $100$ | None |\n| $9 \\sim 12$ | $1000$ | None |\n| $13 \\sim 14$ | $2^{15}$ | $S$ contains only one kind of character |\n| $15 \\sim 17$ | $2^{16}$ | $S$ contains only two kinds of characters |\n| $18 \\sim 21$ | $2^{17}$ | None |\n| $22 \\sim 25$ | $2^{20}$ | None |\n\nFor all test points, it is guaranteed that $1 \\le T \\le 5$ and $1 \\le |S| \\le 2^{20}$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2020] 字符串匹配",
+      "background": "",
+      "description": "小 C 学习完了字符串匹配的相关内容，现在他正在做一道习题。\n\n对于一个字符串 $S$，题目要求他找到 $S$ 的所有具有下列形式的拆分方案数：\n\n$S = ABC$，$S = ABABC$，$S = ABAB \\ldots ABC$，其中 $A$，$B$，$C$ 均是非空字符串，且 $A$ 中出现奇数次的字符数量不超过 $C$ 中出现奇数次的字符数量。\n\n更具体地，我们可以定义 $AB$ 表示两个字符串 $A$，$B$ 相连接，例如 $A = \\texttt{aab}$，$B = \\texttt{ab}$，则 $AB = \\texttt{aabab}$。\n\n并递归地定义 $A^1=A$，$A^n = A^{n - 1} A$（$n \\ge 2$ 且为正整数）。例如 $A = \\texttt{abb}$，则 $A^3=\\texttt{abbabbabb}$。\n\n则小 C 的习题是求 $S = {(AB)}^iC$ 的方案数，其中 $F(A) \\le F(C)$，$F(S)$ 表示字符串 $S$ 中出现奇数次的字符的数量。两种方案不同当且仅当拆分出的 $A$、$B$、$C$ 中有至少一个字符串不同。\n\n小 C 并不会做这道题，只好向你求助，请你帮帮他。",
+      "formatI": "本题有多组数据，输入文件第一行一个正整数 $T$ 表示数据组数。\n\n每组数据仅一行一个字符串 $S$，意义见题目描述。$S$ 仅由英文小写字母构成。",
+      "formatO": "对于每组数据输出一行一个整数表示答案。",
+      "hint": "**【样例 #1 解释】**\n\n对于第一组数据，所有的方案为\n\n1. $A=\\texttt{n}$，$B=\\texttt{nr}$，$C=\\texttt{nnr}$。\n2. $A=\\texttt{n}$，$B=\\texttt{nrn}$，$C=\\texttt{nr}$。\n3. $A=\\texttt{n}$，$B=\\texttt{nrnn}$，$C=\\texttt{r}$。\n4. $A=\\texttt{nn}$，$B=\\texttt{r}$，$C=\\texttt{nnr}$。\n5. $A=\\texttt{nn}$，$B=\\texttt{rn}$，$C=\\texttt{nr}$。\n6. $A=\\texttt{nn}$，$B=\\texttt{rnn}$，$C=\\texttt{r}$。\n7. $A=\\texttt{nnr}$，$B=\\texttt{n}$，$C=\\texttt{nr}$。\n8. $A=\\texttt{nnr}$，$B=\\texttt{nn}$，$C=\\texttt{r}$。\n\n**【数据范围】**\n\n| 测试点编号 | $\\lvert S \\rvert \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 4$ | $10$ | 无 |\n| $5 \\sim 8$ | $100$ | 无 |\n| $9 \\sim 12$ | $1000$ | 无 |\n| $13 \\sim 14$ | $2^{15}$ | $S$ 中只包含一种字符 |\n| $15 \\sim 17$ | $2^{16}$ | $S$ 中只包含两种字符 |\n| $18 \\sim 21$ | $2^{17}$ | 无 |\n| $22 \\sim 25$ | $2^{20}$ | 无 |\n\n对于所有测试点，保证 $1 \\le T \\le 5$，$1 \\le |S| \\le 2^{20}$。 ",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P5410",
+      "type": "P",
+      "name": "【模板】扩展 KMP / exKMP（Z 函数）",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7116",
+      "type": "P",
+      "name": "[NOIP2020] 微信步数",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7115",
+      "type": "P",
+      "name": "[NOIP2020] 移球游戏",
+      "difficulty": 7
+    }
+  ],
+  "forum": {
+    "name": "P7114 [NOIP2020] 字符串匹配",
+    "type": 2,
+    "slug": "P7114",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1287211,
+      "title": "求助！为什么本地可编译 luogu RE！！",
+      "author": {
+        "uid": 1260215,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1260215.png",
+        "name": "seeeeeeeet",
+        "slogan": "Tang",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1777875659
+    },
+    {
+      "id": 1272941,
+      "title": "求问错在哪了",
+      "author": {
+        "uid": 1667130,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1667130.png",
+        "name": "Lymay_you",
+        "slogan": "Ease and decision are eternal strangers.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/07m2zmkt.png"
+      },
+      "time": 1775351816
+    },
+    {
+      "id": 1269051,
+      "title": "0分求调",
+      "author": {
+        "uid": 1667130,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1667130.png",
+        "name": "Lymay_you",
+        "slogan": "Ease and decision are eternal strangers.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/07m2zmkt.png"
+      },
+      "time": 1774752885
+    },
+    {
+      "id": 1268658,
+      "title": "一点卡常经验",
+      "author": {
+        "uid": 537934,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/537934.png",
+        "name": "litjohn",
+        "slogan": "我只是一个孤独于影中的孩子，看见了被繁星点亮的夜。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/ckyaqo1i.png"
+      },
+      "time": 1774689779
+    },
+    {
+      "id": 1258150,
+      "title": "KMP做法求卡常",
+      "author": {
+        "uid": 1145046,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1145046.png",
+        "name": "chenzifan7497",
+        "slogan": "不是因为被拯救而相信，而是因为相信而被拯救",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/heprmp08.png"
+      },
+      "time": 1772807501
+    },
+    {
+      "id": 1252976,
+      "title": "我的做法是否正确？",
+      "author": {
+        "uid": 2030309,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2030309.png",
+        "name": "SpaceBro",
+        "slogan": "联合省选 2026 RP++. | 我不仅仅为己战斗. |  因为自己淋过雨，所以要为你撑伞. AFO.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1771998215
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

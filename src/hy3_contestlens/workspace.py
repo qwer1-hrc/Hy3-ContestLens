@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .errors import ContestLensError, ensure
+from .datasets import ManifestCatalog
 from .settings import AppSettings
 from .utils import atomic_write, atomic_write_json, canonical_json, safe_id, sha256_bytes, sha256_file, utc_now
 
@@ -102,6 +103,7 @@ def apply_unified_diff(source: str, patch: str) -> str:
 class WorkspaceStore:
     def __init__(self, settings: AppSettings):
         self.settings = settings
+        self.catalog = ManifestCatalog(settings.manifests_root, settings.default_memory_mb)
         self.root = settings.runs_root
         self.root.mkdir(parents=True, exist_ok=True)
 
@@ -137,7 +139,7 @@ class WorkspaceStore:
     def create_cpp_submission(self, run_id: str, problem_id: str, source_code: str, created_by: str = "solver") -> dict[str, Any]:
         self._id(run_id, "run_id")
         ensure(re.fullmatch(r"^[a-z][a-z0-9_]*$", problem_id) is not None, "INVALID_PROBLEM_ID", "Invalid problem ID")
-        data = validate_cpp(source_code, self.settings.max_source_bytes, problem_id)
+        data = validate_cpp(source_code, self.settings.max_source_bytes, self.catalog.get(problem_id).io.basename)
         submission_id = safe_id("submission")
         directory = self._submission(run_id, submission_id)
         ensure(not directory.exists(), "SUBMISSION_CONFLICT", "Submission already exists", status_code=409)
@@ -159,7 +161,7 @@ class WorkspaceStore:
 
     def find_cpp_submission(self, run_id: str, problem_id: str, source_code: str, created_by: str = "solver") -> dict[str, Any] | None:
         """Find a durable initial submission after a crash between creation and checkpointing."""
-        data = validate_cpp(source_code, self.settings.max_source_bytes, problem_id)
+        data = validate_cpp(source_code, self.settings.max_source_bytes, self.catalog.get(problem_id).io.basename)
         digest = sha256_bytes(data)
         root = self._run(run_id) / "workspace" / "submissions"
         for path in sorted(root.glob("*/metadata.json")) if root.is_dir() else []:
@@ -234,7 +236,7 @@ class WorkspaceStore:
         metadata = self._load(run_id, submission_id)
         base = self._revision(metadata, base_revision_id)
         ensure(base["sha256"] == base_sha256, "STALE_REVISION", "base_sha256 does not match the selected revision", status_code=409, expected=base["sha256"], actual=base_sha256)
-        data = validate_cpp(source_code, self.settings.max_source_bytes, metadata["problem_id"])
+        data = validate_cpp(source_code, self.settings.max_source_bytes, self.catalog.get(metadata["problem_id"]).io.basename)
         revision_id = self._next_revision(metadata)
         digest = sha256_bytes(data)
         ensure(digest != base_sha256, "NO_SOURCE_CHANGE", "New revision must change the source")

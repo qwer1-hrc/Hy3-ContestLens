@@ -31,9 +31,10 @@ stream = true
 | --- | --- | --- |
 | `max_tokens` | 8192 | 每张图片的输出 token 上限 |
 | `stream` | true | 逐段接收长响应，降低中间代理等待完整结果时断连的风险 |
-| `max_attempts` | 3 | 仅对节点过载和账户速率限制进行的总尝试次数 |
+| `max_attempts` | 3 | 对超时、连接中断、不完整流、HTTP 408/5xx、节点过载和账户速率限制的总尝试次数 |
 | `retry_backoff_seconds` | 10 | 无 Retry-After 时的指数退避起始秒数 |
-| `timeout_seconds` | 90 | 每张图片的调用总超时；失败不自动重试 |
+| `timeout_seconds` | 300 | 每次图片调用的总时限，包含连接、推理和正文生成 |
+| `idle_timeout_seconds` | 90 | 单次连接/读写等待时限；持续返回流式数据时不以此截断总生成时间 |
 | `decision_timeout_seconds` | 300 | WebUI 等待选择的最长秒数；到期自动跳过 |
 | `max_images` | 12 | 每次运行处理的最多页面/图片数，超出部分记为警告 |
 | `max_image_mb` | 8 | 单张本地图片及渲染后 PNG 大小上限 |
@@ -68,7 +69,9 @@ stream = true
 
 图片模型现默认使用 Kimi 官方支持的 SSE 流式响应和 `max_completion_tokens`。每张图完成后保存 HTTP 状态、请求 ID、耗时、结束原因、用量及流式事件统计；失败时保存安全的异常类型和断流统计，不保存图片字节、密钥或推理正文。一次成功描述只有在完整结束后才注入；失败图片仍按可选功能约定回退到原题面。
 
-2026-09-04 的运行 `run_qxQfPoATbSbGvKVI` 两页分别收到 HTTP 429。用户授权的单页复现返回 `engine_overloaded_error`，约 1.45 秒获得响应，未提供 Retry-After；余额由用户确认正常。这表示 Kimi 计算节点临时过载，不是图片检测、渲染、余额或项目内图片并发问题。客户端现在将所有图片调用串行化，只对 `engine_overloaded_error` 和 `rate_limit_reached_error` 有界重试并遵守合法 Retry-After；多次失败后跳过剩余图片，避免连续触发同一限流。余额不足类 429 不重试。
+2026-09-04 的运行 `run_qxQfPoATbSbGvKVI` 两页分别收到 HTTP 429。用户授权的单页复现返回 `engine_overloaded_error`，约 1.45 秒获得响应，未提供 Retry-After；余额由用户确认正常。这表示 Kimi 计算节点临时过载，不是图片检测、渲染、余额或项目内图片并发问题。客户端将所有图片调用串行化，对 `engine_overloaded_error` 和 `rate_limit_reached_error` 有界重试并遵守合法 Retry-After；多次限流失败后跳过剩余图片，避免连续触发同一限流。余额不足类 429 不重试。
+
+2026-09-08 的 `run_sSpjunh6rWVHSBmV` 第二张图收到 HTTP 200 和 3200 个事件，但只有推理内容、正文为零；90.047 秒时被本地总时限终止。旧重试策略没有包含超时，因此尝试一次便回退。现将默认总时限增加到 300 秒，并独立保留 90 秒连接/读写等待时限；超时、传输中断、不完整流及 HTTP 408/5xx 也会有界重试，最多 3 次。不会接受未正常结束的部分正文。显式配置的 `timeout_seconds` 仍表示总时限，secrets 中的旧配置会优先于 app 配置。诊断区分 `total_timeout`、`transport_timeout`、`transport_error`，记录最终尝试耗时和含重试等待的 `total_duration_ms`。旧运行保留原始警告，不因代码更新而重写历史证据。
 
 ## API
 

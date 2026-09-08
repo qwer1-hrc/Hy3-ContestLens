@@ -222,10 +222,12 @@ class ImageUnderstandingClient:
     async def describe(self, data_url: str, label: str, context: str) -> ImageDescriptionResult:
         history = []
         async with self._gate:
+            started = time.monotonic()
             for attempt in range(1, self.settings.max_attempts + 1):
                 try:
                     result = await self._describe_once(data_url, label, context)
                     result.diagnostics["attempts"] = attempt
+                    result.diagnostics["total_duration_ms"] = round((time.monotonic() - started) * 1000)
                     if history:
                         result.diagnostics["retry_history"] = history
                     return result
@@ -234,10 +236,16 @@ class ImageUnderstandingClient:
                     history.append({key: details.get(key) for key in (
                         "type", "duration_ms", "http_status", "request_id", "failure_kind", "provider_error_type",
                     )})
-                    retryable = details.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"}
+                    status = details.get("http_status")
+                    retryable = (
+                        details.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"}
+                        or details.get("failure_kind") in {"total_timeout", "transport_timeout", "transport_error", "stream_incomplete"}
+                        or status == 408 or isinstance(status, int) and 500 <= status <= 599
+                    ) and details.get("provider_error_type") != "exceeded_current_quota_error"
                     if not retryable or attempt >= self.settings.max_attempts:
                         raise ContestLensError(exc.code, exc.message, {
                             **details, "attempts": attempt, "retry_exhausted": retryable,
+                            "total_duration_ms": round((time.monotonic() - started) * 1000),
                             "retry_history": history,
                         }, exc.status_code) from None
                     delay = details.get("retry_after_seconds")
@@ -277,7 +285,10 @@ class ImageUnderstandingClient:
         body: Any = None
         stream: CompletionStream | None = None
         try:
-            async with httpx.AsyncClient(timeout=self.settings.timeout_seconds, transport=self.transport, follow_redirects=False) as client:
+            # Continuous reasoning/answer events are healthy activity. Allow a
+            # longer total generation budget while bounding silent connections.
+            idle_timeout = min(self.settings.idle_timeout_seconds, self.settings.timeout_seconds)
+            async with httpx.AsyncClient(timeout=idle_timeout, transport=self.transport, follow_redirects=False) as client:
                 async with asyncio.timeout(self.settings.timeout_seconds):
                     async with client.stream(
                         "POST", endpoint, headers={"Authorization": f"Bearer {self.settings.api_key}"}, json=payload,
@@ -306,6 +317,8 @@ class ImageUnderstandingClient:
             details: dict[str, Any] = {
                 "type": type(exc).__name__, "duration_ms": round((time.monotonic() - started) * 1000),
                 "http_status": response.status_code if response is not None else None,
+                "timeout_seconds": self.settings.timeout_seconds,
+                "idle_timeout_seconds": self.settings.idle_timeout_seconds,
                 "request_id": next((response.headers.get(key) for key in ("x-request-id", "request-id") if response.headers.get(key)), None) if response is not None else None,
             }
             error = body.get("error") if isinstance(body, dict) else None
@@ -326,6 +339,12 @@ class ImageUnderstandingClient:
                 details["retry_after_seconds"] = retry_after_seconds
             if isinstance(exc, (_ResponseError, StreamResponseError)):
                 details["failure_kind"] = exc.kind
+            elif isinstance(exc, httpx.TimeoutException):
+                details["failure_kind"] = "transport_timeout"
+            elif isinstance(exc, TimeoutError):
+                details["failure_kind"] = "total_timeout"
+            elif isinstance(exc, httpx.TransportError):
+                details["failure_kind"] = "transport_error"
             if stream is not None:
                 details["stream"] = stream.diagnostics()
             raise ContestLensError("IMAGE_MODEL_FAILED", "Image understanding failed; continuing with statement text",

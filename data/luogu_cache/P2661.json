@@ -1,0 +1,300 @@
+{
+  "problem": {
+    "pid": "P2661",
+    "type": "P",
+    "name": "[NOIP 2015 提高组] 信息传递",
+    "difficulty": 3,
+    "tags": [
+      6,
+      32,
+      47,
+      83,
+      127,
+      159,
+      179,
+      180,
+      320
+    ],
+    "totalSubmit": 134614,
+    "totalAccepted": 50413,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 提高组] 信息传递",
+      "background": "NOIP2015 Day1T2",
+      "description": "有 $n$ 个同学（编号为 $1$ 到 $n$）正在玩一个信息传递的游戏。在游戏里每人都有一个固定的信息传递对象，其中，编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学。\n\n游戏开始时，每人都只知道自己的生日。之后每一轮中，所有人会同时将自己当前所知的生日信息告诉各自的信息传递对象（注意：可能有人可以从若干人那里获取信息，但是每人只会把信息告诉一个人，即自己的信息传递对象）。当有人从别人口中得知自己的生日时，游戏结束。请问该游戏一共可以进行几轮？",
+      "formatI": "输入共 $2$ 行。\n\n第一行包含 $1$ 个正整数 $n$，表示 $n$ 个人。\n\n第二行包含 $n$ 个用空格隔开的正整数 $T_1,T_2,\\cdots,T_n$，其中第 $i$ 个整数 $T_i$ 表示编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学，$T_i\\leq n$ 且 $T_i\\neq i$。",
+      "formatO": "共一行一个整数，表示游戏一共可以进行多少轮。",
+      "hint": "**样例 1 解释：**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/3ca5zl3c.png)\n\n游戏的流程如图所示。当进行完第 $3$ 轮游戏后，$4$ 号玩家会听到 $2$ 号玩家告诉他自己的生日，所以答案为 $3$。当然，第 $3$ 轮游戏后，$2$ 号玩家、 $3$ 号玩家都能从自己的消息来源得知自己的生日，同样符合游戏结束的条件。\n\n- 对于 $30\\%$ 的数据，$n\\le 200$；\n- 对于 $60\\%$ 的数据，$n\\le 2500$；\n- 对于 $100\\%$ 的数据，$n\\le 2\\times 10^5$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 提高组] 信息传递",
+      "background": "NOIP2015 Day1T2",
+      "description": "有 $n$ 个同学（编号为 $1$ 到 $n$）正在玩一个信息传递的游戏。在游戏里每人都有一个固定的信息传递对象，其中，编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学。\n\n游戏开始时，每人都只知道自己的生日。之后每一轮中，所有人会同时将自己当前所知的生日信息告诉各自的信息传递对象（注意：可能有人可以从若干人那里获取信息，但是每人只会把信息告诉一个人，即自己的信息传递对象）。当有人从别人口中得知自己的生日时，游戏结束。请问该游戏一共可以进行几轮？",
+      "formatI": "输入共 $2$ 行。\n\n第一行包含 $1$ 个正整数 $n$，表示 $n$ 个人。\n\n第二行包含 $n$ 个用空格隔开的正整数 $T_1,T_2,\\cdots,T_n$，其中第 $i$ 个整数 $T_i$ 表示编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学，$T_i\\leq n$ 且 $T_i\\neq i$。",
+      "formatO": "共一行一个整数，表示游戏一共可以进行多少轮。",
+      "hint": "**样例 1 解释：**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/3ca5zl3c.png)\n\n游戏的流程如图所示。当进行完第 $3$ 轮游戏后，$4$ 号玩家会听到 $2$ 号玩家告诉他自己的生日，所以答案为 $3$。当然，第 $3$ 轮游戏后，$2$ 号玩家、 $3$ 号玩家都能从自己的消息来源得知自己的生日，同样符合游戏结束的条件。\n\n- 对于 $30\\%$ 的数据，$n\\le 200$；\n- 对于 $60\\%$ 的数据，$n\\le 2500$；\n- 对于 $100\\%$ 的数据，$n\\le 2\\times 10^5$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5\n2 4 2 3 1",
+        "3"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Senior] Information Transfer",
+      "background": "NOIP 2015 Day 1 T2.",
+      "description": "There are $n$ players (numbered from $1$ to $n$) playing an information transfer game. In this game, each player has a fixed designated recipient. Specifically, the designated recipient of player $i$ is player $T_i$.\n\nAt the start of the game, each player knows only their own birthday. Then in each round, all players simultaneously tell all the birthday information they currently know to their designated recipient (note: someone may receive information from several people, but each person tells information to exactly one person, i.e., their designated recipient). The game ends when someone learns their own birthday from someone else. How many rounds can the game proceed in total?",
+      "formatI": "The input consists of $2$ lines.\n\nThe first line contains $1$ positive integer $n$, representing the number of players.\n\nThe second line contains $n$ space-separated positive integers $T_1, T_2, \\cdots, T_n$. Here, the $i$-th integer $T_i$ means that the designated recipient of player $i$ is player $T_i$, with $T_i \\leq n$ and $T_i \\neq i$.",
+      "formatO": "Output a single integer on one line, indicating how many rounds the game proceeds in total.",
+      "hint": "Sample 1 explanation:\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/3ca5zl3c.png)\n\nThe process of the game is shown in the figure. After the $3$rd round, player $4$ will hear player $2$ tell him his own birthday, so the answer is $3$. Of course, after the $3$rd round, player $2$ and player $3$ can also learn their own birthdays from their respective sources, which also satisfies the game’s end condition.\n\nConstraints:\n- For $30\\%$ of the testdata, $n \\le 200$.\n- For $60\\%$ of the testdata, $n \\le 2500$.\n- For $100\\%$ of the testdata, $n \\le 2 \\times 10^5$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 提高组] 信息传递",
+      "background": "NOIP2015 Day1T2",
+      "description": "有 $n$ 个同学（编号为 $1$ 到 $n$）正在玩一个信息传递的游戏。在游戏里每人都有一个固定的信息传递对象，其中，编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学。\n\n游戏开始时，每人都只知道自己的生日。之后每一轮中，所有人会同时将自己当前所知的生日信息告诉各自的信息传递对象（注意：可能有人可以从若干人那里获取信息，但是每人只会把信息告诉一个人，即自己的信息传递对象）。当有人从别人口中得知自己的生日时，游戏结束。请问该游戏一共可以进行几轮？",
+      "formatI": "输入共 $2$ 行。\n\n第一行包含 $1$ 个正整数 $n$，表示 $n$ 个人。\n\n第二行包含 $n$ 个用空格隔开的正整数 $T_1,T_2,\\cdots,T_n$，其中第 $i$ 个整数 $T_i$ 表示编号为 $i$ 的同学的信息传递对象是编号为 $T_i$ 的同学，$T_i\\leq n$ 且 $T_i\\neq i$。",
+      "formatO": "共一行一个整数，表示游戏一共可以进行多少轮。",
+      "hint": "**样例 1 解释：**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/3ca5zl3c.png)\n\n游戏的流程如图所示。当进行完第 $3$ 轮游戏后，$4$ 号玩家会听到 $2$ 号玩家告诉他自己的生日，所以答案为 $3$。当然，第 $3$ 轮游戏后，$2$ 号玩家、 $3$ 号玩家都能从自己的消息来源得知自己的生日，同样符合游戏结束的条件。\n\n- 对于 $30\\%$ 的数据，$n\\le 200$；\n- 对于 $60\\%$ 的数据，$n\\le 2500$；\n- 对于 $100\\%$ 的数据，$n\\le 2\\times 10^5$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 302,
+    "startTime": 1446859800,
+    "endTime": 1447507800,
+    "name": "NOIp2015提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1330",
+      "type": "P",
+      "name": "封锁阳光大学",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2678",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 跳石头",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2679",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 子串",
+      "difficulty": 4
+    },
+    {
+      "pid": "P3371",
+      "type": "P",
+      "name": "【模板】单源最短路径（弱化版）",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2921",
+      "type": "P",
+      "name": "[USACO08DEC] Trick or Treat on the Farm G",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P2661 [NOIP 2015 提高组] 信息传递",
+    "type": 2,
+    "slug": "P2661",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1364118,
+      "title": "全T求条（闭关）",
+      "author": {
+        "uid": 1828581,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1828581.png",
+        "name": "zhmiao",
+        "slogan": "oi如棋，落子无悔。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787636306
+    },
+    {
+      "id": 1357183,
+      "title": "拓补+DFS 0pts 求调",
+      "author": {
+        "uid": 1511384,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1511384.png",
+        "name": "Zouzhiyuan66",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787031671
+    },
+    {
+      "id": 1352694,
+      "title": "问",
+      "author": {
+        "uid": 1718901,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1718901.png",
+        "name": "y_way",
+        "slogan": "永恒荣耀,不灭星辰|寒骨裂荆棘,花海映星河|故人化灵鱼,游曳花海间|答案说明所有|第二次生命,在故人的期许下诞生",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/wi7h4bu5.png"
+      },
+      "time": 1786621266
+    },
+    {
+      "id": 1302742,
+      "title": "70求调",
+      "author": {
+        "uid": 1553514,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1553514.png",
+        "name": "SJT1306",
+        "slogan": "渺小到最后,后来的人类世界,可能没人会记得你。可你经历过的痛是真的,乐也是真的,像清晨的露水,短暂但真实。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/3ip06ztc.png"
+      },
+      "time": 1780756818
+    },
+    {
+      "id": 1284511,
+      "title": "警示后人",
+      "author": {
+        "uid": 1438185,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1438185.png",
+        "name": "ray_hxr",
+        "slogan": "1",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qqcpaczo.png"
+      },
+      "time": 1777381688
+    },
+    {
+      "id": 1262045,
+      "title": "洛谷100pts,OJ70pts,求调",
+      "author": {
+        "uid": 1305739,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1305739.png",
+        "name": "Leaping_Lemon",
+        "slogan": "h̨͍̹̥͇̑ͩ̓̑ͫḙ̴͉̪͖͓͌͌͌ͦl̹͔̘͓͔̄ͦ́͐ͣl̸̡̨̛̻͙̈͌͘͝o͍ͣ͟h̨͍̹̥͇̑ͩ̓̑ͫḙ̴͉̪͖͓͌͌͌ͦl̹͔̘͓͔̄ͦ́͐ͣl̸̡̨̛̻͙̈͌͘͝o͍ͣ͟",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/8za4l8tm.png"
+      },
+      "time": 1773482856
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

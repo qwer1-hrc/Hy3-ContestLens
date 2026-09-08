@@ -1,0 +1,325 @@
+{
+  "problem": {
+    "pid": "P1600",
+    "type": "P",
+    "name": "[NOIP 2016 提高组] 天天爱跑步",
+    "difficulty": 7,
+    "tags": [
+      33,
+      42,
+      55,
+      83,
+      211,
+      228,
+      229,
+      290,
+      330,
+      379
+    ],
+    "totalSubmit": 53466,
+    "totalAccepted": 16314,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 提高组] 天天爱跑步",
+      "background": "NOIP2016 提高组 D1T2",
+      "description": "小 C 同学认为跑步非常有趣，于是决定制作一款叫做《天天爱跑步》的游戏。《天天爱跑步》是一个养成类游戏，需要玩家每天按时上线，完成打卡任务。\n\n这个游戏的地图可以看作一棵包含 $n$ 个结点和 $n-1$ 条边的树，每条边连接两个结点，且任意两个结点存在一条路径互相可达。树上结点编号为从 $1$ 到 $n$ 的连续正整数。\n\n现在有 $m$ 个玩家，第 $i$ 个玩家的起点为 $s_i$，终点为 $t_i$。每天打卡任务开始时，所有玩家在第 $0$ 秒同时从自己的起点出发，以每秒跑一条边的速度，不间断地沿着最短路径向着自己的终点跑去，跑到终点后该玩家就算完成了打卡任务。（由于地图是一棵树，所以每个人的路径是唯一的）\n\n小 C 想知道游戏的活跃度，所以在每个结点上都放置了一个观察员。在结点 $j$ 的观察员会选择在第 $w_j$ 秒观察玩家，一个玩家能被这个观察员观察到当且仅当该玩家在第 $w_j$ 秒也正好到达了结点 $j$。小 C 想知道每个观察员会观察到多少人？\n\n注意：我们认为一个玩家到达自己的终点后该玩家就会结束游戏，他不能等待一段时间后再被观察员观察到。即对于把结点 $j$ 作为终点的玩家：若他在第 $w_j$ 秒前到达终点，则在结点 $j$ 的观察员不能观察到该玩家；若他正好在第 $w_j$ 秒到达终点，则在结点 $j$ 的观察员可以观察到这个玩家。",
+      "formatI": "第一行有两个整数 $n$ 和 $m$。其中 $n$ 代表树的结点数量，同时也是观察员的数量，$m$ 代表玩家的数量。\n\n接下来 $n-1$ 行每行两个整数 $u$ 和 $v$，表示结点 $u$ 到结点 $v$ 有一条边。\n\n接下来一行 $n$ 个整数，其中第 $j$ 个整数为 $w_j$，表示结点 $j$ 出现观察员的时间。\n\n接下来 $m$ 行，每行两个整数 $s_i$，和 $t_i$，表示一个玩家的起点和终点。\n\n对于所有的数据，保证 $1\\leq s_i,t_i\\leq n, 0\\leq w_j\\leq n$。",
+      "formatO": "输出 $1$ 行 $n$ 个整数，第 $j$ 个整数表示结点 $j$ 的观察员可以观察到多少人。",
+      "hint": "**样例 1 说明**\n\n对于 $1$ 号点，$w_i=0$，故只有起点为 $1$ 号点的玩家才会被观察到，所以玩家 $1$ 和玩家 $2$ 被观察到，共有 $2$ 人被观察到。\n\n对于 $2$ 号点，没有玩家在第 $2$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $3$ 号点，没有玩家在第 $5$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $4$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $5$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $6$ 号点，玩家 $3$ 被观察到，共 $1$ 人被观察到。\n\n**子任务**\n\n每个测试点的数据规模及特点如下表所示。\n\n提示：数据范围的个位上的数字可以帮助判断是哪一种数据类型。\n\n| 测试点编号 | $n=$ | $m=$ | 约定 |\n| :--------: | :----: | :----: | :----: |\n|     $1\\sim 2$      |  $991$   |  $991$   | 所有人的起点等于自己的终点，即 $\\forall i,\\ s_i=t_i$  |\n|     $3\\sim 4$      |  $992$   |  $992$   | 所有 $w_j=0$  |\n|     $5$      |  $993$   |  $993$   | 无  |\n|     $6\\sim 8$      |  $99994$   |  $99994$   | $\\forall i\\in[1,n-1]$，$i$ 与 $i+1$ 有边。即树退化成 $1,2,\\dots,n$ 按顺序连接的链  |\n|     $9\\sim 12$      |  $99995$   |  $99995$   | 所有 $s_i=1$  |\n|     $13\\sim 16$      |  $99996$   |  $99996$   | 所有 $t_i=1$  |\n|     $17\\sim 19$      |  $99997$   |  $99997$   | 无  |\n|     $20$      |  $299998$   |  $299998$   | 无  |\n\n\n\n**提示**\n\n（提示：由于原提示年代久远，不一定能完全反映现在的情况，现在已经对该提示做出了一定的修改，提示的原文可以在[该剪贴板](https://www.luogu.com.cn/paste/3fneb8m6)查看）\n\n在最终评测时，调用栈占用的空间大小不会有单独的限制，但在我们的工作环境中默认会有 $1 \\text{MiB}$ 的限制。 这可能会引起**函数调用层数较多时，程序发生栈溢出崩溃**，程序中**较深层数的递归**往往会导致这个问题。如果你的程序需要用到较大的栈空间，请务必注意该问题。\n\n我们可以使用一些方法修改调用栈的大小限制。\n\n- Linux\n\n我们可以在终端中输入下列命令：`ulimit -s 1048576`。此命令的意义是，将调用栈的大小限制修改为 $1048576\\text{KiB}=1 \\text{GiB}$。\n\n例如，对于如下程序 `sample.cpp`：\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint f[1000005];\nvoid dfs(int a){\n\tif(a == 0){\n\t\tf[a] = 0;\n\t\treturn;\n\t}\n\tdfs(a - 1);\n\tf[a] = f[a - 1] + 1;\n}\nint main(){\n\tdfs(1000000);\n\treturn 0;\n}\n```\n\n将上述源代码用命令 `g++ sample.cpp -o sample` 编译为可执行文件 `sample` 后，使用 `./sample` 执行程序。\n\n如果在没有使用命令 `ulimit -s 1048576` 的情况下运行该程序，`sample` 会因为栈溢出而崩溃；如果使用了上述命令后运行该程序，该程序则不会崩溃。\n\n特别地，当你打开多个终端时，它们并不会共享该命令，你需要分别对它们运行该命令。\n\n请注意，调用栈占用的空间会计入总空间占用中，和程序其他部分占用的内存共同受到内存限制。\n\n- Windows\n\n如果你使用 Windows 下的 Dev-C++，请选择 `工具-编译选项` 并在如下区域填入以下命令 `-Wl,--stack=1073741824`，填入后注意确认“编译时加入以下命令的”的框是**已勾选**状态。\n\n此处 `1073741824` 的单位是 $\\text{B/Bytes}$。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/z6mbzfqo.png)  ![](https://cdn.luogu.com.cn/upload/image_hosting/zvrzkyq5.png)",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 提高组] 天天爱跑步",
+      "background": "NOIP2016 提高组 D1T2",
+      "description": "小 C 同学认为跑步非常有趣，于是决定制作一款叫做《天天爱跑步》的游戏。《天天爱跑步》是一个养成类游戏，需要玩家每天按时上线，完成打卡任务。\n\n这个游戏的地图可以看作一棵包含 $n$ 个结点和 $n-1$ 条边的树，每条边连接两个结点，且任意两个结点存在一条路径互相可达。树上结点编号为从 $1$ 到 $n$ 的连续正整数。\n\n现在有 $m$ 个玩家，第 $i$ 个玩家的起点为 $s_i$，终点为 $t_i$。每天打卡任务开始时，所有玩家在第 $0$ 秒同时从自己的起点出发，以每秒跑一条边的速度，不间断地沿着最短路径向着自己的终点跑去，跑到终点后该玩家就算完成了打卡任务。（由于地图是一棵树，所以每个人的路径是唯一的）\n\n小 C 想知道游戏的活跃度，所以在每个结点上都放置了一个观察员。在结点 $j$ 的观察员会选择在第 $w_j$ 秒观察玩家，一个玩家能被这个观察员观察到当且仅当该玩家在第 $w_j$ 秒也正好到达了结点 $j$。小 C 想知道每个观察员会观察到多少人？\n\n注意：我们认为一个玩家到达自己的终点后该玩家就会结束游戏，他不能等待一段时间后再被观察员观察到。即对于把结点 $j$ 作为终点的玩家：若他在第 $w_j$ 秒前到达终点，则在结点 $j$ 的观察员不能观察到该玩家；若他正好在第 $w_j$ 秒到达终点，则在结点 $j$ 的观察员可以观察到这个玩家。",
+      "formatI": "第一行有两个整数 $n$ 和 $m$。其中 $n$ 代表树的结点数量，同时也是观察员的数量，$m$ 代表玩家的数量。\n\n接下来 $n-1$ 行每行两个整数 $u$ 和 $v$，表示结点 $u$ 到结点 $v$ 有一条边。\n\n接下来一行 $n$ 个整数，其中第 $j$ 个整数为 $w_j$，表示结点 $j$ 出现观察员的时间。\n\n接下来 $m$ 行，每行两个整数 $s_i$，和 $t_i$，表示一个玩家的起点和终点。\n\n对于所有的数据，保证 $1\\leq s_i,t_i\\leq n, 0\\leq w_j\\leq n$。",
+      "formatO": "输出 $1$ 行 $n$ 个整数，第 $j$ 个整数表示结点 $j$ 的观察员可以观察到多少人。",
+      "hint": "**样例 1 说明**\n\n对于 $1$ 号点，$w_i=0$，故只有起点为 $1$ 号点的玩家才会被观察到，所以玩家 $1$ 和玩家 $2$ 被观察到，共有 $2$ 人被观察到。\n\n对于 $2$ 号点，没有玩家在第 $2$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $3$ 号点，没有玩家在第 $5$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $4$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $5$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $6$ 号点，玩家 $3$ 被观察到，共 $1$ 人被观察到。\n\n**子任务**\n\n每个测试点的数据规模及特点如下表所示。\n\n提示：数据范围的个位上的数字可以帮助判断是哪一种数据类型。\n\n| 测试点编号 | $n=$ | $m=$ | 约定 |\n| :--------: | :----: | :----: | :----: |\n|     $1\\sim 2$      |  $991$   |  $991$   | 所有人的起点等于自己的终点，即 $\\forall i,\\ s_i=t_i$  |\n|     $3\\sim 4$      |  $992$   |  $992$   | 所有 $w_j=0$  |\n|     $5$      |  $993$   |  $993$   | 无  |\n|     $6\\sim 8$      |  $99994$   |  $99994$   | $\\forall i\\in[1,n-1]$，$i$ 与 $i+1$ 有边。即树退化成 $1,2,\\dots,n$ 按顺序连接的链  |\n|     $9\\sim 12$      |  $99995$   |  $99995$   | 所有 $s_i=1$  |\n|     $13\\sim 16$      |  $99996$   |  $99996$   | 所有 $t_i=1$  |\n|     $17\\sim 19$      |  $99997$   |  $99997$   | 无  |\n|     $20$      |  $299998$   |  $299998$   | 无  |\n\n\n\n**提示**\n\n（提示：由于原提示年代久远，不一定能完全反映现在的情况，现在已经对该提示做出了一定的修改，提示的原文可以在[该剪贴板](https://www.luogu.com.cn/paste/3fneb8m6)查看）\n\n在最终评测时，调用栈占用的空间大小不会有单独的限制，但在我们的工作环境中默认会有 $1 \\text{MiB}$ 的限制。 这可能会引起**函数调用层数较多时，程序发生栈溢出崩溃**，程序中**较深层数的递归**往往会导致这个问题。如果你的程序需要用到较大的栈空间，请务必注意该问题。\n\n我们可以使用一些方法修改调用栈的大小限制。\n\n- Linux\n\n我们可以在终端中输入下列命令：`ulimit -s 1048576`。此命令的意义是，将调用栈的大小限制修改为 $1048576\\text{KiB}=1 \\text{GiB}$。\n\n例如，对于如下程序 `sample.cpp`：\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint f[1000005];\nvoid dfs(int a){\n\tif(a == 0){\n\t\tf[a] = 0;\n\t\treturn;\n\t}\n\tdfs(a - 1);\n\tf[a] = f[a - 1] + 1;\n}\nint main(){\n\tdfs(1000000);\n\treturn 0;\n}\n```\n\n将上述源代码用命令 `g++ sample.cpp -o sample` 编译为可执行文件 `sample` 后，使用 `./sample` 执行程序。\n\n如果在没有使用命令 `ulimit -s 1048576` 的情况下运行该程序，`sample` 会因为栈溢出而崩溃；如果使用了上述命令后运行该程序，该程序则不会崩溃。\n\n特别地，当你打开多个终端时，它们并不会共享该命令，你需要分别对它们运行该命令。\n\n请注意，调用栈占用的空间会计入总空间占用中，和程序其他部分占用的内存共同受到内存限制。\n\n- Windows\n\n如果你使用 Windows 下的 Dev-C++，请选择 `工具-编译选项` 并在如下区域填入以下命令 `-Wl,--stack=1073741824`，填入后注意确认“编译时加入以下命令的”的框是**已勾选**状态。\n\n此处 `1073741824` 的单位是 $\\text{B/Bytes}$。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/z6mbzfqo.png)  ![](https://cdn.luogu.com.cn/upload/image_hosting/zvrzkyq5.png)",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6 3\n2 3\n1 2 \n1 4 \n4 5 \n4 6 \n0 2 5 1 2 3 \n1 5 \n1 3 \n2 6 ",
+        "2 0 0 1 1 1 "
+      ],
+      [
+        "5 3 \n1 2 \n2 3 \n2 4 \n1 5 \n0 1 0 3 0 \n3 1 \n1 4\n5 5 ",
+        "1 2 1 0 1 "
+      ]
+    ],
+    "limits": {
+      "time": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Senior] Love Running Everyday",
+      "background": "NOIP 2016 Senior D1T2.",
+      "description": "Student Xiao C thinks running is very interesting, so he decides to make a game called \"Love Running Everyday.\" \"Love Running Everyday\" is a nurturing-style game that requires players to log in on time every day to complete a check-in task.\n\nThe map in this game can be viewed as a tree with $n$ nodes and $n-1$ edges. Each edge connects two nodes, and there exists exactly one path between any two nodes. The nodes on the tree are numbered with consecutive positive integers from $1$ to $n$.\n\nThere are $m$ players. The $i$-th player starts at $s_i$ and ends at $t_i$. When the daily check-in task starts, all players simultaneously depart from their starting points at second $0$, moving at a speed of one edge per second, continuously along the shortest path toward their destination. Once a player reaches the destination, that player is considered to have completed the check-in task. (Since the map is a tree, each person's path is unique.)\n\nXiao C wants to know the game's activity level, so an observer is placed at every node. The observer at node $j$ chooses to observe players at second $w_j$. A player can be observed by this observer if and only if the player also arrives at node $j$ exactly at second $w_j$. Xiao C wants to know how many players each observer will observe.\n\nNote: We assume that once a player reaches the destination, the player finishes the game and cannot wait to be observed later. That is, for a player whose destination is node $j$: if the player reaches the destination before second $w_j$, then the observer at node $j$ cannot observe that player; if the player arrives at the destination exactly at second $w_j$, then the observer at node $j$ can observe that player.",
+      "formatI": "The first line contains two integers $n$ and $m$. Here $n$ is the number of nodes in the tree and also the number of observers, and $m$ is the number of players.\n\nEach of the next $n-1$ lines contains two integers $u$ and $v$, indicating that there is an edge between node $u$ and node $v$.\n\nThe next line contains $n$ integers, where the $j$-th integer is $w_j$, meaning the observation time at node $j$.\n\nEach of the next $m$ lines contains two integers $s_i$ and $t_i$, representing a player's starting point and destination.\n\nFor all testdata, it is guaranteed that $1 \\leq s_i, t_i \\leq n$, $0 \\leq w_j \\leq n$.",
+      "formatO": "Output one line with $n$ integers. The $j$-th integer indicates how many players can be observed by the observer at node $j$.",
+      "hint": "Sample 1 Explanation.\n\n- For node $1$, $w_1 = 0$. Therefore, only players whose starting point is node $1$ will be observed. Players $1$ and $2$ are observed, for a total of $2$ players.\n- For node $2$, no player is at this node at second $2$, so $0$ players are observed.\n- For node $3$, no player is at this node at second $5$, so $0$ players are observed.\n- For node $4$, player $1$ is observed, so $1$ player is observed.\n- For node $5$, player $1$ is observed, so $1$ player is observed.\n- For node $6$, player $3$ is observed, so $1$ player is observed.\n\nSubtasks.\n\nThe size and characteristics of each testpoint are as follows. \n\nTip: The one's digit of the numbers in the constraints can help determine which type of data it is.\n\n| Testpoint ID | $n=$ | $m=$ | Convention |\n| :----------: | :--: | :--: | :--------: |\n| $1 \\sim 2$ | $991$ | $991$ | All players' starting points equal their own destinations, i.e., $\\forall i,\\ s_i=t_i$. |\n| $3 \\sim 4$ | $992$ | $992$ | All $w_j=0$. |\n| $5$ | $993$ | $993$ | None. |\n| $6 \\sim 8$ | $99994$ | $99994$ | $\\forall i \\in [1,n-1]$, there is an edge between $i$ and $i+1$. That is, the tree degenerates into a chain $1,2,\\dots,n$ connected in order. |\n| $9 \\sim 12$ | $99995$ | $99995$ | All $s_i=1$. |\n| $13 \\sim 16$ | $99996$ | $99996$ | All $t_i=1$. |\n| $17 \\sim 19$ | $99997$ | $99997$ | None. |\n| $20$ | $299998$ | $299998$ | None. |\n\nNotes.\n\n(Tip: Because the original note is old, it may not fully reflect the current situation. We have made some updates to this note. The original text can be viewed on [this clipboard](https://www.luogu.com.cn/paste/3fneb8m6).)\n\nIn the final evaluation, the stack size usage will not have a separate limit, but in our working environment there is a default limit of $1 \\text{MiB}$. This may cause a stack overflow crash when the number of function calls is large. Deep recursion in your program often leads to this problem. If your program needs a large stack, please pay close attention to this issue.\n\nWe can use some methods to change the stack size limit.\n\n- Linux\n\nWe can enter the following command in the terminal: `ulimit -s 1048576`. This command changes the stack size limit to $1048576\\text{KiB}=1 \\text{GiB}$.\n\nFor example, for the following program `sample.cpp`:\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint f[1000005];\nvoid dfs(int a){\n\tif(a == 0){\n\t\tf[a] = 0;\n\t\treturn;\n\t}\n\tdfs(a - 1);\n\tf[a] = f[a - 1] + 1;\n}\nint main(){\n\tdfs(1000000);\n\treturn 0;\n}\n```\n\nCompile the above source code with `g++ sample.cpp -o sample` into the executable `sample`, and run it using `./sample`.\n\nIf you run this program without using the command `ulimit -s 1048576`, `sample` will crash due to stack overflow; if you run it after using the above command, the program will not crash.\n\nIn particular, when you open multiple terminals, they do not share this setting. You need to run the command in each of them.\n\nPlease note that the stack usage is counted toward the total memory usage and is subject to the memory limit together with other parts of the program.\n\n- Windows\n\nIf you are using Dev-C++ on Windows, select `Tools - Compiler Options` and fill in the following command in the area as shown: `-Wl,--stack=1073741824`. After filling it in, make sure the box “Add the following commands when compiling” is checked.\n\nHere, `1073741824` is in units of $\\text{B/Bytes}$.\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/z6mbzfqo.png)  ![](https://cdn.luogu.com.cn/upload/image_hosting/zvrzkyq5.png)\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 提高组] 天天爱跑步",
+      "background": "NOIP2016 提高组 D1T2",
+      "description": "小 C 同学认为跑步非常有趣，于是决定制作一款叫做《天天爱跑步》的游戏。《天天爱跑步》是一个养成类游戏，需要玩家每天按时上线，完成打卡任务。\n\n这个游戏的地图可以看作一棵包含 $n$ 个结点和 $n-1$ 条边的树，每条边连接两个结点，且任意两个结点存在一条路径互相可达。树上结点编号为从 $1$ 到 $n$ 的连续正整数。\n\n现在有 $m$ 个玩家，第 $i$ 个玩家的起点为 $s_i$，终点为 $t_i$。每天打卡任务开始时，所有玩家在第 $0$ 秒同时从自己的起点出发，以每秒跑一条边的速度，不间断地沿着最短路径向着自己的终点跑去，跑到终点后该玩家就算完成了打卡任务。（由于地图是一棵树，所以每个人的路径是唯一的）\n\n小 C 想知道游戏的活跃度，所以在每个结点上都放置了一个观察员。在结点 $j$ 的观察员会选择在第 $w_j$ 秒观察玩家，一个玩家能被这个观察员观察到当且仅当该玩家在第 $w_j$ 秒也正好到达了结点 $j$。小 C 想知道每个观察员会观察到多少人？\n\n注意：我们认为一个玩家到达自己的终点后该玩家就会结束游戏，他不能等待一段时间后再被观察员观察到。即对于把结点 $j$ 作为终点的玩家：若他在第 $w_j$ 秒前到达终点，则在结点 $j$ 的观察员不能观察到该玩家；若他正好在第 $w_j$ 秒到达终点，则在结点 $j$ 的观察员可以观察到这个玩家。",
+      "formatI": "第一行有两个整数 $n$ 和 $m$。其中 $n$ 代表树的结点数量，同时也是观察员的数量，$m$ 代表玩家的数量。\n\n接下来 $n-1$ 行每行两个整数 $u$ 和 $v$，表示结点 $u$ 到结点 $v$ 有一条边。\n\n接下来一行 $n$ 个整数，其中第 $j$ 个整数为 $w_j$，表示结点 $j$ 出现观察员的时间。\n\n接下来 $m$ 行，每行两个整数 $s_i$，和 $t_i$，表示一个玩家的起点和终点。\n\n对于所有的数据，保证 $1\\leq s_i,t_i\\leq n, 0\\leq w_j\\leq n$。",
+      "formatO": "输出 $1$ 行 $n$ 个整数，第 $j$ 个整数表示结点 $j$ 的观察员可以观察到多少人。",
+      "hint": "**样例 1 说明**\n\n对于 $1$ 号点，$w_i=0$，故只有起点为 $1$ 号点的玩家才会被观察到，所以玩家 $1$ 和玩家 $2$ 被观察到，共有 $2$ 人被观察到。\n\n对于 $2$ 号点，没有玩家在第 $2$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $3$ 号点，没有玩家在第 $5$ 秒时在此结点，共 $0$ 人被观察到。\n\n对于 $4$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $5$ 号点，玩家 $1$ 被观察到，共 $1$ 人被观察到。\n\n对于 $6$ 号点，玩家 $3$ 被观察到，共 $1$ 人被观察到。\n\n**子任务**\n\n每个测试点的数据规模及特点如下表所示。\n\n提示：数据范围的个位上的数字可以帮助判断是哪一种数据类型。\n\n| 测试点编号 | $n=$ | $m=$ | 约定 |\n| :--------: | :----: | :----: | :----: |\n|     $1\\sim 2$      |  $991$   |  $991$   | 所有人的起点等于自己的终点，即 $\\forall i,\\ s_i=t_i$  |\n|     $3\\sim 4$      |  $992$   |  $992$   | 所有 $w_j=0$  |\n|     $5$      |  $993$   |  $993$   | 无  |\n|     $6\\sim 8$      |  $99994$   |  $99994$   | $\\forall i\\in[1,n-1]$，$i$ 与 $i+1$ 有边。即树退化成 $1,2,\\dots,n$ 按顺序连接的链  |\n|     $9\\sim 12$      |  $99995$   |  $99995$   | 所有 $s_i=1$  |\n|     $13\\sim 16$      |  $99996$   |  $99996$   | 所有 $t_i=1$  |\n|     $17\\sim 19$      |  $99997$   |  $99997$   | 无  |\n|     $20$      |  $299998$   |  $299998$   | 无  |\n\n\n\n**提示**\n\n（提示：由于原提示年代久远，不一定能完全反映现在的情况，现在已经对该提示做出了一定的修改，提示的原文可以在[该剪贴板](https://www.luogu.com.cn/paste/3fneb8m6)查看）\n\n在最终评测时，调用栈占用的空间大小不会有单独的限制，但在我们的工作环境中默认会有 $1 \\text{MiB}$ 的限制。 这可能会引起**函数调用层数较多时，程序发生栈溢出崩溃**，程序中**较深层数的递归**往往会导致这个问题。如果你的程序需要用到较大的栈空间，请务必注意该问题。\n\n我们可以使用一些方法修改调用栈的大小限制。\n\n- Linux\n\n我们可以在终端中输入下列命令：`ulimit -s 1048576`。此命令的意义是，将调用栈的大小限制修改为 $1048576\\text{KiB}=1 \\text{GiB}$。\n\n例如，对于如下程序 `sample.cpp`：\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint f[1000005];\nvoid dfs(int a){\n\tif(a == 0){\n\t\tf[a] = 0;\n\t\treturn;\n\t}\n\tdfs(a - 1);\n\tf[a] = f[a - 1] + 1;\n}\nint main(){\n\tdfs(1000000);\n\treturn 0;\n}\n```\n\n将上述源代码用命令 `g++ sample.cpp -o sample` 编译为可执行文件 `sample` 后，使用 `./sample` 执行程序。\n\n如果在没有使用命令 `ulimit -s 1048576` 的情况下运行该程序，`sample` 会因为栈溢出而崩溃；如果使用了上述命令后运行该程序，该程序则不会崩溃。\n\n特别地，当你打开多个终端时，它们并不会共享该命令，你需要分别对它们运行该命令。\n\n请注意，调用栈占用的空间会计入总空间占用中，和程序其他部分占用的内存共同受到内存限制。\n\n- Windows\n\n如果你使用 Windows 下的 Dev-C++，请选择 `工具-编译选项` 并在如下区域填入以下命令 `-Wl,--stack=1073741824`，填入后注意确认“编译时加入以下命令的”的框是**已勾选**状态。\n\n此处 `1073741824` 的单位是 $\\text{B/Bytes}$。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/z6mbzfqo.png)  ![](https://cdn.luogu.com.cn/upload/image_hosting/zvrzkyq5.png)",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1266,
+    "startTime": 1479424080,
+    "endTime": 1480054800,
+    "name": "NOIP2016提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1084",
+      "type": "P",
+      "name": "[NOIP 2012 提高组] 疫情控制",
+      "difficulty": 7
+    },
+    {
+      "pid": "P1850",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 换教室",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3953",
+      "type": "P",
+      "name": "[NOIP 2017 提高组] 逛公园",
+      "difficulty": 6
+    },
+    {
+      "pid": "P2680",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 运输计划",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2827",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P1600 [NOIP 2016 提高组] 天天爱跑步",
+    "type": 2,
+    "slug": "P1600",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368266,
+      "title": "25->60->80->100 警示帖",
+      "author": {
+        "uid": 736899,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/736899.png",
+        "name": "peter_code",
+        "slogan": "合群是平凡的开始，独行是拔尖的开端。|| 她渐渐忘了我 但是 她并不晓得 遍体鳞伤的我 一天也没再爱过",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/bupyvvhd.png"
+      },
+      "time": 1788021227
+    },
+    {
+      "id": 1327112,
+      "title": "求问这题LCT做法",
+      "author": {
+        "uid": 1372804,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1372804.png",
+        "name": "__ACat__",
+        "slogan": "加油喵！| 骄兵必败 | 做题中···",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/uei6auzh.png"
+      },
+      "time": 1784364868
+    },
+    {
+      "id": 1317842,
+      "title": "55pts平衡树求条",
+      "author": {
+        "uid": 1717150,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1717150.png",
+        "name": "Aurelia_Veil",
+        "slogan": "月色真美啊！&Yore_Snow |QQ 521141214|phigros rks15.33课题金40，前红45",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/b9xc0uoc.png"
+      },
+      "time": 1783649013
+    },
+    {
+      "id": 1303201,
+      "title": "警示厚仁：65pts",
+      "author": {
+        "uid": 846637,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/846637.png",
+        "name": "ThChamp",
+        "slogan": "我该在哪里停留？我问我自己。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1780826715
+    },
+    {
+      "id": 1295866,
+      "title": "警示后人",
+      "author": {
+        "uid": 1208004,
+        "avatar": "https://cdn.luogu.com.cn/images/banned.png",
+        "name": "#SUSPENDED#",
+        "slogan": null,
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": true,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": null
+      },
+      "time": 1779496351
+    },
+    {
+      "id": 1290753,
+      "title": "提供一种在线思路",
+      "author": {
+        "uid": 1169596,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1169596.png",
+        "name": "HongLou_LaMiYa",
+        "slogan": "相遇",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1778506391
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

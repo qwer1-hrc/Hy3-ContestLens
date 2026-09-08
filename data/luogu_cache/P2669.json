@@ -1,0 +1,299 @@
+{
+  "problem": {
+    "pid": "P2669",
+    "type": "P",
+    "name": "[NOIP 2015 普及组] 金币",
+    "difficulty": 1,
+    "tags": [
+      1,
+      5,
+      32,
+      82
+    ],
+    "totalSubmit": 447072,
+    "totalAccepted": 265026,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 普及组] 金币",
+      "background": "NOIP2015 普及组 T1",
+      "description": "国王将金币作为工资，发放给忠诚的骑士。第一天，骑士收到一枚金币；之后两天（第二天和第三天），每天收到两枚金币；之后三天（第四、五、六天），每天收到三枚金币；之后四天（第七、八、九、十天），每天收到四枚金币……；这种工资发放模式会一直这样延续下去：当连续 $n$ 天每天收到 $n$ 枚金币后，骑士会在之后的连续 $n+1$ 天里，每天收到 $n+1$ 枚金币。\n\n请计算在前 $k$ 天里，骑士一共获得了多少金币。",
+      "formatI": "一个正整数 $k$，表示发放金币的天数。",
+      "formatO": "一个正整数，即骑士收到的金币数。\n",
+      "hint": "**【样例 1 说明】**\n\n骑士第一天收到一枚金币；第二天和第三天，每天收到两枚金币；第四、五、六天，每天收到三枚金币。因此一共收到 $1+2+2+3+3+3=14$ 枚金币。\n\n\n对于 $100\\%$ 的数据，$1\\le k\\le 10^4$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 普及组] 金币",
+      "background": "NOIP2015 普及组 T1",
+      "description": "国王将金币作为工资，发放给忠诚的骑士。第一天，骑士收到一枚金币；之后两天（第二天和第三天），每天收到两枚金币；之后三天（第四、五、六天），每天收到三枚金币；之后四天（第七、八、九、十天），每天收到四枚金币……；这种工资发放模式会一直这样延续下去：当连续 $n$ 天每天收到 $n$ 枚金币后，骑士会在之后的连续 $n+1$ 天里，每天收到 $n+1$ 枚金币。\n\n请计算在前 $k$ 天里，骑士一共获得了多少金币。",
+      "formatI": "一个正整数 $k$，表示发放金币的天数。",
+      "formatO": "一个正整数，即骑士收到的金币数。\n",
+      "hint": "**【样例 1 说明】**\n\n骑士第一天收到一枚金币；第二天和第三天，每天收到两枚金币；第四、五、六天，每天收到三枚金币。因此一共收到 $1+2+2+3+3+3=14$ 枚金币。\n\n\n对于 $100\\%$ 的数据，$1\\le k\\le 10^4$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6",
+        "14"
+      ],
+      [
+        "1000\n",
+        "29820\n"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Junior] Gold Coins",
+      "background": "NOIP 2015 Junior T1.",
+      "description": "The king pays his loyal knight in gold coins. On day 1, the knight receives 1 coin; then for the next two days (days 2 and 3), he receives 2 coins per day; then for the next three days (days 4, 5, and 6), he receives 3 coins per day; then for the next four days (days 7, 8, 9, and 10), he receives 4 coins per day; and so on. This payment pattern continues indefinitely: after receiving $n$ coins per day for $n$ consecutive days, the knight will receive $n+1$ coins per day for the next $n+1$ consecutive days.\n\nPlease compute how many coins the knight has received in the first $k$ days.",
+      "formatI": "A positive integer $k$, representing the number of days of coin distribution.",
+      "formatO": "A positive integer, the number of coins the knight receives.",
+      "hint": "[Sample 1 Explanation]\n\nOn day 1 the knight receives 1 coin; on days 2 and 3, he receives 2 coins per day; on days 4, 5, and 6, he receives 3 coins per day. Therefore the total is $1+2+2+3+3+3=14$ coins.\n\nConstraints: For 100% of the testdata, $1 \\le k \\le 10^4$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 普及组] 金币",
+      "background": "NOIP2015 普及组 T1",
+      "description": "国王将金币作为工资，发放给忠诚的骑士。第一天，骑士收到一枚金币；之后两天（第二天和第三天），每天收到两枚金币；之后三天（第四、五、六天），每天收到三枚金币；之后四天（第七、八、九、十天），每天收到四枚金币……；这种工资发放模式会一直这样延续下去：当连续 $n$ 天每天收到 $n$ 枚金币后，骑士会在之后的连续 $n+1$ 天里，每天收到 $n+1$ 枚金币。\n\n请计算在前 $k$ 天里，骑士一共获得了多少金币。",
+      "formatI": "一个正整数 $k$，表示发放金币的天数。",
+      "formatO": "一个正整数，即骑士收到的金币数。\n",
+      "hint": "**【样例 1 说明】**\n\n骑士第一天收到一枚金币；第二天和第三天，每天收到两枚金币；第四、五、六天，每天收到三枚金币。因此一共收到 $1+2+2+3+3+3=14$ 枚金币。\n\n\n对于 $100\\%$ 的数据，$1\\le k\\le 10^4$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 303,
+    "startTime": 1446859800,
+    "endTime": 1447594200,
+    "name": "NOIp2015普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1307",
+      "type": "P",
+      "name": "[NOIP 2011 普及组] 数字反转",
+      "difficulty": 1
+    },
+    {
+      "pid": "P1423",
+      "type": "P",
+      "name": "小玉在游泳",
+      "difficulty": 1
+    },
+    {
+      "pid": "P2670",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 扫雷游戏",
+      "difficulty": 1
+    },
+    {
+      "pid": "P5722",
+      "type": "P",
+      "name": "【深基4.例11】数列求和",
+      "difficulty": 1
+    },
+    {
+      "pid": "P5723",
+      "type": "P",
+      "name": "【深基4.例13】质数口袋",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P2669 [NOIP 2015 普及组] 金币",
+    "type": 2,
+    "slug": "P2669",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1365075,
+      "title": "0分，求改",
+      "author": {
+        "uid": 2188200,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2188200.png",
+        "name": "Jake0",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787722461
+    },
+    {
+      "id": 1354089,
+      "title": "#7 WA求条",
+      "author": {
+        "uid": 1371307,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1371307.png",
+        "name": "wjz0000000",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786761429
+    },
+    {
+      "id": 1324558,
+      "title": "0",
+      "author": {
+        "uid": 2063244,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2063244.png",
+        "name": "Over2015",
+        "slogan": "我不知道说什么！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784187776
+    },
+    {
+      "id": 1320795,
+      "title": "解答必关1",
+      "author": {
+        "uid": 1221629,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1221629.png",
+        "name": "luka14",
+        "slogan": "无论结局如何，我都要拼尽全力",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783929647
+    },
+    {
+      "id": 1300504,
+      "title": "求解！！！",
+      "author": {
+        "uid": 1987138,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1987138.png",
+        "name": "jaka621_",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1780219137
+    },
+    {
+      "id": 1300503,
+      "title": "求解！！！",
+      "author": {
+        "uid": 1753169,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1753169.png",
+        "name": "jwdj",
+        "slogan": "kskbl",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/a53xu2ub.png"
+      },
+      "time": 1780219024
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

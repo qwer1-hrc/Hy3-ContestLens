@@ -1,0 +1,320 @@
+{
+  "problem": {
+    "pid": "P2119",
+    "type": "P",
+    "name": "[NOIP 2016 普及组] 魔法阵",
+    "difficulty": 4,
+    "tags": [
+      5,
+      33,
+      82,
+      111,
+      254
+    ],
+    "totalSubmit": 39254,
+    "totalAccepted": 10666,
+    "flag": 5,
+    "provider": {
+      "uid": 99,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/99.png",
+      "name": "saffah",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Orange",
+      "ccfLevel": 10,
+      "xcpcLevel": 8,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 普及组] 魔法阵",
+      "background": "NOIP2016 普及组 T4",
+      "description": "六十年一次的魔法战争就要开始了，大魔法师准备从附近的魔法场中汲取魔法能量。\n\n大魔法师有 $m$ 个魔法物品，编号分别为 $1,2,\\ldots,m$。每个物品具有一个魔法值，我们用 $X_i$ 表示编号为 $i$ 的物品的魔法值。每个魔法值 $X_i$ 是不超过 $n$ 的正整数，可能有多个物品的魔法值相同。\n\n大魔法师认为，当且仅当四个编号为 $a,b,c,d$ 的魔法物品满足 $X_a<X_b<X_c<X_d,X_b-X_a=2(X_d-X_c)$，并且 $X_b-X_a<(X_c-X_b)/3$ 时，这四个魔法物品形成了一个魔法阵，他称这四个魔法物品分别为这个魔法阵的 $A$ 物品，$B$ 物品，$C$ 物品，$D$ 物品。\n\n现在，大魔法师想要知道，对于每个魔法物品，作为某个魔法阵的 $A$ 物品出现的次数，作为 $B$ 物品的次数，作为 $C$ 物品的次数，和作为 $D$ 物品的次数。",
+      "formatI": "第一行包含两个空格隔开的正整数 $n,m$。\n\n接下来 $m$ 行，每行一个正整数，第 $i+1$ 行的正整数表示 $X_i$，即编号为 $i$ 的物品的魔法值。\n\n保证 $1 \\le n \\le 15000$，$1 \\le m \\le 40000$，$1 \\le X_i \\le n$。每个 $X_i$ 是分别在合法范围内等概率随机生成的。",
+      "formatO": "共 $m$ 行，每行 $4$ 个整数。第 $i$ 行的 $4$ 个整数依次表示编号为 $i$ 的物品作 为 $A,B,C,D$ 物品分别出现的次数。\n\n保证标准输出中的每个数都不会超过 $10^9$。每行相邻的两个数之间用恰好一个空格隔开。\n",
+      "hint": "【样例解释 $1$】\n\n共有 $5$ 个魔法阵，分别为：\n\n- 物品 $1,3,7,6$，其魔法值分别为 $1,7,26,29$；\n- 物品 $1,5,2,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $1,5,7,4$，其魔法值分别为 $1,5,26,28$；\n- 物品 $1,5,8,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $5,3,4,6$，其魔法值分别为 $5,7,28,29$。\n\n以物品 $5$ 为例，它作为 $A$ 物品出现了 $1$ 次，作为 $B$ 物品出现了 $3$ 次，没有作为 $C$ 物品或者 $D$ 物品出现，所以这一行输出的四个数依次为 $1,3,0,0$。\n\n此外，如果我们将输出看作一个 $m$ 行 $4$ 列的矩阵，那么每一列上的 $m$ 个数之和都应等于魔法阵的总数。所以，如果你的输出不满足这个性质，那么这个输出一定不正确。你可以通过这个性质在一定程度上检查你的输出的正确性。\n\n【数据规模】\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/nozwrvut.png)",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 普及组] 魔法阵",
+      "background": "NOIP2016 普及组 T4",
+      "description": "六十年一次的魔法战争就要开始了，大魔法师准备从附近的魔法场中汲取魔法能量。\n\n大魔法师有 $m$ 个魔法物品，编号分别为 $1,2,\\ldots,m$。每个物品具有一个魔法值，我们用 $X_i$ 表示编号为 $i$ 的物品的魔法值。每个魔法值 $X_i$ 是不超过 $n$ 的正整数，可能有多个物品的魔法值相同。\n\n大魔法师认为，当且仅当四个编号为 $a,b,c,d$ 的魔法物品满足 $X_a<X_b<X_c<X_d,X_b-X_a=2(X_d-X_c)$，并且 $X_b-X_a<(X_c-X_b)/3$ 时，这四个魔法物品形成了一个魔法阵，他称这四个魔法物品分别为这个魔法阵的 $A$ 物品，$B$ 物品，$C$ 物品，$D$ 物品。\n\n现在，大魔法师想要知道，对于每个魔法物品，作为某个魔法阵的 $A$ 物品出现的次数，作为 $B$ 物品的次数，作为 $C$ 物品的次数，和作为 $D$ 物品的次数。",
+      "formatI": "第一行包含两个空格隔开的正整数 $n,m$。\n\n接下来 $m$ 行，每行一个正整数，第 $i+1$ 行的正整数表示 $X_i$，即编号为 $i$ 的物品的魔法值。\n\n保证 $1 \\le n \\le 15000$，$1 \\le m \\le 40000$，$1 \\le X_i \\le n$。每个 $X_i$ 是分别在合法范围内等概率随机生成的。",
+      "formatO": "共 $m$ 行，每行 $4$ 个整数。第 $i$ 行的 $4$ 个整数依次表示编号为 $i$ 的物品作 为 $A,B,C,D$ 物品分别出现的次数。\n\n保证标准输出中的每个数都不会超过 $10^9$。每行相邻的两个数之间用恰好一个空格隔开。\n",
+      "hint": "【样例解释 $1$】\n\n共有 $5$ 个魔法阵，分别为：\n\n- 物品 $1,3,7,6$，其魔法值分别为 $1,7,26,29$；\n- 物品 $1,5,2,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $1,5,7,4$，其魔法值分别为 $1,5,26,28$；\n- 物品 $1,5,8,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $5,3,4,6$，其魔法值分别为 $5,7,28,29$。\n\n以物品 $5$ 为例，它作为 $A$ 物品出现了 $1$ 次，作为 $B$ 物品出现了 $3$ 次，没有作为 $C$ 物品或者 $D$ 物品出现，所以这一行输出的四个数依次为 $1,3,0,0$。\n\n此外，如果我们将输出看作一个 $m$ 行 $4$ 列的矩阵，那么每一列上的 $m$ 个数之和都应等于魔法阵的总数。所以，如果你的输出不满足这个性质，那么这个输出一定不正确。你可以通过这个性质在一定程度上检查你的输出的正确性。\n\n【数据规模】\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/nozwrvut.png)",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "30 8\n1\n24\n7\n28\n5\n29\n26\n24",
+        "4 0 0 0\n0 0 1 0\n0 2 0 0\n0 0 1 1\n1 3 0 0\n0 0 0 2\n0 0 2 2\n0 0 1 0"
+      ],
+      [
+        "15 15\n1 \n2 \n3 \n4 \n5\n6 \n7 \n8 \n9\n10\n11\n12\n13\n14\n15",
+        "5 0 0 0\n4 0 0 0\n3 5 0 0\n2 4 0 0\n1 3 0 0\n0 2 0 0\n0 1 0 0\n0 0 0 0\n0 0 0 0\n0 0 1 0\n0 0 2 1\n0 0 3 2\n0 0 4 3\n0 0 5 4\n0 0 0 5"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Junior] Magic Formation",
+      "background": "NOIP 2016 Junior T4.",
+      "description": "The once-in-60-years magic war is about to begin, and the grand mage is preparing to draw magic energy from nearby magic fields.\n\nThe grand mage has $m$ magic items, numbered $1, 2, \\ldots, m$. Each item has a magic value, denoted $X_i$ for the item with index $i$. Each magic value $X_i$ is a positive integer not exceeding $n$, and multiple items may share the same magic value.\n\nThe grand mage believes that a set of four items with indices $a, b, c, d$ forms a magic formation if and only if they satisfy $X_a<X_b<X_c<X_d,X_b-X_a=2(X_d-X_c)$, and $X_b-X_a<(X_c-X_b)/3$. He calls these four items the $A$ item, $B$ item, $C$ item, and $D$ item of that magic formation, respectively.\n\nNow, the grand mage wants to know, for each magic item, how many times it appears as the $A$ item in some magic formation, as the $B$ item, as the $C$ item, and as the $D$ item.",
+      "formatI": "The first line contains two positive integers $n, m$ separated by a space.\n\nThen follow $m$ lines, each containing one positive integer. The integer on line $i+1$ is $X_i$, the magic value of the item with index $i$.\n\nIt is guaranteed that $1 \\le n \\le 15000$, $1 \\le m \\le 40000$, $1 \\le X_i \\le n$. Each $X_i$ is independently and uniformly generated within the valid range.",
+      "formatO": "Output $m$ lines, each containing $4$ integers. The $i$-th line contains $4$ integers, which are the counts of item $i$ appearing as the $A$, $B$, $C$, and $D$ items, respectively.\n\nIt is guaranteed that every number in the standard output does not exceed $10^9$. There must be exactly one space between any two adjacent numbers on the same line.",
+      "hint": "[Sample Explanation $1$]\n\nThere are $5$ magic formations in total, namely:\n\n- Items $1,3,7,6$, with magic values $1,7,26,29$;\n- Items $1,5,2,7$, with magic values $1,5,24,26$;\n- Items $1,5,7,4$, with magic values $1,5,26,28$;\n- Items $1,5,8,7$, with magic values $1,5,24,26$;\n- Items $5,3,4,6$, with magic values $5,7,28,29$.\n\nTake item $5$ as an example. It appears once as the $A$ item and $3$ times as the $B$ item. It does not appear as the $C$ or $D$ item. Therefore, the four numbers on that line are $1, 3, 0, 0$.\n\nIn addition, if we view the output as an $m$-by-$4$ matrix, then the sum of the $m$ numbers in each column should equal the total number of magic formations. Therefore, if your output does not satisfy this property, it must be incorrect. You can use this property to partially check the correctness of your output.\n\n[Constraints]\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/nozwrvut.png)\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 普及组] 魔法阵",
+      "background": "NOIP2016 普及组 T4",
+      "description": "六十年一次的魔法战争就要开始了，大魔法师准备从附近的魔法场中汲取魔法能量。\n\n大魔法师有 $m$ 个魔法物品，编号分别为 $1,2,\\ldots,m$。每个物品具有一个魔法值，我们用 $X_i$ 表示编号为 $i$ 的物品的魔法值。每个魔法值 $X_i$ 是不超过 $n$ 的正整数，可能有多个物品的魔法值相同。\n\n大魔法师认为，当且仅当四个编号为 $a,b,c,d$ 的魔法物品满足 $X_a<X_b<X_c<X_d,X_b-X_a=2(X_d-X_c)$，并且 $X_b-X_a<(X_c-X_b)/3$ 时，这四个魔法物品形成了一个魔法阵，他称这四个魔法物品分别为这个魔法阵的 $A$ 物品，$B$ 物品，$C$ 物品，$D$ 物品。\n\n现在，大魔法师想要知道，对于每个魔法物品，作为某个魔法阵的 $A$ 物品出现的次数，作为 $B$ 物品的次数，作为 $C$ 物品的次数，和作为 $D$ 物品的次数。",
+      "formatI": "第一行包含两个空格隔开的正整数 $n,m$。\n\n接下来 $m$ 行，每行一个正整数，第 $i+1$ 行的正整数表示 $X_i$，即编号为 $i$ 的物品的魔法值。\n\n保证 $1 \\le n \\le 15000$，$1 \\le m \\le 40000$，$1 \\le X_i \\le n$。每个 $X_i$ 是分别在合法范围内等概率随机生成的。",
+      "formatO": "共 $m$ 行，每行 $4$ 个整数。第 $i$ 行的 $4$ 个整数依次表示编号为 $i$ 的物品作 为 $A,B,C,D$ 物品分别出现的次数。\n\n保证标准输出中的每个数都不会超过 $10^9$。每行相邻的两个数之间用恰好一个空格隔开。\n",
+      "hint": "【样例解释 $1$】\n\n共有 $5$ 个魔法阵，分别为：\n\n- 物品 $1,3,7,6$，其魔法值分别为 $1,7,26,29$；\n- 物品 $1,5,2,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $1,5,7,4$，其魔法值分别为 $1,5,26,28$；\n- 物品 $1,5,8,7$，其魔法值分别为 $1,5,24,26$；\n- 物品 $5,3,4,6$，其魔法值分别为 $5,7,28,29$。\n\n以物品 $5$ 为例，它作为 $A$ 物品出现了 $1$ 次，作为 $B$ 物品出现了 $3$ 次，没有作为 $C$ 物品或者 $D$ 物品出现，所以这一行输出的四个数依次为 $1,3,0,0$。\n\n此外，如果我们将输出看作一个 $m$ 行 $4$ 列的矩阵，那么每一列上的 $m$ 个数之和都应等于魔法阵的总数。所以，如果你的输出不满足这个性质，那么这个输出一定不正确。你可以通过这个性质在一定程度上检查你的输出的正确性。\n\n【数据规模】\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/nozwrvut.png)",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1265,
+    "startTime": 1479384000,
+    "endTime": 1480054800,
+    "name": "NOIP2016普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P2258",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 子矩阵",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2671",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 求和",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2672",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 推销员",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3956",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 棋盘",
+      "difficulty": 4
+    },
+    {
+      "pid": "P3957",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 跳房子",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P2119 [NOIP 2016 普及组] 魔法阵",
+    "type": 2,
+    "slug": "P2119",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1340449,
+      "title": "90分极限卡s！！！！",
+      "author": {
+        "uid": 2198124,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2198124.png",
+        "name": "Aizhiaozhe343",
+        "slogan": "一路往下走，走不通回头，换条路再走，直到...无路可走。。。(深搜)",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785507538
+    },
+    {
+      "id": 1245241,
+      "title": "大佬大佬，75分，有回必关",
+      "author": {
+        "uid": 1862378,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1862378.png",
+        "name": "Sunqitai",
+        "slogan": "Nothing(无)",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/clfiab3r.png"
+      },
+      "time": 1770530320
+    },
+    {
+      "id": 1244277,
+      "title": "10pts 玄关",
+      "author": {
+        "uid": 1328264,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1328264.png",
+        "name": "wjy7777",
+        "slogan": "代词使用他 | | 6年级最菜蒟蒻 | | B站、AT、CF均同名 | | 回关见",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/gefbokhl.png"
+      },
+      "time": 1770435495
+    },
+    {
+      "id": 1234387,
+      "title": "真没想到，unordered_map的常数这么大",
+      "author": {
+        "uid": 38886,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/38886.png",
+        "name": "越学越掂",
+        "slogan": "My life is in my hands, not in the god's.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/rxb8nbv8.png"
+      },
+      "time": 1769145483
+    },
+    {
+      "id": 1117602,
+      "title": "为什么本题的数组要开大才能过",
+      "author": {
+        "uid": 1211668,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1211668.png",
+        "name": "wmy_ovo",
+        "slogan": "move at your own pace",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/ybqk5nl5.png"
+      },
+      "time": 1753666847
+    },
+    {
+      "id": 1075450,
+      "title": "5分求调",
+      "author": {
+        "uid": 1453856,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1453856.png",
+        "name": "jixinmingtian",
+        "slogan": "唯物主义",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1745399518
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

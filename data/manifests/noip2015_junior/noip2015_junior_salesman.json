@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "noip2015_junior",
+  "problem_id": "noip2015_junior_salesman",
+  "title_zh": "推销员",
+  "day": 1,
+  "contest": "NOIP",
+  "year": 2015,
+  "group": "junior",
+  "task_number": 4,
+  "luogu_id": "P2672",
+  "luogu_difficulty": "提高",
+  "difficulty_checked_at": "2026-09-05T05:09:53.342718+00:00",
+  "data_status": "official",
+  "test_count": 10,
+  "judge_note": null,
+  "statement_relative_path": "noip/2015/junior/04_salesman/statement.md",
+  "resource_limits": {
+    "time_ms": 1000,
+    "memory_mb": 128,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "salesman",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 10.0
+  }
+}

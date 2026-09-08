@@ -1,0 +1,342 @@
+{
+  "problem": {
+    "pid": "P7913",
+    "type": "P",
+    "name": "[CSP-S 2021] 廊桥分配",
+    "difficulty": 4,
+    "tags": [
+      1,
+      7,
+      58,
+      108,
+      113,
+      148,
+      254,
+      288,
+      342
+    ],
+    "totalSubmit": 98914,
+    "totalAccepted": 23613,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[CSP-S 2021] 廊桥分配",
+      "background": "",
+      "description": "当一架飞机抵达机场时，可以停靠在航站楼旁的廊桥，也可以停靠在位于机场边缘的远机位。乘客一般更期待停靠在廊桥，因为这样省去了坐摆渡车前往航站楼的周折。然而，因为廊桥的数量有限，所以这样的愿望不总是能实现。\n\n机场分为国内区和国际区，国内航班飞机只能停靠在国内区，国际航班飞机只能停靠在国际区。一部分廊桥属于国内区，其余的廊桥属于国际区。\n\nL 市新建了一座机场，一共有 $n$ 个廊桥。该机场决定，廊桥的使用遵循“先到先得”的原则，即每架飞机抵达后，如果相应的区（国内/国际）还有空闲的廊桥，就停靠在廊桥，否则停靠在远机位（假设远机位的数量充足）。该机场只有一条跑道，因此不存在两架飞机同时抵达的情况。\n\n现给定未来一段时间飞机的抵达、离开时刻，请你负责将 $n$ 个廊桥分配给国内区和国际区，使停靠廊桥的飞机数量最多。",
+      "formatI": "输入的第一行，包含三个正整数 $n, m_1, m_2$，分别表示廊桥的个数、国内航班飞机的数量、国际航班飞机的数量。\n\n接下来 $m_1$ 行，是国内航班的信息，第 $i$ 行包含两个正整数 $a_{1, i}, b_{1, i}$，分别表示一架国内航班飞机的抵达、离开时刻。\n\n接下来 $m_2$ 行，是国际航班的信息，第 $i$ 行包含两个正整数 $a_{2, i}, b_{2, i}$，分别表示一架国际航班飞机的抵达、离开时刻。\n\n每行的多个整数由空格分隔。",
+      "formatO": "输出一个正整数，表示能够停靠廊桥的飞机数量的最大值。",
+      "hint": "**【样例解释 #1】**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tdg5pa5a.png)\n\n在图中，我们用抵达、离开时刻的数对来代表一架飞机，如 $(1, 5)$ 表示时刻 $1$ 抵达、时刻 $5$ 离开的飞机；用 $\\surd$ 表示该飞机停靠在廊桥，用 $\\times$ 表示该飞机停靠在远机位。\n\n我们以表格中阴影部分的计算方式为例，说明该表的含义。在这一部分中，国际区有 $2$ 个廊桥，$4$ 架国际航班飞机依如下次序抵达：\n\n1. 首先 $(2, 11)$ 在时刻 $2$ 抵达，停靠在廊桥。\n2. 然后 $(4, 15)$ 在时刻 $4$ 抵达，停靠在另一个廊桥。\n3. 接着 $(7, 17)$ 在时刻 $7$ 抵达，这时前 $2$ 架飞机都还没离开、都还占用着廊桥，而国际区只有 $2$ 个廊桥，所以只能停靠远机位。\n4. 最后 $(12, 16)$ 在时刻 $12$ 抵达，这时 $(2, 11)$ 这架飞机已经离开，所以有 $1$ 个空闲的廊桥，该飞机可以停靠在廊桥。\n\n根据表格中的计算结果，当国内区分配 $2$ 个廊桥、国际区分配 $1$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $7$ 架。\n\n**【样例解释 #2】**\n\n当国内区分配 $2$ 个廊桥、国际区分配 $0$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $4$ 架，即所有的国内航班飞机都能停靠在廊桥。\n\n需要注意的是，本题中廊桥的使用遵循“先到先得”的原则，如果国际区只有 $1$ 个廊桥，那么将被飞机 $(1, 19)$ 占用，而不会被 $(3, 4)$、$(5, 6)$、$(7, 8)$、$(9, 10)$ 这 $4$ 架飞机先后使用。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n \\le 100$，$m_1 + m_2 \\le 100$。  \n对于 $40 \\%$ 的数据，$n \\le 5000$，$m_1 + m_2 \\le 5000$。  \n对于 $100 \\%$ 的数据，$1 \\le n \\le {10}^5$，$m_1, m_2 \\ge 1$，$m_1 + m_2 \\le {10}^5$，所有 $a_{1, i}, b_{1, i}, a_{2, i}, b_{2, i}$ 为数值不超过 ${10}^8$ 的互不相同的正整数，且保证对于每个 $i \\in [1, m_1]$，都有 $a_{1, i} < b_{1, i}$，以及对于每个 $i \\in [1, m_2]$，都有 $a_{2, i} < b_{2, i}$。\n\n【感谢 hack 数据提供】\n\n- [xingxuxin](/user/393378)。\n- [cyslngsul](/user/126765)。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2021] 廊桥分配",
+      "background": "",
+      "description": "当一架飞机抵达机场时，可以停靠在航站楼旁的廊桥，也可以停靠在位于机场边缘的远机位。乘客一般更期待停靠在廊桥，因为这样省去了坐摆渡车前往航站楼的周折。然而，因为廊桥的数量有限，所以这样的愿望不总是能实现。\n\n机场分为国内区和国际区，国内航班飞机只能停靠在国内区，国际航班飞机只能停靠在国际区。一部分廊桥属于国内区，其余的廊桥属于国际区。\n\nL 市新建了一座机场，一共有 $n$ 个廊桥。该机场决定，廊桥的使用遵循“先到先得”的原则，即每架飞机抵达后，如果相应的区（国内/国际）还有空闲的廊桥，就停靠在廊桥，否则停靠在远机位（假设远机位的数量充足）。该机场只有一条跑道，因此不存在两架飞机同时抵达的情况。\n\n现给定未来一段时间飞机的抵达、离开时刻，请你负责将 $n$ 个廊桥分配给国内区和国际区，使停靠廊桥的飞机数量最多。",
+      "formatI": "输入的第一行，包含三个正整数 $n, m_1, m_2$，分别表示廊桥的个数、国内航班飞机的数量、国际航班飞机的数量。\n\n接下来 $m_1$ 行，是国内航班的信息，第 $i$ 行包含两个正整数 $a_{1, i}, b_{1, i}$，分别表示一架国内航班飞机的抵达、离开时刻。\n\n接下来 $m_2$ 行，是国际航班的信息，第 $i$ 行包含两个正整数 $a_{2, i}, b_{2, i}$，分别表示一架国际航班飞机的抵达、离开时刻。\n\n每行的多个整数由空格分隔。",
+      "formatO": "输出一个正整数，表示能够停靠廊桥的飞机数量的最大值。",
+      "hint": "**【样例解释 #1】**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tdg5pa5a.png)\n\n在图中，我们用抵达、离开时刻的数对来代表一架飞机，如 $(1, 5)$ 表示时刻 $1$ 抵达、时刻 $5$ 离开的飞机；用 $\\surd$ 表示该飞机停靠在廊桥，用 $\\times$ 表示该飞机停靠在远机位。\n\n我们以表格中阴影部分的计算方式为例，说明该表的含义。在这一部分中，国际区有 $2$ 个廊桥，$4$ 架国际航班飞机依如下次序抵达：\n\n1. 首先 $(2, 11)$ 在时刻 $2$ 抵达，停靠在廊桥。\n2. 然后 $(4, 15)$ 在时刻 $4$ 抵达，停靠在另一个廊桥。\n3. 接着 $(7, 17)$ 在时刻 $7$ 抵达，这时前 $2$ 架飞机都还没离开、都还占用着廊桥，而国际区只有 $2$ 个廊桥，所以只能停靠远机位。\n4. 最后 $(12, 16)$ 在时刻 $12$ 抵达，这时 $(2, 11)$ 这架飞机已经离开，所以有 $1$ 个空闲的廊桥，该飞机可以停靠在廊桥。\n\n根据表格中的计算结果，当国内区分配 $2$ 个廊桥、国际区分配 $1$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $7$ 架。\n\n**【样例解释 #2】**\n\n当国内区分配 $2$ 个廊桥、国际区分配 $0$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $4$ 架，即所有的国内航班飞机都能停靠在廊桥。\n\n需要注意的是，本题中廊桥的使用遵循“先到先得”的原则，如果国际区只有 $1$ 个廊桥，那么将被飞机 $(1, 19)$ 占用，而不会被 $(3, 4)$、$(5, 6)$、$(7, 8)$、$(9, 10)$ 这 $4$ 架飞机先后使用。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n \\le 100$，$m_1 + m_2 \\le 100$。  \n对于 $40 \\%$ 的数据，$n \\le 5000$，$m_1 + m_2 \\le 5000$。  \n对于 $100 \\%$ 的数据，$1 \\le n \\le {10}^5$，$m_1, m_2 \\ge 1$，$m_1 + m_2 \\le {10}^5$，所有 $a_{1, i}, b_{1, i}, a_{2, i}, b_{2, i}$ 为数值不超过 ${10}^8$ 的互不相同的正整数，且保证对于每个 $i \\in [1, m_1]$，都有 $a_{1, i} < b_{1, i}$，以及对于每个 $i \\in [1, m_2]$，都有 $a_{2, i} < b_{2, i}$。\n\n【感谢 hack 数据提供】\n\n- [xingxuxin](/user/393378)。\n- [cyslngsul](/user/126765)。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "0m0c9yt7",
+        "filename": "airport.zip",
+        "size": 1935,
+        "uploadTime": 1634990294,
+        "downloadLink": "/fe/api/problem/downloadAttachment/0m0c9yt7"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 5 4\n1 5\n3 8\n6 10\n9 14\n13 18\n2 11\n4 15\n7 17\n12 16\n",
+        "7\n"
+      ],
+      [
+        "2 4 6\n20 30\n40 50\n21 22\n41 42\n1 19\n2 18\n3 4\n5 6\n7 8\n9 10\n",
+        "4\n"
+      ],
+      [
+        "见附件中的 airport/airport3.in",
+        "见附件中的 airport/airport3.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2021] Jet Bridge Allocation.",
+      "background": "",
+      "description": "When an airplane arrives at an airport, it can park at a jet bridge next to the terminal, or at a remote stand on the edge of the airport. Passengers usually prefer parking at a jet bridge, because it saves them the trouble of taking a shuttle bus to the terminal. However, since the number of jet bridges is limited, this wish cannot always be satisfied.\n\nThe airport is divided into a domestic area and an international area. Domestic flights can only park in the domestic area, and international flights can only park in the international area. Some jet bridges belong to the domestic area, and the remaining jet bridges belong to the international area.\n\nCity $L$ has built a new airport with a total of $n$ jet bridges. The airport decides that jet bridge usage follows the “first come, first served” rule: after each airplane arrives, if there is an available jet bridge in the corresponding area (domestic/international), it parks at a jet bridge; otherwise, it parks at a remote stand (assume the number of remote stands is sufficient). The airport has only one runway, so there will not be two airplanes arriving at the same time.\n\nYou are given the arrival and departure times of airplanes over a future period. Please allocate the $n$ jet bridges between the domestic area and the international area so that the number of airplanes that can park at jet bridges is maximized.",
+      "formatI": "The first line contains three positive integers $n, m_1, m_2$, representing the number of jet bridges, the number of domestic flights, and the number of international flights.\n\nThe next $m_1$ lines contain information about domestic flights. The $i$-th line contains two positive integers $a_{1, i}, b_{1, i}$, representing the arrival and departure times of a domestic flight.\n\nThe next $m_2$ lines contain information about international flights. The $i$-th line contains two positive integers $a_{2, i}, b_{2, i}$, representing the arrival and departure times of an international flight.\n\nIntegers on the same line are separated by spaces.",
+      "formatO": "Output one positive integer, the maximum possible number of airplanes that can park at jet bridges.",
+      "hint": "**[Sample Explanation #1]**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tdg5pa5a.png)\n\nIn the figure, we use an ordered pair of arrival and departure times to represent a plane. For example, $(1, 5)$ means a plane arrives at time $1$ and departs at time $5$. We use $\\surd$ to indicate that the plane parks at a jet bridge, and $\\times$ to indicate that the plane parks at a remote stand.\n\nWe take the shaded part of the table as an example to explain the meaning of the table. In this part, the international area has $2$ jet bridges, and $4$ international planes arrive in the following order:\n\n1. First, $(2, 11)$ arrives at time $2$ and parks at a jet bridge.\n2. Then, $(4, 15)$ arrives at time $4$ and parks at the other jet bridge.\n3. Next, $(7, 17)$ arrives at time $7$. At this time, the first $2$ planes have not departed and are still occupying the jet bridges. Since the international area has only $2$ jet bridges, it can only park at a remote stand.\n4. Finally, $(12, 16)$ arrives at time $12$. At this time, the plane $(2, 11)$ has already departed, so there is $1$ available jet bridge, and this plane can park at a jet bridge.\n\nAccording to the results in the table, when $2$ jet bridges are allocated to the domestic area and $1$ jet bridge is allocated to the international area, the number of planes that can park at jet bridges is maximized, with a total of $7$ planes.\n\n**[Sample Explanation #2]**\n\nWhen $2$ jet bridges are allocated to the domestic area and $0$ jet bridges are allocated to the international area, the number of planes that can park at jet bridges is maximized, with a total of $4$ planes, i.e. all domestic planes can park at jet bridges.\n\nNote that in this problem, jet bridge usage follows the “first come, first served” rule. If the international area has only $1$ jet bridge, it will be occupied by the plane $(1, 19)$, and it will not be used in turn by the $4$ planes $(3, 4)$, $(5, 6)$, $(7, 8)$, $(9, 10)$.\n\n**[Constraints]**\n\nFor $20\\%$ of the testdata, $n \\le 100$, $m_1 + m_2 \\le 100$.  \nFor $40\\%$ of the testdata, $n \\le 5000$, $m_1 + m_2 \\le 5000$.  \nFor $100\\%$ of the testdata, $1 \\le n \\le {10}^5$, $m_1, m_2 \\ge 1$, $m_1 + m_2 \\le {10}^5$. All $a_{1, i}, b_{1, i}, a_{2, i}, b_{2, i}$ are distinct positive integers with values not exceeding ${10}^8$. It is guaranteed that for each $i \\in [1, m_1]$, $a_{1, i} < b_{1, i}$, and for each $i \\in [1, m_2]$, $a_{2, i} < b_{2, i}$.\n\n[Thanks to the providers of hack data]\n\n- [xingxuxin](/user/393378)。  \n- [cyslngsul](/user/126765)。\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2021] 廊桥分配",
+      "background": "",
+      "description": "当一架飞机抵达机场时，可以停靠在航站楼旁的廊桥，也可以停靠在位于机场边缘的远机位。乘客一般更期待停靠在廊桥，因为这样省去了坐摆渡车前往航站楼的周折。然而，因为廊桥的数量有限，所以这样的愿望不总是能实现。\n\n机场分为国内区和国际区，国内航班飞机只能停靠在国内区，国际航班飞机只能停靠在国际区。一部分廊桥属于国内区，其余的廊桥属于国际区。\n\nL 市新建了一座机场，一共有 $n$ 个廊桥。该机场决定，廊桥的使用遵循“先到先得”的原则，即每架飞机抵达后，如果相应的区（国内/国际）还有空闲的廊桥，就停靠在廊桥，否则停靠在远机位（假设远机位的数量充足）。该机场只有一条跑道，因此不存在两架飞机同时抵达的情况。\n\n现给定未来一段时间飞机的抵达、离开时刻，请你负责将 $n$ 个廊桥分配给国内区和国际区，使停靠廊桥的飞机数量最多。",
+      "formatI": "输入的第一行，包含三个正整数 $n, m_1, m_2$，分别表示廊桥的个数、国内航班飞机的数量、国际航班飞机的数量。\n\n接下来 $m_1$ 行，是国内航班的信息，第 $i$ 行包含两个正整数 $a_{1, i}, b_{1, i}$，分别表示一架国内航班飞机的抵达、离开时刻。\n\n接下来 $m_2$ 行，是国际航班的信息，第 $i$ 行包含两个正整数 $a_{2, i}, b_{2, i}$，分别表示一架国际航班飞机的抵达、离开时刻。\n\n每行的多个整数由空格分隔。",
+      "formatO": "输出一个正整数，表示能够停靠廊桥的飞机数量的最大值。",
+      "hint": "**【样例解释 #1】**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tdg5pa5a.png)\n\n在图中，我们用抵达、离开时刻的数对来代表一架飞机，如 $(1, 5)$ 表示时刻 $1$ 抵达、时刻 $5$ 离开的飞机；用 $\\surd$ 表示该飞机停靠在廊桥，用 $\\times$ 表示该飞机停靠在远机位。\n\n我们以表格中阴影部分的计算方式为例，说明该表的含义。在这一部分中，国际区有 $2$ 个廊桥，$4$ 架国际航班飞机依如下次序抵达：\n\n1. 首先 $(2, 11)$ 在时刻 $2$ 抵达，停靠在廊桥。\n2. 然后 $(4, 15)$ 在时刻 $4$ 抵达，停靠在另一个廊桥。\n3. 接着 $(7, 17)$ 在时刻 $7$ 抵达，这时前 $2$ 架飞机都还没离开、都还占用着廊桥，而国际区只有 $2$ 个廊桥，所以只能停靠远机位。\n4. 最后 $(12, 16)$ 在时刻 $12$ 抵达，这时 $(2, 11)$ 这架飞机已经离开，所以有 $1$ 个空闲的廊桥，该飞机可以停靠在廊桥。\n\n根据表格中的计算结果，当国内区分配 $2$ 个廊桥、国际区分配 $1$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $7$ 架。\n\n**【样例解释 #2】**\n\n当国内区分配 $2$ 个廊桥、国际区分配 $0$ 个廊桥时，停靠廊桥的飞机数量最多，一共 $4$ 架，即所有的国内航班飞机都能停靠在廊桥。\n\n需要注意的是，本题中廊桥的使用遵循“先到先得”的原则，如果国际区只有 $1$ 个廊桥，那么将被飞机 $(1, 19)$ 占用，而不会被 $(3, 4)$、$(5, 6)$、$(7, 8)$、$(9, 10)$ 这 $4$ 架飞机先后使用。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n \\le 100$，$m_1 + m_2 \\le 100$。  \n对于 $40 \\%$ 的数据，$n \\le 5000$，$m_1 + m_2 \\le 5000$。  \n对于 $100 \\%$ 的数据，$1 \\le n \\le {10}^5$，$m_1, m_2 \\ge 1$，$m_1 + m_2 \\le {10}^5$，所有 $a_{1, i}, b_{1, i}, a_{2, i}, b_{2, i}$ 为数值不超过 ${10}^8$ 的互不相同的正整数，且保证对于每个 $i \\in [1, m_1]$，都有 $a_{1, i} < b_{1, i}$，以及对于每个 $i \\in [1, m_2]$，都有 $a_{2, i} < b_{2, i}$。\n\n【感谢 hack 数据提供】\n\n- [xingxuxin](/user/393378)。\n- [cyslngsul](/user/126765)。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 55005,
+    "startTime": 1634992200,
+    "endTime": 1635337800,
+    "name": "CSP2021 S 组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7912",
+      "type": "P",
+      "name": "[CSP-J 2021] 小熊的果篮",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7909",
+      "type": "P",
+      "name": "[CSP-J 2021] 分糖果",
+      "difficulty": 2
+    },
+    {
+      "pid": "P7914",
+      "type": "P",
+      "name": "[CSP-S 2021] 括号序列",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7915",
+      "type": "P",
+      "name": "[CSP-S 2021] 回文",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7960",
+      "type": "P",
+      "name": "[NOIP2021] 报数",
+      "difficulty": 3
+    }
+  ],
+  "forum": {
+    "name": "P7913 [CSP-S 2021] 廊桥分配",
+    "type": 2,
+    "slug": "P7913",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368709,
+      "title": "#22TLE 求优化",
+      "author": {
+        "uid": 916767,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/916767.png",
+        "name": "Luogu_916767",
+        "slogan": "Florr.io",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788091528
+    },
+    {
+      "id": 1364919,
+      "title": "求调必关P7913",
+      "author": {
+        "uid": 890662,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/890662.png",
+        "name": "Jason_Teng",
+        "slogan": "一══┳┻━︻▄去.cn看内容",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/v1t6vyep.png"
+      },
+      "time": 1787711158
+    },
+    {
+      "id": 1360510,
+      "title": "95pts求条闭关",
+      "author": {
+        "uid": 1531075,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1531075.png",
+        "name": "queen_son",
+        "slogan": "queen_son",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787285362
+    },
+    {
+      "id": 1355219,
+      "title": "仅是后人",
+      "author": {
+        "uid": 1034420,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1034420.png",
+        "name": "__AKcepted",
+        "slogan": "不拿蓝钩不改签      壶关条件：https://www.luogu.me/paste/cw254tg4  宣团：https://www.luogu.com.cn/team/108942",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/9f8ufvp4.png"
+      },
+      "time": 1786863103
+    },
+    {
+      "id": 1354551,
+      "title": "数据除了hack好像有点水",
+      "author": {
+        "uid": 2046634,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2046634.png",
+        "name": "Green_ZXR",
+        "slogan": "这个家伙不懒哦 || CSP2026 RP++",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/c0xjjfsk.png"
+      },
+      "time": 1786788315
+    },
+    {
+      "id": 1346830,
+      "title": "45pts求条",
+      "author": {
+        "uid": 1717217,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1717217.png",
+        "name": "jiahui190511",
+        "slogan": "背负火影之名，我不能输",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/tyyhud3u.png"
+      },
+      "time": 1786113805
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

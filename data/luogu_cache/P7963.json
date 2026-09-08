@@ -1,0 +1,346 @@
+{
+  "problem": {
+    "pid": "P7963",
+    "type": "P",
+    "name": "[NOIP2021] 棋局",
+    "difficulty": 8,
+    "tags": [
+      47,
+      58,
+      83,
+      108,
+      379
+    ],
+    "totalSubmit": 9443,
+    "totalAccepted": 1485,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2021] 棋局",
+      "background": "在输了一晚上的麻将之后，小 z 和小 c 卸掉了手机上的所有牌类游戏。不过这怎么可能阻挡得了他们上课颓废的决心呢？现在他们的目光盯在了棋类游戏上，但他们两个除了天天下飞行棋以外，几乎所有棋类游戏都只懂个大概规则。\n\n“既然我们都会玩但只能玩一点点，不如我们自己搞个缝合怪出来吧！”\n\n于是，在他们的精心脑洞之下，一个融合了围棋、象棋与军棋的奇妙游戏诞生了……",
+      "description": "游戏在一张长 $n$ 行宽 $m$ 列的网格形棋盘上进行，棋子落在网格的交叉点上，我们不妨记左上角的交叉点的坐标为 $(1,1)$，右下角的交叉点坐标为 $(n,m)$。\n\n棋子分为黑白两色，对局双方各执一方棋子。\n\n每个棋子除了颜色以外还有等级，不妨设 $\\mathit{col}_i$ 为棋子 $i$ 的颜色，$\\mathit{lv}_i$ 为棋子 $i$ 的等级。另外，棋盘上的网格线共有 $4$ 种状态，对于第 $i$ 条网格线，设其状态为 $\\mathit{opt}_i$。\n\n轮到每方下棋时，他可以选择棋盘上的一个己方棋子沿网格线进行移动到另一个交叉点，称为走子。形式化定义走子的过程如下：选择一个坐标序列 $(x_0,y_0),(x_1,y_1),\\ldots,(x_k,y_k)$，其中 $k$ 是任意选定的正整数，$(x_0,y_0)$ 是棋子初始的位置，$(x_k,y_k)$ 是棋子最终走到的位置，需要满足：\n\n- 对于任意 $i=0,1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 和 $(x_{i+1},y_{i+1})$ 之间必须有网格线直接相连，也就是说**走子必须沿着网格线走**；\n- 对于任意 $i\\not=j$，必须有 $(x_i,y_i)\\ne(x_j,y_j)$，也就是说走子过程中不能经过重复位置，特别地 $(x_0,y_0)\\ne(x_k,y_k)$，也就是说**不能原地不动（或走回原地）**；\n- 对于任意 $i=1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 上必须没有棋子，也就是说**走子时不能越过已有的棋子**；\n- 若 $(x_k,y_k)$ 上没有棋子，称为普通走子，否则称为吃子。在吃子过程中，设正在走的棋子颜色为 $\\mathit{col}_1$，等级为 $\\mathit{lv}_1$，被吃的棋子颜色为 $\\mathit{col}_2$，等级为 $\\mathit{lv}_2$，则必须满足 $\\mathit{col}_1\\ne\\mathit{col}_2,\\mathit{lv}_1\\geq\\mathit{lv}_2$，换句话说**只能吃与自己颜色不同，且等级不高于自己等级的棋子**。\n\n需要注意的是，由上述定义可以得出，不允许棋子在吃子后继续向前走。\n\n网格线的状态含义如下所述：\n\n- 如果 $\\mathit{opt}_i=0$，代表此路不通，走子时不能经过这条网格线；\n- 如果 $\\mathit{opt}_i=1$，代表这条网格线是一条“普通道路”，每次走子时棋子最多只能经过 $1$ 条普通道路。\n- 如果 $\\mathit{opt}_i=2$，代表这条网格线是一条“直行道路”，每次走子时棋子可以经过任意条直行道路，但只能**一直沿横向或一直沿纵向走，不能转弯**。如沿直行道路从 $(1,1)$ 经过 $(1,2)$ 走到 $(1,3)$ 是可以的，但是从 $(1,1)$ 经过 $(1,2)$ 走到 $(2,2)$ 不行。\n- 如果 $\\mathit{opt}_i=3$，代表这条网格线是一条“互通道路”，每次走子时棋子可以经过任意条互通道路，且中途可任意转弯。\n\n同时规定在一次走子过程中，**棋子经过的网格线的状态必须全部相同**，比如从 $(1,1)$ 经过直行道路走到 $(1,2)$ 再经过互通道路走到 $(1,3)$ 是不允许的。\n\n至于如何判断胜负等其它细节，与本题无关，故略去。\n\n小 z 和小 c 开发出这款棋类游戏后，为了提升水平，想了一个训练的策略：一开始棋盘是空的，然后小 c 会每次往棋盘的某个空交叉点上放一枚棋子，小 z 需要快速计算出：若选择这枚新放上的棋子进行一次走子，棋盘上一共有多少个位置是能被走到的？注意：因为这只是思维训练，他们并不会真的走这枚棋子。\n\n可怜的小 z 发现他的计算力不足以算出这个问题，只好向你求助。",
+      "formatI": "每个测试点由多组数据组成。\n\n第一行：一个正整数 $T$ 表示数据组数。\n\n对于每组数据：\n\n第一行：三个正整数 $n, m, q$，分别表示棋盘的行数、列数和游戏的轮数。\n\n接下来 $n$ 行，每行为一个长 $m - 1$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i, j + 1)$ 的网格线状态。 \n\n接下来 $n - 1$ 行，每行为一个长 $m$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i + 1, j)$ 的网格线状态。\n\n接下来 $q$ 行，每行 $4$ 个非负整数 $\\mathit{col}_i , \\mathit{lv}_i , x_i , y_i$，表示在第 $i$ 轮有一枚颜色为 $\\mathit{col}_i$，等级为 $\\mathit{lv}_i$ 的棋子放在了交叉点 $(x_i , y_i)$ 上。其中 $\\mathit{col}_i = 0$ 表示黑子，$\\mathit{col}_i = 1$ 表示白子。保证之前交叉点 $(x_i , y_i)$ 上没有棋子。",
+      "formatO": "对于每组数据输出 $q$ 行，每行一个非负整数，表示第 $i$ 枚棋子放置后能走到的交叉点数量。",
+      "hint": "**【样例解释 #1】**\n\n放置棋子 $1$ 后，它能走到的位置为 $(2, 1),(2, 2),(3, 2),(3, 3)$。\n\n放置棋子 $2$ 后，它能走到的位置为 $(2, 2),(2, 3),(3, 1)$。\n\n放置棋子 $3$ 后，它能走到的位置为 $(1, 1),(1, 3),(2, 2)$。\n\n放置棋子 $4$ 后，它能走到的位置为 $(2, 2),(3, 1),(3, 3)$。\n\n放置棋子 $5$ 后，它能走到的位置为 $(2, 3),(3, 2)$。\n\n\n**【数据范围】**\n\n| 测试点编号 | $n \\times m \\le$ | $q \\le$ | 特殊性质 |\n|:-:|:-:|:-:|:-:|\n| $1 \\sim 2$ | $100$ | $50$ | 无 |\n| $3 \\sim 6$ | $5000$ | $2000$ | 无 |\n| $7 \\sim 8$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路”与“互通道路” |\n| $9 \\sim 11$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“互通道路” |\n| $12 \\sim 14$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路” |\n| $15 \\sim 16$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = i$ |\n| $17 \\sim 18$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = q - i + 1$ |\n| $19 \\sim 21$ | $2 \\times {10}^5$ | $2000$ | $n, m \\le 1000$ |\n| $22 \\sim 25$ | $2 \\times {10}^5$ | ${10}^5$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le T \\le 5$，$2 \\le n, m \\le {10}^5$，$4 \\le n \\times m \\le 2 \\times {10}^5$，$1 \\le q \\le \\min \\{ {10}^5, n \\times m \\}$，$1 \\le \\mathit{lv}_i \\le q$，$1 \\le x_i \\le n$，$1 \\le y_i \\le m$，$\\mathit{col}_i \\in \\{ 0, 1 \\}$。\n\n注：由于本题输入输出规模较大，建议使用较为快速的输入输出方式。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2021] 棋局",
+      "background": "在输了一晚上的麻将之后，小 z 和小 c 卸掉了手机上的所有牌类游戏。不过这怎么可能阻挡得了他们上课颓废的决心呢？现在他们的目光盯在了棋类游戏上，但他们两个除了天天下飞行棋以外，几乎所有棋类游戏都只懂个大概规则。\n\n“既然我们都会玩但只能玩一点点，不如我们自己搞个缝合怪出来吧！”\n\n于是，在他们的精心脑洞之下，一个融合了围棋、象棋与军棋的奇妙游戏诞生了……",
+      "description": "游戏在一张长 $n$ 行宽 $m$ 列的网格形棋盘上进行，棋子落在网格的交叉点上，我们不妨记左上角的交叉点的坐标为 $(1,1)$，右下角的交叉点坐标为 $(n,m)$。\n\n棋子分为黑白两色，对局双方各执一方棋子。\n\n每个棋子除了颜色以外还有等级，不妨设 $\\mathit{col}_i$ 为棋子 $i$ 的颜色，$\\mathit{lv}_i$ 为棋子 $i$ 的等级。另外，棋盘上的网格线共有 $4$ 种状态，对于第 $i$ 条网格线，设其状态为 $\\mathit{opt}_i$。\n\n轮到每方下棋时，他可以选择棋盘上的一个己方棋子沿网格线进行移动到另一个交叉点，称为走子。形式化定义走子的过程如下：选择一个坐标序列 $(x_0,y_0),(x_1,y_1),\\ldots,(x_k,y_k)$，其中 $k$ 是任意选定的正整数，$(x_0,y_0)$ 是棋子初始的位置，$(x_k,y_k)$ 是棋子最终走到的位置，需要满足：\n\n- 对于任意 $i=0,1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 和 $(x_{i+1},y_{i+1})$ 之间必须有网格线直接相连，也就是说**走子必须沿着网格线走**；\n- 对于任意 $i\\not=j$，必须有 $(x_i,y_i)\\ne(x_j,y_j)$，也就是说走子过程中不能经过重复位置，特别地 $(x_0,y_0)\\ne(x_k,y_k)$，也就是说**不能原地不动（或走回原地）**；\n- 对于任意 $i=1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 上必须没有棋子，也就是说**走子时不能越过已有的棋子**；\n- 若 $(x_k,y_k)$ 上没有棋子，称为普通走子，否则称为吃子。在吃子过程中，设正在走的棋子颜色为 $\\mathit{col}_1$，等级为 $\\mathit{lv}_1$，被吃的棋子颜色为 $\\mathit{col}_2$，等级为 $\\mathit{lv}_2$，则必须满足 $\\mathit{col}_1\\ne\\mathit{col}_2,\\mathit{lv}_1\\geq\\mathit{lv}_2$，换句话说**只能吃与自己颜色不同，且等级不高于自己等级的棋子**。\n\n需要注意的是，由上述定义可以得出，不允许棋子在吃子后继续向前走。\n\n网格线的状态含义如下所述：\n\n- 如果 $\\mathit{opt}_i=0$，代表此路不通，走子时不能经过这条网格线；\n- 如果 $\\mathit{opt}_i=1$，代表这条网格线是一条“普通道路”，每次走子时棋子最多只能经过 $1$ 条普通道路。\n- 如果 $\\mathit{opt}_i=2$，代表这条网格线是一条“直行道路”，每次走子时棋子可以经过任意条直行道路，但只能**一直沿横向或一直沿纵向走，不能转弯**。如沿直行道路从 $(1,1)$ 经过 $(1,2)$ 走到 $(1,3)$ 是可以的，但是从 $(1,1)$ 经过 $(1,2)$ 走到 $(2,2)$ 不行。\n- 如果 $\\mathit{opt}_i=3$，代表这条网格线是一条“互通道路”，每次走子时棋子可以经过任意条互通道路，且中途可任意转弯。\n\n同时规定在一次走子过程中，**棋子经过的网格线的状态必须全部相同**，比如从 $(1,1)$ 经过直行道路走到 $(1,2)$ 再经过互通道路走到 $(1,3)$ 是不允许的。\n\n至于如何判断胜负等其它细节，与本题无关，故略去。\n\n小 z 和小 c 开发出这款棋类游戏后，为了提升水平，想了一个训练的策略：一开始棋盘是空的，然后小 c 会每次往棋盘的某个空交叉点上放一枚棋子，小 z 需要快速计算出：若选择这枚新放上的棋子进行一次走子，棋盘上一共有多少个位置是能被走到的？注意：因为这只是思维训练，他们并不会真的走这枚棋子。\n\n可怜的小 z 发现他的计算力不足以算出这个问题，只好向你求助。",
+      "formatI": "每个测试点由多组数据组成。\n\n第一行：一个正整数 $T$ 表示数据组数。\n\n对于每组数据：\n\n第一行：三个正整数 $n, m, q$，分别表示棋盘的行数、列数和游戏的轮数。\n\n接下来 $n$ 行，每行为一个长 $m - 1$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i, j + 1)$ 的网格线状态。 \n\n接下来 $n - 1$ 行，每行为一个长 $m$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i + 1, j)$ 的网格线状态。\n\n接下来 $q$ 行，每行 $4$ 个非负整数 $\\mathit{col}_i , \\mathit{lv}_i , x_i , y_i$，表示在第 $i$ 轮有一枚颜色为 $\\mathit{col}_i$，等级为 $\\mathit{lv}_i$ 的棋子放在了交叉点 $(x_i , y_i)$ 上。其中 $\\mathit{col}_i = 0$ 表示黑子，$\\mathit{col}_i = 1$ 表示白子。保证之前交叉点 $(x_i , y_i)$ 上没有棋子。",
+      "formatO": "对于每组数据输出 $q$ 行，每行一个非负整数，表示第 $i$ 枚棋子放置后能走到的交叉点数量。",
+      "hint": "**【样例解释 #1】**\n\n放置棋子 $1$ 后，它能走到的位置为 $(2, 1),(2, 2),(3, 2),(3, 3)$。\n\n放置棋子 $2$ 后，它能走到的位置为 $(2, 2),(2, 3),(3, 1)$。\n\n放置棋子 $3$ 后，它能走到的位置为 $(1, 1),(1, 3),(2, 2)$。\n\n放置棋子 $4$ 后，它能走到的位置为 $(2, 2),(3, 1),(3, 3)$。\n\n放置棋子 $5$ 后，它能走到的位置为 $(2, 3),(3, 2)$。\n\n\n**【数据范围】**\n\n| 测试点编号 | $n \\times m \\le$ | $q \\le$ | 特殊性质 |\n|:-:|:-:|:-:|:-:|\n| $1 \\sim 2$ | $100$ | $50$ | 无 |\n| $3 \\sim 6$ | $5000$ | $2000$ | 无 |\n| $7 \\sim 8$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路”与“互通道路” |\n| $9 \\sim 11$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“互通道路” |\n| $12 \\sim 14$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路” |\n| $15 \\sim 16$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = i$ |\n| $17 \\sim 18$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = q - i + 1$ |\n| $19 \\sim 21$ | $2 \\times {10}^5$ | $2000$ | $n, m \\le 1000$ |\n| $22 \\sim 25$ | $2 \\times {10}^5$ | ${10}^5$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le T \\le 5$，$2 \\le n, m \\le {10}^5$，$4 \\le n \\times m \\le 2 \\times {10}^5$，$1 \\le q \\le \\min \\{ {10}^5, n \\times m \\}$，$1 \\le \\mathit{lv}_i \\le q$，$1 \\le x_i \\le n$，$1 \\le y_i \\le m$，$\\mathit{col}_i \\in \\{ 0, 1 \\}$。\n\n注：由于本题输入输出规模较大，建议使用较为快速的输入输出方式。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "aq9l3tbx",
+        "filename": "chess.zip",
+        "size": 4406960,
+        "uploadTime": 1637409769,
+        "downloadLink": "/fe/api/problem/downloadAttachment/aq9l3tbx"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1\n3 3 5\n13\n22\n23\n010\n233\n0 1 2 3\n1 2 2 1\n1 3 1 2\n0 2 3 2\n1 3 2 2\n",
+        "4\n3\n3\n3\n2\n"
+      ],
+      [
+        "2\n2 3 4\n22\n33\n123\n0 2 1 2\n0 1 2 1\n1 2 1 3\n0 3 2 2\n3 2 3\n3\n1\n3\n32\n32\n0 2 1 2\n1 2 3 2\n0 1 2 2\n",
+        "3\n4\n4\n2\n5\n5\n1\n"
+      ],
+      [
+        "见附件中的 chess/chess3.in",
+        "见附件中的 chess/chess3.ans"
+      ],
+      [
+        "见附件中的 chess/chess4.in",
+        "见附件中的 chess/chess4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000,
+        6000
+      ],
+      "memory": [
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576,
+        1048576
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2021] Chessboard",
+      "background": "After losing at mahjong for a whole night, Xiao z and Xiao c uninstalled all card games on their phones. But how could that stop their determination to slack off in class? Now they set their eyes on board games, yet aside from playing Aeroplane Chess every day, they only know the rough rules of almost all other board games.\n\n“Since we both can play but only a little, why don’t we make our own mash-up?”\n\nSo, with their wild imagination, a wonderful game that mixes Go, Chinese Chess, and Junqi (junqi, i.e., Chinese Army Chess) was born.",
+      "description": "The game is played on a grid-shaped board with $n$ rows and $m$ columns. Pieces are placed on the intersections of the grid lines. We denote the top-left intersection as $(1,1)$ and the bottom-right intersection as $(n,m)$.\n\nPieces come in two colors, black and white, and each player uses one color.\n\nBesides color, each piece also has a level. Let $\\mathit{col}_i$ be the color of piece $i$, and $\\mathit{lv}_i$ be the level of piece $i$. In addition, each grid edge on the board has one of $4$ states. For the $i$-th grid edge, let its state be $\\mathit{opt}_i$.\n\nOn a player’s turn, they may choose one of their own pieces and move it along grid edges to another intersection; this is called a move. Formally, a move is defined as choosing a coordinate sequence $(x_0,y_0),(x_1,y_1),\\ldots,(x_k,y_k)$, where $k$ is any chosen positive integer, $(x_0,y_0)$ is the piece’s starting position, and $(x_k,y_k)$ is the final position. It must satisfy:\n\n- For any $i=0,1,\\ldots,k-1$, the intersections $(x_i,y_i)$ and $(x_{i+1},y_{i+1})$ must be directly connected by a grid edge; that is, **the move must follow grid edges**.\n- For any $i\\not=j$, we must have $(x_i,y_i)\\ne(x_j,y_j)$; that is, no position may be visited twice during the move. In particular, $(x_0,y_0)\\ne(x_k,y_k)$, meaning **the piece cannot stay in place (or return to its starting point)**.\n- For any $i=1,\\ldots,k-1$, there must be no piece on $(x_i,y_i)$; that is, **the piece cannot pass through existing pieces**.\n- If there is no piece on $(x_k,y_k)$, it is a normal move; otherwise it is a capture. During a capture, let the moving piece have color $\\mathit{col}_1$ and level $\\mathit{lv}_1$, and the captured piece have color $\\mathit{col}_2$ and level $\\mathit{lv}_2$. Then it must hold that $\\mathit{col}_1\\ne\\mathit{col}_2,\\mathit{lv}_1\\geq\\mathit{lv}_2$. In other words, **you may only capture a piece of a different color whose level is not higher than yours**.\n\nNote that from the definition above, a piece is not allowed to keep moving forward after capturing.\n\nThe meanings of grid edge states are as follows:\n\n- If $\\mathit{opt}_i=0$, it means the road is blocked, and the move cannot pass through this grid edge.\n- If $\\mathit{opt}_i=1$, it means the grid edge is a “normal road”. In each move, a piece may pass through at most $1$ normal road.\n- If $\\mathit{opt}_i=2$, it means the grid edge is a “straight road”. In each move, a piece may pass through any number of straight roads, but it must **keep moving only horizontally or only vertically, and cannot turn**. For example, going from $(1,1)$ to $(1,3)$ via $(1,2)$ along straight roads is allowed, but going from $(1,1)$ to $(2,2)$ via $(1,2)$ is not.\n- If $\\mathit{opt}_i=3$, it means the grid edge is a “connected road”. In each move, a piece may pass through any number of connected roads, and may turn freely along the way.\n\nIt is also required that within a single move, **all grid edges passed through must have the same state**. For example, moving from $(1,1)$ to $(1,2)$ via a straight road and then from $(1,2)$ to $(1,3)$ via a connected road is not allowed.\n\nOther details such as how to decide the winner are irrelevant to this problem and are omitted.\n\nAfter developing this board game, Xiao z and Xiao c came up with a training strategy to improve: the board starts empty, and then Xiao c places one piece onto some empty intersection each time. Xiao z needs to quickly compute: if we choose this newly placed piece to make exactly one move, how many positions on the board can it reach in total? Note that since this is only mental training, they will not actually move the piece.\n\nPoor Xiao z found his computing ability is not enough to solve this, so he asks you for help.",
+      "formatI": "Each test contains multiple test cases.\n\nThe first line contains a positive integer $T$, the number of test cases.\n\nFor each test case:\n\nThe first line contains three positive integers $n, m, q$, representing the number of rows, columns, and the number of turns.\n\nThe next $n$ lines each contain a string of length $m - 1$, consisting of characters $\\texttt{0}$, $\\texttt{1}$, $\\texttt{2}$, $\\texttt{3}$. The $j$-th character in the $i$-th line represents the state of the grid edge connecting intersection $(i, j)$ to intersection $(i, j + 1)$.\n\nThe next $n - 1$ lines each contain a string of length $m$, consisting of characters $\\texttt{0}$, $\\texttt{1}$, $\\texttt{2}$, $\\texttt{3}$. The $j$-th character in the $i$-th line represents the state of the grid edge connecting intersection $(i, j)$ to intersection $(i + 1, j)$.\n\nThe next $q$ lines each contain $4$ non-negative integers $\\mathit{col}_i , \\mathit{lv}_i , x_i , y_i$, meaning that in turn $i$, a piece with color $\\mathit{col}_i$ and level $\\mathit{lv}_i$ is placed at intersection $(x_i , y_i)$. Here $\\mathit{col}_i = 0$ denotes a black piece, and $\\mathit{col}_i = 1$ denotes a white piece. It is guaranteed that there was no piece on $(x_i , y_i)$ before.",
+      "formatO": "For each test case, output $q$ lines. Each line contains a non-negative integer, representing the number of intersections that the $i$-th newly placed piece can reach after it is placed.",
+      "hint": "**[Sample Explanation #1]**\n\nAfter placing piece $1$, the positions it can reach are $(2, 1),(2, 2),(3, 2),(3, 3)$.\n\nAfter placing piece $2$, the positions it can reach are $(2, 2),(2, 3),(3, 1)$.\n\nAfter placing piece $3$, the positions it can reach are $(1, 1),(1, 3),(2, 2)$.\n\nAfter placing piece $4$, the positions it can reach are $(2, 2),(3, 1),(3, 3)$.\n\nAfter placing piece $5$, the positions it can reach are $(2, 3),(3, 2)$.\n\n**[Constraints]**\n\n| Test Point ID | $n \\times m \\le$ | $q \\le$ | Special Property |\n|:-:|:-:|:-:|:-:|\n| $1 \\sim 2$ | $100$ | $50$ | None |\n| $3 \\sim 6$ | $5000$ | $2000$ | None |\n| $7 \\sim 8$ | $2 \\times {10}^5$ | ${10}^5$ | No “straight roads” and no “connected roads” |\n| $9 \\sim 11$ | $2 \\times {10}^5$ | ${10}^5$ | No “connected roads” |\n| $12 \\sim 14$ | $2 \\times {10}^5$ | ${10}^5$ | No “straight roads” |\n| $15 \\sim 16$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = i$ |\n| $17 \\sim 18$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = q - i + 1$ |\n| $19 \\sim 21$ | $2 \\times {10}^5$ | $2000$ | $n, m \\le 1000$ |\n| $22 \\sim 25$ | $2 \\times {10}^5$ | ${10}^5$ | None |\n\nFor $100\\%$ of the testdata, $1 \\le T \\le 5$, $2 \\le n, m \\le {10}^5$, $4 \\le n \\times m \\le 2 \\times {10}^5$, $1 \\le q \\le \\min \\{ {10}^5, n \\times m \\}$, $1 \\le \\mathit{lv}_i \\le q$, $1 \\le x_i \\le n$, $1 \\le y_i \\le m$, $\\mathit{col}_i \\in \\{ 0, 1 \\}$.\n\nNote: Since the input and output size of this problem is large, it is recommended to use faster I/O methods.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2021] 棋局",
+      "background": "在输了一晚上的麻将之后，小 z 和小 c 卸掉了手机上的所有牌类游戏。不过这怎么可能阻挡得了他们上课颓废的决心呢？现在他们的目光盯在了棋类游戏上，但他们两个除了天天下飞行棋以外，几乎所有棋类游戏都只懂个大概规则。\n\n“既然我们都会玩但只能玩一点点，不如我们自己搞个缝合怪出来吧！”\n\n于是，在他们的精心脑洞之下，一个融合了围棋、象棋与军棋的奇妙游戏诞生了……",
+      "description": "游戏在一张长 $n$ 行宽 $m$ 列的网格形棋盘上进行，棋子落在网格的交叉点上，我们不妨记左上角的交叉点的坐标为 $(1,1)$，右下角的交叉点坐标为 $(n,m)$。\n\n棋子分为黑白两色，对局双方各执一方棋子。\n\n每个棋子除了颜色以外还有等级，不妨设 $\\mathit{col}_i$ 为棋子 $i$ 的颜色，$\\mathit{lv}_i$ 为棋子 $i$ 的等级。另外，棋盘上的网格线共有 $4$ 种状态，对于第 $i$ 条网格线，设其状态为 $\\mathit{opt}_i$。\n\n轮到每方下棋时，他可以选择棋盘上的一个己方棋子沿网格线进行移动到另一个交叉点，称为走子。形式化定义走子的过程如下：选择一个坐标序列 $(x_0,y_0),(x_1,y_1),\\ldots,(x_k,y_k)$，其中 $k$ 是任意选定的正整数，$(x_0,y_0)$ 是棋子初始的位置，$(x_k,y_k)$ 是棋子最终走到的位置，需要满足：\n\n- 对于任意 $i=0,1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 和 $(x_{i+1},y_{i+1})$ 之间必须有网格线直接相连，也就是说**走子必须沿着网格线走**；\n- 对于任意 $i\\not=j$，必须有 $(x_i,y_i)\\ne(x_j,y_j)$，也就是说走子过程中不能经过重复位置，特别地 $(x_0,y_0)\\ne(x_k,y_k)$，也就是说**不能原地不动（或走回原地）**；\n- 对于任意 $i=1,\\ldots,k-1$，坐标 $(x_i,y_i)$ 上必须没有棋子，也就是说**走子时不能越过已有的棋子**；\n- 若 $(x_k,y_k)$ 上没有棋子，称为普通走子，否则称为吃子。在吃子过程中，设正在走的棋子颜色为 $\\mathit{col}_1$，等级为 $\\mathit{lv}_1$，被吃的棋子颜色为 $\\mathit{col}_2$，等级为 $\\mathit{lv}_2$，则必须满足 $\\mathit{col}_1\\ne\\mathit{col}_2,\\mathit{lv}_1\\geq\\mathit{lv}_2$，换句话说**只能吃与自己颜色不同，且等级不高于自己等级的棋子**。\n\n需要注意的是，由上述定义可以得出，不允许棋子在吃子后继续向前走。\n\n网格线的状态含义如下所述：\n\n- 如果 $\\mathit{opt}_i=0$，代表此路不通，走子时不能经过这条网格线；\n- 如果 $\\mathit{opt}_i=1$，代表这条网格线是一条“普通道路”，每次走子时棋子最多只能经过 $1$ 条普通道路。\n- 如果 $\\mathit{opt}_i=2$，代表这条网格线是一条“直行道路”，每次走子时棋子可以经过任意条直行道路，但只能**一直沿横向或一直沿纵向走，不能转弯**。如沿直行道路从 $(1,1)$ 经过 $(1,2)$ 走到 $(1,3)$ 是可以的，但是从 $(1,1)$ 经过 $(1,2)$ 走到 $(2,2)$ 不行。\n- 如果 $\\mathit{opt}_i=3$，代表这条网格线是一条“互通道路”，每次走子时棋子可以经过任意条互通道路，且中途可任意转弯。\n\n同时规定在一次走子过程中，**棋子经过的网格线的状态必须全部相同**，比如从 $(1,1)$ 经过直行道路走到 $(1,2)$ 再经过互通道路走到 $(1,3)$ 是不允许的。\n\n至于如何判断胜负等其它细节，与本题无关，故略去。\n\n小 z 和小 c 开发出这款棋类游戏后，为了提升水平，想了一个训练的策略：一开始棋盘是空的，然后小 c 会每次往棋盘的某个空交叉点上放一枚棋子，小 z 需要快速计算出：若选择这枚新放上的棋子进行一次走子，棋盘上一共有多少个位置是能被走到的？注意：因为这只是思维训练，他们并不会真的走这枚棋子。\n\n可怜的小 z 发现他的计算力不足以算出这个问题，只好向你求助。",
+      "formatI": "每个测试点由多组数据组成。\n\n第一行：一个正整数 $T$ 表示数据组数。\n\n对于每组数据：\n\n第一行：三个正整数 $n, m, q$，分别表示棋盘的行数、列数和游戏的轮数。\n\n接下来 $n$ 行，每行为一个长 $m - 1$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i, j + 1)$ 的网格线状态。 \n\n接下来 $n - 1$ 行，每行为一个长 $m$ 的字符串，每个字符为 $\\texttt{0}$、$\\texttt{1}$、$\\texttt{2}$、$\\texttt{3}$ 中的一个，第 $i$ 行第 $j$ 个字符表示交叉点 $(i, j)$ 连向交叉点 $(i + 1, j)$ 的网格线状态。\n\n接下来 $q$ 行，每行 $4$ 个非负整数 $\\mathit{col}_i , \\mathit{lv}_i , x_i , y_i$，表示在第 $i$ 轮有一枚颜色为 $\\mathit{col}_i$，等级为 $\\mathit{lv}_i$ 的棋子放在了交叉点 $(x_i , y_i)$ 上。其中 $\\mathit{col}_i = 0$ 表示黑子，$\\mathit{col}_i = 1$ 表示白子。保证之前交叉点 $(x_i , y_i)$ 上没有棋子。",
+      "formatO": "对于每组数据输出 $q$ 行，每行一个非负整数，表示第 $i$ 枚棋子放置后能走到的交叉点数量。",
+      "hint": "**【样例解释 #1】**\n\n放置棋子 $1$ 后，它能走到的位置为 $(2, 1),(2, 2),(3, 2),(3, 3)$。\n\n放置棋子 $2$ 后，它能走到的位置为 $(2, 2),(2, 3),(3, 1)$。\n\n放置棋子 $3$ 后，它能走到的位置为 $(1, 1),(1, 3),(2, 2)$。\n\n放置棋子 $4$ 后，它能走到的位置为 $(2, 2),(3, 1),(3, 3)$。\n\n放置棋子 $5$ 后，它能走到的位置为 $(2, 3),(3, 2)$。\n\n\n**【数据范围】**\n\n| 测试点编号 | $n \\times m \\le$ | $q \\le$ | 特殊性质 |\n|:-:|:-:|:-:|:-:|\n| $1 \\sim 2$ | $100$ | $50$ | 无 |\n| $3 \\sim 6$ | $5000$ | $2000$ | 无 |\n| $7 \\sim 8$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路”与“互通道路” |\n| $9 \\sim 11$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“互通道路” |\n| $12 \\sim 14$ | $2 \\times {10}^5$ | ${10}^5$ | 不存在“直行道路” |\n| $15 \\sim 16$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = i$ |\n| $17 \\sim 18$ | $2 \\times {10}^5$ | ${10}^5$ | $\\mathit{lv}_i = q - i + 1$ |\n| $19 \\sim 21$ | $2 \\times {10}^5$ | $2000$ | $n, m \\le 1000$ |\n| $22 \\sim 25$ | $2 \\times {10}^5$ | ${10}^5$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le T \\le 5$，$2 \\le n, m \\le {10}^5$，$4 \\le n \\times m \\le 2 \\times {10}^5$，$1 \\le q \\le \\min \\{ {10}^5, n \\times m \\}$，$1 \\le \\mathit{lv}_i \\le q$，$1 \\le x_i \\le n$，$1 \\le y_i \\le m$，$\\mathit{col}_i \\in \\{ 0, 1 \\}$。\n\n注：由于本题输入输出规模较大，建议使用较为快速的输入输出方式。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 57025,
+    "startTime": 1637391600,
+    "endTime": 1637575200,
+    "name": "NOIP2021 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "CF1340F",
+      "type": "CF",
+      "name": "Nastya and CBS",
+      "difficulty": 8
+    },
+    {
+      "pid": "P7960",
+      "type": "P",
+      "name": "[NOIP2021] 报数",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7962",
+      "type": "P",
+      "name": "[NOIP2021] 方差",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7961",
+      "type": "P",
+      "name": "[NOIP2021] 数列",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7968",
+      "type": "P",
+      "name": "[COCI 2021/2022 #2] Osumnjičeni",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P7963 [NOIP2021] 棋局",
+    "type": 2,
+    "slug": "P7963",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1345527,
+      "title": "求神犇解答",
+      "author": {
+        "uid": 1953681,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1953681.png",
+        "name": "Selene_20120122",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786009580
+    },
+    {
+      "id": 1196393,
+      "title": "8pts求调",
+      "author": {
+        "uid": 524091,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/524091.png",
+        "name": "dami826",
+        "slogan": "既然选择了远方，便只顾风雨兼程",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/t2xt83z9.png"
+      },
+      "time": 1762938314
+    },
+    {
+      "id": 1196037,
+      "title": "悬赏20RMB，没过样例，线段树合并+并查集",
+      "author": {
+        "uid": 575363,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/575363.png",
+        "name": "CR380AL",
+        "slogan": "百川映月终赴海，万壑欢鹰自向前",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1762861695
+    },
+    {
+      "id": 1143439,
+      "title": "再次造福后人",
+      "author": {
+        "uid": 657750,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/657750.png",
+        "name": "qkhm",
+        "slogan": "Remain Loving",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xmrquz15.png"
+      },
+      "time": 1756250968
+    },
+    {
+      "id": 1133069,
+      "title": "警示后人",
+      "author": {
+        "uid": 1678847,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1678847.png",
+        "name": "rabbit_mygo",
+        "slogan": "只晓屈从命运， 何以昂首过活？ 直面傍身之影， 切莫俯首畏缩！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jkjwwn6f.png"
+      },
+      "time": 1755223621
+    },
+    {
+      "id": 892623,
+      "title": "警示后人",
+      "author": {
+        "uid": 360974,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/360974.png",
+        "name": "Y204335",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1723616551
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

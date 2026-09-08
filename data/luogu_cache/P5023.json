@@ -1,0 +1,325 @@
+{
+  "problem": {
+    "pid": "P5023",
+    "type": "P",
+    "name": "[NOIP 2018 提高组] 填数游戏",
+    "difficulty": 8,
+    "tags": [
+      3,
+      5,
+      35,
+      83,
+      253,
+      376
+    ],
+    "totalSubmit": 16954,
+    "totalAccepted": 3509,
+    "flag": 5,
+    "provider": {
+      "uid": 36482,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+      "name": "龟龟号打捞船",
+      "slogan": "",
+      "badge": "铲屎官",
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2018 提高组] 填数游戏",
+      "background": "NOIP2018 提高组 D2T2",
+      "description": "小 D 特别喜欢玩游戏。这一天，他在玩一款填数游戏。\n  \n这个填数游戏的棋盘是一个 $n \\times m$ 的矩形表格。玩家需要在表格的每个格子中填入一个数字（数字 $0$ 或者数字 $1$），填数时需要满足一些限制。   \n\n下面我们来具体描述这些限制。   \n\n为了方便描述，我们先给出一些定义： \n \n-  我们用每个格子的行列坐标来表示一个格子，即（行坐标，列坐标）。注意：行列坐标均从 $0$ 开始编号。\n- 合法路径 $P$：一条路径是合法的当且仅当：   \n    1. 这条路径从矩形表格的左上角的格子 $(0,0)$ 出发，到矩形的右下角格子 $(n - 1,m - 1)$ 结束；   \n    2. 在这条路径中，每次只能从当前的格子移动到右边与它相邻的格子，或者从当前格子移动到下面与它相邻的格子。\n    \n  例如：在下面这个矩形中，只有两条路径是合法的，它们分别是 $P_1$：$(0,0)\\to (0,1)\\to (1,1)$ 和 $P_2$：$(0,0) \\to (1,0) \\to (1,1)$。\n   \n![](https://cdn.luogu.com.cn/upload/pic/43256.png)  \n\n对于一条合法的路径 $P$，我们可以用一个字符串 $w(P)$ 来表示，该字符串的长度为 $n + m - 2$，其中只包含字符 $\\texttt R$ 或者字符 $\\texttt D$，第 $i$ 个字符记录了路径 $P$ 中第 $i$ 步的移动方法。$\\texttt R$ 表示移动到当前格子右边与它相邻的格子，$\\texttt D$ 表示移动到当前格子下面与它相邻的格子。例如，上图中对于路径 $P_1$，有 $w(P_1) = \\texttt {RD}$；而对于另一条路径 $P_2$，有 $w(P_2) = \\texttt {DR}$。   \n\n同时，将每条合法路径 $P$ 经过的每个格子上填入的数字依次连接后，会得到一个长度为 $n + m - 1$ 的 $01$ 字符串，记为 $s(P)$。例如，如果我们在格子 $(0,0)$ 和 $(1,0)$ 上填入数字 $0$，在格子 $(0,1)$ 和 $(1,1)$ 上填入数字 $1$（见上图红色数字），那么对于路径 $P_1$，我们可以得到 $s(P_1) = 011$，对于路径 $P_2$，有 $s(P_2) = 001$。 \n\n游戏要求小 D 找到一种填数字 $0$、$1$ 的方法，使得对于两条路径 $P_1$，$P_2$，如果 $w(P_1) > w(P_2)$，那么必须 $s(P_1) ≤ s(P_2)$。我们说字符串 $a$ 比字符串 $b$ 小，当且仅当字符串 $a$ 的字典序小于字符串 $b$ 的字典序，字典序的定义详见第一题。但是仅仅是找一种方法无法满足小 D 的好奇心，小 D 更想知道这个游戏有多少种玩法，也就是说，有多少种填数字的方法满足游戏的要求？ \n\n小 D 能力有限，希望你帮助他解决这个问题，即有多少种填 $0$、$1$ 的方法能满足题目要求。由于答案可能很大，你需要输出答案对 $10^9 + 7$ 取模的结果。 ",
+      "formatI": "输入文件共一行，包含两个正整数 $n,m$，由一个空格分隔，表示矩形的大小。其中 $n$ 表示矩形表格的行数，$m$ 表示矩形表格的列数。 ",
+      "formatO": "输出共一行，包含一个正整数，表示有多少种填 $0$、$1$ 的方法能满足游戏的要求。 注意：输出答案对 $10^9+7$ 取模的结果。 ",
+      "hint": "**样例解释**  \n\n![](https://cdn.luogu.com.cn/upload/pic/43257.png)  \n\n**数据规模与约定** \n\n| 测试点编号 | $n\\le$ | $m\\le$ |\n| :-----------: | :-----------: | :-----------: |\n| $1\\sim 4$ | $3$ | $3$ |\n| $5\\sim 10$ | $2$ | $10^6$ |\n| $11\\sim 13$ | $3$ | $10^6$ |\n| $14\\sim 16$ | $8$ | $8$ |\n| $17\\sim 20$ | $8$ | $10^6$ |\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2018 提高组] 填数游戏",
+      "background": "NOIP2018 提高组 D2T2",
+      "description": "小 D 特别喜欢玩游戏。这一天，他在玩一款填数游戏。\n  \n这个填数游戏的棋盘是一个 $n \\times m$ 的矩形表格。玩家需要在表格的每个格子中填入一个数字（数字 $0$ 或者数字 $1$），填数时需要满足一些限制。   \n\n下面我们来具体描述这些限制。   \n\n为了方便描述，我们先给出一些定义： \n \n-  我们用每个格子的行列坐标来表示一个格子，即（行坐标，列坐标）。注意：行列坐标均从 $0$ 开始编号。\n- 合法路径 $P$：一条路径是合法的当且仅当：   \n    1. 这条路径从矩形表格的左上角的格子 $(0,0)$ 出发，到矩形的右下角格子 $(n - 1,m - 1)$ 结束；   \n    2. 在这条路径中，每次只能从当前的格子移动到右边与它相邻的格子，或者从当前格子移动到下面与它相邻的格子。\n    \n  例如：在下面这个矩形中，只有两条路径是合法的，它们分别是 $P_1$：$(0,0)\\to (0,1)\\to (1,1)$ 和 $P_2$：$(0,0) \\to (1,0) \\to (1,1)$。\n   \n![](https://cdn.luogu.com.cn/upload/pic/43256.png)  \n\n对于一条合法的路径 $P$，我们可以用一个字符串 $w(P)$ 来表示，该字符串的长度为 $n + m - 2$，其中只包含字符 $\\texttt R$ 或者字符 $\\texttt D$，第 $i$ 个字符记录了路径 $P$ 中第 $i$ 步的移动方法。$\\texttt R$ 表示移动到当前格子右边与它相邻的格子，$\\texttt D$ 表示移动到当前格子下面与它相邻的格子。例如，上图中对于路径 $P_1$，有 $w(P_1) = \\texttt {RD}$；而对于另一条路径 $P_2$，有 $w(P_2) = \\texttt {DR}$。   \n\n同时，将每条合法路径 $P$ 经过的每个格子上填入的数字依次连接后，会得到一个长度为 $n + m - 1$ 的 $01$ 字符串，记为 $s(P)$。例如，如果我们在格子 $(0,0)$ 和 $(1,0)$ 上填入数字 $0$，在格子 $(0,1)$ 和 $(1,1)$ 上填入数字 $1$（见上图红色数字），那么对于路径 $P_1$，我们可以得到 $s(P_1) = 011$，对于路径 $P_2$，有 $s(P_2) = 001$。 \n\n游戏要求小 D 找到一种填数字 $0$、$1$ 的方法，使得对于两条路径 $P_1$，$P_2$，如果 $w(P_1) > w(P_2)$，那么必须 $s(P_1) ≤ s(P_2)$。我们说字符串 $a$ 比字符串 $b$ 小，当且仅当字符串 $a$ 的字典序小于字符串 $b$ 的字典序，字典序的定义详见第一题。但是仅仅是找一种方法无法满足小 D 的好奇心，小 D 更想知道这个游戏有多少种玩法，也就是说，有多少种填数字的方法满足游戏的要求？ \n\n小 D 能力有限，希望你帮助他解决这个问题，即有多少种填 $0$、$1$ 的方法能满足题目要求。由于答案可能很大，你需要输出答案对 $10^9 + 7$ 取模的结果。 ",
+      "formatI": "输入文件共一行，包含两个正整数 $n,m$，由一个空格分隔，表示矩形的大小。其中 $n$ 表示矩形表格的行数，$m$ 表示矩形表格的列数。 ",
+      "formatO": "输出共一行，包含一个正整数，表示有多少种填 $0$、$1$ 的方法能满足游戏的要求。 注意：输出答案对 $10^9+7$ 取模的结果。 ",
+      "hint": "**样例解释**  \n\n![](https://cdn.luogu.com.cn/upload/pic/43257.png)  \n\n**数据规模与约定** \n\n| 测试点编号 | $n\\le$ | $m\\le$ |\n| :-----------: | :-----------: | :-----------: |\n| $1\\sim 4$ | $3$ | $3$ |\n| $5\\sim 10$ | $2$ | $10^6$ |\n| $11\\sim 13$ | $3$ | $10^6$ |\n| $14\\sim 16$ | $8$ | $8$ |\n| $17\\sim 20$ | $8$ | $10^6$ |\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": true,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 2",
+        "12"
+      ],
+      [
+        "3 3",
+        "112"
+      ],
+      [
+        "5 5",
+        "7136"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2018 Senior] Number Filling Game",
+      "background": "NOIP 2018 Senior D2T2.",
+      "description": "Xiao D really likes playing games. One day, he was playing a number filling game.\n\nThe board of this game is an $n \\times m$ rectangular grid. The player needs to fill each cell in the grid with a number (either $0$ or $1$), and the filling must satisfy some constraints.\n\nWe describe these constraints in detail below.\n\nFor convenience, we first give some definitions:\n\n- We use the row and column coordinates of each cell to represent a cell, i.e., (row, column). Note: both row and column coordinates start from $0$.\n- A valid path $P$: A path is valid if and only if:\n  1. The path starts from the top-left cell $(0,0)$ of the grid and ends at the bottom-right cell $(n - 1,m - 1)$;\n  2. Along this path, each move can only go from the current cell to the adjacent cell on its right, or from the current cell to the adjacent cell below it.\n\n  For example, in the rectangle below, only two paths are valid: $P_1$: $(0,0)\\to (0,1)\\to (1,1)$ and $P_2$: $(0,0) \\to (1,0) \\to (1,1)$.\n\n![](https://cdn.luogu.com.cn/upload/pic/43256.png)\n\nFor a valid path $P$, we can represent it with a string $w(P)$ of length $n + m - 2$, which contains only the characters $\\texttt R$ or $\\texttt D$. The $i$-th character records how the $i$-th step of path $P$ moves. $\\texttt R$ means moving to the adjacent cell on the right of the current cell, and $\\texttt D$ means moving to the adjacent cell below the current cell. For example, for path $P_1$ in the figure above, $w(P_1) = \\texttt {RD}$; for the other path $P_2$, $w(P_2) = \\texttt {DR}$.\n\nAlso, if we concatenate, in order, the numbers filled in each cell visited by a valid path $P$, we obtain a $01$ string of length $n + m - 1$, denoted by $s(P)$. For example, if we fill $0$ in cells $(0,0)$ and $(1,0)$, and fill $1$ in cells $(0,1)$ and $(1,1)$ (as the red numbers in the figure), then for path $P_1$ we get $s(P_1) = 011$, and for path $P_2$ we get $s(P_2) = 001$.\n\nThe game requires Xiao D to find a way to fill $0$ and $1$ such that for any two paths $P_1$, $P_2$, if $w(P_1) > w(P_2)$, then it must hold that $s(P_1) \\le s(P_2)$. We say that string $a$ is smaller than string $b$ if and only if $a$ is lexicographically smaller than $b$. The definition of lexicographical order is given in detail in Problem 1. However, finding just one method does not satisfy Xiao D’s curiosity. Xiao D wants to know how many different ways the game can be played, that is, how many filling methods satisfy the requirement.\n\nXiao D is not strong enough, so he hopes you can help solve this problem: how many ways of filling $0$ and $1$ can satisfy the requirement? Since the answer may be very large, you need to output the answer modulo $10^9 + 7$.",
+      "formatI": "The input consists of one line containing two positive integers $n,m$, separated by a space, representing the size of the rectangle. Here $n$ is the number of rows of the grid, and $m$ is the number of columns of the grid.",
+      "formatO": "Output one line containing a positive integer, representing how many ways of filling $0$ and $1$ can satisfy the requirement. Note: output the result modulo $10^9+7$.",
+      "hint": "**Sample Explanation**\n\n![](https://cdn.luogu.com.cn/upload/pic/43257.png)\n\n**Constraints**\n\n| Test Point ID | $n\\le$ | $m\\le$ |\n| :-----------: | :-----------: | :-----------: |\n| $1\\sim 4$ | $3$ | $3$ |\n| $5\\sim 10$ | $2$ | $10^6$ |\n| $11\\sim 13$ | $3$ | $10^6$ |\n| $14\\sim 16$ | $8$ | $8$ |\n| $17\\sim 20$ | $8$ | $10^6$ |\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2018 提高组] 填数游戏",
+      "background": "NOIP2018 提高组 D2T2",
+      "description": "小 D 特别喜欢玩游戏。这一天，他在玩一款填数游戏。\n  \n这个填数游戏的棋盘是一个 $n \\times m$ 的矩形表格。玩家需要在表格的每个格子中填入一个数字（数字 $0$ 或者数字 $1$），填数时需要满足一些限制。   \n\n下面我们来具体描述这些限制。   \n\n为了方便描述，我们先给出一些定义： \n \n-  我们用每个格子的行列坐标来表示一个格子，即（行坐标，列坐标）。注意：行列坐标均从 $0$ 开始编号。\n- 合法路径 $P$：一条路径是合法的当且仅当：   \n    1. 这条路径从矩形表格的左上角的格子 $(0,0)$ 出发，到矩形的右下角格子 $(n - 1,m - 1)$ 结束；   \n    2. 在这条路径中，每次只能从当前的格子移动到右边与它相邻的格子，或者从当前格子移动到下面与它相邻的格子。\n    \n  例如：在下面这个矩形中，只有两条路径是合法的，它们分别是 $P_1$：$(0,0)\\to (0,1)\\to (1,1)$ 和 $P_2$：$(0,0) \\to (1,0) \\to (1,1)$。\n   \n![](https://cdn.luogu.com.cn/upload/pic/43256.png)  \n\n对于一条合法的路径 $P$，我们可以用一个字符串 $w(P)$ 来表示，该字符串的长度为 $n + m - 2$，其中只包含字符 $\\texttt R$ 或者字符 $\\texttt D$，第 $i$ 个字符记录了路径 $P$ 中第 $i$ 步的移动方法。$\\texttt R$ 表示移动到当前格子右边与它相邻的格子，$\\texttt D$ 表示移动到当前格子下面与它相邻的格子。例如，上图中对于路径 $P_1$，有 $w(P_1) = \\texttt {RD}$；而对于另一条路径 $P_2$，有 $w(P_2) = \\texttt {DR}$。   \n\n同时，将每条合法路径 $P$ 经过的每个格子上填入的数字依次连接后，会得到一个长度为 $n + m - 1$ 的 $01$ 字符串，记为 $s(P)$。例如，如果我们在格子 $(0,0)$ 和 $(1,0)$ 上填入数字 $0$，在格子 $(0,1)$ 和 $(1,1)$ 上填入数字 $1$（见上图红色数字），那么对于路径 $P_1$，我们可以得到 $s(P_1) = 011$，对于路径 $P_2$，有 $s(P_2) = 001$。 \n\n游戏要求小 D 找到一种填数字 $0$、$1$ 的方法，使得对于两条路径 $P_1$，$P_2$，如果 $w(P_1) > w(P_2)$，那么必须 $s(P_1) ≤ s(P_2)$。我们说字符串 $a$ 比字符串 $b$ 小，当且仅当字符串 $a$ 的字典序小于字符串 $b$ 的字典序，字典序的定义详见第一题。但是仅仅是找一种方法无法满足小 D 的好奇心，小 D 更想知道这个游戏有多少种玩法，也就是说，有多少种填数字的方法满足游戏的要求？ \n\n小 D 能力有限，希望你帮助他解决这个问题，即有多少种填 $0$、$1$ 的方法能满足题目要求。由于答案可能很大，你需要输出答案对 $10^9 + 7$ 取模的结果。 ",
+      "formatI": "输入文件共一行，包含两个正整数 $n,m$，由一个空格分隔，表示矩形的大小。其中 $n$ 表示矩形表格的行数，$m$ 表示矩形表格的列数。 ",
+      "formatO": "输出共一行，包含一个正整数，表示有多少种填 $0$、$1$ 的方法能满足游戏的要求。 注意：输出答案对 $10^9+7$ 取模的结果。 ",
+      "hint": "**样例解释**  \n\n![](https://cdn.luogu.com.cn/upload/pic/43257.png)  \n\n**数据规模与约定** \n\n| 测试点编号 | $n\\le$ | $m\\le$ |\n| :-----------: | :-----------: | :-----------: |\n| $1\\sim 4$ | $3$ | $3$ |\n| $5\\sim 10$ | $2$ | $10^6$ |\n| $11\\sim 13$ | $3$ | $10^6$ |\n| $14\\sim 16$ | $8$ | $8$ |\n| $17\\sim 20$ | $8$ | $10^6$ |\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 12952,
+    "startTime": 1541804400,
+    "endTime": 1542211200,
+    "name": "NOIP2018提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P3953",
+      "type": "P",
+      "name": "[NOIP 2017 提高组] 逛公园",
+      "difficulty": 6
+    },
+    {
+      "pid": "P4719",
+      "type": "P",
+      "name": "【模板】动态 DP",
+      "difficulty": 7
+    },
+    {
+      "pid": "P5021",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 赛道修建",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5022",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 旅行",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5024",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 保卫王国",
+      "difficulty": 7
+    }
+  ],
+  "forum": {
+    "name": "P5023 [NOIP 2018 提高组] 填数游戏",
+    "type": 2,
+    "slug": "P5023",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1297233,
+      "title": "DP 做法求调",
+      "author": {
+        "uid": 1780676,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1780676.png",
+        "name": "caizhengyan",
+        "slogan": "GL && HF！！！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1779628415
+    },
+    {
+      "id": 1233452,
+      "title": "有哪位大手子解释一下样例二",
+      "author": {
+        "uid": 1118614,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1118614.png",
+        "name": "I_Love_DS",
+        "slogan": "把悄悄话藏在心底",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/4wozcu5x.png"
+      },
+      "time": 1768882070
+    },
+    {
+      "id": 884062,
+      "title": "求助！！！感觉公式没错但是WA",
+      "author": {
+        "uid": 987758,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/987758.png",
+        "name": "CaoSheng_zzz",
+        "slogan": "草绳吖！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hebc1wdf.png"
+      },
+      "time": 1723088195
+    },
+    {
+      "id": 661929,
+      "title": "help me",
+      "author": {
+        "uid": 907202,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/907202.png",
+        "name": "Ckq0123456",
+        "slogan": "",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1692107416
+    },
+    {
+      "id": 660976,
+      "title": "#17-20 WA，求帮助",
+      "author": {
+        "uid": 378418,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/378418.png",
+        "name": "Cwkapn",
+        "slogan": "坚守往往是艰难的，但不能因为艰难而不坚守。——《做干净的奥赛》",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/sp3hzf6g.png"
+      },
+      "time": 1692063577
+    },
+    {
+      "id": 168602,
+      "title": "这题数据其实可以加强",
+      "author": {
+        "uid": 286826,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/286826.png",
+        "name": "little_Aiz",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/wdtit44p.png"
+      },
+      "time": 1573733584
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

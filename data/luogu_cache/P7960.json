@@ -1,0 +1,314 @@
+{
+  "problem": {
+    "pid": "P7960",
+    "type": "P",
+    "name": "[NOIP2021] 报数",
+    "difficulty": 3,
+    "tags": [
+      58,
+      83,
+      108
+    ],
+    "totalSubmit": 91891,
+    "totalAccepted": 27010,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2021] 报数",
+      "background": "",
+      "description": "报数游戏是一个广为流传的休闲小游戏。参加游戏的每个人要按一定顺序轮流报数，但如果下一个报的数是 $7$ 的倍数，或十进制表示中含有数字 $7$，就必须跳过这个数，否则就输掉了游戏。\n\n在一个风和日丽的下午，刚刚结束 SPC20nn 比赛的小 r 和小 z 闲得无聊玩起了这个报数游戏。但在只有两个人玩的情况下计算起来还是比较容易的，因此他们玩了很久也没分出胜负。此时小 z 灵光一闪，决定把这个游戏加强：任何一个十进制中含有数字 $7$ 的数，它的所有倍数都不能报出来！\n\n形式化地，设 $p(x)$ 表示 $x$ 的十进制表示中是否含有数字 $7$，若含有则 $p(x) = 1$，否则 $p(x) = 0$。则一个正整数 $x$ 不能被报出，当且仅当存在正整数 $y$ 和 $z$ ，使得 $x = yz$ 且 $p(y) = 1$。\n\n\n例如，如果小 r 报出了 $6$ ，由于 $7$ 不能报，所以小 z 下一个需要报 $8$；如果小 r 报出了 $33$，则由于 $34 = 17 \\times 2$，$35 = 7 \\times 5$ 都不能报，小 z 下一个需要报出 $36$ ；如果小 r 报出了 $69$，由于 $70 \\sim 79$ 的数都含有 $7$，小 z 下一个需要报出 $80$ 才行。\n\n现在小 r 的上一个数报出了 $x$，小 z 想快速算出他下一个数要报多少，不过他很快就发现这个游戏可比原版的游戏难算多了，于是他需要你的帮助。当然，如果小 r 报出的 x 本身是不能报出的，你也要快速反应过来小 r 输了才行。\n\n由于小 r 和小 z 玩了很长时间游戏，你也需要回答小 z 的很多个问题。",
+      "formatI": "第一行，一个正整数 $T$ 表示小 z 询问的数量。\n\n接下来 $T$ 行，每行一个正整数 $x$，表示这一次小 r 报出的数。",
+      "formatO": "输出共 $T$ 行，每行一个整数，如果小 r 这一次报出的数是不能报出的，输出 $-1$，否则输出小 z 下一次报出的数是多少。",
+      "hint": "**【样例解释 #1】**\n\n这一组样例的前 $3$ 次询问在题目描述中已有解释。\n\n对于第 $4$ 次询问，由于 $300 = 75 \\times 4$，而 $75$ 中含有 $7$ ，所以小 r 直接输掉了游戏。\n\n**【数据范围】**\n\n对于 $10\\%$ 的数据，$T \\leq 10$，$x \\leq 100$。  \n对于 $30\\%$ 的数据，$T \\leq 100$，$x \\leq 1000$。  \n对于 $50\\%$ 的数据，$T \\leq 1000$，$x \\leq 10000$。  \n对于 $70\\%$ 的数据，$T \\leq 10000$，$x \\leq 2 \\times {10}^5$。  \n对于 $100\\%$ 的数据，$1 \\le T \\leq 2 \\times {10}^5$，$1 \\le x \\leq {10}^7$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2021] 报数",
+      "background": "",
+      "description": "报数游戏是一个广为流传的休闲小游戏。参加游戏的每个人要按一定顺序轮流报数，但如果下一个报的数是 $7$ 的倍数，或十进制表示中含有数字 $7$，就必须跳过这个数，否则就输掉了游戏。\n\n在一个风和日丽的下午，刚刚结束 SPC20nn 比赛的小 r 和小 z 闲得无聊玩起了这个报数游戏。但在只有两个人玩的情况下计算起来还是比较容易的，因此他们玩了很久也没分出胜负。此时小 z 灵光一闪，决定把这个游戏加强：任何一个十进制中含有数字 $7$ 的数，它的所有倍数都不能报出来！\n\n形式化地，设 $p(x)$ 表示 $x$ 的十进制表示中是否含有数字 $7$，若含有则 $p(x) = 1$，否则 $p(x) = 0$。则一个正整数 $x$ 不能被报出，当且仅当存在正整数 $y$ 和 $z$ ，使得 $x = yz$ 且 $p(y) = 1$。\n\n\n例如，如果小 r 报出了 $6$ ，由于 $7$ 不能报，所以小 z 下一个需要报 $8$；如果小 r 报出了 $33$，则由于 $34 = 17 \\times 2$，$35 = 7 \\times 5$ 都不能报，小 z 下一个需要报出 $36$ ；如果小 r 报出了 $69$，由于 $70 \\sim 79$ 的数都含有 $7$，小 z 下一个需要报出 $80$ 才行。\n\n现在小 r 的上一个数报出了 $x$，小 z 想快速算出他下一个数要报多少，不过他很快就发现这个游戏可比原版的游戏难算多了，于是他需要你的帮助。当然，如果小 r 报出的 x 本身是不能报出的，你也要快速反应过来小 r 输了才行。\n\n由于小 r 和小 z 玩了很长时间游戏，你也需要回答小 z 的很多个问题。",
+      "formatI": "第一行，一个正整数 $T$ 表示小 z 询问的数量。\n\n接下来 $T$ 行，每行一个正整数 $x$，表示这一次小 r 报出的数。",
+      "formatO": "输出共 $T$ 行，每行一个整数，如果小 r 这一次报出的数是不能报出的，输出 $-1$，否则输出小 z 下一次报出的数是多少。",
+      "hint": "**【样例解释 #1】**\n\n这一组样例的前 $3$ 次询问在题目描述中已有解释。\n\n对于第 $4$ 次询问，由于 $300 = 75 \\times 4$，而 $75$ 中含有 $7$ ，所以小 r 直接输掉了游戏。\n\n**【数据范围】**\n\n对于 $10\\%$ 的数据，$T \\leq 10$，$x \\leq 100$。  \n对于 $30\\%$ 的数据，$T \\leq 100$，$x \\leq 1000$。  \n对于 $50\\%$ 的数据，$T \\leq 1000$，$x \\leq 10000$。  \n对于 $70\\%$ 的数据，$T \\leq 10000$，$x \\leq 2 \\times {10}^5$。  \n对于 $100\\%$ 的数据，$1 \\le T \\leq 2 \\times {10}^5$，$1 \\le x \\leq {10}^7$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "nuacg4zh",
+        "filename": "number.zip",
+        "size": 1332243,
+        "uploadTime": 1637419301,
+        "downloadLink": "/fe/api/problem/downloadAttachment/nuacg4zh"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "4\n6\n33\n69\n300\n",
+        "8\n36\n80\n-1\n"
+      ],
+      [
+        "5\n90\n99\n106\n114\n169\n",
+        "92\n100\n109\n-1\n180\n"
+      ],
+      [
+        "见附件中的 number/number3.in",
+        "见附件中的 number/number3.ans"
+      ],
+      [
+        "见附件中的 number/number4.in",
+        "见附件中的 number/number4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2021] Counting Off",
+      "background": "",
+      "description": "The counting-off game is a widely known casual game. Everyone in the game takes turns counting in a fixed order. However, if the next number to be spoken is a multiple of $7$, or its decimal representation contains the digit $7$, then this number must be skipped; otherwise, the player loses.\n\nOn a sunny afternoon, little r and little z, who had just finished the SPC20nn contest, were bored and started playing this counting-off game. But with only two players, it was still easy to compute, so they played for a long time without deciding a winner. Then little z had an idea and decided to strengthen the game: for any number whose decimal representation contains the digit $7$, none of its multiples are allowed to be spoken.\n\nFormally, let $p(x)$ indicate whether the decimal representation of $x$ contains the digit $7$. If it does, then $p(x) = 1$; otherwise, $p(x) = 0$. Then a positive integer $x$ cannot be spoken if and only if there exist positive integers $y$ and $z$ such that $x = yz$ and $p(y) = 1$.\n\nFor example, if little r says $6$, then since $7$ cannot be spoken, little z needs to say $8$ next. If little r says $33$, then since $34 = 17 \\times 2$ and $35 = 7 \\times 5$ both cannot be spoken, little z needs to say $36$ next. If little r says $69$, then since all numbers from $70 \\sim 79$ contain $7$, little z must say $80$ next.\n\nNow little r previously said $x$, and little z wants to quickly compute what number he should say next. But he soon finds that this game is much harder to compute than the original one, so he needs your help. Of course, if the number $x$ said by little r itself is not allowed, you should also quickly realize that little r has lost.\n\nSince little r and little z have been playing for a long time, you also need to answer many questions from little z.",
+      "formatI": "The first line contains a positive integer $T$, indicating the number of queries from little z.\n\nThe next $T$ lines each contain a positive integer $x$, indicating the number said by little r in this round.",
+      "formatO": "Output $T$ lines in total. For each line, output an integer: if the number said by little r in this round is not allowed, output $-1$; otherwise, output the number that little z should say next.",
+      "hint": "**Sample Explanation #1**\n\nThe first $3$ queries in this sample have already been explained in the problem description.\n\nFor the $4$-th query, since $300 = 75 \\times 4$, and $75$ contains the digit $7$, little r loses immediately.\n\n**Constraints**\n\nFor $10\\%$ of the testdata, $T \\leq 10$, $x \\leq 100$.  \nFor $30\\%$ of the testdata, $T \\leq 100$, $x \\leq 1000$.  \nFor $50\\%$ of the testdata, $T \\leq 1000$, $x \\leq 10000$.  \nFor $70\\%$ of the testdata, $T \\leq 10000$, $x \\leq 2 \\times {10}^5$.  \nFor $100\\%$ of the testdata, $1 \\le T \\leq 2 \\times {10}^5$, $1 \\le x \\leq {10}^7$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2021] 报数",
+      "background": "",
+      "description": "报数游戏是一个广为流传的休闲小游戏。参加游戏的每个人要按一定顺序轮流报数，但如果下一个报的数是 $7$ 的倍数，或十进制表示中含有数字 $7$，就必须跳过这个数，否则就输掉了游戏。\n\n在一个风和日丽的下午，刚刚结束 SPC20nn 比赛的小 r 和小 z 闲得无聊玩起了这个报数游戏。但在只有两个人玩的情况下计算起来还是比较容易的，因此他们玩了很久也没分出胜负。此时小 z 灵光一闪，决定把这个游戏加强：任何一个十进制中含有数字 $7$ 的数，它的所有倍数都不能报出来！\n\n形式化地，设 $p(x)$ 表示 $x$ 的十进制表示中是否含有数字 $7$，若含有则 $p(x) = 1$，否则 $p(x) = 0$。则一个正整数 $x$ 不能被报出，当且仅当存在正整数 $y$ 和 $z$ ，使得 $x = yz$ 且 $p(y) = 1$。\n\n\n例如，如果小 r 报出了 $6$ ，由于 $7$ 不能报，所以小 z 下一个需要报 $8$；如果小 r 报出了 $33$，则由于 $34 = 17 \\times 2$，$35 = 7 \\times 5$ 都不能报，小 z 下一个需要报出 $36$ ；如果小 r 报出了 $69$，由于 $70 \\sim 79$ 的数都含有 $7$，小 z 下一个需要报出 $80$ 才行。\n\n现在小 r 的上一个数报出了 $x$，小 z 想快速算出他下一个数要报多少，不过他很快就发现这个游戏可比原版的游戏难算多了，于是他需要你的帮助。当然，如果小 r 报出的 x 本身是不能报出的，你也要快速反应过来小 r 输了才行。\n\n由于小 r 和小 z 玩了很长时间游戏，你也需要回答小 z 的很多个问题。",
+      "formatI": "第一行，一个正整数 $T$ 表示小 z 询问的数量。\n\n接下来 $T$ 行，每行一个正整数 $x$，表示这一次小 r 报出的数。",
+      "formatO": "输出共 $T$ 行，每行一个整数，如果小 r 这一次报出的数是不能报出的，输出 $-1$，否则输出小 z 下一次报出的数是多少。",
+      "hint": "**【样例解释 #1】**\n\n这一组样例的前 $3$ 次询问在题目描述中已有解释。\n\n对于第 $4$ 次询问，由于 $300 = 75 \\times 4$，而 $75$ 中含有 $7$ ，所以小 r 直接输掉了游戏。\n\n**【数据范围】**\n\n对于 $10\\%$ 的数据，$T \\leq 10$，$x \\leq 100$。  \n对于 $30\\%$ 的数据，$T \\leq 100$，$x \\leq 1000$。  \n对于 $50\\%$ 的数据，$T \\leq 1000$，$x \\leq 10000$。  \n对于 $70\\%$ 的数据，$T \\leq 10000$，$x \\leq 2 \\times {10}^5$。  \n对于 $100\\%$ 的数据，$1 \\le T \\leq 2 \\times {10}^5$，$1 \\le x \\leq {10}^7$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 57025,
+    "startTime": 1637391600,
+    "endTime": 1637575200,
+    "name": "NOIP2021 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7913",
+      "type": "P",
+      "name": "[CSP-S 2021] 廊桥分配",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7915",
+      "type": "P",
+      "name": "[CSP-S 2021] 回文",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7962",
+      "type": "P",
+      "name": "[NOIP2021] 方差",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7961",
+      "type": "P",
+      "name": "[NOIP2021] 数列",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P7960 [NOIP2021] 报数",
+    "type": 2,
+    "slug": "P7960",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1359720,
+      "title": "50TLE求dalao调",
+      "author": {
+        "uid": 1531022,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1531022.png",
+        "name": "Yuhan_He",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787215003
+    },
+    {
+      "id": 1349304,
+      "title": "70tle求条码风良好",
+      "author": {
+        "uid": 1580435,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1580435.png",
+        "name": "yxr_QAQ_",
+        "slogan": "芙芙芙芙芙芙芙芙芙",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/liugj2wn.png"
+      },
+      "time": 1786361287
+    },
+    {
+      "id": 1346693,
+      "title": "答案是对的,但超时.求条优化方法",
+      "author": {
+        "uid": 1908103,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1908103.png",
+        "name": "wyzxfrefwf",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786105969
+    },
+    {
+      "id": 1267008,
+      "title": "30求调。。",
+      "author": {
+        "uid": 1536541,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1536541.png",
+        "name": "Born___alone",
+        "slogan": "这个家伙很懒，什么都留下了。。。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/8lwufsxf.png"
+      },
+      "time": 1774417750
+    },
+    {
+      "id": 1266361,
+      "title": "70pts!!!!!",
+      "author": {
+        "uid": 1918927,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1918927.png",
+        "name": "MrPigcken",
+        "slogan": "姓杨，名癫，字发骁，自号发癫芝士，MrPigcken。\"Welcome to ACOJ\" 忠实粉丝。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Cheater",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dgvdkbw6.png"
+      },
+      "time": 1774246672
+    },
+    {
+      "id": 1252343,
+      "title": "70pts求掉！",
+      "author": {
+        "uid": 1512077,
+        "avatar": "https://cdn.luogu.com.cn/images/banned.png",
+        "name": "#SUSPENDED#",
+        "slogan": null,
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": true,
+        "color": "Gray",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": null
+      },
+      "time": 1771912274
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

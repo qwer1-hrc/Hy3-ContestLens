@@ -1,0 +1,60 @@
+{
+  "source": "https://www.luogu.com.cn/_lfe/config",
+  "checked_at": "2026-09-05",
+  "labels": [
+    {
+      "type": "Nil",
+      "id": 0,
+      "name": "暂无评定",
+      "color": "grey-3"
+    },
+    {
+      "type": "Pupil",
+      "id": 1,
+      "name": "入门",
+      "color": "pink-3"
+    },
+    {
+      "type": "JuniorUnder",
+      "id": 2,
+      "name": "普及−",
+      "color": "orange-3"
+    },
+    {
+      "type": "Junior",
+      "id": 3,
+      "name": "普及",
+      "color": "gold-3"
+    },
+    {
+      "type": "JuniorAbove",
+      "id": 4,
+      "name": "普及+/提高−",
+      "color": "green-3"
+    },
+    {
+      "type": "Senior",
+      "id": 5,
+      "name": "提高",
+      "color": "cyan-3"
+    },
+    {
+      "type": "SeniorAbove",
+      "id": 6,
+      "name": "提高+/省选−",
+      "color": "blue-3"
+    },
+    {
+      "type": "NoiUnder",
+      "id": 7,
+      "name": "省选/NOI−",
+      "color": "purple-3"
+    },
+    {
+      "type": "Noi",
+      "id": 8,
+      "name": "NOI/NOI+/CTS",
+      "color": "lapis-4"
+    }
+  ]
+}

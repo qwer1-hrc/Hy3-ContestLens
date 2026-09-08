@@ -1,0 +1,315 @@
+{
+  "problem": {
+    "pid": "P1941",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+    "difficulty": 4,
+    "tags": [
+      3,
+      31,
+      83,
+      111,
+      139
+    ],
+    "totalSubmit": 96140,
+    "totalAccepted": 20062,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "background": "NOIP2014 提高组 D1T3",
+      "description": "Flappy Bird 是一款风靡一时的休闲手机游戏。玩家需要不断控制点击手机屏幕的频率来调节小鸟的飞行高度，让小鸟顺利通过画面右方的管道缝隙。如果小鸟一不小心撞到了水管或者掉在地上的话，便宣告失败。\n\n为了简化问题，我们对游戏规则进行了简化和改编:\n\n游戏界面是一个长为 $n$，高为 $m$ 的二维平面，其中有 $k$ 个管道（忽略管道的宽度）。 \n\n小鸟始终在游戏界面内移动。小鸟从游戏界面最左边任意整数高度位置出发，到达游戏界面最右边时，游戏完成。\n\n小鸟每个单位时间沿横坐标方向右移的距离为 $1$，竖直移动的距离由玩家控制。如果点击屏幕，小鸟就会上升一定高度 $x$，每个单位时间可以点击多次，效果叠加；如果不点击屏幕，小鸟就会下降一定高度 $y$。小鸟位于横坐标方向不同位置时，上升的高度 $x$ 和下降的高度 $y$ 可能互不相同。\n\n小鸟高度等于 $0$ 或者小鸟碰到管道时，游戏失败。小鸟高度为 $m$ 时，无法再上升。\n\n现在，请你判断是否可以完成游戏。如果可以，输出最少点击屏幕数；否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "formatI": "第 $1$ 行有 $3$ 个整数 $n, m, k$，分别表示游戏界面的长度，高度和水管的数量，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行 $2$ 个用一个空格隔开的整数 $x$ 和 $y$，依次表示在横坐标位置 $0 \\sim n-1$ 上玩家点击屏幕后，小鸟在下一位置上升的高度 $x$，以及在这个位置上玩家不点击屏幕时，小鸟在下一位置下降的高度 $y$。\n\n接下来 $k$ 行，每行 $3$ 个整数 $p,l,h$，每两个整数之间用一个空格隔开。每行表示一个管道，其中 $p$ 表示管道的横坐标，$l$ 表示此管道缝隙的下边沿高度，$h$ 表示管道缝隙上边沿的高度（输入数据保证 $p$ 各不相同，但不保证按照大小顺序给出）。",
+      "formatO": "共两行。\n\n第一行，包含一个整数，如果可以成功完成游戏，则输出 $1$，否则输出 $0$。\n\n第二行，包含一个整数，如果第一行为 $1$，则输出成功完成游戏需要最少点击屏幕数，否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "hint": "【输入输出样例说明】\n\n如下图所示，蓝色直线表示小鸟的飞行轨迹，红色直线表示管道。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/59alxbqi.png)\n\n【数据范围】\n\n对于 $30\\%$ 的数据：$5 \\leq n \\leq 10, 5 \\leq m \\leq 10, k=0$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $50\\%$ 的数据：$5 \\leq n \\leq 20, 5 \\leq m \\leq 10$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $70\\%$ 的数据：$5 \\leq n \\leq 1000, 5 \\leq m \\leq 100$；\n\n对于 $100\\%$ 的数据：$5 \\leq n \\leq 10000$，$5 \\leq m \\leq 1000$，$0 \\leq k < n$，$0 < x,y < m$，$0 < p < n$，$0 \\leq l < h \\leq m$， $l + 1 < h$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "background": "NOIP2014 提高组 D1T3",
+      "description": "Flappy Bird 是一款风靡一时的休闲手机游戏。玩家需要不断控制点击手机屏幕的频率来调节小鸟的飞行高度，让小鸟顺利通过画面右方的管道缝隙。如果小鸟一不小心撞到了水管或者掉在地上的话，便宣告失败。\n\n为了简化问题，我们对游戏规则进行了简化和改编:\n\n游戏界面是一个长为 $n$，高为 $m$ 的二维平面，其中有 $k$ 个管道（忽略管道的宽度）。 \n\n小鸟始终在游戏界面内移动。小鸟从游戏界面最左边任意整数高度位置出发，到达游戏界面最右边时，游戏完成。\n\n小鸟每个单位时间沿横坐标方向右移的距离为 $1$，竖直移动的距离由玩家控制。如果点击屏幕，小鸟就会上升一定高度 $x$，每个单位时间可以点击多次，效果叠加；如果不点击屏幕，小鸟就会下降一定高度 $y$。小鸟位于横坐标方向不同位置时，上升的高度 $x$ 和下降的高度 $y$ 可能互不相同。\n\n小鸟高度等于 $0$ 或者小鸟碰到管道时，游戏失败。小鸟高度为 $m$ 时，无法再上升。\n\n现在，请你判断是否可以完成游戏。如果可以，输出最少点击屏幕数；否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "formatI": "第 $1$ 行有 $3$ 个整数 $n, m, k$，分别表示游戏界面的长度，高度和水管的数量，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行 $2$ 个用一个空格隔开的整数 $x$ 和 $y$，依次表示在横坐标位置 $0 \\sim n-1$ 上玩家点击屏幕后，小鸟在下一位置上升的高度 $x$，以及在这个位置上玩家不点击屏幕时，小鸟在下一位置下降的高度 $y$。\n\n接下来 $k$ 行，每行 $3$ 个整数 $p,l,h$，每两个整数之间用一个空格隔开。每行表示一个管道，其中 $p$ 表示管道的横坐标，$l$ 表示此管道缝隙的下边沿高度，$h$ 表示管道缝隙上边沿的高度（输入数据保证 $p$ 各不相同，但不保证按照大小顺序给出）。",
+      "formatO": "共两行。\n\n第一行，包含一个整数，如果可以成功完成游戏，则输出 $1$，否则输出 $0$。\n\n第二行，包含一个整数，如果第一行为 $1$，则输出成功完成游戏需要最少点击屏幕数，否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "hint": "【输入输出样例说明】\n\n如下图所示，蓝色直线表示小鸟的飞行轨迹，红色直线表示管道。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/59alxbqi.png)\n\n【数据范围】\n\n对于 $30\\%$ 的数据：$5 \\leq n \\leq 10, 5 \\leq m \\leq 10, k=0$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $50\\%$ 的数据：$5 \\leq n \\leq 20, 5 \\leq m \\leq 10$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $70\\%$ 的数据：$5 \\leq n \\leq 1000, 5 \\leq m \\leq 100$；\n\n对于 $100\\%$ 的数据：$5 \\leq n \\leq 10000$，$5 \\leq m \\leq 1000$，$0 \\leq k < n$，$0 < x,y < m$，$0 < p < n$，$0 \\leq l < h \\leq m$， $l + 1 < h$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "10 10 6 \n3 9  \n9 9  \n1 2  \n1 3  \n1 2  \n1 1  \n2 1  \n2 1  \n1 6  \n2 2  \n1 2 7 \n5 1 5 \n6 3 5 \n7 5 8 \n8 7 9 \n9 1 3 \n",
+        "1\n6\n\n"
+      ],
+      [
+        "10 10 4 \n1 2  \n3 1  \n2 2  \n1 8  \n1 8  \n3 2  \n2 1  \n2 1  \n2 2  \n1 2  \n1 0 2 \n6 7 9 \n9 1 4 \n3 8 10  ",
+        "0\n3"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Flappy Bird",
+      "background": "NOIP 2014 Senior D1T3.",
+      "description": "Flappy Bird is a once-popular casual mobile game. The player needs to continuously control the tapping frequency to adjust the bird’s altitude so that it passes through the gaps between the pipes on the right side of the screen. If the bird accidentally hits a pipe or falls to the ground, the game ends in failure.\n\nTo simplify the problem, we modify the game rules as follows:\n\nThe game interface is a 2D plane with length $n$ and height $m$, containing $k$ pipes (pipe width is ignored).\n\nThe bird always moves within the game interface. It starts from any integer height on the left edge of the interface, and the game is completed when it reaches the right edge.\n\nIn each unit of time, the bird moves a distance of $1$ to the right along the horizontal axis. Its vertical movement is controlled by the player. If the screen is tapped, the bird rises by a certain height $x$, and you may tap multiple times within one unit of time with the effects adding up; if you do not tap, the bird falls by a certain height $y$. The rise $x$ and fall $y$ can vary with the bird’s horizontal position.\n\nIf the bird’s height equals $0$ or it hits a pipe, the game fails. When the bird’s height is $m$, it cannot rise further.\n\nNow, please determine whether the game can be completed. If it can, output the minimum number of taps. Otherwise, output the maximum number of pipe gaps the bird can pass through.",
+      "formatI": "The first line contains $3$ integers $n, m, k$, representing the length and height of the game interface and the number of pipes, respectively, separated by a single space.\n\nThe next $n$ lines each contain $2$ integers $x$ and $y$, separated by a single space. For horizontal positions $0 \\sim n - 1$ in order, $x$ denotes how much the bird will rise at the next position if the player taps at this position, and $y$ denotes how much the bird will fall at the next position if the player does not tap at this position.\n\nThen follow $k$ lines, each containing $3$ integers $p, l, h$, separated by single spaces. Each line describes one pipe, where $p$ is the pipe’s horizontal coordinate, $l$ is the lower boundary of the gap, and $h$ is the upper boundary of the gap (the input guarantees that all $p$ are distinct, but they are not guaranteed to be in sorted order).",
+      "formatO": "Output two lines.\n\nThe first line contains an integer. Output $1$ if the game can be successfully completed; otherwise, output $0$.\n\nThe second line contains an integer. If the first line is $1$, output the minimum number of taps required to complete the game. Otherwise, output the maximum number of pipe gaps the bird can pass through.",
+      "hint": "[Explanation for the sample input and output]\n\nAs shown in the figure below, the blue line is the bird’s flight path, and the red line represents the pipes.\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/59alxbqi.png)\n\nConstraints\n\n- For $30\\%$ of the testdata: $5 \\leq n \\leq 10$, $5 \\leq m \\leq 10$, $k = 0$, and there exists an optimal solution where at most $3$ taps occur within any single unit of time.\n- For $50\\%$ of the testdata: $5 \\leq n \\leq 20$, $5 \\leq m \\leq 10$, and there exists an optimal solution where at most $3$ taps occur within any single unit of time.\n- For $70\\%$ of the testdata: $5 \\leq n \\leq 1000$, $5 \\leq m \\leq 100$.\n- For $100\\%$ of the testdata: $5 \\leq n \\leq 10000$, $5 \\leq m \\leq 1000$, $0 \\leq k < n$, $0 < x, y < m$, $0 < p < n$, $0 \\leq l < h \\leq m$, $l + 1 < h$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "background": "NOIP2014 提高组 D1T3",
+      "description": "Flappy Bird 是一款风靡一时的休闲手机游戏。玩家需要不断控制点击手机屏幕的频率来调节小鸟的飞行高度，让小鸟顺利通过画面右方的管道缝隙。如果小鸟一不小心撞到了水管或者掉在地上的话，便宣告失败。\n\n为了简化问题，我们对游戏规则进行了简化和改编:\n\n游戏界面是一个长为 $n$，高为 $m$ 的二维平面，其中有 $k$ 个管道（忽略管道的宽度）。 \n\n小鸟始终在游戏界面内移动。小鸟从游戏界面最左边任意整数高度位置出发，到达游戏界面最右边时，游戏完成。\n\n小鸟每个单位时间沿横坐标方向右移的距离为 $1$，竖直移动的距离由玩家控制。如果点击屏幕，小鸟就会上升一定高度 $x$，每个单位时间可以点击多次，效果叠加；如果不点击屏幕，小鸟就会下降一定高度 $y$。小鸟位于横坐标方向不同位置时，上升的高度 $x$ 和下降的高度 $y$ 可能互不相同。\n\n小鸟高度等于 $0$ 或者小鸟碰到管道时，游戏失败。小鸟高度为 $m$ 时，无法再上升。\n\n现在，请你判断是否可以完成游戏。如果可以，输出最少点击屏幕数；否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "formatI": "第 $1$ 行有 $3$ 个整数 $n, m, k$，分别表示游戏界面的长度，高度和水管的数量，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行 $2$ 个用一个空格隔开的整数 $x$ 和 $y$，依次表示在横坐标位置 $0 \\sim n-1$ 上玩家点击屏幕后，小鸟在下一位置上升的高度 $x$，以及在这个位置上玩家不点击屏幕时，小鸟在下一位置下降的高度 $y$。\n\n接下来 $k$ 行，每行 $3$ 个整数 $p,l,h$，每两个整数之间用一个空格隔开。每行表示一个管道，其中 $p$ 表示管道的横坐标，$l$ 表示此管道缝隙的下边沿高度，$h$ 表示管道缝隙上边沿的高度（输入数据保证 $p$ 各不相同，但不保证按照大小顺序给出）。",
+      "formatO": "共两行。\n\n第一行，包含一个整数，如果可以成功完成游戏，则输出 $1$，否则输出 $0$。\n\n第二行，包含一个整数，如果第一行为 $1$，则输出成功完成游戏需要最少点击屏幕数，否则，输出小鸟最多可以通过多少个管道缝隙。",
+      "hint": "【输入输出样例说明】\n\n如下图所示，蓝色直线表示小鸟的飞行轨迹，红色直线表示管道。\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/59alxbqi.png)\n\n【数据范围】\n\n对于 $30\\%$ 的数据：$5 \\leq n \\leq 10, 5 \\leq m \\leq 10, k=0$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $50\\%$ 的数据：$5 \\leq n \\leq 20, 5 \\leq m \\leq 10$，保证存在一组最优解使得同一单位时间最多点击屏幕 $3$ 次；\n\n对于 $70\\%$ 的数据：$5 \\leq n \\leq 1000, 5 \\leq m \\leq 100$；\n\n对于 $100\\%$ 的数据：$5 \\leq n \\leq 10000$，$5 \\leq m \\leq 1000$，$0 \\leq k < n$，$0 < x,y < m$，$0 < p < n$，$0 \\leq l < h \\leq m$， $l + 1 < h$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1351",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 联合权值",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2296",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2312",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 解方程",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2679",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 子串",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2831",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P1941 [NOIP 2014 提高组] 飞扬的小鸟",
+    "type": 2,
+    "slug": "P1941",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1370430,
+      "title": "超自然现象求助",
+      "author": {
+        "uid": 1592188,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1592188.png",
+        "name": "Eternal_Sunshine",
+        "slogan": "当代孟德尔",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/5f72ootr.png"
+      },
+      "time": 1788497479
+    },
+    {
+      "id": 1370342,
+      "title": "一个奇怪的影响程序的运行速度的问题",
+      "author": {
+        "uid": 1531023,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1531023.png",
+        "name": "Thomas_liu",
+        "slogan": "四人同台三人在，一人已坐观众席 | AFO",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788443900
+    },
+    {
+      "id": 1370008,
+      "title": "如果你连样例都不过",
+      "author": {
+        "uid": 1224036,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1224036.png",
+        "name": "ycc160229",
+        "slogan": "boscod-cpp",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788399500
+    },
+    {
+      "id": 1369310,
+      "title": "对题目含义的疑问",
+      "author": {
+        "uid": 995945,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/995945.png",
+        "name": "watermouthhang",
+        "slogan": "让过去在面前倒流，让未来在脚下铺开——最大流·残余网络",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/2yrhmchp.png"
+      },
+      "time": 1788218971
+    },
+    {
+      "id": 1367659,
+      "title": "65pts求条，必关",
+      "author": {
+        "uid": 1474322,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1474322.png",
+        "name": "big_smart_2012",
+        "slogan": "一坨shit是shit，满山shit叫code",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/a1rih38c.png"
+      },
+      "time": 1787973281
+    },
+    {
+      "id": 1353809,
+      "title": "75分 求调",
+      "author": {
+        "uid": 1490438,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1490438.png",
+        "name": "wsptrNO1",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786711006
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

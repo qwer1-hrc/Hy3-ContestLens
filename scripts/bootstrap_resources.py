@@ -10,10 +10,19 @@ def main() -> None:
     scopes = hub.store.list_scopes()
     if not scopes:
         raise SystemExit("No configured resource root is available")
-    scope_id = scopes[0]["scope_id"]
     bindings = []
     for manifest in hub.catalog.list():
-        found = hub.resources.find_problem_assets(scope_id, manifest.problem_id, manifest.title_zh, manifest.io.basename)
+        if manifest.data_status == "missing":
+            bindings.append({"problem_id":manifest.problem_id,"status":"MISSING_TEST_DATA"})
+            continue
+        # Prefer the canonical collection; older scopes remain available for history.
+        ordered = sorted(scopes, key=lambda s: s["display_name"] != "contest_data")
+        found = {"status": "PROBLEM_ASSET_NOT_FOUND"}
+        for scope in ordered:
+            scope_id = scope["scope_id"]
+            found = hub.resources.find_problem_assets(scope_id, manifest.problem_id, manifest.title_zh, manifest.io.basename)
+            if found.get("auto_selected_candidate_id"):
+                break
         candidate_id = found.get("auto_selected_candidate_id")
         if not candidate_id:
             bindings.append({"problem_id": manifest.problem_id, "status": found["status"]})
@@ -25,4 +34,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

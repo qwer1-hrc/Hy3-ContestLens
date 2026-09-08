@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "csps2025_senior",
+  "problem_id": "csps2025_senior_replace",
+  "title_zh": "谐音替换",
+  "day": 1,
+  "contest": "CSP-S",
+  "year": 2025,
+  "group": "senior",
+  "task_number": 3,
+  "luogu_id": "P14363",
+  "luogu_difficulty": "提高+/省选−",
+  "difficulty_checked_at": "2026-09-05T05:11:18.542443+00:00",
+  "data_status": "samples",
+  "test_count": 4,
+  "judge_note": null,
+  "statement_relative_path": "csps/2025/senior/03_replace/statement.md",
+  "resource_limits": {
+    "time_ms": 1000,
+    "memory_mb": 2048,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "replace",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 25.0
+  }
+}

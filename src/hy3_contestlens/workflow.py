@@ -9,7 +9,14 @@ from typing import Any
 
 from .domain import CheckResult, CompileResult, CriticReview, Diagnosis, ErrorType, RunStatus, SolverOutput, Verdict
 from .errors import ContestLensError
-from .evaluation import adjudicate, code_review_conflicts_with_compile, improvement_key, is_complete
+from .evaluation import (
+    adjudicate,
+    code_review_conflicts_with_compile,
+    critic_review_quality_issues,
+    improvement_key,
+    is_complete,
+    repair_quality_gate,
+)
 from .judge import DockerJudge
 from .image_understanding import ImageDescriptionResult, ImageUnderstandingClient, StatementImages, augment_document
 from .model import Hy3Client
@@ -77,21 +84,37 @@ class ContestWorkflow:
         code_task = self.model.code_review(problem_spec, solution, io_basename)
         return await asyncio.gather(algorithm_task, code_task)
 
-    async def _recheck_code_review_if_conflicting(
+    async def _recheck_code_review_if_needed(
         self,
         problem_spec: dict[str, Any],
         solution: SolverOutput,
         io_basename: str,
         code_review: CriticReview,
         compile_result: CompileResult,
+        check: CheckResult | None = None,
     ) -> tuple[CriticReview, CriticReview | None]:
-        if not code_review_conflicts_with_compile(code_review, compile_result.verdict):
+        needs_runtime_evidence = (
+            compile_result.verdict == Verdict.OK
+            and check is not None
+            and check.verdict != Verdict.AC
+        )
+        needs_compile_evidence = compile_result.verdict == Verdict.CE
+        needs_quality_recheck = bool(critic_review_quality_issues(
+            code_review, (step.step_id for step in solution.steps),
+        ))
+        if not (
+            code_review_conflicts_with_compile(code_review, compile_result.verdict)
+            or needs_runtime_evidence
+            or needs_compile_evidence
+            or needs_quality_recheck
+        ):
             return code_review, None
         rechecked = await self.model.code_review(
             problem_spec,
             solution,
             io_basename,
             compile_evidence=compile_result.model_dump(mode="json"),
+            judge_evidence=check.model_dump(mode="json") if check else None,
         )
         return rechecked, code_review
 
@@ -130,7 +153,7 @@ class ContestWorkflow:
             check = await asyncio.to_thread(
                 self.judge.check_answer,
                 compile_result.compile_artifact_id,
-                "noip2018",
+                self.manifests.get(problem_id).dataset_id,
                 problem_id,
             )
             self.store.append_event(
@@ -151,8 +174,18 @@ class ContestWorkflow:
         return compile_result, check, frozen
 
     async def execute(self, run_id: str) -> None:
+        parents: dict[str, int | None] = {}
+
+        def progress(data: dict[str, Any]) -> None:
+            call_id = data["call_id"]
+            if call_id not in parents:
+                status = self.store.get_run(run_id)["status"]
+                parents[call_id] = next((event["seq"] for event in reversed(self.store.list_events(run_id))
+                                         if event["type"] == status), None)
+            self.store.append_event(run_id, "MODEL_CALL_PROGRESS", {**data, "parent_seq": parents[call_id]})
+
         try:
-            with model_run_context(self.workspace.settings.runs_root, run_id, lambda: self._cancelled(run_id)):
+            with model_run_context(self.workspace.settings.runs_root, run_id, lambda: self._cancelled(run_id), progress):
                 await self._execute(run_id)
         except ContestLensError as exc:
             if self._cancelled(run_id):
@@ -445,8 +478,8 @@ class ContestWorkflow:
             final_reviews = checkpoint.get("initial_final_reviews")
             if final_reviews is None:
                 self._status(run_id, RunStatus.LOCALIZING, phase="initial", revision_id=revision_id)
-                code_review, initial_code_review = await self._recheck_code_review_if_conflicting(
-                    problem_spec, solution, io_basename, code_review, compile_result,
+                code_review, initial_code_review = await self._recheck_code_review_if_needed(
+                    problem_spec, solution, io_basename, code_review, compile_result, check,
                 )
                 final_reviews = {
                     "algorithm": algorithm_review.model_dump(mode="json"),
@@ -468,7 +501,10 @@ class ContestWorkflow:
                 self._write(run_id, "code_critic_initial.json", initial_code_review.model_dump(mode="json"))
                 self._write(run_id, "code_critic_recheck.json", code_review.model_dump(mode="json"))
             self._write(run_id, "code_critic.json", code_review.model_dump(mode="json"))
-            diagnosis = adjudicate(algorithm_review, code_review, compile_result.verdict, check)
+            diagnosis = adjudicate(
+                algorithm_review, code_review, compile_result.verdict, check,
+                (step.step_id for step in solution.steps),
+            )
             initial = self._evaluation_record(revision_id, revision_sha, compile_result, check, diagnosis, frozen)
             self._write(run_id, "initial_evaluation/compile_result.json", compile_result.model_dump(mode="json"))
             if check:
@@ -524,7 +560,13 @@ class ContestWorkflow:
                     "repair_scope": best["diagnosis"]["repair_suggestion"],
                     "required_changes": [best["diagnosis"]["repair_suggestion"]] if best["diagnosis"]["repair_suggestion"] else [],
                     "regression_risks": ["Previously passing tests", "Complexity claim", "Code-step mapping"],
-                    "success_criteria": ["Compilation succeeds", "All formal tests pass", "No high-confidence contradicted process step"],
+                    "success_criteria": [
+                        "Compilation succeeds",
+                        "All formal tests pass",
+                        "No previously passing test regresses",
+                        "Critic findings are structurally consistent and localize the earliest defect",
+                        "Every loop and work queue has an explicit termination invariant",
+                    ],
                 }
                 repaired = await self.model.repair(
                     problem_spec, best_solution, best["diagnosis"],
@@ -609,8 +651,8 @@ class ContestWorkflow:
                 else:
                     algorithm_review = CriticReview.model_validate(raw_reviews["algorithm"])
                     code_review = CriticReview.model_validate(raw_reviews["code"])
-                code_review, initial_code_review = await self._recheck_code_review_if_conflicting(
-                    problem_spec, repaired, io_basename, code_review, compile_result,
+                code_review, initial_code_review = await self._recheck_code_review_if_needed(
+                    problem_spec, repaired, io_basename, code_review, compile_result, check,
                 )
                 review_data = {
                     "algorithm": algorithm_review.model_dump(mode="json"),
@@ -631,18 +673,24 @@ class ContestWorkflow:
                 run_id, RunStatus.LOCALIZING, phase="repair",
                 round=round_number, revision_id=revision["revision_id"],
             )
-            diagnosis = adjudicate(algorithm_review, code_review, compile_result.verdict, check)
+            diagnosis = adjudicate(
+                algorithm_review, code_review, compile_result.verdict, check,
+                (step.step_id for step in repaired.steps),
+            )
             current = self._evaluation_record(
                 revision["revision_id"], revision["sha256"], compile_result, check, diagnosis, frozen,
             )
             current_key = improvement_key(compile_result.verdict, check, diagnosis)
-            improved = current_key > best_key
+            previous_check = CheckResult.model_validate(best["check"]) if best.get("check") else None
+            quality_gate = repair_quality_gate(previous_check, check)
+            candidate_rank_improved = current_key > best_key
+            improved = candidate_rank_improved and quality_gate["passed"]
             if improved:
                 best, best_solution, best_key = current, repaired, current_key
                 no_improvement = 0
             else:
                 no_improvement += 1
-                if current_key < best_key:
+                if current_key < best_key or quality_gate["regressed_tests"]:
                     regression_count += 1
             round_record = {
                 "repair_round_id": f"round_{round_number:03d}",
@@ -657,6 +705,16 @@ class ContestWorkflow:
                 "code_review_initial": initial_code_review.model_dump(mode="json") if initial_code_review else None,
                 "code_review_recheck_triggered": initial_code_review is not None,
                 "process_evaluation": diagnosis.model_dump(mode="json"),
+                "quality_gate": {
+                    **quality_gate,
+                    "candidate_rank_improved": candidate_rank_improved,
+                    "algorithm_critic_issues": critic_review_quality_issues(
+                        algorithm_review, (step.step_id for step in repaired.steps),
+                    ),
+                    "code_critic_issues": critic_review_quality_issues(
+                        code_review, (step.step_id for step in repaired.steps),
+                    ),
+                },
                 "improved": improved,
                 "loop_decision": "COMPLETE" if is_complete(compile_result.verdict, check, diagnosis) else "CONTINUE",
             }

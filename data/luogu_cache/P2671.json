@@ -1,0 +1,302 @@
+{
+  "problem": {
+    "pid": "P2671",
+    "type": "P",
+    "name": "[NOIP 2015 普及组] 求和",
+    "difficulty": 4,
+    "tags": [
+      32,
+      44,
+      82,
+      113,
+      254
+    ],
+    "totalSubmit": 110667,
+    "totalAccepted": 29442,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 普及组] 求和",
+      "background": "NOIP2015 普及组 T3",
+      "description": "一条狭长的纸带被均匀划分出了 $n$ 个格子，格子编号从 $1$ 到 $n$。每个格子上都染了一种颜色 $color_i$（用 $[1,m]$ 当中的一个整数表示），并且写了一个数字 $number_i$。\n\n| 编号 | 1 | 2 | 3 | 4 | 5 | 6 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| **颜色和数字** | $\\color{blue}{5}$ | $\\color{blue}{5}$ | $\\color{red}{3}$ | $\\color{red}{2}$ | $\\color{blue}{2}$ | $\\color{red}{2}$ |\n\n定义一种特殊的三元组：$(x,y,z)$，其中 $x,y,z$ 都代表纸带上格子的编号，这里的三元组要求满足以下两个条件：\n\n1. $x,y,z$ 都是整数，$x<y<z,y-x=z-y$。\n\n2. $color_x=color_z$。\n\n满足上述条件的三元组的分数规定为 $(x+z) \\times (number_x+number_z)$。整个纸带的分数规定为所有满足条件的三元组的分数的和。这个分数可能会很大，你只要输出整个纸带的分数除以 $10007$ 所得的余数即可。",
+      "formatI": "第一行是用一个空格隔开的两个正整数 $n$ 和 $m$，$n$ 表示纸带上格子的个数，$m$ 表示纸带上颜色的种类数。\n\n第二行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子上面写的数字 $number_i$。\n\n第三行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子染的颜色 $color_i$。",
+      "formatO": "一个整数，表示所求的纸带分数除以 $10007$ 所得的余数。",
+      "hint": "**样例 1 解释**\n\n纸带如题目描述中的图所示。\n\n所有满足条件的三元组为：$(1, 3, 5), (4, 5, 6)$。\n\n所以纸带的分数为 $(1 + 5) \\times (5 + 2) + (4 + 6) \\times (2 + 2) = 42 + 40 = 82$。\n\n\n对于第 $1$ 组至第 $2$ 组数据， $1 ≤ n ≤ 100, 1 ≤ m ≤ 5$；\n\n对于第 $3$ 组至第 $4$ 组数据，$1 ≤ n ≤ 3000, 1 ≤ m ≤ 100$；\n\n对于第 $5$ 组至第 $ 6 $ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5$，且不存在出现次数超过 $ 20 $ 的颜色；\n\n对于全部 $10$ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5, 1 ≤ color_i ≤ m,1≤number_i≤10^5$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 普及组] 求和",
+      "background": "NOIP2015 普及组 T3",
+      "description": "一条狭长的纸带被均匀划分出了 $n$ 个格子，格子编号从 $1$ 到 $n$。每个格子上都染了一种颜色 $color_i$（用 $[1,m]$ 当中的一个整数表示），并且写了一个数字 $number_i$。\n\n| 编号 | 1 | 2 | 3 | 4 | 5 | 6 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| **颜色和数字** | $\\color{blue}{5}$ | $\\color{blue}{5}$ | $\\color{red}{3}$ | $\\color{red}{2}$ | $\\color{blue}{2}$ | $\\color{red}{2}$ |\n\n定义一种特殊的三元组：$(x,y,z)$，其中 $x,y,z$ 都代表纸带上格子的编号，这里的三元组要求满足以下两个条件：\n\n1. $x,y,z$ 都是整数，$x<y<z,y-x=z-y$。\n\n2. $color_x=color_z$。\n\n满足上述条件的三元组的分数规定为 $(x+z) \\times (number_x+number_z)$。整个纸带的分数规定为所有满足条件的三元组的分数的和。这个分数可能会很大，你只要输出整个纸带的分数除以 $10007$ 所得的余数即可。",
+      "formatI": "第一行是用一个空格隔开的两个正整数 $n$ 和 $m$，$n$ 表示纸带上格子的个数，$m$ 表示纸带上颜色的种类数。\n\n第二行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子上面写的数字 $number_i$。\n\n第三行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子染的颜色 $color_i$。",
+      "formatO": "一个整数，表示所求的纸带分数除以 $10007$ 所得的余数。",
+      "hint": "**样例 1 解释**\n\n纸带如题目描述中的图所示。\n\n所有满足条件的三元组为：$(1, 3, 5), (4, 5, 6)$。\n\n所以纸带的分数为 $(1 + 5) \\times (5 + 2) + (4 + 6) \\times (2 + 2) = 42 + 40 = 82$。\n\n\n对于第 $1$ 组至第 $2$ 组数据， $1 ≤ n ≤ 100, 1 ≤ m ≤ 5$；\n\n对于第 $3$ 组至第 $4$ 组数据，$1 ≤ n ≤ 3000, 1 ≤ m ≤ 100$；\n\n对于第 $5$ 组至第 $ 6 $ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5$，且不存在出现次数超过 $ 20 $ 的颜色；\n\n对于全部 $10$ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5, 1 ≤ color_i ≤ m,1≤number_i≤10^5$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6 2\n5 5 3 2 2 2\n2 2 1 1 2 1",
+        "82\n"
+      ],
+      [
+        "15 4\n5 10 8 2 2 2 9 9 7 7 5 6 4 2 4\n2 2 3 3 4 3 3 2 4 4 4 4 1 1 1",
+        "1388"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072,
+        131072
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Junior] Sum",
+      "background": "NOIP 2015 Junior T3.",
+      "description": "A long narrow strip of paper is evenly divided into $n$ cells, numbered from $1$ to $n$. Each cell is colored with a color $color_i$ (represented by an integer from $[1, m]$), and a number $number_i$ is written on it.\n\n| Index | 1 | 2 | 3 | 4 | 5 | 6 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| **Color and number** | $\\color{blue}{5}$ | $\\color{blue}{5}$ | $\\color{red}{3}$ | $\\color{red}{2}$ | $\\color{blue}{2}$ | $\\color{red}{2}$ |\n\nDefine a special triplet $(x, y, z)$, where $x$, $y$, $z$ are indices of cells on the strip, satisfying both of the following conditions:\n\n1. $x$, $y$, $z$ are integers, $x < y < z$, $y - x = z - y$.\n2. $color_x = color_z$.\n\nThe score of such a triplet is defined as $(x+z) \\times (number_x+number_z)$. The score of the entire strip is the sum of the scores of all triplets that satisfy the conditions. This score can be very large; you only need to output the remainder when the total score is divided by $10007$.",
+      "formatI": "The first line contains two positive integers $n$ and $m$ separated by a space. $n$ is the number of cells on the strip, and $m$ is the number of colors.\n\nThe second line contains $n$ positive integers separated by spaces; the $i$-th number is the number $number_i$ written on cell $i$.\n\nThe third line contains $n$ positive integers separated by spaces; the $i$-th number is the color $color_i$ of cell $i$.",
+      "formatO": "A single integer, the remainder of the total score modulo $10007$.",
+      "hint": "Sample 1 Explanation.\n\nThe strip is as shown in the figure in the problem description.\n\nAll valid triplets are: $(1, 3, 5)$, $(4, 5, 6)$.\n\nTherefore, the total score is $(1 + 5) \\times (5 + 2) + (4 + 6) \\times (2 + 2) = 42 + 40 = 82$.\n\nConstraints:\n- For testdata groups $1$ to $2$, $1 \\le n \\le 100$, $1 \\le m \\le 5$.\n- For testdata groups $3$ to $4$, $1 \\le n \\le 3000$, $1 \\le m \\le 100$.\n- For testdata groups $5$ to $6$, $1 \\le n \\le 10^5$, $1 \\le m \\le 10^5$, and no color appears more than $20$ times.\n- For all $10$ testdata groups, $1 \\le n \\le 10^5$, $1 \\le m \\le 10^5$, $1 \\le color_i \\le m$, $1 \\le number_i \\le 10^5$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 普及组] 求和",
+      "background": "NOIP2015 普及组 T3",
+      "description": "一条狭长的纸带被均匀划分出了 $n$ 个格子，格子编号从 $1$ 到 $n$。每个格子上都染了一种颜色 $color_i$（用 $[1,m]$ 当中的一个整数表示），并且写了一个数字 $number_i$。\n\n| 编号 | 1 | 2 | 3 | 4 | 5 | 6 |\n| :----------: | :----------: | :----------: | :----------: | :----------: | :----------: | :----------: |\n| **颜色和数字** | $\\color{blue}{5}$ | $\\color{blue}{5}$ | $\\color{red}{3}$ | $\\color{red}{2}$ | $\\color{blue}{2}$ | $\\color{red}{2}$ |\n\n定义一种特殊的三元组：$(x,y,z)$，其中 $x,y,z$ 都代表纸带上格子的编号，这里的三元组要求满足以下两个条件：\n\n1. $x,y,z$ 都是整数，$x<y<z,y-x=z-y$。\n\n2. $color_x=color_z$。\n\n满足上述条件的三元组的分数规定为 $(x+z) \\times (number_x+number_z)$。整个纸带的分数规定为所有满足条件的三元组的分数的和。这个分数可能会很大，你只要输出整个纸带的分数除以 $10007$ 所得的余数即可。",
+      "formatI": "第一行是用一个空格隔开的两个正整数 $n$ 和 $m$，$n$ 表示纸带上格子的个数，$m$ 表示纸带上颜色的种类数。\n\n第二行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子上面写的数字 $number_i$。\n\n第三行有 $n$ 个用空格隔开的正整数，第 $i$ 个数字表示纸带上编号为 $i$ 的格子染的颜色 $color_i$。",
+      "formatO": "一个整数，表示所求的纸带分数除以 $10007$ 所得的余数。",
+      "hint": "**样例 1 解释**\n\n纸带如题目描述中的图所示。\n\n所有满足条件的三元组为：$(1, 3, 5), (4, 5, 6)$。\n\n所以纸带的分数为 $(1 + 5) \\times (5 + 2) + (4 + 6) \\times (2 + 2) = 42 + 40 = 82$。\n\n\n对于第 $1$ 组至第 $2$ 组数据， $1 ≤ n ≤ 100, 1 ≤ m ≤ 5$；\n\n对于第 $3$ 组至第 $4$ 组数据，$1 ≤ n ≤ 3000, 1 ≤ m ≤ 100$；\n\n对于第 $5$ 组至第 $ 6 $ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5$，且不存在出现次数超过 $ 20 $ 的颜色；\n\n对于全部 $10$ 组数据，$1 ≤ n ≤ 10^5, 1 ≤ m ≤ 10^5, 1 ≤ color_i ≤ m,1≤number_i≤10^5$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 303,
+    "startTime": 1446859800,
+    "endTime": 1447594200,
+    "name": "NOIp2015普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P2119",
+      "type": "P",
+      "name": "[NOIP 2016 普及组] 魔法阵",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2672",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 推销员",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3406",
+      "type": "P",
+      "name": "海底高铁",
+      "difficulty": 3
+    },
+    {
+      "pid": "P3956",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 棋盘",
+      "difficulty": 4
+    },
+    {
+      "pid": "P4147",
+      "type": "P",
+      "name": "玉蟾宫",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P2671 [NOIP 2015 普及组] 求和",
+    "type": 2,
+    "slug": "P2671",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1363579,
+      "title": "50分 求调  必必必必必必必必必关",
+      "author": {
+        "uid": 1434639,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1434639.png",
+        "name": "zhuo0808",
+        "slogan": "这个家伙一点也不懒,什么都留下了。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xshynrjx.png"
+      },
+      "time": 1787572952
+    },
+    {
+      "id": 1359155,
+      "title": "0分求调",
+      "author": {
+        "uid": 2091376,
+        "avatar": "https://cdn.luogu.com.cn/images/banned.png",
+        "name": "#SUSPENDED#",
+        "slogan": null,
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": true,
+        "color": "Gray",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": null
+      },
+      "time": 1787188846
+    },
+    {
+      "id": 1348630,
+      "title": "（不是题解）关于本题数学闭式和教材使用的归纳式的关系",
+      "author": {
+        "uid": 2141510,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2141510.png",
+        "name": "raywxiong",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786325579
+    },
+    {
+      "id": 1331986,
+      "title": "样例不过求助",
+      "author": {
+        "uid": 1070468,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1070468.png",
+        "name": "ZzZzz_shutdown_s",
+        "slogan": "这个家伙很癫，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/yjsuj9q5.png"
+      },
+      "time": 1784776700
+    },
+    {
+      "id": 1331972,
+      "title": "求问复杂度",
+      "author": {
+        "uid": 1610711,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1610711.png",
+        "name": "X_0K_7_X",
+        "slogan": "Pain cannot define the past",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/4vijmhhz.png"
+      },
+      "time": 1784776425
+    },
+    {
+      "id": 1320178,
+      "title": "0pts玄关",
+      "author": {
+        "uid": 1034676,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1034676.png",
+        "name": "C2330tujiasheng",
+        "slogan": "喵",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783869899
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

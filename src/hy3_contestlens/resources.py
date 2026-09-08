@@ -221,10 +221,10 @@ class ResourceService:
         expected_directory = source_problem_dir(root, manifest)
         directories = [expected_directory] if expected_directory.is_dir() and not expected_directory.is_symlink() and not _is_reparse_point(expected_directory) else []
         if not directories:
-            directories = sorted({path.parent for path in self._safe_files(root) if path.suffix.lower() == ".in" and path.name.startswith(problem_id)}) if root.is_dir() else []
+            directories = sorted({path.parent for path in self._safe_files(root) if path.suffix.lower() == ".in" and path.name.startswith(manifest.io.basename)}) if root.is_dir() else []
         candidates: list[dict[str, Any]] = []
         for directory in directories:
-            inputs = sorted(directory.glob(f"{problem_id}*.in"), key=natural_test_key)
+            inputs = sorted(directory.glob(f"{manifest.io.basename}*.in"), key=natural_test_key)
             paired = []
             missing_answers = []
             conflicts = []
@@ -253,7 +253,12 @@ class ResourceService:
         root = self._root(scope_id)
         manifest = self.catalog.get(problem_id)
         title = title_zh or manifest.title_zh
-        documents = self._document_candidates(root, title)
+        exact = root / manifest.statement_relative_path if manifest.statement_relative_path else None
+        if exact and exact.is_file():
+            exact = self.resolve_scoped(scope_id, manifest.statement_relative_path, extensions=ALLOWED_DOCUMENT_EXTENSIONS)
+            documents = [{"path": exact, "kind": "markdown", "line_start": 1, "line_end": len(exact.read_text(encoding="utf-8").splitlines())}]
+        else:
+            documents = self._document_candidates(root, title)
         dataset = self.inspect_test_dataset(scope_id, problem_id)
         combined: list[dict[str, Any]] = []
         for document in documents or [None]:

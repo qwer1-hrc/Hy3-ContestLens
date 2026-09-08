@@ -1,0 +1,1432 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 717,
+    "result": [
+      {
+        "pid": "P2058",
+        "type": "P",
+        "name": "[NOIP 2016 普及组] 海港",
+        "difficulty": 3,
+        "tags": [
+          1,
+          33,
+          82,
+          148,
+          288,
+          345
+        ],
+        "totalSubmit": 183169,
+        "totalAccepted": 65538,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2827",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 蚯蚓",
+        "difficulty": 5,
+        "tags": [
+          33,
+          83,
+          108,
+          288
+        ],
+        "totalSubmit": 97943,
+        "totalAccepted": 23250,
+        "flag": 5,
+        "provider": {
+          "uid": 99,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/99.png",
+          "name": "saffah",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P1850",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 换教室",
+        "difficulty": 5,
+        "tags": [
+          3,
+          33,
+          83,
+          270,
+          476
+        ],
+        "totalSubmit": 67973,
+        "totalAccepted": 19658,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P1909",
+        "type": "P",
+        "name": "[NOIP 2016 普及组] 买铅笔",
+        "difficulty": 1,
+        "tags": [
+          1,
+          33,
+          82
+        ],
+        "totalSubmit": 680385,
+        "totalAccepted": 309923,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2119",
+        "type": "P",
+        "name": "[NOIP 2016 普及组] 魔法阵",
+        "difficulty": 4,
+        "tags": [
+          5,
+          33,
+          82,
+          111,
+          254
+        ],
+        "totalSubmit": 39254,
+        "totalAccepted": 10666,
+        "flag": 5,
+        "provider": {
+          "uid": 99,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/99.png",
+          "name": "saffah",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P1563",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 玩具谜题",
+        "difficulty": 2,
+        "tags": [
+          1,
+          33,
+          83
+        ],
+        "totalSubmit": 313629,
+        "totalAccepted": 126113,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2010",
+        "type": "P",
+        "name": "[NOIP 2016 普及组] 回文日期",
+        "difficulty": 2,
+        "tags": [
+          33,
+          82,
+          111
+        ],
+        "totalSubmit": 199873,
+        "totalAccepted": 69021,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P1600",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 天天爱跑步",
+        "difficulty": 7,
+        "tags": [
+          33,
+          42,
+          55,
+          83,
+          211,
+          228,
+          229,
+          290,
+          330,
+          379
+        ],
+        "totalSubmit": 53466,
+        "totalAccepted": 16314,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2822",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 组合数问题",
+        "difficulty": 3,
+        "tags": [
+          5,
+          33,
+          83,
+          252,
+          254
+        ],
+        "totalSubmit": 131492,
+        "totalAccepted": 41681,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2831",
+        "type": "P",
+        "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+        "difficulty": 5,
+        "tags": [
+          4,
+          5,
+          33,
+          83,
+          464
+        ],
+        "totalSubmit": 54767,
+        "totalAccepted": 19710,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5896",
+        "type": "P",
+        "name": "[IOI 2016] aliens",
+        "difficulty": 8,
+        "tags": [
+          3,
+          33,
+          102,
+          107,
+          150,
+          153
+        ],
+        "totalSubmit": 5103,
+        "totalAccepted": 1109,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P5966",
+        "type": "P",
+        "name": "[POI 2016] Hydrorozgrywka",
+        "difficulty": 7,
+        "tags": [
+          33,
+          57
+        ],
+        "totalSubmit": 125,
+        "totalAccepted": 51,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5967",
+        "type": "P",
+        "name": "[POI 2016] Korale",
+        "difficulty": 5,
+        "tags": [
+          4,
+          33,
+          42,
+          51,
+          57
+        ],
+        "totalSubmit": 1747,
+        "totalAccepted": 363,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5969",
+        "type": "P",
+        "name": "[POI 2016] Nadajniki",
+        "difficulty": 5,
+        "tags": [
+          33,
+          57
+        ],
+        "totalSubmit": 411,
+        "totalAccepted": 175,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5999",
+        "type": "P",
+        "name": "[CEOI 2016] kangaroo",
+        "difficulty": 6,
+        "tags": [
+          3,
+          33,
+          117,
+          252
+        ],
+        "totalSubmit": 5170,
+        "totalAccepted": 2991,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6000",
+        "type": "P",
+        "name": "[CEOI 2016] match",
+        "difficulty": 7,
+        "tags": [
+          7,
+          33,
+          112,
+          117
+        ],
+        "totalSubmit": 1404,
+        "totalAccepted": 467,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6001",
+        "type": "P",
+        "name": "[CEOI 2016] popeala",
+        "difficulty": 7,
+        "tags": [
+          3,
+          33,
+          117
+        ],
+        "totalSubmit": 317,
+        "totalAccepted": 112,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6167",
+        "type": "P",
+        "name": "[IOI 2016] shortcut",
+        "difficulty": 8,
+        "tags": [
+          33,
+          102,
+          107,
+          108
+        ],
+        "totalSubmit": 609,
+        "totalAccepted": 191,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P6168",
+        "type": "P",
+        "name": "[IOI 2016] railroad",
+        "difficulty": 8,
+        "tags": [
+          33,
+          102,
+          107,
+          166,
+          182
+        ],
+        "totalSubmit": 900,
+        "totalAccepted": 345,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P6169",
+        "type": "P",
+        "name": "[IOI 2016] molecules",
+        "difficulty": 5,
+        "tags": [
+          33,
+          102,
+          107,
+          113,
+          254,
+          345
+        ],
+        "totalSubmit": 734,
+        "totalAccepted": 182,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P6964",
+        "type": "P",
+        "name": "[NEERC 2016] Abbreviation",
+        "difficulty": 4,
+        "tags": [
+          33,
+          335,
+          500
+        ],
+        "totalSubmit": 429,
+        "totalAccepted": 150,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7036",
+        "type": "P",
+        "name": "[NWRRC 2016] Folding",
+        "difficulty": 2,
+        "tags": [
+          33,
+          335,
+          503
+        ],
+        "totalSubmit": 1135,
+        "totalAccepted": 286,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7040",
+        "type": "P",
+        "name": "[NWRRC 2016] Java2016",
+        "difficulty": 4,
+        "tags": [
+          33,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 320,
+        "totalAccepted": 132,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P13646",
+        "type": "P",
+        "name": "[NOISG 2016] LunchBox",
+        "difficulty": 2,
+        "tags": [
+          7,
+          33,
+          113,
+          436
+        ],
+        "totalSubmit": 1463,
+        "totalAccepted": 727,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13647",
+        "type": "P",
+        "name": "[NOISG 2016] Fabric",
+        "difficulty": 5,
+        "tags": [
+          33,
+          368,
+          385,
+          436,
+          465
+        ],
+        "totalSubmit": 277,
+        "totalAccepted": 79,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13650",
+        "type": "P",
+        "name": "[NOISG 2016] UnluckyFloors",
+        "difficulty": 5,
+        "tags": [
+          3,
+          33,
+          45,
+          141,
+          254,
+          436
+        ],
+        "totalSubmit": 62,
+        "totalAccepted": 21,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P1691",
+        "type": "P",
+        "name": "[ICPC 2016 WF] Oil",
+        "difficulty": 7,
+        "tags": [
+          8,
+          33,
+          298,
+          335,
+          449,
+          510
+        ],
+        "totalSubmit": 643,
+        "totalAccepted": 275,
+        "flag": 5,
+        "provider": {
+          "uid": 151935,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/151935.png",
+          "name": "Rainbow_qwq",
+          "slogan": "// what is matter? never mind. || https://www.cnblogs.com/Rainbowsjy/",
+          "badge": "Crystal",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p8un4op0.png"
+        }
+      },
+      {
+        "pid": "P4674",
+        "type": "P",
+        "name": "[BalticOI 2016] Bosses (day1)",
+        "difficulty": 5,
+        "tags": [
+          33,
+          108,
+          334
+        ],
+        "totalSubmit": 541,
+        "totalAccepted": 266,
+        "flag": 5,
+        "provider": {
+          "uid": 82152,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/82152.png",
+          "name": "Tiphereth_A",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/4baa2exz.png"
+        }
+      },
+      {
+        "pid": "P4675",
+        "type": "P",
+        "name": "[BalticOI 2016] Park (day1)",
+        "difficulty": 5,
+        "tags": [
+          33,
+          47,
+          108,
+          175,
+          334,
+          482
+        ],
+        "totalSubmit": 779,
+        "totalAccepted": 221,
+        "flag": 5,
+        "provider": {
+          "uid": 82152,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/82152.png",
+          "name": "Tiphereth_A",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/4baa2exz.png"
+        }
+      },
+      {
+        "pid": "P4676",
+        "type": "P",
+        "name": "[BalticOI 2016] Spiral (day1)",
+        "difficulty": 6,
+        "tags": [
+          33,
+          334
+        ],
+        "totalSubmit": 93,
+        "totalAccepted": 39,
+        "flag": 5,
+        "provider": {
+          "uid": 82152,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/82152.png",
+          "name": "Tiphereth_A",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/4baa2exz.png"
+        }
+      },
+      {
+        "pid": "P5964",
+        "type": "P",
+        "name": "[POI 2016] Park wodny",
+        "difficulty": 5,
+        "tags": [
+          33,
+          57
+        ],
+        "totalSubmit": 302,
+        "totalAccepted": 49,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6122",
+        "type": "P",
+        "name": "[NEERC 2016] Mole Tunnels",
+        "difficulty": 7,
+        "tags": [
+          33,
+          335,
+          373,
+          500
+        ],
+        "totalSubmit": 2274,
+        "totalAccepted": 1032,
+        "flag": 5,
+        "provider": {
+          "uid": 226760,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/226760.png",
+          "name": "RedLycoris",
+          "slogan": "原id paulzrm | nju",
+          "badge": "Kanade",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/dptujxd8.png"
+        }
+      },
+      {
+        "pid": "P6123",
+        "type": "P",
+        "name": "[NEERC 2016] Hard Refactoring",
+        "difficulty": 3,
+        "tags": [
+          2,
+          33,
+          335,
+          500
+        ],
+        "totalSubmit": 1467,
+        "totalAccepted": 237,
+        "flag": 5,
+        "provider": {
+          "uid": 226760,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/226760.png",
+          "name": "RedLycoris",
+          "slogan": "原id paulzrm | nju",
+          "badge": "Kanade",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/dptujxd8.png"
+        }
+      },
+      {
+        "pid": "P6965",
+        "type": "P",
+        "name": "[NEERC 2016] Binary Code",
+        "difficulty": 7,
+        "tags": [
+          33,
+          107,
+          155,
+          176,
+          300,
+          335,
+          500
+        ],
+        "totalSubmit": 3665,
+        "totalAccepted": 941,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6966",
+        "type": "P",
+        "name": "[NEERC 2016] Cactus Construction",
+        "difficulty": 7,
+        "tags": [
+          33,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 304,
+        "totalAccepted": 94,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6969",
+        "type": "P",
+        "name": "[NEERC 2016] Foreign Postcards",
+        "difficulty": 0,
+        "tags": [
+          3,
+          5,
+          33,
+          107,
+          270,
+          335,
+          500
+        ],
+        "totalSubmit": 218,
+        "totalAccepted": 172,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6971",
+        "type": "P",
+        "name": "[NEERC 2016] Jenga Boom",
+        "difficulty": 0,
+        "tags": [
+          33,
+          335,
+          500
+        ],
+        "totalSubmit": 112,
+        "totalAccepted": 30,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7031",
+        "type": "P",
+        "name": "[NWRRC 2016] Anniversary Cake",
+        "difficulty": 1,
+        "tags": [
+          33,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 1407,
+        "totalAccepted": 652,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7034",
+        "type": "P",
+        "name": "[NWRRC 2016] Digital Addition",
+        "difficulty": 5,
+        "tags": [
+          33,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 93,
+        "totalAccepted": 45,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7035",
+        "type": "P",
+        "name": "[NWRRC 2016] Easy Reading",
+        "difficulty": 7,
+        "tags": [
+          33,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 89,
+        "totalAccepted": 31,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7038",
+        "type": "P",
+        "name": "[NWRRC 2016] Hard Cuts",
+        "difficulty": 8,
+        "tags": [
+          33,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 66,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7039",
+        "type": "P",
+        "name": "[NWRRC 2016] Integral Polygons",
+        "difficulty": 7,
+        "tags": [
+          8,
+          33,
+          292,
+          335,
+          464,
+          503
+        ],
+        "totalSubmit": 214,
+        "totalAccepted": 98,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7041",
+        "type": "P",
+        "name": "[NWRRC 2016] King’s Heir",
+        "difficulty": 2,
+        "tags": [
+          33,
+          335,
+          503
+        ],
+        "totalSubmit": 561,
+        "totalAccepted": 246,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9195",
+        "type": "P",
+        "name": "[JOI Open 2016] JOIRIS",
+        "difficulty": 7,
+        "tags": [
+          33,
+          107,
+          318,
+          336
+        ],
+        "totalSubmit": 607,
+        "totalAccepted": 269,
+        "flag": 5,
+        "provider": {
+          "uid": 66709,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/66709.png",
+          "name": "LgxTpre",
+          "slogan": "大概，死而无憾了吧。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vuh9f7jf.png"
+        }
+      },
+      {
+        "pid": "P13188",
+        "type": "P",
+        "name": "[GCJ 2016 Qualification] Fractiles",
+        "difficulty": 5,
+        "tags": [
+          5,
+          33,
+          107,
+          514
+        ],
+        "totalSubmit": 14,
+        "totalAccepted": 6,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13191",
+        "type": "P",
+        "name": "[GCJ 2016 #1A] BFFs",
+        "difficulty": 4,
+        "tags": [
+          6,
+          33,
+          127,
+          514
+        ],
+        "totalSubmit": 82,
+        "totalAccepted": 30,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13194",
+        "type": "P",
+        "name": "[GCJ 2016 #1B] Technobabble",
+        "difficulty": 5,
+        "tags": [
+          33,
+          187,
+          514
+        ],
+        "totalSubmit": 46,
+        "totalAccepted": 15,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13196",
+        "type": "P",
+        "name": "[GCJ 2016 #1C] Slides!",
+        "difficulty": 4,
+        "tags": [
+          6,
+          33,
+          107,
+          318,
+          514
+        ],
+        "totalSubmit": 55,
+        "totalAccepted": 17,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13205",
+        "type": "P",
+        "name": "[GCJ 2016 #3] Go++",
+        "difficulty": 7,
+        "tags": [
+          33,
+          107,
+          318,
+          514
+        ],
+        "totalSubmit": 24,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13206",
+        "type": "P",
+        "name": "[GCJ 2016 Finals] Integeregex",
+        "difficulty": 8,
+        "tags": [
+          3,
+          33,
+          305,
+          514
+        ],
+        "totalSubmit": 14,
+        "totalAccepted": 6,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2016",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

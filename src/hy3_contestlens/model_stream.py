@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
+from collections import Counter
 from typing import Any
 
 
@@ -12,10 +14,36 @@ class StreamResponseError(Exception):
         self.kind = kind
 
 
+class RepetitionGuard:
+    """Conservative answer-only guard for prose reviews, never solver code or reasoning.
+
+    Require a long tail dominated by repeated complete sentences. Short recurring
+    schema keys, step verdicts and mathematical expressions cannot trigger it.
+    """
+
+    def __init__(self) -> None:
+        self.tail = ""
+        self.since_check = 0
+
+    def feed(self, text: str) -> None:
+        self.tail = (self.tail + text)[-8192:]
+        self.since_check += len(text)
+        if len(self.tail) < 8192 or self.since_check < 1024:
+            return
+        self.since_check = 0
+        sentences = re.findall(r"[^.!?。！？\n]{12,300}[.!?。！？]", self.tail)
+        counts = Counter(s.strip() for s in sentences)
+        covered = sum(len(s) * n for s, n in counts.items())
+        repeated = sum(len(s) * n for s, n in counts.items() if n >= 4)
+        if (len(sentences) >= 40 and covered >= 6000 and repeated >= covered * .85
+                and len(counts) <= len(sentences) * .25):
+            raise StreamResponseError("repetitive_output", "Review answer entered a sustained repetitive loop")
+
+
 class CompletionStream:
     """Assemble SSE answer text, never store or expose private reasoning deltas."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, guard_repetition: bool = False) -> None:
         self.started = time.monotonic()
         self.first_event_ms: int | None = None
         self.event_count = 0
@@ -31,6 +59,7 @@ class CompletionStream:
         self._event_chars = 0
         self._wire_chars = 0
         self._hash = hashlib.sha256()
+        self._repetition_guard = RepetitionGuard() if guard_repetition else None
 
     def feed(self, line: str) -> None:
         self._hash.update((line + "\n").encode("utf-8"))
@@ -98,6 +127,8 @@ class CompletionStream:
                 if self.content_chars > 4_000_000:
                     raise StreamResponseError("response_shape", "Streaming answer exceeded the safety limit")
                 self._parts.append(content)
+                if self._repetition_guard:
+                    self._repetition_guard.feed(content)
             if choice.get("finish_reason") is not None:
                 self.finish_reason = choice["finish_reason"]
             # Kimi places usage on the terminal choice, while OpenAI-compatible

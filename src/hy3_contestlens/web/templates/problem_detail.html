@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ problem.title_zh }} · Hy3-ContestLens{% endblock %}
+{% block content %}
+<section class="page-head"><p>{{ problem.contest }} {{ problem.year }} · {{ '普及组' if problem.group == 'junior' else '提高组' }} · {% if (problem.contest == 'NOIP' and problem.year < 2020 and problem.group == 'senior') or (problem.contest == 'CSP-S' and problem.year == 2019) %}Day {{ problem.day }} · {% endif %}第 {{ problem.task_number }} 题</p><h1>{{ problem.title_zh }}</h1><p>{{ problem.luogu_difficulty or '待标注' }} · {{ problem.resource_limits.time_ms }} ms · {{ problem.effective_memory_limit_mb }} MB</p></section>
+<section class="panel">
+<p>{{ '仅含附加样例，不能代表完整正式测试。' if problem.data_status == 'samples' else '缺少测试数据。' if problem.data_status == 'missing' else '仅有 10/20 个正式测试点。' if problem.data_status == 'partial' else '已导入本地比赛测试数据。' }}共 {{ problem.test_count }} 对；评测得分为本地测试点等权通过率，不代表官方子任务得分。</p>
+{% if problem.judge_note %}<p>{{ problem.judge_note }}，暂不支持自动评测。</p>{% else %}<a class="button primary" href="/ui/runs/new?problem={{ problem.problem_id }}">{{ '开始样例评测' if problem.data_status == 'samples' else '开始评测' }}</a>{% endif %}
+{% if problem.luogu_id %}<a class="button" href="https://www.luogu.com.cn/problem/{{ problem.luogu_id }}" target="_blank" rel="noopener">洛谷原题与难度</a>{% endif %}
+<p class="muted">难度查询时间：{{ problem.difficulty_checked_at or '未查询' }}</p>
+<pre class="statement-text">{{ statement }}</pre>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "noip2021_senior",
+  "problem_id": "noip2021_senior_chess",
+  "title_zh": "棋局",
+  "day": 1,
+  "contest": "NOIP",
+  "year": 2021,
+  "group": "senior",
+  "task_number": 4,
+  "luogu_id": "P7963",
+  "luogu_difficulty": "NOI/NOI+/CTS",
+  "difficulty_checked_at": "2026-09-05T05:10:38.037237+00:00",
+  "data_status": "official",
+  "test_count": 25,
+  "judge_note": null,
+  "statement_relative_path": "noip/2021/senior/04_chess/statement.md",
+  "resource_limits": {
+    "time_ms": 4000,
+    "memory_mb": 1024,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "chess",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 4.0
+  }
+}

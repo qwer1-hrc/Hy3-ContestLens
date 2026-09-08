@@ -1,0 +1,328 @@
+{
+  "problem": {
+    "pid": "P7115",
+    "type": "P",
+    "name": "[NOIP2020] 移球游戏",
+    "difficulty": 7,
+    "tags": [
+      37,
+      83,
+      107,
+      112,
+      318,
+      365
+    ],
+    "totalSubmit": 15312,
+    "totalAccepted": 3268,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2020] 移球游戏",
+      "background": "",
+      "description": "小 C 正在玩一个移球游戏，他面前有 $n + 1$ 根柱子，柱子从 $1 \\sim n + 1$ 编号，其中 $1$ 号柱子、$2$ 号柱子、……、$n$ 号柱子上各有 $m$ 个球，它们自底向上放置在柱子上，$n + 1$ 号柱子上初始时没有球。这 $n \\times m$ 个球共有 $n$ 种颜色，每种颜色的球各 $m$ 个。\n\n初始时一根柱子上的球可能是五颜六色的，而小 C 的任务是将所有同种颜色的球移到同一根柱子上，这是唯一的目标，而每种颜色的球最后放置在哪根柱子则没有限制。\n\n小 C 可以通过若干次操作完成这个目标，一次操作能将一个球从一根柱子移到另一根柱子上。更具体地，将 $x$ 号柱子上的球移动到 $y$ 号柱子上的要求为：\n\n1. $x$ 号柱子上至少有一个球；\n2. $y$ 号柱子上至多有 $m - 1$ 个球；\n3. 只能将 $x$ 号柱子最上方的球移到 $y$ 号柱子的最上方。\n\n小 C 的目标并不难完成，因此他决定给自己加加难度：在完成目标的基础上，使用的操作次数不能超过 $820000$。换句话说，小 C 需要使用至多 $820000$ 次操作完成目标。\n\n小 C 被难住了，但他相信难不倒你，请你给出一个操作方案完成小 C 的目标。合法的方案可能有多种，你只需要给出任意一种，题目保证一定存在一个合法方案。",
+      "formatI": "第一行两个用空格分隔的整数 $n, m$。分别表示球的颜色数、每种颜色球的个数。  \n接下来 $n$ 行每行 $m$ 个用单个空格分隔的整数，第 $i$ 行的整数按自底向上的顺序依次给出了 $i$ 号柱子上的球的颜色。",
+      "formatO": "本题采用自定义校验器（special judge）评测。  \n你的输出的第一行应该仅包含单个整数 $k$，表示你的方案的操作次数。你应保证 $0 \\le k \\le 820000$。  \n接下来 $k$ 行每行你应输出两个用单个空格分隔的正整数 $x, y$，表示这次操作将 $x$ 号柱子最上方的球移动到 $y$ 号柱子最上方。你应保证 $1 \\le x, y \\le n + 1$ 且 $x \\ne y$。",
+      "hint": "**【样例 #1 解释】**\n\n柱子中的内容为：按自底向上的顺序依次给出柱子上每个球的颜色。\n\n| 操作 | $1$ 号柱子 | $2$ 号柱子 | $3$ 号柱子 |\n|:-:|:-:|:-:|:-:|\n| 初始 | $1\\ 1\\ 2$ | $2\\ 1\\ 2$ | |\n| $1\\ 3$ | $1\\ 1$ | $2\\ 1\\ 2$ | $2$ |\n| $2\\ 3$ | $1\\ 1$ | $2\\ 1$ | $2\\ 2$ |\n| $2\\ 3$ | $1\\ 1$ | $2$ | $2\\ 2\\ 1$ |\n| $3\\ 1$ | $1\\ 1\\ 1$ | $2$ | $2\\ 2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2$ | $2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2\\ 2$ | |\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | $m \\le$ |\n|:-:|:-:|:-:|\n| $1 \\sim 2$ | $2$ | $20$ |\n| $3 \\sim 5$ | $10$ | $20$ |\n| $6 \\sim 8$ | $50$ | $85$ |\n| $9 \\sim 14$ | $50$ | $300$ |\n| $15 \\sim 20$ | $50$ | $400$ |\n\n对于所有测试点，保证 $2 \\le n \\le 50$，$2 \\le m \\le 400$。\n\n**【校验器】**\n\n为了方便选手测试，在附件中的 `ball` 目录下我们下发了 `checker.cpp` 文件，选手可以编译该程序，并使用它校验自己的输出文件。但请注意它与最终评测时所使用的校验器并不完全一致。你也不需要关心其代码的具体内容。\n\n编译命令为：`g++ checker.cpp −o checker -std=c++11`。\n\n`checker` 的使用方式为：`checker <inputfile> <outputfile>`，参数依次表示输入文件与你的输出文件。\n\n若你输出的数字大小范围不合法，则校验器会给出相应提示。若你的输出数字大小范围正确，但方案错误，则校验器会给出简要的错误信息：\n\n1. `A x`，表示进行到第 $x$ 个操作时不合法。\n2. `B x`，表示操作执行完毕后第 $x$ 个柱子上的球不合法。\n\n若你的方案正确，校验器会给出 `OK`。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2020] 移球游戏",
+      "background": "",
+      "description": "小 C 正在玩一个移球游戏，他面前有 $n + 1$ 根柱子，柱子从 $1 \\sim n + 1$ 编号，其中 $1$ 号柱子、$2$ 号柱子、……、$n$ 号柱子上各有 $m$ 个球，它们自底向上放置在柱子上，$n + 1$ 号柱子上初始时没有球。这 $n \\times m$ 个球共有 $n$ 种颜色，每种颜色的球各 $m$ 个。\n\n初始时一根柱子上的球可能是五颜六色的，而小 C 的任务是将所有同种颜色的球移到同一根柱子上，这是唯一的目标，而每种颜色的球最后放置在哪根柱子则没有限制。\n\n小 C 可以通过若干次操作完成这个目标，一次操作能将一个球从一根柱子移到另一根柱子上。更具体地，将 $x$ 号柱子上的球移动到 $y$ 号柱子上的要求为：\n\n1. $x$ 号柱子上至少有一个球；\n2. $y$ 号柱子上至多有 $m - 1$ 个球；\n3. 只能将 $x$ 号柱子最上方的球移到 $y$ 号柱子的最上方。\n\n小 C 的目标并不难完成，因此他决定给自己加加难度：在完成目标的基础上，使用的操作次数不能超过 $820000$。换句话说，小 C 需要使用至多 $820000$ 次操作完成目标。\n\n小 C 被难住了，但他相信难不倒你，请你给出一个操作方案完成小 C 的目标。合法的方案可能有多种，你只需要给出任意一种，题目保证一定存在一个合法方案。",
+      "formatI": "第一行两个用空格分隔的整数 $n, m$。分别表示球的颜色数、每种颜色球的个数。  \n接下来 $n$ 行每行 $m$ 个用单个空格分隔的整数，第 $i$ 行的整数按自底向上的顺序依次给出了 $i$ 号柱子上的球的颜色。",
+      "formatO": "本题采用自定义校验器（special judge）评测。  \n你的输出的第一行应该仅包含单个整数 $k$，表示你的方案的操作次数。你应保证 $0 \\le k \\le 820000$。  \n接下来 $k$ 行每行你应输出两个用单个空格分隔的正整数 $x, y$，表示这次操作将 $x$ 号柱子最上方的球移动到 $y$ 号柱子最上方。你应保证 $1 \\le x, y \\le n + 1$ 且 $x \\ne y$。",
+      "hint": "**【样例 #1 解释】**\n\n柱子中的内容为：按自底向上的顺序依次给出柱子上每个球的颜色。\n\n| 操作 | $1$ 号柱子 | $2$ 号柱子 | $3$ 号柱子 |\n|:-:|:-:|:-:|:-:|\n| 初始 | $1\\ 1\\ 2$ | $2\\ 1\\ 2$ | |\n| $1\\ 3$ | $1\\ 1$ | $2\\ 1\\ 2$ | $2$ |\n| $2\\ 3$ | $1\\ 1$ | $2\\ 1$ | $2\\ 2$ |\n| $2\\ 3$ | $1\\ 1$ | $2$ | $2\\ 2\\ 1$ |\n| $3\\ 1$ | $1\\ 1\\ 1$ | $2$ | $2\\ 2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2$ | $2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2\\ 2$ | |\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | $m \\le$ |\n|:-:|:-:|:-:|\n| $1 \\sim 2$ | $2$ | $20$ |\n| $3 \\sim 5$ | $10$ | $20$ |\n| $6 \\sim 8$ | $50$ | $85$ |\n| $9 \\sim 14$ | $50$ | $300$ |\n| $15 \\sim 20$ | $50$ | $400$ |\n\n对于所有测试点，保证 $2 \\le n \\le 50$，$2 \\le m \\le 400$。\n\n**【校验器】**\n\n为了方便选手测试，在附件中的 `ball` 目录下我们下发了 `checker.cpp` 文件，选手可以编译该程序，并使用它校验自己的输出文件。但请注意它与最终评测时所使用的校验器并不完全一致。你也不需要关心其代码的具体内容。\n\n编译命令为：`g++ checker.cpp −o checker -std=c++11`。\n\n`checker` 的使用方式为：`checker <inputfile> <outputfile>`，参数依次表示输入文件与你的输出文件。\n\n若你输出的数字大小范围不合法，则校验器会给出相应提示。若你的输出数字大小范围正确，但方案错误，则校验器会给出简要的错误信息：\n\n1. `A x`，表示进行到第 $x$ 个操作时不合法。\n2. `B x`，表示操作执行完毕后第 $x$ 个柱子上的球不合法。\n\n若你的方案正确，校验器会给出 `OK`。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "mu4y7wlz",
+        "filename": "ball.zip",
+        "size": 66377,
+        "uploadTime": 1607156013,
+        "downloadLink": "/fe/api/problem/downloadAttachment/mu4y7wlz"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 3\n1 1 2\n2 1 2\n",
+        "6\n1 3\n2 3\n2 3\n3 1\n3 2\n3 2\n"
+      ],
+      [
+        "见附件中的 ball/ball2.in",
+        "见附件中的 ball/ball2.ans"
+      ],
+      [
+        "见附件中的 ball/ball3.in",
+        "见附件中的 ball/ball3.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2020] Ball Moving Game",
+      "background": "",
+      "description": "Xiao C is playing a ball moving game. There are $n + 1$ poles in front of him, numbered from $1$ to $n + 1$. Poles $1$, $2$, $\\ldots$, $n$ each initially have $m$ balls stacked from bottom to top, while pole $n + 1$ initially has no balls. There are $n \\times m$ balls in total, with $n$ colors, and each color has exactly $m$ balls.\n\nInitially, the balls on a single pole may have many different colors. Xiao C’s task is to move all balls of the same color onto the same pole. This is the only goal, and there is no restriction on which pole each color finally ends up on.\n\nXiao C can achieve this goal using a sequence of operations. In one operation, he moves one ball from one pole to another. More specifically, moving a ball from pole $x$ to pole $y$ must satisfy:\n\n1. Pole $x$ has at least one ball.\n2. Pole $y$ has at most $m - 1$ balls.\n3. Only the top ball of pole $x$ can be moved to the top of pole $y$.\n\nSince the goal is not hard to achieve, Xiao C decided to make it more challenging: while achieving the goal, the total number of operations must not exceed $820000$. In other words, Xiao C must complete the goal in at most $820000$ operations.\n\nXiao C is stuck, but he believes you can solve it. Please output an operation plan to achieve Xiao C’s goal. There may be many valid plans; you only need to output any one of them. It is guaranteed that at least one valid plan exists.",
+      "formatI": "The first line contains two integers $n, m$ separated by spaces, representing the number of colors of balls and the number of balls of each color.  \nThe next $n$ lines each contain $m$ integers separated by single spaces. For line $i$, the integers give the colors of the balls on pole $i$ in order from bottom to top.",
+      "formatO": "This problem is judged with a special judge.  \nThe first line of your output should contain only a single integer $k$, indicating the number of operations in your plan. You must ensure that $0 \\le k \\le 820000$.  \nThe next $k$ lines should each contain two positive integers $x, y$ separated by a single space, meaning that this operation moves the top ball of pole $x$ to the top of pole $y$. You must ensure that $1 \\le x, y \\le n + 1$ and $x \\ne y$.",
+      "hint": "**[Sample #1 Explanation]**\n\nThe contents in the poles are given as: for each pole, the colors of its balls are listed from bottom to top.\n\n| Operation | Pole $1$ | Pole $2$ | Pole $3$ |\n|:-:|:-:|:-:|:-:|\n| Initial | $1\\ 1\\ 2$ | $2\\ 1\\ 2$ | |\n| $1\\ 3$ | $1\\ 1$ | $2\\ 1\\ 2$ | $2$ |\n| $2\\ 3$ | $1\\ 1$ | $2\\ 1$ | $2\\ 2$ |\n| $2\\ 3$ | $1\\ 1$ | $2$ | $2\\ 2\\ 1$ |\n| $3\\ 1$ | $1\\ 1\\ 1$ | $2$ | $2\\ 2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2$ | $2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2\\ 2$ | |\n\n**[Constraints]**\n\n| Test Point ID | $n \\le$ | $m \\le$ |\n|:-:|:-:|:-:|\n| $1 \\sim 2$ | $2$ | $20$ |\n| $3 \\sim 5$ | $10$ | $20$ |\n| $6 \\sim 8$ | $50$ | $85$ |\n| $9 \\sim 14$ | $50$ | $300$ |\n| $15 \\sim 20$ | $50$ | $400$ |\n\nFor all test points, it is guaranteed that $2 \\le n \\le 50$ and $2 \\le m \\le 400$.\n\n**[Checker]**\n\nTo make it easier for contestants to test, we provide a `checker.cpp` file in the `ball` directory in the attachments. You can compile this program and use it to check your output file. However, note that it is not exactly the same as the checker used in the final judging. You also do not need to care about the exact details of its code.\n\nThe compile command is: `g++ checker.cpp −o checker -std=c++11`.\n\nUsage of `checker` is: `checker <inputfile> <outputfile>`, where the parameters are the input file and your output file, respectively.\n\nIf the range of numbers in your output is invalid, the checker will print corresponding messages. If the range is correct but the plan is wrong, it will print brief error information:\n\n1. `A x`, meaning the operation is invalid at the $x$-th operation.\n2. `B x`, meaning after all operations are executed, the balls on pole $x$ are invalid.\n\nIf your plan is correct, the checker will print `OK`.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2020] 移球游戏",
+      "background": "",
+      "description": "小 C 正在玩一个移球游戏，他面前有 $n + 1$ 根柱子，柱子从 $1 \\sim n + 1$ 编号，其中 $1$ 号柱子、$2$ 号柱子、……、$n$ 号柱子上各有 $m$ 个球，它们自底向上放置在柱子上，$n + 1$ 号柱子上初始时没有球。这 $n \\times m$ 个球共有 $n$ 种颜色，每种颜色的球各 $m$ 个。\n\n初始时一根柱子上的球可能是五颜六色的，而小 C 的任务是将所有同种颜色的球移到同一根柱子上，这是唯一的目标，而每种颜色的球最后放置在哪根柱子则没有限制。\n\n小 C 可以通过若干次操作完成这个目标，一次操作能将一个球从一根柱子移到另一根柱子上。更具体地，将 $x$ 号柱子上的球移动到 $y$ 号柱子上的要求为：\n\n1. $x$ 号柱子上至少有一个球；\n2. $y$ 号柱子上至多有 $m - 1$ 个球；\n3. 只能将 $x$ 号柱子最上方的球移到 $y$ 号柱子的最上方。\n\n小 C 的目标并不难完成，因此他决定给自己加加难度：在完成目标的基础上，使用的操作次数不能超过 $820000$。换句话说，小 C 需要使用至多 $820000$ 次操作完成目标。\n\n小 C 被难住了，但他相信难不倒你，请你给出一个操作方案完成小 C 的目标。合法的方案可能有多种，你只需要给出任意一种，题目保证一定存在一个合法方案。",
+      "formatI": "第一行两个用空格分隔的整数 $n, m$。分别表示球的颜色数、每种颜色球的个数。  \n接下来 $n$ 行每行 $m$ 个用单个空格分隔的整数，第 $i$ 行的整数按自底向上的顺序依次给出了 $i$ 号柱子上的球的颜色。",
+      "formatO": "本题采用自定义校验器（special judge）评测。  \n你的输出的第一行应该仅包含单个整数 $k$，表示你的方案的操作次数。你应保证 $0 \\le k \\le 820000$。  \n接下来 $k$ 行每行你应输出两个用单个空格分隔的正整数 $x, y$，表示这次操作将 $x$ 号柱子最上方的球移动到 $y$ 号柱子最上方。你应保证 $1 \\le x, y \\le n + 1$ 且 $x \\ne y$。",
+      "hint": "**【样例 #1 解释】**\n\n柱子中的内容为：按自底向上的顺序依次给出柱子上每个球的颜色。\n\n| 操作 | $1$ 号柱子 | $2$ 号柱子 | $3$ 号柱子 |\n|:-:|:-:|:-:|:-:|\n| 初始 | $1\\ 1\\ 2$ | $2\\ 1\\ 2$ | |\n| $1\\ 3$ | $1\\ 1$ | $2\\ 1\\ 2$ | $2$ |\n| $2\\ 3$ | $1\\ 1$ | $2\\ 1$ | $2\\ 2$ |\n| $2\\ 3$ | $1\\ 1$ | $2$ | $2\\ 2\\ 1$ |\n| $3\\ 1$ | $1\\ 1\\ 1$ | $2$ | $2\\ 2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2$ | $2$ |\n| $3\\ 2$ | $1\\ 1\\ 1$ | $2\\ 2\\ 2$ | |\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | $m \\le$ |\n|:-:|:-:|:-:|\n| $1 \\sim 2$ | $2$ | $20$ |\n| $3 \\sim 5$ | $10$ | $20$ |\n| $6 \\sim 8$ | $50$ | $85$ |\n| $9 \\sim 14$ | $50$ | $300$ |\n| $15 \\sim 20$ | $50$ | $400$ |\n\n对于所有测试点，保证 $2 \\le n \\le 50$，$2 \\le m \\le 400$。\n\n**【校验器】**\n\n为了方便选手测试，在附件中的 `ball` 目录下我们下发了 `checker.cpp` 文件，选手可以编译该程序，并使用它校验自己的输出文件。但请注意它与最终评测时所使用的校验器并不完全一致。你也不需要关心其代码的具体内容。\n\n编译命令为：`g++ checker.cpp −o checker -std=c++11`。\n\n`checker` 的使用方式为：`checker <inputfile> <outputfile>`，参数依次表示输入文件与你的输出文件。\n\n若你输出的数字大小范围不合法，则校验器会给出相应提示。若你的输出数字大小范围正确，但方案错误，则校验器会给出简要的错误信息：\n\n1. `A x`，表示进行到第 $x$ 个操作时不合法。\n2. `B x`，表示操作执行完毕后第 $x$ 个柱子上的球不合法。\n\n若你的方案正确，校验器会给出 `OK`。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "CF622F",
+      "type": "CF",
+      "name": "The Sum of the k-th Powers",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7116",
+      "type": "P",
+      "name": "[NOIP2020] 微信步数",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7114",
+      "type": "P",
+      "name": "[NOIP2020] 字符串匹配",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P7115 [NOIP2020] 移球游戏",
+    "type": 2,
+    "slug": "P7115",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1297376,
+      "title": "这样为什么能过？",
+      "author": {
+        "uid": 957205,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/957205.png",
+        "name": "Frommyvalleyuphard",
+        "slogan": "已然残钢而破灭也，弗若任于人，于浮木之中题瓶而上路径。故此无后者越前者乎，仅此FMVH而不断前进。以其实为证，以其能为明，而似于歧路徘徊也。通过此，歧路徘徊而不再追忆，迷茫者得其意。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/lmoudyic.png"
+      },
+      "time": 1779692087
+    },
+    {
+      "id": 1295305,
+      "title": "警示后人：如果你用第二篇题解的做法",
+      "author": {
+        "uid": 1695715,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1695715.png",
+        "name": "ysw_2029",
+        "slogan": "两条平行线永不相交。两条相交的线，先是不停靠近，但在经历唯一的交点后，越离越远。|| ACT II - CATASTROPHE: FINALE",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 8,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/z7jatmrf.png"
+      },
+      "time": 1779362747
+    },
+    {
+      "id": 1235360,
+      "title": "RE10pts求调",
+      "author": {
+        "uid": 1059455,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1059455.png",
+        "name": "ybw0731",
+        "slogan": "当你凝视深渊时，深渊也在被你凝视。壶关请私信。",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1769325070
+    },
+    {
+      "id": 1200367,
+      "title": "禁食后人",
+      "author": {
+        "uid": 765045,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/765045.png",
+        "name": "TobyHu",
+        "slogan": "Hzy",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1763479410
+    },
+    {
+      "id": 1148008,
+      "title": "如果你操作次数过多",
+      "author": {
+        "uid": 572133,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/572133.png",
+        "name": "潘德理2010",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1757064452
+    },
+    {
+      "id": 1110746,
+      "title": "MLE求调",
+      "author": {
+        "uid": 755005,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/755005.png",
+        "name": "cxt1111",
+        "slogan": "Still I Rise",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/rd1ro3uw.png"
+      },
+      "time": 1752916818
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

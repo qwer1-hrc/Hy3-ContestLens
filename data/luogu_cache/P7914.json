@@ -1,0 +1,336 @@
+{
+  "problem": {
+    "pid": "P7914",
+    "type": "P",
+    "name": "[CSP-S 2021] 括号序列",
+    "difficulty": 6,
+    "tags": [
+      3,
+      58,
+      108,
+      144,
+      342
+    ],
+    "totalSubmit": 32041,
+    "totalAccepted": 11605,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[CSP-S 2021] 括号序列",
+      "background": "",
+      "description": "小 w 在赛场上遇到了这样一个题：一个长度为 $n$ 且符合规范的括号序列，其有些位置已经确定了，有些位置尚未确定，求这样的括号序列一共有多少个。\n\n身经百战的小 w 当然一眼就秒了这题，不仅如此，他还觉得一场正式比赛出这么简单的模板题也太小儿科了，于是他把这题进行了加强之后顺手扔给了小 c。\n\n具体而言，小 w 定义“超级括号序列”是由字符 `(`、`)`、`*` 组成的字符串，并且对于某个给定的常数 $k$，给出了“符合规范的超级括号序列”的定义如下：\n\n1. `()`、`(S)` 均是符合规范的超级括号序列，其中 `S` 表示任意一个仅由**不超过** $\\bm{k}$ **个**字符 `*` 组成的非空字符串（以下两条规则中的 `S` 均为此含义）；\n2. 如果字符串 `A` 和 `B` 均为符合规范的超级括号序列，那么字符串 `AB`、`ASB` 均为符合规范的超级括号序列，其中 `AB` 表示把字符串 `A` 和字符串 `B` 拼接在一起形成的字符串；\n3. 如果字符串 `A` 为符合规范的超级括号序列，那么字符串 `(A)`、`(SA)`、`(AS)` 均为符合规范的超级括号序列。\n4. 所有符合规范的超级括号序列均可通过上述 3 条规则得到。\n\n例如，若 $k = 3$，则字符串 `((**()*(*))*)(***)` 是符合规范的超级括号序列，但字符串 `*()`、`(*()*)`、`((**))*)`、`(****(*))` 均不是。特别地，空字符串也不被视为符合规范的超级括号序列。\n\n现在给出一个长度为 $n$ 的超级括号序列，其中有一些位置的字符已经确定，另外一些位置的字符尚未确定（用 `?` 表示）。小 w 希望能计算出：有多少种将所有尚未确定的字符一一确定的方法，使得得到的字符串是一个符合规范的超级括号序列？\n\n可怜的小 c 并不会做这道题，于是只好请求你来帮忙。",
+      "formatI": "第一行，两个正整数 $n, k$。\n\n第二行，一个长度为 $n$ 且仅由 `(`、`)`、`*`、`?` 构成的字符串 $S$。",
+      "formatO": "输出一个非负整数表示答案对 ${10}^9 + 7$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n如下几种方案是符合规范的：\n\n```plain\n(**)*()\n(**(*))\n(*(**))\n(*)**()\n(*)(**)\n```\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 3$ | $15$ | 无 |\n| $4 \\sim 8$ | $40$ | 无 |\n| $9 \\sim 13$ | $100$ | 无 |\n| $14 \\sim 15$ | $500$ | $S$ 串中仅含有字符 `?` |\n| $16 \\sim 20$ | $500$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le k \\le n \\le 500$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2021] 括号序列",
+      "background": "",
+      "description": "小 w 在赛场上遇到了这样一个题：一个长度为 $n$ 且符合规范的括号序列，其有些位置已经确定了，有些位置尚未确定，求这样的括号序列一共有多少个。\n\n身经百战的小 w 当然一眼就秒了这题，不仅如此，他还觉得一场正式比赛出这么简单的模板题也太小儿科了，于是他把这题进行了加强之后顺手扔给了小 c。\n\n具体而言，小 w 定义“超级括号序列”是由字符 `(`、`)`、`*` 组成的字符串，并且对于某个给定的常数 $k$，给出了“符合规范的超级括号序列”的定义如下：\n\n1. `()`、`(S)` 均是符合规范的超级括号序列，其中 `S` 表示任意一个仅由**不超过** $\\bm{k}$ **个**字符 `*` 组成的非空字符串（以下两条规则中的 `S` 均为此含义）；\n2. 如果字符串 `A` 和 `B` 均为符合规范的超级括号序列，那么字符串 `AB`、`ASB` 均为符合规范的超级括号序列，其中 `AB` 表示把字符串 `A` 和字符串 `B` 拼接在一起形成的字符串；\n3. 如果字符串 `A` 为符合规范的超级括号序列，那么字符串 `(A)`、`(SA)`、`(AS)` 均为符合规范的超级括号序列。\n4. 所有符合规范的超级括号序列均可通过上述 3 条规则得到。\n\n例如，若 $k = 3$，则字符串 `((**()*(*))*)(***)` 是符合规范的超级括号序列，但字符串 `*()`、`(*()*)`、`((**))*)`、`(****(*))` 均不是。特别地，空字符串也不被视为符合规范的超级括号序列。\n\n现在给出一个长度为 $n$ 的超级括号序列，其中有一些位置的字符已经确定，另外一些位置的字符尚未确定（用 `?` 表示）。小 w 希望能计算出：有多少种将所有尚未确定的字符一一确定的方法，使得得到的字符串是一个符合规范的超级括号序列？\n\n可怜的小 c 并不会做这道题，于是只好请求你来帮忙。",
+      "formatI": "第一行，两个正整数 $n, k$。\n\n第二行，一个长度为 $n$ 且仅由 `(`、`)`、`*`、`?` 构成的字符串 $S$。",
+      "formatO": "输出一个非负整数表示答案对 ${10}^9 + 7$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n如下几种方案是符合规范的：\n\n```plain\n(**)*()\n(**(*))\n(*(**))\n(*)**()\n(*)(**)\n```\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 3$ | $15$ | 无 |\n| $4 \\sim 8$ | $40$ | 无 |\n| $9 \\sim 13$ | $100$ | 无 |\n| $14 \\sim 15$ | $500$ | $S$ 串中仅含有字符 `?` |\n| $16 \\sim 20$ | $500$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le k \\le n \\le 500$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "1vsls872",
+        "filename": "bracket.zip",
+        "size": 1560,
+        "uploadTime": 1634990322,
+        "downloadLink": "/fe/api/problem/downloadAttachment/1vsls872"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "7 3\n(*??*??\n",
+        "5\n"
+      ],
+      [
+        "10 2\n???(*??(?)\n",
+        "19\n"
+      ],
+      [
+        "见附件中的 bracket/bracket3.in",
+        "见附件中的 bracket/bracket3.ans"
+      ],
+      [
+        "见附件中的 bracket/bracket4.in",
+        "见附件中的 bracket/bracket4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2021] Bracket Sequence",
+      "background": "",
+      "description": "Little w encountered such a problem in a contest: given a valid bracket sequence of length $n$, where some positions are already fixed and some are not, find how many such bracket sequences there are.\n\nThe battle-hardened little w solved it instantly. Not only that, he also felt that using such a simple template problem in an official contest was too easy, so he strengthened the problem and casually threw it to little c.\n\nSpecifically, little w defines a “super bracket sequence” as a string consisting of characters `(`, `)`, and `*`. For a given constant $k$, the definition of a “valid super bracket sequence” is as follows:\n\n1. `()` and `(S)` are both valid super bracket sequences, where `S` is any non-empty string consisting only of **no more than** $\\bm{k}$ **characters** `*` (the `S` in the next two rules has the same meaning).\n2. If both strings `A` and `B` are valid super bracket sequences, then `AB` and `ASB` are also valid super bracket sequences, where `AB` means concatenating string `A` and string `B`.\n3. If string `A` is a valid super bracket sequence, then `(A)`, `(SA)`, and `(AS)` are also valid super bracket sequences.\n4. All valid super bracket sequences can be obtained using the above 3 rules.\n\nFor example, if $k = 3$, then the string `((**()*(*))*)(***)` is a valid super bracket sequence, but `*()`, `(*()*)`, `((**))*)`, and `(****(*))` are not. In particular, the empty string is also not considered a valid super bracket sequence.\n\nNow you are given a super bracket sequence of length $n$, where some positions have already been fixed, and the other positions are not fixed (denoted by `?`). Little w wants to compute: in how many ways can we determine all the unknown characters one by one so that the resulting string is a valid super bracket sequence?\n\nPoor little c cannot solve this problem, so he has to ask you for help.",
+      "formatI": "The first line contains two positive integers $n, k$.\n\nThe second line contains a string $S$ of length $n$, consisting only of `(`, `)`, `*`, and `?`.",
+      "formatO": "Output a non-negative integer, representing the answer modulo ${10}^9 + 7$.",
+      "hint": "**[Sample Explanation #1]**\n\nThe following solutions are valid:\n\n```plain\n(**)*()\n(**(*))\n(*(**))\n(*)**()\n(*)(**)\n```\n\n**[Constraints]**\n\n| Test Point ID | $n \\le$ | Special Property |\n|:-:|:-:|:-:|\n| $1 \\sim 3$ | $15$ | None |\n| $4 \\sim 8$ | $40$ | None |\n| $9 \\sim 13$ | $100$ | None |\n| $14 \\sim 15$ | $500$ | The string $S$ contains only the character `?` |\n| $16 \\sim 20$ | $500$ | None |\n\nFor $100\\%$ of the testdata, $1 \\le k \\le n \\le 500$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2021] 括号序列",
+      "background": "",
+      "description": "小 w 在赛场上遇到了这样一个题：一个长度为 $n$ 且符合规范的括号序列，其有些位置已经确定了，有些位置尚未确定，求这样的括号序列一共有多少个。\n\n身经百战的小 w 当然一眼就秒了这题，不仅如此，他还觉得一场正式比赛出这么简单的模板题也太小儿科了，于是他把这题进行了加强之后顺手扔给了小 c。\n\n具体而言，小 w 定义“超级括号序列”是由字符 `(`、`)`、`*` 组成的字符串，并且对于某个给定的常数 $k$，给出了“符合规范的超级括号序列”的定义如下：\n\n1. `()`、`(S)` 均是符合规范的超级括号序列，其中 `S` 表示任意一个仅由**不超过** $\\bm{k}$ **个**字符 `*` 组成的非空字符串（以下两条规则中的 `S` 均为此含义）；\n2. 如果字符串 `A` 和 `B` 均为符合规范的超级括号序列，那么字符串 `AB`、`ASB` 均为符合规范的超级括号序列，其中 `AB` 表示把字符串 `A` 和字符串 `B` 拼接在一起形成的字符串；\n3. 如果字符串 `A` 为符合规范的超级括号序列，那么字符串 `(A)`、`(SA)`、`(AS)` 均为符合规范的超级括号序列。\n4. 所有符合规范的超级括号序列均可通过上述 3 条规则得到。\n\n例如，若 $k = 3$，则字符串 `((**()*(*))*)(***)` 是符合规范的超级括号序列，但字符串 `*()`、`(*()*)`、`((**))*)`、`(****(*))` 均不是。特别地，空字符串也不被视为符合规范的超级括号序列。\n\n现在给出一个长度为 $n$ 的超级括号序列，其中有一些位置的字符已经确定，另外一些位置的字符尚未确定（用 `?` 表示）。小 w 希望能计算出：有多少种将所有尚未确定的字符一一确定的方法，使得得到的字符串是一个符合规范的超级括号序列？\n\n可怜的小 c 并不会做这道题，于是只好请求你来帮忙。",
+      "formatI": "第一行，两个正整数 $n, k$。\n\n第二行，一个长度为 $n$ 且仅由 `(`、`)`、`*`、`?` 构成的字符串 $S$。",
+      "formatO": "输出一个非负整数表示答案对 ${10}^9 + 7$ 取模的结果。",
+      "hint": "**【样例解释 #1】**\n\n如下几种方案是符合规范的：\n\n```plain\n(**)*()\n(**(*))\n(*(**))\n(*)**()\n(*)(**)\n```\n\n**【数据范围】**\n\n| 测试点编号 | $n \\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1 \\sim 3$ | $15$ | 无 |\n| $4 \\sim 8$ | $40$ | 无 |\n| $9 \\sim 13$ | $100$ | 无 |\n| $14 \\sim 15$ | $500$ | $S$ 串中仅含有字符 `?` |\n| $16 \\sim 20$ | $500$ | 无 |\n\n对于 $100 \\%$ 的数据，$1 \\le k \\le n \\le 500$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 55005,
+    "startTime": 1634992200,
+    "endTime": 1635337800,
+    "name": "CSP2021 S 组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7913",
+      "type": "P",
+      "name": "[CSP-S 2021] 廊桥分配",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7915",
+      "type": "P",
+      "name": "[CSP-S 2021] 回文",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7916",
+      "type": "P",
+      "name": "[CSP-S 2021] 交通规划",
+      "difficulty": 7
+    },
+    {
+      "pid": "P7960",
+      "type": "P",
+      "name": "[NOIP2021] 报数",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7961",
+      "type": "P",
+      "name": "[NOIP2021] 数列",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P7914 [CSP-S 2021] 括号序列",
+    "type": 2,
+    "slug": "P7914",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1366725,
+      "title": "进食后人(如果你三维区间dp答案偏小或40分)",
+      "author": {
+        "uid": 1787628,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1787628.png",
+        "name": "petersala",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787848069
+    },
+    {
+      "id": 1362720,
+      "title": "求问第一篇题解为什么不会重复计算",
+      "author": {
+        "uid": 1556956,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1556956.png",
+        "name": "ZC_Algo",
+        "slogan": "这个家伙真的很懒",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787487662
+    },
+    {
+      "id": 1361790,
+      "title": "TLE。。。",
+      "author": {
+        "uid": 2028673,
+        "avatar": "https://cdn.luogu.com.cn/images/banned.png",
+        "name": "#SUSPENDED#",
+        "slogan": null,
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": true,
+        "color": "Cheater",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": null
+      },
+      "time": 1787392316
+    },
+    {
+      "id": 1345275,
+      "title": "警示后人（样例输出比答案大）",
+      "author": {
+        "uid": 719978,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/719978.png",
+        "name": "DYYqwq",
+        "slogan": "Phototropism.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/mfv976rm.png"
+      },
+      "time": 1785999048
+    },
+    {
+      "id": 1334433,
+      "title": "进食后仍（if you TLE)",
+      "author": {
+        "uid": 1063127,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1063127.png",
+        "name": "yechenguo",
+        "slogan": "ด้้้้้็้้้็็็็็้้้้้็็็็็้้้้้้็็็็็้้้้้็็็็็้้้้้้็็็็็้้้้้็็็็็้้้้้้็็็||支持互关(私，灰棕或我不想,不关)||清团杀关（误杀私）||CSP2026必拿7勾！！！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784965523
+    },
+    {
+      "id": 1287403,
+      "title": "求掉",
+      "author": {
+        "uid": 1282570,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1282570.png",
+        "name": "zxChicken_fAKer",
+        "slogan": "关注主包谢谢喵~~~",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hdr9pp4n.png"
+      },
+      "time": 1777894548
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

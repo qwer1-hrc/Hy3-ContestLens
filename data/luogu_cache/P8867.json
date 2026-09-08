@@ -1,0 +1,347 @@
+{
+  "problem": {
+    "pid": "P8867",
+    "type": "P",
+    "name": "[NOIP2022] 建造军营",
+    "difficulty": 6,
+    "tags": [
+      59,
+      83,
+      108,
+      152,
+      180,
+      181,
+      259
+    ],
+    "totalSubmit": 21636,
+    "totalAccepted": 6672,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP2022] 建造军营",
+      "background": "",
+      "description": "A 国与 B 国正在激烈交战中，A 国打算在自己的国土上建造一些军营。\n\nA 国的国土由 $n$ 座城市组成，$m$ 条双向道路连接这些城市，使得**任意两座城市均可通过道路直接或间接到达**。A 国打算选择一座或多座城市（**至少一座**），并在这些城市上各建造一座军营。\n\n众所周知，军营之间的联络是十分重要的。然而此时 A 国接到情报，B 国将会于不久后袭击 A 国的一条道路，但具体的袭击目标却无从得知。如果 B 国袭击成功，这条道路将被切断，可能会造成 A 国某两个军营无法互相到达，这是 A 国极力避免的。因此 A 国决定派兵看守若干条道路（**可以是一条或多条，也可以一条也不看守**），A 国有信心保证被派兵看守的道路能够抵御 B 国的袭击而不被切断。\n\nA 国希望制定一个建造军营和看守道路的方案，使得 B 国袭击的无论是 A 国的哪条道路，都不会造成某两座军营无法互相到达。现在，请你帮 A 国计算一下可能的建造军营和看守道路的方案数共有多少。由于方案数可能会很多，你只需要输出其对 $1,000,000,007\\left(10^{9}+7\\right)$ 取模的值即可。两个方案被认为是不同的，当且仅当存在至少一座城市在一个方案中建造了军营而在另一个方案中没有，或者存在至少一条道路在一个方案中被派兵看守而在另一个方案中没有。",
+      "formatI": "第一行包含两个正整数 $n,m$，分别表示城市的个数和双向道路的数量。\n\n接下来 $m$ 行，每行包含两个正整数 $u_{i},v_{i}$，描述一条连接 $u_{i}$ 和 $v_{i}$ 的双向道路。保证没有重边和自环。",
+      "formatO": "输出一行包含一个整数，表示建造军营和看守道路的方案数对 $1,000,000,007\\left(10^{9}+ 7\\right)$ 取模的结果。",
+      "hint": "### 样例 1 解释\n\n样例中，A 国共有两座城市，有 $1$ 条道路连接他们。\n\n所有可能的方案如下：\n\n- 在城市 $1$ 建军营，不看守这条道路；\n- 在城市 $1$ 建军营，看守这条道路；\n- 在城市 $2$ 建军营，不看守这条道路；\n- 在城市 $2$ 建军营，看守这条道路；\n- 在城市 $1,2$ 建军营，看守这条道路。\n\n### 数据规模与约定\n\n对于所有数据，保证 $1 \\leq n \\leq 5 \\times 10^5$，$n - 1 \\leq m \\leq 10^6$，$1 \\leq u_i, v_i \\leq n$，$u_i \\neq v_i$。\n\n::cute-table{tuack}\n\n|测试点编号 | $n \\leq $ | $m \\leq $| 特殊条件 |\n| :-: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $8$ | $10$ | 无 |\n| $4 \\sim 7$ | $16$ | $25$ | ^ |\n| $8 \\sim 9$ | $3000$ | $5000$ | ^ |\n| $10 \\sim 11$ | $5 \\times 10^5$ | $10^6$ | 特殊性质 $\\mathrm{A}$ |\n| $12 \\sim 14$ | ^ | ^ | $m = n - 1$ |\n| $15 \\sim 16$ | ^ | ^ | $m = n$ |\n| $17 \\sim 20$ | ^ | ^ | 无 |\n\n特殊性质 $\\mathrm{A}$：保证 $m=n-1$ 且第 $i$ 条道路连接城市 $i$ 与 $i+1$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2022] 建造军营",
+      "background": "",
+      "description": "A 国与 B 国正在激烈交战中，A 国打算在自己的国土上建造一些军营。\n\nA 国的国土由 $n$ 座城市组成，$m$ 条双向道路连接这些城市，使得**任意两座城市均可通过道路直接或间接到达**。A 国打算选择一座或多座城市（**至少一座**），并在这些城市上各建造一座军营。\n\n众所周知，军营之间的联络是十分重要的。然而此时 A 国接到情报，B 国将会于不久后袭击 A 国的一条道路，但具体的袭击目标却无从得知。如果 B 国袭击成功，这条道路将被切断，可能会造成 A 国某两个军营无法互相到达，这是 A 国极力避免的。因此 A 国决定派兵看守若干条道路（**可以是一条或多条，也可以一条也不看守**），A 国有信心保证被派兵看守的道路能够抵御 B 国的袭击而不被切断。\n\nA 国希望制定一个建造军营和看守道路的方案，使得 B 国袭击的无论是 A 国的哪条道路，都不会造成某两座军营无法互相到达。现在，请你帮 A 国计算一下可能的建造军营和看守道路的方案数共有多少。由于方案数可能会很多，你只需要输出其对 $1,000,000,007\\left(10^{9}+7\\right)$ 取模的值即可。两个方案被认为是不同的，当且仅当存在至少一座城市在一个方案中建造了军营而在另一个方案中没有，或者存在至少一条道路在一个方案中被派兵看守而在另一个方案中没有。",
+      "formatI": "第一行包含两个正整数 $n,m$，分别表示城市的个数和双向道路的数量。\n\n接下来 $m$ 行，每行包含两个正整数 $u_{i},v_{i}$，描述一条连接 $u_{i}$ 和 $v_{i}$ 的双向道路。保证没有重边和自环。",
+      "formatO": "输出一行包含一个整数，表示建造军营和看守道路的方案数对 $1,000,000,007\\left(10^{9}+ 7\\right)$ 取模的结果。",
+      "hint": "### 样例 1 解释\n\n样例中，A 国共有两座城市，有 $1$ 条道路连接他们。\n\n所有可能的方案如下：\n\n- 在城市 $1$ 建军营，不看守这条道路；\n- 在城市 $1$ 建军营，看守这条道路；\n- 在城市 $2$ 建军营，不看守这条道路；\n- 在城市 $2$ 建军营，看守这条道路；\n- 在城市 $1,2$ 建军营，看守这条道路。\n\n### 数据规模与约定\n\n对于所有数据，保证 $1 \\leq n \\leq 5 \\times 10^5$，$n - 1 \\leq m \\leq 10^6$，$1 \\leq u_i, v_i \\leq n$，$u_i \\neq v_i$。\n\n::cute-table{tuack}\n\n|测试点编号 | $n \\leq $ | $m \\leq $| 特殊条件 |\n| :-: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $8$ | $10$ | 无 |\n| $4 \\sim 7$ | $16$ | $25$ | ^ |\n| $8 \\sim 9$ | $3000$ | $5000$ | ^ |\n| $10 \\sim 11$ | $5 \\times 10^5$ | $10^6$ | 特殊性质 $\\mathrm{A}$ |\n| $12 \\sim 14$ | ^ | ^ | $m = n - 1$ |\n| $15 \\sim 16$ | ^ | ^ | $m = n$ |\n| $17 \\sim 20$ | ^ | ^ | 无 |\n\n特殊性质 $\\mathrm{A}$：保证 $m=n-1$ 且第 $i$ 条道路连接城市 $i$ 与 $i+1$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "8vnbs5iw",
+        "filename": "barrack.zip",
+        "size": 3511260,
+        "uploadTime": 1669443264,
+        "downloadLink": "/fe/api/problem/downloadAttachment/8vnbs5iw"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 1\n1 2",
+        "5"
+      ],
+      [
+        "4 4\n1 2\n2 3\n3 1\n1 4",
+        "184"
+      ],
+      [
+        "见附加文件里的 barrack/barrack3.in",
+        "见附加文件里的 barrack/barrack3.ans"
+      ],
+      [
+        "见附加文件里的 barrack/barrack4.in",
+        "见附加文件里的 barrack/barrack4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP2022] Building Military Camps",
+      "background": "",
+      "description": "Countries A and B are at war, and country A plans to build some military camps on its own territory.\n\nCountry A’s territory consists of $n$ cities, connected by $m$ bidirectional roads, such that any two cities are directly or indirectly reachable through the roads. Country A will choose one or more cities (at least one) and build exactly one military camp in each chosen city.\n\nIt is well known that communication between camps is crucial. However, country A has received intelligence that country B will soon attack one of A’s roads, but the exact target is unknown. If B’s attack succeeds, that road will be cut, which may cause some two camps in A to be unable to reach each other, something A is keen to avoid. Therefore, A decides to station troops to guard some roads (it could be one or more, or possibly none). Country A is confident that any guarded road can withstand B’s attack and will not be cut.\n\nCountry A wants to design a plan for building camps and guarding roads such that, no matter which road in A is attacked by B, it will not cause any two camps to be unable to reach each other. Please help country A calculate how many possible plans there are for building camps and guarding roads. Since the number of plans may be large, output the value modulo $1,000,000,007\\left(10^{9}+7\\right)$. Two plans are considered different if and only if there exists at least one city that has a camp in one plan but not in the other, or there exists at least one road that is guarded in one plan but not in the other.",
+      "formatI": "The first line contains two positive integers $n, m$, denoting the number of cities and the number of bidirectional roads, respectively.\n\nThe next $m$ lines each contain two positive integers $u_i, v_i$, describing a bidirectional road connecting $u_i$ and $v_i$. There are no multiple edges or self-loops.",
+      "formatO": "Output one line containing an integer, the number of valid plans for building camps and guarding roads, modulo $1,000,000,007\\left(10^{9}+ 7\\right)$.",
+      "hint": "### Sample 1 Explanation\n\nIn the sample, country A has two cities, with $1$ road connecting them.\n\nAll possible plans are as follows:\n- Build a camp in city $1$, do not guard the road.\n- Build a camp in city $1$, guard the road.\n- Build a camp in city $2$, do not guard the road.\n- Build a camp in city $2$, guard the road.\n- Build camps in cities $1, 2$, guard the road.\n\n### Constraints\n\nFor all testdata, it is guaranteed that $1 \\leq n \\leq 5 \\times 10^5$, $n - 1 \\leq m \\leq 10^6$, $1 \\leq u_i, v_i \\leq n$, $u_i \\neq v_i$.\n\n| Test point ID | $n \\leq$ | $m \\leq$ | Special condition |\n| :-: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $8$ | $10$ | None |\n| $4 \\sim 7$ | $16$ | $25$ | ^ |\n| $8 \\sim 9$ | $3000$ | $5000$ | ^ |\n| $10 \\sim 11$ | $5 \\times 10^5$ | $10^6$ | Special property $\\mathrm{A}$ |\n| $12 \\sim 14$ | ^ | ^ | $m = n - 1$ |\n| $15 \\sim 16$ | ^ | ^ | $m = n$ |\n| $17 \\sim 20$ | ^ | ^ | None |\n\nSpecial property $\\mathrm{A}$: guarantee $m = n - 1$ and the $i$-th road connects city $i$ and $i + 1$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP2022] 建造军营",
+      "background": "",
+      "description": "A 国与 B 国正在激烈交战中，A 国打算在自己的国土上建造一些军营。\n\nA 国的国土由 $n$ 座城市组成，$m$ 条双向道路连接这些城市，使得**任意两座城市均可通过道路直接或间接到达**。A 国打算选择一座或多座城市（**至少一座**），并在这些城市上各建造一座军营。\n\n众所周知，军营之间的联络是十分重要的。然而此时 A 国接到情报，B 国将会于不久后袭击 A 国的一条道路，但具体的袭击目标却无从得知。如果 B 国袭击成功，这条道路将被切断，可能会造成 A 国某两个军营无法互相到达，这是 A 国极力避免的。因此 A 国决定派兵看守若干条道路（**可以是一条或多条，也可以一条也不看守**），A 国有信心保证被派兵看守的道路能够抵御 B 国的袭击而不被切断。\n\nA 国希望制定一个建造军营和看守道路的方案，使得 B 国袭击的无论是 A 国的哪条道路，都不会造成某两座军营无法互相到达。现在，请你帮 A 国计算一下可能的建造军营和看守道路的方案数共有多少。由于方案数可能会很多，你只需要输出其对 $1,000,000,007\\left(10^{9}+7\\right)$ 取模的值即可。两个方案被认为是不同的，当且仅当存在至少一座城市在一个方案中建造了军营而在另一个方案中没有，或者存在至少一条道路在一个方案中被派兵看守而在另一个方案中没有。",
+      "formatI": "第一行包含两个正整数 $n,m$，分别表示城市的个数和双向道路的数量。\n\n接下来 $m$ 行，每行包含两个正整数 $u_{i},v_{i}$，描述一条连接 $u_{i}$ 和 $v_{i}$ 的双向道路。保证没有重边和自环。",
+      "formatO": "输出一行包含一个整数，表示建造军营和看守道路的方案数对 $1,000,000,007\\left(10^{9}+ 7\\right)$ 取模的结果。",
+      "hint": "### 样例 1 解释\n\n样例中，A 国共有两座城市，有 $1$ 条道路连接他们。\n\n所有可能的方案如下：\n\n- 在城市 $1$ 建军营，不看守这条道路；\n- 在城市 $1$ 建军营，看守这条道路；\n- 在城市 $2$ 建军营，不看守这条道路；\n- 在城市 $2$ 建军营，看守这条道路；\n- 在城市 $1,2$ 建军营，看守这条道路。\n\n### 数据规模与约定\n\n对于所有数据，保证 $1 \\leq n \\leq 5 \\times 10^5$，$n - 1 \\leq m \\leq 10^6$，$1 \\leq u_i, v_i \\leq n$，$u_i \\neq v_i$。\n\n::cute-table{tuack}\n\n|测试点编号 | $n \\leq $ | $m \\leq $| 特殊条件 |\n| :-: | :-: | :-: | :-: |\n| $1 \\sim 3$ | $8$ | $10$ | 无 |\n| $4 \\sim 7$ | $16$ | $25$ | ^ |\n| $8 \\sim 9$ | $3000$ | $5000$ | ^ |\n| $10 \\sim 11$ | $5 \\times 10^5$ | $10^6$ | 特殊性质 $\\mathrm{A}$ |\n| $12 \\sim 14$ | ^ | ^ | $m = n - 1$ |\n| $15 \\sim 16$ | ^ | ^ | $m = n$ |\n| $17 \\sim 20$ | ^ | ^ | 无 |\n\n特殊性质 $\\mathrm{A}$：保证 $m=n-1$ 且第 $i$ 条道路连接城市 $i$ 与 $i+1$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 93176,
+    "startTime": 1669442400,
+    "endTime": 1670076000,
+    "name": "NOIP 2022 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [],
+  "forum": {
+    "name": "P8867 [NOIP2022] 建造军营",
+    "type": 2,
+    "slug": "P8867",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1367017,
+      "title": "关于测试点15∼16 m=n",
+      "author": {
+        "uid": 1210996,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1210996.png",
+        "name": "Circuits",
+        "slogan": "想在高中继续参加信息学竞赛的在武汉上学的9年级同学可以私信沟通",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 8,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787899206
+    },
+    {
+      "id": 1361170,
+      "title": "0pts求条必关",
+      "author": {
+        "uid": 1191286,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1191286.png",
+        "name": "So_so",
+        "slogan": "绿名",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/w4bte43h.png"
+      },
+      "time": 1787323920
+    },
+    {
+      "id": 1358184,
+      "title": "阴间10pts求条",
+      "author": {
+        "uid": 1041623,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1041623.png",
+        "name": "zyen11451425",
+        "slogan": "☭имя твоё неизвестно подвиг твой бессмертен!☭|熟练界 被子植物门 单子叶植物纲 天南星目 天南星科 磨芋族 磨芋属 魔芋、疏毛魔芋、野魔芋、东川魔芋的块茎",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hy6uxggb.png"
+      },
+      "time": 1787109772
+    },
+    {
+      "id": 1340625,
+      "title": "0分，求条",
+      "author": {
+        "uid": 784094,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/784094.png",
+        "name": "yang123456789",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785550911
+    },
+    {
+      "id": 1338197,
+      "title": "嚼嚼嚼，80ptsのTLE/MLE真好吃捏~",
+      "author": {
+        "uid": 718487,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/718487.png",
+        "name": "CleverRaccoon",
+        "slogan": "不蓝钩不改个签",
+        "badge": "ʕ•ᴥ•ʔ",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/nhmh93j1.png"
+      },
+      "time": 1785311832
+    },
+    {
+      "id": 1336315,
+      "title": "0pts玄关求条",
+      "author": {
+        "uid": 1636740,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1636740.png",
+        "name": "wakemaggot",
+        "slogan": "我是gay!!!||2026 CSP/NOIP RP++||我已苏醒我是帝国少女||K+MC+术",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/j4gvxgx6.png"
+      },
+      "time": 1785146425
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

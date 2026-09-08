@@ -4,11 +4,12 @@ import json
 import httpx
 import pytest
 
-from hy3_contestlens.domain import SolverOutput
+from hy3_contestlens.domain import CriticReview, SolverOutput
 from hy3_contestlens.errors import ContestLensError
 from hy3_contestlens.model import Hy3Client
 from hy3_contestlens.model_diagnostics import model_run_context
 from hy3_contestlens.settings import Hy3Settings
+from hy3_contestlens.model_stream import CompletionStream, RepetitionGuard, StreamResponseError
 
 
 SOLUTION = {
@@ -162,3 +163,55 @@ async def test_body_disconnect_after_json_headers_retains_transport_error(tmp_pa
     with pytest.raises(ContestLensError) as caught:
         await client.solve({}, "road")
     assert caught.value.details["exception_type"] == "RemoteProtocolError"
+
+
+def test_guard_requires_sustained_repeated_prose_and_never_checks_reasoning():
+    phrase = "UNRESOLVED because no defect is identified and the summary does not claim one. "
+    guard = RepetitionGuard()
+    guard.feed(phrase * 30)  # Occasional repetition does not terminate a review.
+    with pytest.raises(StreamResponseError, match="repetitive loop"):
+        for _ in range(100):
+            guard.feed(phrase * 4)
+    # Long, distinct evidence and repetitive code are not rejected.
+    RepetitionGuard().feed(" ".join(f"Step {i} establishes the distinct bound n < {i + 1234}." for i in range(500)))
+    stream = CompletionStream(guard_repetition=True)
+    for line in frame(reasoning=phrase * 500).splitlines():
+        stream.feed(line)
+    assert stream.reasoning_chars > 10000
+    unguarded = CompletionStream()
+    for line in frame(phrase * 500).splitlines():
+        unguarded.feed(line)
+    assert unguarded.content_chars > 10000
+
+
+@pytest.mark.asyncio
+async def test_repetitive_review_closes_early_retries_and_emits_safe_progress(tmp_path):
+    phrase = "The summary does not claim a defect, consistent with UNRESOLVED. "
+    repeated = '{"summary":"' + phrase * 500
+    first = ByteStream("".join(frame(repeated[i:i + 128]) for i in range(0, len(repeated), 128)))
+    valid = {"reviewer": "algorithm_critic", "assessments": [], "summary": "No defect found."}
+    client, requests = make_client(tmp_path, [first, ByteStream(stream_text(valid))], reasoning_effort="high", max_tokens=127000)
+    events = []
+    with model_run_context(tmp_path, "run_progress", progress=events.append):
+        result = await client.json_completion(role="algorithm_critic", prompt="Review.", schema=CriticReview)
+    assert result.summary == valid["summary"] and first.closed
+    assert len(requests) == 2
+    assert all(r["reasoning_effort"] == "high" and r["max_tokens"] == 127000 for r in requests)
+    assert requests[1]["messages"][-1]["content"].find("repetitive_output") >= 0
+    assert phrase not in requests[1]["messages"][-1]["content"]
+    assert events[0]["phase"] == "waiting" and events[-1]["phase"] == "success"
+    retry = next(e for e in events if e["phase"] == "retrying")
+    assert retry["failure_kind"] == "repetitive_output" and retry["answer_chars"] < 12000
+    assert len({e["call_id"] for e in events}) == 1
+    assert {e["attempt"] for e in events} == {1, 2}
+    assert "PRIVATE_REASONING_SENTINEL" not in json.dumps(events)
+    assert "SECRET_KEY" not in json.dumps(events)
+
+
+@pytest.mark.asyncio
+async def test_progress_failure_does_not_fail_model_call(tmp_path):
+    client, _ = make_client(tmp_path, [ByteStream(stream_text())])
+    def broken(data):
+        raise OSError("unavailable")
+    with model_run_context(tmp_path, "run_progress", progress=broken):
+        assert (await client.solve({}, "road")).cpp_source == SOLUTION["cpp_source"]

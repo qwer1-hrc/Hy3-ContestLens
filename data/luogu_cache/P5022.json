@@ -1,0 +1,333 @@
+{
+  "problem": {
+    "pid": "P5022",
+    "type": "P",
+    "name": "[NOIP 2018 提高组] 旅行",
+    "difficulty": 5,
+    "tags": [
+      4,
+      7,
+      35,
+      83,
+      127,
+      320
+    ],
+    "totalSubmit": 78234,
+    "totalAccepted": 18023,
+    "flag": 5,
+    "provider": {
+      "uid": 36482,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+      "name": "龟龟号打捞船",
+      "slogan": "",
+      "badge": "铲屎官",
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2018 提高组] 旅行",
+      "background": "NOIP2018 提高组 D2T1",
+      "description": "小 Y 是一个爱好旅行的 OIer。她来到 X 国，打算将各个城市都玩一遍。\n\n小 Y 了解到，X 国的 $n$ 个城市之间有 $m$ 条双向道路。每条双向道路连接两个城市。不存在两条连接同一对城市的道路，也不存在一条连接一个城市和它本身的道路。并且，从任意一个城市出发，通过这些道路都可以到达任意一个其他城市。小 Y 只能通过这些道路从一个城市前往另一个城市。\n\n小 Y 的旅行方案是这样的：任意选定一个城市作为起点，然后从起点开始，每次可以选择一条与当前城市相连的道路，走向一个没有去过的城市，或者沿着第一次访问该城市时经过的道路后退到上一个城市。当小 Y 回到起点时，她可以选择结束这次旅行或继续旅行。需要注意的是，小 Y 要求在旅行方案中，每个城市都被访问到。\n\n为了让自己的旅行更有意义，小 Y 决定在每到达一个新的城市（包括起点）时，将它的编号记录下来。她知道这样会形成一个长度为 $n$ 的序列。她希望这个序列的字典序最小，你能帮帮她吗？对于两个长度均为 $n$ 的序列 $A$ 和 $B$，当且仅当存在一个正整数 $x$，满足以下条件时，我们说序列 $A$ 的字典序小于 $B$。\n\n- 对于任意正整数 $1 \\le i < x$，序列 $A$ 的第 $i$ 个元素 $A_i$ 和序列 $B$ 的第 $i$ 个元素 $B_i$ 相同。\n- 序列 $A$ 的第 $x$ 个元素的值小于序列 $B$ 的第 $x$ 个元素的值。",
+      "formatI": "输入文件共 $m + 1$ 行。第一行包含两个整数 $n,m(m \\le n)$，中间用一个空格分隔。\n\n接下来 $m$ 行，每行包含两个整数 $u,v (1 \\le u,v \\le n)$ ，表示编号为 $u$ 和 $v$ 的城市之间有一条道路，两个整数之间用一个空格分隔。",
+      "formatO": "输出文件包含一行，$n$ 个整数，表示字典序最小的序列。相邻两个整数之间用一个空格分隔。",
+      "hint": "【数据规模与约定】\n\n对于 $100\\%$ 的数据和所有样例， $1 \\le n \\le 5000 $ 且 $m = n - 1$ 或 $m = n$ 。\n\n对于不同的测试点，我们约定数据的规模如下：\n\n![](https://cdn.luogu.com.cn/upload/pic/43271.png)",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2018 提高组] 旅行",
+      "background": "NOIP2018 提高组 D2T1",
+      "description": "小 Y 是一个爱好旅行的 OIer。她来到 X 国，打算将各个城市都玩一遍。\n\n小 Y 了解到，X 国的 $n$ 个城市之间有 $m$ 条双向道路。每条双向道路连接两个城市。不存在两条连接同一对城市的道路，也不存在一条连接一个城市和它本身的道路。并且，从任意一个城市出发，通过这些道路都可以到达任意一个其他城市。小 Y 只能通过这些道路从一个城市前往另一个城市。\n\n小 Y 的旅行方案是这样的：任意选定一个城市作为起点，然后从起点开始，每次可以选择一条与当前城市相连的道路，走向一个没有去过的城市，或者沿着第一次访问该城市时经过的道路后退到上一个城市。当小 Y 回到起点时，她可以选择结束这次旅行或继续旅行。需要注意的是，小 Y 要求在旅行方案中，每个城市都被访问到。\n\n为了让自己的旅行更有意义，小 Y 决定在每到达一个新的城市（包括起点）时，将它的编号记录下来。她知道这样会形成一个长度为 $n$ 的序列。她希望这个序列的字典序最小，你能帮帮她吗？对于两个长度均为 $n$ 的序列 $A$ 和 $B$，当且仅当存在一个正整数 $x$，满足以下条件时，我们说序列 $A$ 的字典序小于 $B$。\n\n- 对于任意正整数 $1 \\le i < x$，序列 $A$ 的第 $i$ 个元素 $A_i$ 和序列 $B$ 的第 $i$ 个元素 $B_i$ 相同。\n- 序列 $A$ 的第 $x$ 个元素的值小于序列 $B$ 的第 $x$ 个元素的值。",
+      "formatI": "输入文件共 $m + 1$ 行。第一行包含两个整数 $n,m(m \\le n)$，中间用一个空格分隔。\n\n接下来 $m$ 行，每行包含两个整数 $u,v (1 \\le u,v \\le n)$ ，表示编号为 $u$ 和 $v$ 的城市之间有一条道路，两个整数之间用一个空格分隔。",
+      "formatO": "输出文件包含一行，$n$ 个整数，表示字典序最小的序列。相邻两个整数之间用一个空格分隔。",
+      "hint": "【数据规模与约定】\n\n对于 $100\\%$ 的数据和所有样例， $1 \\le n \\le 5000 $ 且 $m = n - 1$ 或 $m = n$ 。\n\n对于不同的测试点，我们约定数据的规模如下：\n\n![](https://cdn.luogu.com.cn/upload/pic/43271.png)",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6 5 \n1 3 \n2 3 \n2 5 \n3 4 \n4 6",
+        "1 3 2 5 4 6"
+      ],
+      [
+        "6 6 \n1 3 \n2 3 \n2 5 \n3 4 \n4 5 \n4 6",
+        "1 3 2 4 5 6"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2018 Senior] Travel",
+      "background": "NOIP 2018 Senior D2T1.",
+      "description": "Xiao Y is an OIer who loves traveling. She comes to Country X and plans to visit every city.\n\nXiao Y learns that there are $m$ undirected roads among the $n$ cities in Country X. Each undirected road connects two cities. There are no two roads connecting the same pair of cities, and there is no road connecting a city to itself. Also, starting from any city, one can reach any other city through these roads. Xiao Y can only travel from one city to another using these roads.\n\nXiao Y’s travel plan is as follows: she chooses any city as the starting point, and then starting from it, each time she can either choose a road connected to the current city and go to a city she has not visited before, or go back to the previous city along the road she used when she first visited the current city. When Xiao Y returns to the starting point, she may choose to end the trip or continue. Note that Xiao Y requires that in her plan, every city must be visited.\n\nTo make her trip more meaningful, every time she arrives at a new city (including the starting point), she records its index. She knows this will form a sequence of length $n$. She wants this sequence to be lexicographically smallest. Can you help her? For two sequences $A$ and $B$ of length $n$, we say $A$ is lexicographically smaller than $B$ if and only if there exists a positive integer $x$ such that:\n\n- For any positive integer $1 \\le i < x$, the $i$-th element $A_i$ of $A$ equals the $i$-th element $B_i$ of $B$.\n- The value of the $x$-th element of $A$ is smaller than that of the $x$-th element of $B$.",
+      "formatI": "The input has $m + 1$ lines. The first line contains two integers $n,m(m \\le n)$, separated by a space.\n\nThe next $m$ lines each contain two integers $u,v (1 \\le u,v \\le n)$, indicating that there is a road between the cities numbered $u$ and $v$. The two integers are separated by a space.",
+      "formatO": "Output one line with $n$ integers, representing the lexicographically smallest sequence. Adjacent integers are separated by a space.",
+      "hint": "## Constraints\n\nFor $100\\%$ of the data and all samples, $1 \\le n \\le 5000$ and $m = n - 1$ or $m = n$.\n\nFor different test points, the constraints are as follows:\n\n![](https://cdn.luogu.com.cn/upload/pic/43271.png)\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2018 提高组] 旅行",
+      "background": "NOIP2018 提高组 D2T1",
+      "description": "小 Y 是一个爱好旅行的 OIer。她来到 X 国，打算将各个城市都玩一遍。\n\n小 Y 了解到，X 国的 $n$ 个城市之间有 $m$ 条双向道路。每条双向道路连接两个城市。不存在两条连接同一对城市的道路，也不存在一条连接一个城市和它本身的道路。并且，从任意一个城市出发，通过这些道路都可以到达任意一个其他城市。小 Y 只能通过这些道路从一个城市前往另一个城市。\n\n小 Y 的旅行方案是这样的：任意选定一个城市作为起点，然后从起点开始，每次可以选择一条与当前城市相连的道路，走向一个没有去过的城市，或者沿着第一次访问该城市时经过的道路后退到上一个城市。当小 Y 回到起点时，她可以选择结束这次旅行或继续旅行。需要注意的是，小 Y 要求在旅行方案中，每个城市都被访问到。\n\n为了让自己的旅行更有意义，小 Y 决定在每到达一个新的城市（包括起点）时，将它的编号记录下来。她知道这样会形成一个长度为 $n$ 的序列。她希望这个序列的字典序最小，你能帮帮她吗？对于两个长度均为 $n$ 的序列 $A$ 和 $B$，当且仅当存在一个正整数 $x$，满足以下条件时，我们说序列 $A$ 的字典序小于 $B$。\n\n- 对于任意正整数 $1 \\le i < x$，序列 $A$ 的第 $i$ 个元素 $A_i$ 和序列 $B$ 的第 $i$ 个元素 $B_i$ 相同。\n- 序列 $A$ 的第 $x$ 个元素的值小于序列 $B$ 的第 $x$ 个元素的值。",
+      "formatI": "输入文件共 $m + 1$ 行。第一行包含两个整数 $n,m(m \\le n)$，中间用一个空格分隔。\n\n接下来 $m$ 行，每行包含两个整数 $u,v (1 \\le u,v \\le n)$ ，表示编号为 $u$ 和 $v$ 的城市之间有一条道路，两个整数之间用一个空格分隔。",
+      "formatO": "输出文件包含一行，$n$ 个整数，表示字典序最小的序列。相邻两个整数之间用一个空格分隔。",
+      "hint": "【数据规模与约定】\n\n对于 $100\\%$ 的数据和所有样例， $1 \\le n \\le 5000 $ 且 $m = n - 1$ 或 $m = n$ 。\n\n对于不同的测试点，我们约定数据的规模如下：\n\n![](https://cdn.luogu.com.cn/upload/pic/43271.png)",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 12952,
+    "startTime": 1541804400,
+    "endTime": 1542211200,
+    "name": "NOIP2018提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P2607",
+      "type": "P",
+      "name": "[ZJOI2008] 骑士",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5021",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 赛道修建",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5023",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 填数游戏",
+      "difficulty": 8
+    },
+    {
+      "pid": "P5024",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 保卫王国",
+      "difficulty": 7
+    },
+    {
+      "pid": "P5049",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 旅行 加强版",
+      "difficulty": 7
+    }
+  ],
+  "forum": {
+    "name": "P5022 [NOIP 2018 提高组] 旅行",
+    "type": 2,
+    "slug": "P5022",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368187,
+      "title": "求问",
+      "author": {
+        "uid": 761444,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/761444.png",
+        "name": "CASCwty",
+        "slogan": "雄关漫道真如铁，而今迈步从头越。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/gx8bbipy.png"
+      },
+      "time": 1788011885
+    },
+    {
+      "id": 1366892,
+      "title": "调了几个小时了还不对，玄关求条",
+      "author": {
+        "uid": 1216673,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1216673.png",
+        "name": "zhl716",
+        "slogan": "᠎",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787889150
+    },
+    {
+      "id": 1350175,
+      "title": "if (RE 84pts)",
+      "author": {
+        "uid": 1086881,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1086881.png",
+        "name": "Zephyn",
+        "slogan": "Minecraft 8 年老玩家",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qt7jpq2y.png"
+      },
+      "time": 1786435566
+    },
+    {
+      "id": 1330483,
+      "title": "萌新刚学基环树 错解求反例",
+      "author": {
+        "uid": 1794511,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1794511.png",
+        "name": "_Seren_",
+        "slogan": "我不会二分。 || 会好起来的吧。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784640018
+    },
+    {
+      "id": 1324712,
+      "title": "紧实厚刃 if WA 88pts #18#19#20",
+      "author": {
+        "uid": 1717406,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1717406.png",
+        "name": "cao2333",
+        "slogan": "咕顾辜 原+崩+音游+MC+月计=珠颈斑鸠awa",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/nw8mj6rz.png"
+      },
+      "time": 1784190999
+    },
+    {
+      "id": 1324681,
+      "title": "如果是点有点权（可重复），怎么做",
+      "author": {
+        "uid": 366639,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/366639.png",
+        "name": "hh弟中弟",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784190243
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

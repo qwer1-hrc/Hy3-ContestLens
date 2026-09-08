@@ -1,0 +1,328 @@
+{
+  "problem": {
+    "pid": "P5657",
+    "type": "P",
+    "name": "[CSP-S 2019] 格雷码",
+    "difficulty": 2,
+    "tags": [
+      5,
+      36,
+      54,
+      244,
+      314,
+      342
+    ],
+    "totalSubmit": 119456,
+    "totalAccepted": 39631,
+    "flag": 5,
+    "provider": {
+      "uid": 401,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/401.png",
+      "name": "soha",
+      "slogan": "洛谷爆炸的时候，10%是因为开发组，90%是因为阿里云。",
+      "badge": "空气",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/vsp3t8vv.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2019] 格雷码",
+      "background": "",
+      "description": "通常，人们习惯将所有 $n$ 位二进制串按照字典序排列，例如所有 2 位二进制串按字典序从小到大排列为：00，01，10，11。\n\n格雷码（Gray Code）是一种特殊的 $n$ 位二进制串排列法，它要求相邻的两个二进制串间**恰好**有一位**不同**，特别地，第一个串与最后一个串也算作相邻。\n\n所有 2 位二进制串按格雷码排列的一个例子为：00，01，11，10。\n\n$n$ 位格雷码不止一种，下面给出其中一种格雷码的生成算法：\n1. 1 位格雷码由两个 1 位二进制串组成，顺序为：0，1。\n2. $n + 1$ 位格雷码的前 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**顺序**排列，再在每个串前加一个前缀 0 构成。\n3. $n + 1$ 位格雷码的后 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**逆序**排列，再在每个串前加一个前缀 1 构成。\n\n综上，$n + 1$ 位格雷码，由 $n$ 位格雷码的 $2^n$ 个二进制串按顺序排列再加前缀 0，和按逆序排列再加前缀 1 构成，共 $2^{n+1}$ 个二进制串。另外，对于 $n$ 位格雷码中的 $2^n$ 个 二进制串，我们按上述算法得到的排列顺序将它们从 $0 \\sim 2^n - 1$ 编号。\n\n按该算法，2 位格雷码可以这样推出：\n\n1. 已知 1 位格雷码为 0，1。\n2. 前两个格雷码为 00，01。后两个格雷码为 11，10。合并得到 00，01，11，10，编号依次为 0 ~ 3。\n\n同理，3 位格雷码可以这样推出：\n\n1. 已知 2 位格雷码为：00，01，11，10。\n2. 前四个格雷码为：000，001，011，010。后四个格雷码为：110，111，101，100。合并得到：000，001，011，010，110，111，101，100，编号依次为 0 ~ 7。\n\n现在给出 $n$，$k$，请你求出按上述算法生成的 $n$ 位格雷码中的 $k$ 号二进制串。\n",
+      "formatI": "仅一行两个整数 $n$，$k$，意义见题目描述。",
+      "formatO": "仅一行一个 $n$ 位二进制串表示答案。",
+      "hint": "【样例 1 解释】\n\n2 位格雷码为：00，01，11，10，编号从 0∼3，因此 3 号串是 10。\n\n【样例 2 解释】\n\n3 位格雷码为：000，001，011，010，110，111，101，100，编号从 0∼7，因此 5 号串是 111。\n\n【数据范围】\n\n对于 $50\\%$ 的数据：$n \\leq 10$\n\n对于 $80\\%$ 的数据：$k \\leq 5 \\times 10^6$\n\n对于 $95\\%$ 的数据：$k \\leq 2^{63} - 1$\n\n对于 $100\\%$ 的数据：$1 \\leq n \\leq 64$, $0 \\leq k \\lt 2^n$",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2019] 格雷码",
+      "background": "",
+      "description": "通常，人们习惯将所有 $n$ 位二进制串按照字典序排列，例如所有 2 位二进制串按字典序从小到大排列为：00，01，10，11。\n\n格雷码（Gray Code）是一种特殊的 $n$ 位二进制串排列法，它要求相邻的两个二进制串间**恰好**有一位**不同**，特别地，第一个串与最后一个串也算作相邻。\n\n所有 2 位二进制串按格雷码排列的一个例子为：00，01，11，10。\n\n$n$ 位格雷码不止一种，下面给出其中一种格雷码的生成算法：\n1. 1 位格雷码由两个 1 位二进制串组成，顺序为：0，1。\n2. $n + 1$ 位格雷码的前 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**顺序**排列，再在每个串前加一个前缀 0 构成。\n3. $n + 1$ 位格雷码的后 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**逆序**排列，再在每个串前加一个前缀 1 构成。\n\n综上，$n + 1$ 位格雷码，由 $n$ 位格雷码的 $2^n$ 个二进制串按顺序排列再加前缀 0，和按逆序排列再加前缀 1 构成，共 $2^{n+1}$ 个二进制串。另外，对于 $n$ 位格雷码中的 $2^n$ 个 二进制串，我们按上述算法得到的排列顺序将它们从 $0 \\sim 2^n - 1$ 编号。\n\n按该算法，2 位格雷码可以这样推出：\n\n1. 已知 1 位格雷码为 0，1。\n2. 前两个格雷码为 00，01。后两个格雷码为 11，10。合并得到 00，01，11，10，编号依次为 0 ~ 3。\n\n同理，3 位格雷码可以这样推出：\n\n1. 已知 2 位格雷码为：00，01，11，10。\n2. 前四个格雷码为：000，001，011，010。后四个格雷码为：110，111，101，100。合并得到：000，001，011，010，110，111，101，100，编号依次为 0 ~ 7。\n\n现在给出 $n$，$k$，请你求出按上述算法生成的 $n$ 位格雷码中的 $k$ 号二进制串。\n",
+      "formatI": "仅一行两个整数 $n$，$k$，意义见题目描述。",
+      "formatO": "仅一行一个 $n$ 位二进制串表示答案。",
+      "hint": "【样例 1 解释】\n\n2 位格雷码为：00，01，11，10，编号从 0∼3，因此 3 号串是 10。\n\n【样例 2 解释】\n\n3 位格雷码为：000，001，011，010，110，111，101，100，编号从 0∼7，因此 5 号串是 111。\n\n【数据范围】\n\n对于 $50\\%$ 的数据：$n \\leq 10$\n\n对于 $80\\%$ 的数据：$k \\leq 5 \\times 10^6$\n\n对于 $95\\%$ 的数据：$k \\leq 2^{63} - 1$\n\n对于 $100\\%$ 的数据：$1 \\leq n \\leq 64$, $0 \\leq k \\lt 2^n$",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 3",
+        "10"
+      ],
+      [
+        "3 5",
+        "111"
+      ],
+      [
+        "44 1145141919810",
+        "00011000111111010000001001001000000001100011"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2019] Gray Code",
+      "background": "",
+      "description": "Usually, people are used to arranging all $n$-bit binary strings in lexicographical order. For example, all 2-bit binary strings in increasing lexicographical order are: 00, 01, 10, 11.\n\nGray Code is a special way to arrange $n$-bit binary strings. It requires that any two adjacent binary strings differ in **exactly** one bit. In particular, the first string and the last string are also considered adjacent.\n\nAn example of arranging all 2-bit binary strings in Gray Code order is: 00, 01, 11, 10.\n\nThere is more than one $n$-bit Gray Code. Below is one algorithm to generate a Gray Code:\n1. The 1-bit Gray Code consists of two 1-bit binary strings, in the order: 0, 1.\n2. The first $2^n$ binary strings of the $(n + 1)$-bit Gray Code can be formed by taking the $n$-bit Gray Code generated by this algorithm (a total of $2^n$ $n$-bit binary strings) in **order**, and adding a prefix 0 to each string.\n3. The last $2^n$ binary strings of the $(n + 1)$-bit Gray Code can be formed by taking the $n$-bit Gray Code generated by this algorithm (a total of $2^n$ $n$-bit binary strings) in **reverse order**, and adding a prefix 1 to each string.\n\nIn summary, the $(n + 1)$-bit Gray Code consists of the $2^n$ strings of the $n$-bit Gray Code in order with prefix 0, and the $2^n$ strings of the $n$-bit Gray Code in reverse order with prefix 1, making a total of $2^{n+1}$ binary strings. Also, for the $2^n$ binary strings in the $n$-bit Gray Code, we number them as $0 \\sim 2^n - 1$ according to the order produced by the above algorithm.\n\nWith this algorithm, the 2-bit Gray Code can be derived as follows:\n\n1. The 1-bit Gray Code is 0, 1.\n2. The first two Gray codes are 00, 01. The last two Gray codes are 11, 10. Merging them gives 00, 01, 11, 10, numbered from 0 to 3 in order.\n\nSimilarly, the 3-bit Gray Code can be derived as follows:\n\n1. The 2-bit Gray Code is: 00, 01, 11, 10.\n2. The first four Gray codes are: 000, 001, 011, 010. The last four Gray codes are: 110, 111, 101, 100. Merging them gives: 000, 001, 011, 010, 110, 111, 101, 100, numbered from 0 to 7 in order.\n\nNow you are given $n$ and $k$. Please find the $k$-th binary string in the $n$-bit Gray Code generated by the above algorithm.",
+      "formatI": "A single line with two integers $n$ and $k$, as described in the statement.",
+      "formatO": "A single line with an $n$-bit binary string representing the answer.",
+      "hint": "[Sample 1 Explanation]\n\nThe 2-bit Gray Code is: 00, 01, 11, 10, numbered from $0 \\sim 3$, so string number 3 is 10.\n\n[Sample 2 Explanation]\n\nThe 3-bit Gray Code is: 000, 001, 011, 010, 110, 111, 101, 100, numbered from $0 \\sim 7$, so string number 5 is 111.\n\n[Constraints]\n\nFor $50\\%$ of the testdata: $n \\leq 10$.\n\nFor $80\\%$ of the testdata: $k \\leq 5 \\times 10^6$.\n\nFor $95\\%$ of the testdata: $k \\leq 2^{63} - 1$.\n\nFor $100\\%$ of the testdata: $1 \\leq n \\leq 64$, $0 \\leq k \\lt 2^n$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2019] 格雷码",
+      "background": "",
+      "description": "通常，人们习惯将所有 $n$ 位二进制串按照字典序排列，例如所有 2 位二进制串按字典序从小到大排列为：00，01，10，11。\n\n格雷码（Gray Code）是一种特殊的 $n$ 位二进制串排列法，它要求相邻的两个二进制串间**恰好**有一位**不同**，特别地，第一个串与最后一个串也算作相邻。\n\n所有 2 位二进制串按格雷码排列的一个例子为：00，01，11，10。\n\n$n$ 位格雷码不止一种，下面给出其中一种格雷码的生成算法：\n1. 1 位格雷码由两个 1 位二进制串组成，顺序为：0，1。\n2. $n + 1$ 位格雷码的前 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**顺序**排列，再在每个串前加一个前缀 0 构成。\n3. $n + 1$ 位格雷码的后 $2^n$ 个二进制串，可以由依此算法生成的 $n$ 位格雷码（总共 $2^n$ 个 $n$ 位二进制串）按**逆序**排列，再在每个串前加一个前缀 1 构成。\n\n综上，$n + 1$ 位格雷码，由 $n$ 位格雷码的 $2^n$ 个二进制串按顺序排列再加前缀 0，和按逆序排列再加前缀 1 构成，共 $2^{n+1}$ 个二进制串。另外，对于 $n$ 位格雷码中的 $2^n$ 个 二进制串，我们按上述算法得到的排列顺序将它们从 $0 \\sim 2^n - 1$ 编号。\n\n按该算法，2 位格雷码可以这样推出：\n\n1. 已知 1 位格雷码为 0，1。\n2. 前两个格雷码为 00，01。后两个格雷码为 11，10。合并得到 00，01，11，10，编号依次为 0 ~ 3。\n\n同理，3 位格雷码可以这样推出：\n\n1. 已知 2 位格雷码为：00，01，11，10。\n2. 前四个格雷码为：000，001，011，010。后四个格雷码为：110，111，101，100。合并得到：000，001，011，010，110，111，101，100，编号依次为 0 ~ 7。\n\n现在给出 $n$，$k$，请你求出按上述算法生成的 $n$ 位格雷码中的 $k$ 号二进制串。\n",
+      "formatI": "仅一行两个整数 $n$，$k$，意义见题目描述。",
+      "formatO": "仅一行一个 $n$ 位二进制串表示答案。",
+      "hint": "【样例 1 解释】\n\n2 位格雷码为：00，01，11，10，编号从 0∼3，因此 3 号串是 10。\n\n【样例 2 解释】\n\n3 位格雷码为：000，001，011，010，110，111，101，100，编号从 0∼7，因此 5 号串是 111。\n\n【数据范围】\n\n对于 $50\\%$ 的数据：$n \\leq 10$\n\n对于 $80\\%$ 的数据：$k \\leq 5 \\times 10^6$\n\n对于 $95\\%$ 的数据：$k \\leq 2^{63} - 1$\n\n对于 $100\\%$ 的数据：$1 \\leq n \\leq 64$, $0 \\leq k \\lt 2^n$",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 24103,
+    "startTime": 1573876800,
+    "endTime": 1574481600,
+    "name": "CSP2019-S2 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P5019",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 铺设道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P5658",
+      "type": "P",
+      "name": "[CSP-S 2019] 括号树",
+      "difficulty": 4
+    },
+    {
+      "pid": "P5660",
+      "type": "P",
+      "name": "[CSP-J 2019] 数字游戏",
+      "difficulty": 1
+    },
+    {
+      "pid": "P5661",
+      "type": "P",
+      "name": "[CSP-J 2019] 公交换乘",
+      "difficulty": 2
+    },
+    {
+      "pid": "P5664",
+      "type": "P",
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P5657 [CSP-S 2019] 格雷码",
+    "type": 2,
+    "slug": "P5657",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1362616,
+      "title": "95pts求调 必关",
+      "author": {
+        "uid": 1765652,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1765652.png",
+        "name": "bengbengzhu",
+        "slogan": "Dreaming about the things we could be.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787480106
+    },
+    {
+      "id": 1360183,
+      "title": "dalao求调50TLE",
+      "author": {
+        "uid": 1531022,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1531022.png",
+        "name": "Yuhan_He",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787235161
+    },
+    {
+      "id": 1359593,
+      "title": "吉士糇荵",
+      "author": {
+        "uid": 1557826,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1557826.png",
+        "name": "Kingsleytang",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787210444
+    },
+    {
+      "id": 1359312,
+      "title": "很难崩（后人真香）",
+      "author": {
+        "uid": 1818333,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1818333.png",
+        "name": "Sdc99520",
+        "slogan": "别笑，我确实玩蛋仔派对啾～",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/9o7c8zry.png"
+      },
+      "time": 1787195791
+    },
+    {
+      "id": 1359012,
+      "title": "一点小小的建议",
+      "author": {
+        "uid": 1358117,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1358117.png",
+        "name": "SteHub",
+        "slogan": "愿此生如风，尽自由",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787147536
+    },
+    {
+      "id": 1358904,
+      "title": "警示后人",
+      "author": {
+        "uid": 681941,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/681941.png",
+        "name": "NBRT_Line7",
+        "slogan": "中国人能飞",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787143503
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

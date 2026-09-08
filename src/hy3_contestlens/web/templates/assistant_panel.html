@@ -1,0 +1,15 @@
+<section class="panel run-assistant" data-assistant-run="{{ run_id }}">
+  <div class="panel-head"><div><h2>评测助手</h2><p>询问报告、比较修复轮次，或分析运行失败原因。回答会附上查询依据。</p></div></div>
+  <div class="assistant-suggestions">
+    <button type="button" data-question="解释这次运行的结果和停止原因。">解读评测结果</button>
+    <button type="button" data-question="对比初次与最佳版本，哪些测试点改善或退化了？">比较版本</button>
+    <button type="button" data-question="分析这次运行失败或未解决的原因，区分已知事实和推测，并给出排查建议。">诊断失败原因</button>
+    <button type="button" data-question="Algorithm Critic 和 Code Critic 的结论是否一致？请查询评审证据。">查看评审分歧</button>
+  </div>
+  <div class="assistant-messages" role="log" aria-label="评测问答记录" aria-live="polite"></div>
+  <form class="assistant-form">
+    <label>你的问题<textarea name="question" rows="3" maxlength="2000" required placeholder="例如：为什么第三轮没有被选为最佳版本？"></textarea></label>
+    <div class="actions"><button type="submit">发送问题</button><button type="button" class="assistant-clear">清空对话</button><span class="assistant-status" role="status"></span></div>
+  </form>
+  <p class="muted">助手按需查询当前运行，不会修改评测结果。提问会使用模型额度；对话保留在本页，刷新后清空。</p>
+</section>

@@ -4,7 +4,8 @@
 <section class="page-head"><span class="eyebrow">NEW RUN</span><h1>创建一次可审计评测</h1></section>
 <section class="panel narrow">
   <div class="window-note"><span aria-hidden="true">↗</span><div><strong>独立解题页面</strong><br>这个页面只负责当前题目。你可以回到主页继续打开其他题目，它们会在各自页面并行运行。</div></div>
-  <label>题目<select id="run-problem">{% for problem in problems %}<option value="{{ problem.problem_id }}">{{ problem.title_zh }} · {{ problem.problem_id }}</option>{% endfor %}</select></label>
+  <label>题目<select id="run-problem">{% for problem in problems %}<option value="{{ problem.problem_id }}" {% if problem.judge_note %}disabled{% endif %}>{{ problem.contest }} {{ problem.year }} {{ '普及组' if problem.group == 'junior' else '提高组' }} · {{ problem.title_zh }}{{ '（仅样例）' if problem.data_status == 'samples' else '' }}{{ '（需专用判题器）' if problem.judge_note else '' }}</option>{% endfor %}</select></label>
+  <p class="muted">2025 年为附加样例评测；本地得分是测试点等权通过率，不代表官方子任务得分。</p>
   <label>最大修复轮数<input id="repair-rounds" type="number" min="1" max="5" value="3"></label>
   <label class="check"><input id="repair-enabled" type="checkbox" checked> 启用有界循环修复</label>
   <p class="image-model-note">若题面包含图片或图形，且已配置独立图片模型，运行步骤中会询问是否使用更精确的图片理解。未配置、跳过或识别失败均继续原流程。</p>

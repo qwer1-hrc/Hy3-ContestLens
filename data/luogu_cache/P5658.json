@@ -1,0 +1,326 @@
+{
+  "problem": {
+    "pid": "P5658",
+    "type": "P",
+    "name": "[CSP-S 2019] 括号树",
+    "difficulty": 4,
+    "tags": [
+      3,
+      11,
+      36,
+      230,
+      287,
+      342
+    ],
+    "totalSubmit": 84851,
+    "totalAccepted": 21038,
+    "flag": 5,
+    "provider": {
+      "uid": 1,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+      "name": "kkksc03",
+      "slogan": "洛谷吉祥物 DA✩ZE",
+      "badge": "吉祥物",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 6,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2019] 括号树",
+      "background": "本题中**合法括号串**的定义如下：\n1.\t`()` 是合法括号串。\n2.\t如果 `A` 是合法括号串，则 `(A)` 是合法括号串。\n3.\t如果 `A`，`B` 是合法括号串，则 `AB` 是合法括号串。\n\n本题中**子串**与**不同的子串**的定义如下：\n1.\t字符串 `S` 的子串是 `S` 中**连续**的任意个字符组成的字符串。`S` 的子串可用起始位置 $l$ 与终止位置 $r$ 来表示，记为 $S (l, r)$（$1 \\leq l \\leq r \\leq |S |$，$|S |$ 表示 S 的长度）。\n2.\t`S` 的两个子串视作不同**当且仅当**它们在 `S` 中的位置不同，即 $l$ 不同或 $r$ 不同。",
+      "description": "一个大小为 $n$ 的树包含 $n$ 个结点和 $n - 1$ 条边，每条边连接两个结点，且任意两个结点间**有且仅有**一条简单路径互相可达。\n\n小 Q 是一个充满好奇心的小朋友，有一天他在上学的路上碰见了一个大小为 $n$ 的树，树上结点从 $1 \\sim n$ 编号，$1$ 号结点为树的根。除 $1$ 号结点外，每个结点有一个父亲结点，$u$（$2 \\leq u \\leq n$）号结点的父亲为 $f_u$（$1 ≤ f_u < u$）号结点。\n\n小 Q 发现这个树的每个结点上**恰有**一个括号，可能是`(` 或`)`。小 Q 定义 $s_i$ 为：将根结点到 $i$ 号结点的简单路径上的括号，按结点经过顺序依次排列组成的字符串。\n \n显然 $s_i$ 是个括号串，但不一定是合法括号串，因此现在小 Q 想对所有的 $i$（$1\\leq i\\leq n$）求出，$s_i$ 中有多少个**互不相同的子串**是**合法括号串**。\n \n这个问题难倒了小 Q，他只好向你求助。设 $s_i$ 共有 $k_i$ 个不同子串是合法括号串， 你只需要告诉小 Q 所有 $i \\times k_i$ 的异或和，即：\n$$ (1 \\times k_1)\\ \\text{xor}\\ (2 \\times k_2)\\ \\text{xor}\\ (3 \\times k_3)\\ \\text{xor}\\ \\cdots\\ \\text{xor}\\ (n \\times k_n) $$\n其中 $\\text{xor}$ 是位异或运算。",
+      "formatI": "第一行一个整数 $n$，表示树的大小。\n\n第二行一个长为 $n$ 的由`(` 与`)` 组成的括号串，第 $i$ 个括号表示 $i$ 号结点上的括号。\n\n第三行包含 $n − 1$ 个整数，第 $i$（$1 \\leq i \\lt n$）个整数表示 $i + 1$ 号结点的父亲编号 $f_{i+1}$。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 1 解释】**\n\n树的形态如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/10z2scex.png)\n\n将根到 1 号结点的简单路径上的括号，按经过顺序排列所组成的字符串为 `(`，子串是合法括号串的个数为 $0$。\n\n将根到 2 号结点的字符串为 `((`，子串是合法括号串的个数为 $0$。\n\n将根到 3 号结点的字符串为 `()`，子串是合法括号串的个数为 $1$。\n\n将根到 4 号结点的字符串为 `(((`，子串是合法括号串的个数为 $0$。\n\n将根到 5 号结点的字符串为 `(()`，子串是合法括号串的个数为 $1$。\n\n**【样例 2】**\n\n见选手目录下的 brackets/brackets2.in 与 brackets/brackets2.ans。\n\n**【数据范围】**\n\n::cute-table{tuack}\n\n| 测试点编号 | $n\\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1\\sim 2$ | $8$ | $f_i=i-1$ |\n| $3\\sim 4$ | $200$ | ^ |\n| $5\\sim 7$ | $2000$ | ^ |\n| $8\\sim 10$ | ^ | 无 |\n| $11\\sim 14$ | $10^5$ | $f_i=i-1$ |\n| $15\\sim 16$ | ^ | 无 |\n| $17\\sim 20$ | $5\\times 10^5$ | ^ |",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2019] 括号树",
+      "background": "本题中**合法括号串**的定义如下：\n1.\t`()` 是合法括号串。\n2.\t如果 `A` 是合法括号串，则 `(A)` 是合法括号串。\n3.\t如果 `A`，`B` 是合法括号串，则 `AB` 是合法括号串。\n\n本题中**子串**与**不同的子串**的定义如下：\n1.\t字符串 `S` 的子串是 `S` 中**连续**的任意个字符组成的字符串。`S` 的子串可用起始位置 $l$ 与终止位置 $r$ 来表示，记为 $S (l, r)$（$1 \\leq l \\leq r \\leq |S |$，$|S |$ 表示 S 的长度）。\n2.\t`S` 的两个子串视作不同**当且仅当**它们在 `S` 中的位置不同，即 $l$ 不同或 $r$ 不同。",
+      "description": "一个大小为 $n$ 的树包含 $n$ 个结点和 $n - 1$ 条边，每条边连接两个结点，且任意两个结点间**有且仅有**一条简单路径互相可达。\n\n小 Q 是一个充满好奇心的小朋友，有一天他在上学的路上碰见了一个大小为 $n$ 的树，树上结点从 $1 \\sim n$ 编号，$1$ 号结点为树的根。除 $1$ 号结点外，每个结点有一个父亲结点，$u$（$2 \\leq u \\leq n$）号结点的父亲为 $f_u$（$1 ≤ f_u < u$）号结点。\n\n小 Q 发现这个树的每个结点上**恰有**一个括号，可能是`(` 或`)`。小 Q 定义 $s_i$ 为：将根结点到 $i$ 号结点的简单路径上的括号，按结点经过顺序依次排列组成的字符串。\n \n显然 $s_i$ 是个括号串，但不一定是合法括号串，因此现在小 Q 想对所有的 $i$（$1\\leq i\\leq n$）求出，$s_i$ 中有多少个**互不相同的子串**是**合法括号串**。\n \n这个问题难倒了小 Q，他只好向你求助。设 $s_i$ 共有 $k_i$ 个不同子串是合法括号串， 你只需要告诉小 Q 所有 $i \\times k_i$ 的异或和，即：\n$$ (1 \\times k_1)\\ \\text{xor}\\ (2 \\times k_2)\\ \\text{xor}\\ (3 \\times k_3)\\ \\text{xor}\\ \\cdots\\ \\text{xor}\\ (n \\times k_n) $$\n其中 $\\text{xor}$ 是位异或运算。",
+      "formatI": "第一行一个整数 $n$，表示树的大小。\n\n第二行一个长为 $n$ 的由`(` 与`)` 组成的括号串，第 $i$ 个括号表示 $i$ 号结点上的括号。\n\n第三行包含 $n − 1$ 个整数，第 $i$（$1 \\leq i \\lt n$）个整数表示 $i + 1$ 号结点的父亲编号 $f_{i+1}$。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 1 解释】**\n\n树的形态如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/10z2scex.png)\n\n将根到 1 号结点的简单路径上的括号，按经过顺序排列所组成的字符串为 `(`，子串是合法括号串的个数为 $0$。\n\n将根到 2 号结点的字符串为 `((`，子串是合法括号串的个数为 $0$。\n\n将根到 3 号结点的字符串为 `()`，子串是合法括号串的个数为 $1$。\n\n将根到 4 号结点的字符串为 `(((`，子串是合法括号串的个数为 $0$。\n\n将根到 5 号结点的字符串为 `(()`，子串是合法括号串的个数为 $1$。\n\n**【样例 2】**\n\n见选手目录下的 brackets/brackets2.in 与 brackets/brackets2.ans。\n\n**【数据范围】**\n\n::cute-table{tuack}\n\n| 测试点编号 | $n\\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1\\sim 2$ | $8$ | $f_i=i-1$ |\n| $3\\sim 4$ | $200$ | ^ |\n| $5\\sim 7$ | $2000$ | ^ |\n| $8\\sim 10$ | ^ | 无 |\n| $11\\sim 14$ | $10^5$ | $f_i=i-1$ |\n| $15\\sim 16$ | ^ | 无 |\n| $17\\sim 20$ | $5\\times 10^5$ | ^ |",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "exxym4gw",
+        "filename": "brackets.zip",
+        "size": 248770,
+        "uploadTime": 1752233709,
+        "downloadLink": "/fe/api/problem/downloadAttachment/exxym4gw"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5\n(()()\n1 1 2 2",
+        "6"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000,
+        256000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2019] Bracket Tree",
+      "background": "In this problem, a **valid bracket sequence** is defined as follows:\n1. `()` is a valid bracket sequence.\n2. If `A` is a valid bracket sequence, then `(A)` is a valid bracket sequence.\n3. If `A` and `B` are valid bracket sequences, then `AB` is a valid bracket sequence.\n\nIn this problem, the definitions of a **substring** and **distinct substrings** are as follows:\n1. A substring of a string `S` is a string formed by any **continuous** characters in `S`. A substring of `S` can be represented by the starting position $l$ and the ending position $r$, denoted as $S (l, r)$ ($1 \\leq l \\leq r \\leq |S |$, where $|S |$ denotes the length of `S`).\n2. Two substrings of `S` are considered different **if and only if** their positions in `S` are different, i.e. $l$ is different or $r$ is different.",
+      "description": "A tree of size $n$ contains $n$ nodes and $n - 1$ edges. Each edge connects two nodes, and between any two nodes there exists **exactly one** simple path.\n\nXiao Q is a curious kid. One day on his way to school, he encountered a tree of size $n$. The nodes of the tree are numbered from $1 \\sim n$, and node $1$ is the root. Except for node $1$, every node has a parent node. The parent of node $u$ ($2 \\leq u \\leq n$) is node $f_u$ ($1 \\le f_u < u$).\n\nXiao Q found that each node of the tree has **exactly** one bracket, either `(` or `)`. Xiao Q defines $s_i$ as follows: take the brackets on the simple path from the root to node $i$, and arrange them into a string in the order the nodes are visited.\n\nObviously, $s_i$ is a bracket string, but it is not necessarily a valid bracket sequence. Now Xiao Q wants, for all $i$ ($1 \\leq i \\leq n$), to find how many **distinct substrings** of $s_i$ are **valid bracket sequences**.\n\nThis problem stumped Xiao Q, so he asks you for help. Suppose $s_i$ has $k_i$ distinct substrings that are valid bracket sequences. You only need to tell Xiao Q the XOR sum of all $i \\times k_i$, namely:\n$$ (1 \\times k_1)\\ \\text{xor}\\ (2 \\times k_2)\\ \\text{xor}\\ (3 \\times k_3)\\ \\text{xor}\\ \\cdots\\ \\text{xor}\\ (n \\times k_n) $$\nwhere $\\text{xor}$ is the bitwise XOR operation.",
+      "formatI": "The first line contains an integer $n$, denoting the size of the tree.\n\nThe second line contains a bracket string of length $n$ consisting of `(` and `)`. The $i$-th bracket denotes the bracket on node $i$.\n\nThe third line contains $n − 1$ integers. The $i$-th integer ($1 \\leq i \\lt n$) denotes the parent index $f_{i+1}$ of node $i + 1$.",
+      "formatO": "Only one line containing one integer, denoting the answer.",
+      "hint": "**[Sample 1 Explanation]**\n\nThe shape of the tree is shown in the figure below:\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/10z2scex.png)\n\nThe string formed by the brackets on the simple path from the root to node 1, arranged in order, is `(`, and the number of substrings that are valid bracket sequences is $0$.\n\nThe string from the root to node 2 is `((`, and the number of substrings that are valid bracket sequences is $0$.\n\nThe string from the root to node 3 is `()`, and the number of substrings that are valid bracket sequences is $1$.\n\nThe string from the root to node 4 is `(((`, and the number of substrings that are valid bracket sequences is $0$.\n\nThe string from the root to node 5 is `(()`, and the number of substrings that are valid bracket sequences is $1$.\n\n**[Sample 2]**\n\nSee `brackets/brackets2.in` and `brackets/brackets2.ans` under the contestant directory.\n\n**[Constraints]**\n\n::cute-table{tuack}\n\n| Test Point ID | $n\\le$ | Special Property |\n|:-:|:-:|:-:|\n| $1\\sim 2$ | $8$ | $f_i=i-1$ |\n| $3\\sim 4$ | $200$ | ^ |\n| $5\\sim 7$ | $2000$ | ^ |\n| $8\\sim 10$ | ^ | None |\n| $11\\sim 14$ | $10^5$ | $f_i=i-1$ |\n| $15\\sim 16$ | ^ | None |\n| $17\\sim 20$ | $5\\times 10^5$ | ^ |\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2019] 括号树",
+      "background": "本题中**合法括号串**的定义如下：\n1.\t`()` 是合法括号串。\n2.\t如果 `A` 是合法括号串，则 `(A)` 是合法括号串。\n3.\t如果 `A`，`B` 是合法括号串，则 `AB` 是合法括号串。\n\n本题中**子串**与**不同的子串**的定义如下：\n1.\t字符串 `S` 的子串是 `S` 中**连续**的任意个字符组成的字符串。`S` 的子串可用起始位置 $l$ 与终止位置 $r$ 来表示，记为 $S (l, r)$（$1 \\leq l \\leq r \\leq |S |$，$|S |$ 表示 S 的长度）。\n2.\t`S` 的两个子串视作不同**当且仅当**它们在 `S` 中的位置不同，即 $l$ 不同或 $r$ 不同。",
+      "description": "一个大小为 $n$ 的树包含 $n$ 个结点和 $n - 1$ 条边，每条边连接两个结点，且任意两个结点间**有且仅有**一条简单路径互相可达。\n\n小 Q 是一个充满好奇心的小朋友，有一天他在上学的路上碰见了一个大小为 $n$ 的树，树上结点从 $1 \\sim n$ 编号，$1$ 号结点为树的根。除 $1$ 号结点外，每个结点有一个父亲结点，$u$（$2 \\leq u \\leq n$）号结点的父亲为 $f_u$（$1 ≤ f_u < u$）号结点。\n\n小 Q 发现这个树的每个结点上**恰有**一个括号，可能是`(` 或`)`。小 Q 定义 $s_i$ 为：将根结点到 $i$ 号结点的简单路径上的括号，按结点经过顺序依次排列组成的字符串。\n \n显然 $s_i$ 是个括号串，但不一定是合法括号串，因此现在小 Q 想对所有的 $i$（$1\\leq i\\leq n$）求出，$s_i$ 中有多少个**互不相同的子串**是**合法括号串**。\n \n这个问题难倒了小 Q，他只好向你求助。设 $s_i$ 共有 $k_i$ 个不同子串是合法括号串， 你只需要告诉小 Q 所有 $i \\times k_i$ 的异或和，即：\n$$ (1 \\times k_1)\\ \\text{xor}\\ (2 \\times k_2)\\ \\text{xor}\\ (3 \\times k_3)\\ \\text{xor}\\ \\cdots\\ \\text{xor}\\ (n \\times k_n) $$\n其中 $\\text{xor}$ 是位异或运算。",
+      "formatI": "第一行一个整数 $n$，表示树的大小。\n\n第二行一个长为 $n$ 的由`(` 与`)` 组成的括号串，第 $i$ 个括号表示 $i$ 号结点上的括号。\n\n第三行包含 $n − 1$ 个整数，第 $i$（$1 \\leq i \\lt n$）个整数表示 $i + 1$ 号结点的父亲编号 $f_{i+1}$。",
+      "formatO": "仅一行一个整数表示答案。",
+      "hint": "**【样例 1 解释】**\n\n树的形态如下图：\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/10z2scex.png)\n\n将根到 1 号结点的简单路径上的括号，按经过顺序排列所组成的字符串为 `(`，子串是合法括号串的个数为 $0$。\n\n将根到 2 号结点的字符串为 `((`，子串是合法括号串的个数为 $0$。\n\n将根到 3 号结点的字符串为 `()`，子串是合法括号串的个数为 $1$。\n\n将根到 4 号结点的字符串为 `(((`，子串是合法括号串的个数为 $0$。\n\n将根到 5 号结点的字符串为 `(()`，子串是合法括号串的个数为 $1$。\n\n**【样例 2】**\n\n见选手目录下的 brackets/brackets2.in 与 brackets/brackets2.ans。\n\n**【数据范围】**\n\n::cute-table{tuack}\n\n| 测试点编号 | $n\\le$ | 特殊性质 |\n|:-:|:-:|:-:|\n| $1\\sim 2$ | $8$ | $f_i=i-1$ |\n| $3\\sim 4$ | $200$ | ^ |\n| $5\\sim 7$ | $2000$ | ^ |\n| $8\\sim 10$ | ^ | 无 |\n| $11\\sim 14$ | $10^5$ | $f_i=i-1$ |\n| $15\\sim 16$ | ^ | 无 |\n| $17\\sim 20$ | $5\\times 10^5$ | ^ |",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 24103,
+    "startTime": 1573876800,
+    "endTime": 1574481600,
+    "name": "CSP2019-S2 自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P5657",
+      "type": "P",
+      "name": "[CSP-S 2019] 格雷码",
+      "difficulty": 2
+    },
+    {
+      "pid": "P5663",
+      "type": "P",
+      "name": "[CSP-J 2019] 加工零件",
+      "difficulty": 4
+    },
+    {
+      "pid": "P5664",
+      "type": "P",
+      "name": "[CSP-S 2019] Emiya 家今天的饭",
+      "difficulty": 6
+    },
+    {
+      "pid": "P5665",
+      "type": "P",
+      "name": "[CSP-S 2019] 划分",
+      "difficulty": 7
+    },
+    {
+      "pid": "P5666",
+      "type": "P",
+      "name": "[CSP-S 2019] 树的重心",
+      "difficulty": 7
+    }
+  ],
+  "forum": {
+    "name": "P5658 [CSP-S 2019] 括号树",
+    "type": 2,
+    "slug": "P5658",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1367338,
+      "title": "85pts WA#8-10 求条",
+      "author": {
+        "uid": 1717251,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1717251.png",
+        "name": "YAOCHONGyc",
+        "slogan": "ycccccccccccccccc",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/1npvk4tc.png"
+      },
+      "time": 1787919835
+    },
+    {
+      "id": 1364280,
+      "title": "美味 0pt/5pts 后人",
+      "author": {
+        "uid": 1024213,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1024213.png",
+        "name": "albertting",
+        "slogan": "从今天开始实名上网：【盒子】|| P-hua is forbidden but I am exempted. || Give me your SKILL.md pls.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/d47rymq6.png"
+      },
+      "time": 1787644772
+    },
+    {
+      "id": 1362880,
+      "title": "求助各位大佬",
+      "author": {
+        "uid": 1299126,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1299126.png",
+        "name": "Siha",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787497810
+    },
+    {
+      "id": 1354493,
+      "title": "10pts求调",
+      "author": {
+        "uid": 1536846,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1536846.png",
+        "name": "lcc0222",
+        "slogan": "会强起来的",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dp8lkhro.png"
+      },
+      "time": 1786784426
+    },
+    {
+      "id": 1346593,
+      "title": "if you WA 85pts && WA 8~10",
+      "author": {
+        "uid": 1279560,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1279560.png",
+        "name": "hehaoyanghy",
+        "slogan": "这个人很不勤快，什么都没写",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/85w0kuzs.png"
+      },
+      "time": 1786101104
+    },
+    {
+      "id": 1345820,
+      "title": "WA求调",
+      "author": {
+        "uid": 1782336,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1782336.png",
+        "name": "lushenyang",
+        "slogan": "https://www.luogu.com.cn/problem/U710375",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786025777
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -64,7 +64,7 @@ def run(args: argparse.Namespace) -> Any:
     if args.command == "health":
         return client.request("GET", "/readyz")
     if args.command == "list-problems":
-        return client.request("GET", "/api/v1/datasets/noip2018/problems")
+        return client.request("GET", "/api/v1/problems")
     if args.command == "show-problem":
         return client.request("GET", f"/api/v1/problems/{args.problem}")
     if args.command == "resources":
@@ -87,7 +87,8 @@ def run(args: argparse.Namespace) -> Any:
         frozen = client.request("POST", f"/api/v1/runs/{args.run}/submissions/{args.submission}/revisions/{args.revision}:freeze", {"expected_sha256": revision["sha256"]})
         return client.request("POST", "/api/v1/judge/compile", {"problem_id": revision["problem_id"], "source_artifact_id": frozen["source_artifact_id"], "source_sha256": frozen["source_sha256"]})
     if args.command == "check":
-        return client.request("POST", "/api/v1/judge/check-answer", {"compile_artifact_id": args.compile_artifact, "dataset_id": "noip2018", "problem_id": args.problem})
+        manifest = client.request("GET", f"/api/v1/problems/{args.problem}")
+        return client.request("POST", "/api/v1/judge/check-answer", {"compile_artifact_id": args.compile_artifact, "dataset_id": manifest["dataset_id"], "problem_id": args.problem})
     if args.command == "watch":
         cursor = 0
         while True:

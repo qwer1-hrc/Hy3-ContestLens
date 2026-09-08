@@ -29,6 +29,7 @@
     {% for assessment in review.assessments or [] %}<div class="critic-assessment"><strong>{{ assessment.step_id }} · {{ assessment.verdict|report_label }}</strong>{% if assessment.confidence is defined %}<span class="muted"> · 置信度 {{ (assessment.confidence * 100)|round(1) }}%</span>{% endif %}{{ evidence(assessment.evidence) }}</div>{% endfor %}
   </article>{% endfor %}
   {% if not section.critics %}<p class="muted">此版本未保存独立 Critic 记录。</p>{% endif %}
+  {% if section.quality_gate %}<h3>修复质量门禁</h3><dl class="diagnosis-facts"><div><dt>门禁结果</dt><dd>{{ '通过' if section.quality_gate.passed else '拒绝' }}</dd></div><div><dt>新增通过点</dt><dd>{{ (section.quality_gate.fixed_tests or [])|join(', ') or '无' }}</dd></div><div><dt>回归测试点</dt><dd>{{ (section.quality_gate.regressed_tests or [])|join(', ') or '无' }}</dd></div><div><dt>候选排名提升</dt><dd>{{ '是' if section.quality_gate.candidate_rank_improved else '否' }}</dd></div></dl>{% endif %}
   {% if section.repair_plan %}<h3>本轮修复计划</h3>{% for key, title in [('root_cause','根因'), ('repair_scope','修复范围'), ('required_changes','必要修改'), ('regression_risks','回归风险'), ('success_criteria','成功标准')] %}{% set value = section.repair_plan.get(key) %}{% if value %}<h4>{{ title }}</h4>{% if value is string %}<p class="report-prose">{{ value }}</p>{% else %}{{ evidence(value) }}{% endif %}{% endif %}{% endfor %}{% endif %}
 </div></details>
 {% endfor %}
@@ -36,5 +37,6 @@
 </section>
 {% else %}<section class="panel"><h2>报告为空</h2>{% if result.error_code %}<p>错误代码：<code>{{ result.error_code }}</code></p>{% endif %}</section>{% endif %}
 <div class="report-navigation"><a class="button" href="{{ back_url }}">← 返回</a></div>
+{% include "assistant_panel.html" %}
 {% endblock %}
-{% block scripts %}{% if report_available %}<script src="/static/reports.js?v=0.4.0"></script>{% endif %}{% endblock %}
+{% block scripts %}{% if report_available %}<script src="/static/reports.js?v=0.4.0"></script>{% endif %}<script src="/static/assistant-markdown.js?v=2"></script><script src="/static/assistant.js?v=2"></script>{% endblock %}

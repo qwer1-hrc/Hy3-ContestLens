@@ -12,6 +12,30 @@ SOURCE = "#include <cstdio>\n#include <iostream>\nint main(){freopen(\"road.in\"
 FIXED = "#include <cstdio>\n#include <iostream>\nint main(){freopen(\"road.in\", \"r\", stdin); freopen(\"road.out\", \"w\", stdout); std::cout << 2 << '\\n';}\n"
 
 
+@pytest.mark.parametrize('problem_id,basename', [
+    ('csps2019_senior_meal', 'meal'),
+    ('csps2019_senior_brackets', 'brackets'),
+    ('noip2014_senior_road', 'road'),
+])
+def test_catalog_basename_used_for_create_recovery_and_repair(settings, problem_id, basename):
+    workspace = WorkspaceStore(settings)
+    source = SOURCE.replace('road.', basename + '.')
+    fixed = FIXED.replace('road.', basename + '.')
+    run_id = 'run_basename'
+    created = workspace.get_or_create_cpp_submission(run_id, problem_id, source)
+    recovered = workspace.get_or_create_cpp_submission(run_id, problem_id, source)
+    assert recovered['submission_id'] == created['submission_id']
+    assert recovered['recovered']
+    revised = workspace.replace_cpp_submission(run_id, created['submission_id'], 'r000', created['sha256'], fixed, 1, 'plan_basename', 'test')
+    frozen = workspace.freeze_cpp_revision(run_id, created['submission_id'], revised['revision_id'], revised['sha256'])
+    path, _ = workspace.locate_source_artifact(frozen['source_artifact_id'])
+    assert path.read_text(encoding='utf-8') == fixed
+    wrong = source.replace(basename + '.', problem_id + '.')
+    with pytest.raises(ContestLensError) as error:
+        workspace.create_cpp_submission('run_wrong_basename', problem_id, wrong)
+    assert error.value.code == 'REQUIRED_FILE_IO_MISSING'
+
+
 def test_revision_patch_stale_hash_and_freeze(settings):
     workspace = WorkspaceStore(settings)
     created = workspace.create_cpp_submission("run_test", "road", SOURCE)

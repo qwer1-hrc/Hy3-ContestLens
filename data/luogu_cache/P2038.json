@@ -1,0 +1,290 @@
+{
+  "problem": {
+    "pid": "P2038",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+    "difficulty": 2,
+    "tags": [
+      1,
+      31,
+      83,
+      111
+    ],
+    "totalSubmit": 47406,
+    "totalAccepted": 19021,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+      "background": "NOIP2014 提高组 D2T1",
+      "description": "随着智能手机的日益普及，人们对无线网的需求日益增大。某城市决定对城市内的公共场所覆盖无线网。\n\n假设该城市的布局为由严格平行的 $129$ 条东西向街道和 $129$ 条南北向街道所形成的网格状，并且相邻的平行街道之间的距离都是恒定值 $1$。东西向街道从北到南依次编号为 $0,1,2 \\dots 128$，南北向街道从西到东依次编号为 $0,1,2 \\dots 128$。\n\n东西向街道和南北向街道相交形成路口，规定编号为 $x$ 的南北向街道和编号为 $y$ 的东西向街道形成的路口的坐标是 $(x, y)$。在某些路口存在一定数量的公共场所。\n\n由于政府财政问题，只能安装一个大型无线网络发射器。该无线网络发射器的传播范围是一个以该点为中心，边长为 $2d$ 的正方形。传播范围包括正方形边界。\n\n现在政府有关部门准备安装一个传播参数为 $d$ 的无线网络发射器，希望你帮助他们在城市内找出合适的路口作为安装地点，使得覆盖的公共场所最多。",
+      "formatI": "第一行包含一个整数 $d$，表示无线网络发射器的传播距离。\n\n第二行包含一个整数 $n$，表示有公共场所的路口数目。\n\n接下来 $n$ 行，每行给出三个整数 $x, y, k$，中间用一个空格隔开，分别代表路口的坐标 $(x, y)$ 以及该路口公共场所的数量。同一坐标只会给出一次。",
+      "formatO": "输出一行，包含两个整数，用一个空格隔开，分别表示能覆盖最多公共场所的安装地点方案数，以及能覆盖的最多公共场所的数量。",
+      "hint": "对于 $100\\%$ 的数据，$1 \\leq d \\leq 20, 1 \\leq n \\leq 20, 0 \\leq x \\leq 128, 0 \\leq y \\leq 128, 0 < k \\leq 10^6$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+      "background": "NOIP2014 提高组 D2T1",
+      "description": "随着智能手机的日益普及，人们对无线网的需求日益增大。某城市决定对城市内的公共场所覆盖无线网。\n\n假设该城市的布局为由严格平行的 $129$ 条东西向街道和 $129$ 条南北向街道所形成的网格状，并且相邻的平行街道之间的距离都是恒定值 $1$。东西向街道从北到南依次编号为 $0,1,2 \\dots 128$，南北向街道从西到东依次编号为 $0,1,2 \\dots 128$。\n\n东西向街道和南北向街道相交形成路口，规定编号为 $x$ 的南北向街道和编号为 $y$ 的东西向街道形成的路口的坐标是 $(x, y)$。在某些路口存在一定数量的公共场所。\n\n由于政府财政问题，只能安装一个大型无线网络发射器。该无线网络发射器的传播范围是一个以该点为中心，边长为 $2d$ 的正方形。传播范围包括正方形边界。\n\n现在政府有关部门准备安装一个传播参数为 $d$ 的无线网络发射器，希望你帮助他们在城市内找出合适的路口作为安装地点，使得覆盖的公共场所最多。",
+      "formatI": "第一行包含一个整数 $d$，表示无线网络发射器的传播距离。\n\n第二行包含一个整数 $n$，表示有公共场所的路口数目。\n\n接下来 $n$ 行，每行给出三个整数 $x, y, k$，中间用一个空格隔开，分别代表路口的坐标 $(x, y)$ 以及该路口公共场所的数量。同一坐标只会给出一次。",
+      "formatO": "输出一行，包含两个整数，用一个空格隔开，分别表示能覆盖最多公共场所的安装地点方案数，以及能覆盖的最多公共场所的数量。",
+      "hint": "对于 $100\\%$ 的数据，$1 \\leq d \\leq 20, 1 \\leq n \\leq 20, 0 \\leq x \\leq 128, 0 \\leq y \\leq 128, 0 < k \\leq 10^6$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1\n2\n4 4 10\n6 6 20",
+        "1 30"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Wireless Network Transmitter Placement",
+      "background": "NOIP 2014 Senior D2T1.",
+      "description": "With the increasing popularity of smartphones, the demand for wireless networks is growing. A certain city decides to cover public places with a wireless network.\n\nAssume the city layout is a grid formed by $129$ east-west streets and $129$ north-south streets, and the distance between any two adjacent parallel streets is a constant $1$. The east-west streets are numbered $0,1,2 \\dots 128$ from north to south, and the north-south streets are numbered $0,1,2 \\dots 128$ from west to east.\n\nIntersections are formed where an east-west street meets a north-south street. The intersection of the north-south street numbered $x$ and the east-west street numbered $y$ has coordinates $(x, y)$. Some intersections have a certain number of public places.\n\nDue to budget constraints, only one large wireless network transmitter can be installed. Its coverage area is a square centered at the installation point with side length $2d$. The coverage includes the square’s boundary.\n\nNow the authorities plan to install a transmitter with parameter $d$. Please help them find a suitable intersection in the city as the installation location to maximize the number of public places covered.",
+      "formatI": "The first line contains an integer $d$, the coverage parameter of the wireless network transmitter.\n\nThe second line contains an integer $n$, the number of intersections that have public places.\n\nThe next $n$ lines each contain three integers $x, y, k$ separated by a space, representing the intersection coordinates $(x, y)$ and the number of public places at that intersection. Each coordinate appears at most once.",
+      "formatO": "Output one line containing two integers separated by a space: the number of installation locations that achieve the maximum coverage of public places, and the maximum number of public places covered.",
+      "hint": "For $100\\%$ of the testdata, $1 \\leq d \\leq 20, 1 \\leq n \\leq 20, 0 \\leq x \\leq 128, 0 \\leq y \\leq 128, 0 < k \\leq 10^6$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 无线网络发射器选址",
+      "background": "NOIP2014 提高组 D2T1",
+      "description": "随着智能手机的日益普及，人们对无线网的需求日益增大。某城市决定对城市内的公共场所覆盖无线网。\n\n假设该城市的布局为由严格平行的 $129$ 条东西向街道和 $129$ 条南北向街道所形成的网格状，并且相邻的平行街道之间的距离都是恒定值 $1$。东西向街道从北到南依次编号为 $0,1,2 \\dots 128$，南北向街道从西到东依次编号为 $0,1,2 \\dots 128$。\n\n东西向街道和南北向街道相交形成路口，规定编号为 $x$ 的南北向街道和编号为 $y$ 的东西向街道形成的路口的坐标是 $(x, y)$。在某些路口存在一定数量的公共场所。\n\n由于政府财政问题，只能安装一个大型无线网络发射器。该无线网络发射器的传播范围是一个以该点为中心，边长为 $2d$ 的正方形。传播范围包括正方形边界。\n\n现在政府有关部门准备安装一个传播参数为 $d$ 的无线网络发射器，希望你帮助他们在城市内找出合适的路口作为安装地点，使得覆盖的公共场所最多。",
+      "formatI": "第一行包含一个整数 $d$，表示无线网络发射器的传播距离。\n\n第二行包含一个整数 $n$，表示有公共场所的路口数目。\n\n接下来 $n$ 行，每行给出三个整数 $x, y, k$，中间用一个空格隔开，分别代表路口的坐标 $(x, y)$ 以及该路口公共场所的数量。同一坐标只会给出一次。",
+      "formatO": "输出一行，包含两个整数，用一个空格隔开，分别表示能覆盖最多公共场所的安装地点方案数，以及能覆盖的最多公共场所的数量。",
+      "hint": "对于 $100\\%$ 的数据，$1 \\leq d \\leq 20, 1 \\leq n \\leq 20, 0 \\leq x \\leq 128, 0 \\leq y \\leq 128, 0 < k \\leq 10^6$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1328",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 生活大爆炸版石头剪刀布",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1965",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 转圈游戏",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1969",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 积木大赛",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2296",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2615",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 神奇的幻方",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P2038 [NOIP 2014 提高组] 无线网络发射器选址",
+    "type": 2,
+    "slug": "P2038",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1350118,
+      "title": "进食后人：版本问题",
+      "author": {
+        "uid": 836448,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/836448.png",
+        "name": "Cherry_Pop",
+        "slogan": "你的时间已经属于我了…||集训时依旧高强度上网",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/44jhkdqt.png"
+      },
+      "time": 1786433657
+    },
+    {
+      "id": 1343222,
+      "title": "【前缀和做法】警示后人",
+      "author": {
+        "uid": 1126325,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1126325.png",
+        "name": "_trace_",
+        "slogan": "太菜了，掉绿祭 || 不经大迫，何以成杰 || 华风夏韵，洛水天依",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785823598
+    },
+    {
+      "id": 1291542,
+      "title": "0分，样例ac，求调",
+      "author": {
+        "uid": 1801359,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1801359.png",
+        "name": "Chen334605",
+        "slogan": "这个家伙很懒，但似乎留下了什么",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1778681510
+    },
+    {
+      "id": 1281395,
+      "title": "汬㫅䪷䭃 如果你 WA20pts",
+      "author": {
+        "uid": 1576738,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1576738.png",
+        "name": "One_cape",
+        "slogan": "爱意也抑压  恶意也抑压",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/obnbsue2.png"
+      },
+      "time": 1776839470
+    },
+    {
+      "id": 1269286,
+      "title": "70分，求调，必关",
+      "author": {
+        "uid": 1416320,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1416320.png",
+        "name": "Milk_Tea",
+        "slogan": "宝宝你太粘人了我把你扔到墙角粘老鼠叭^v^ || 橙名及以上或200粉以上或蓝金勾壶关（别粽名啊喂），只有我关注的才能私信我QwQ",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/4003vps1.png"
+      },
+      "time": 1774771070
+    },
+    {
+      "id": 1228085,
+      "title": "60pts,必关",
+      "author": {
+        "uid": 1741593,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1741593.png",
+        "name": "ljx19979012368",
+        "slogan": "这个家伙不懒，但还是什么都没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1767793068
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

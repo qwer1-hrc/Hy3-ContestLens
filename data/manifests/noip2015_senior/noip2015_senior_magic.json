@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "noip2015_senior",
+  "problem_id": "noip2015_senior_magic",
+  "title_zh": "神奇的幻方",
+  "day": 1,
+  "contest": "NOIP",
+  "year": 2015,
+  "group": "senior",
+  "task_number": 1,
+  "luogu_id": "P2615",
+  "luogu_difficulty": "普及−",
+  "difficulty_checked_at": "2026-09-05T05:09:55.015333+00:00",
+  "data_status": "official",
+  "test_count": 10,
+  "judge_note": null,
+  "statement_relative_path": "noip/2015/senior/day1/01_magic/statement.md",
+  "resource_limits": {
+    "time_ms": 1000,
+    "memory_mb": 128,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "magic",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 10.0
+  }
+}

@@ -129,7 +129,11 @@ async def test_checkpoint_resume_does_not_repeat_analysis_or_solver(settings):
                 reviews_started.set()
             if block_reviews:
                 await asyncio.Event().wait()
-            return CriticReview(reviewer=reviewer, summary="supported")
+            return CriticReview(
+                reviewer=reviewer,
+                assessments=[{"step_id": "S1", "verdict": "SUPPORTED", "evidence": ["fixture"], "confidence": 1}],
+                summary="supported",
+            )
 
     class Judge:
         def compile_cpp(self, _problem, artifact, _sha):

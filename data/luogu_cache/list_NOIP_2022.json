@@ -1,0 +1,1424 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 1000,
+    "result": [
+      {
+        "pid": "P8865",
+        "type": "P",
+        "name": "[NOIP2022] 种花",
+        "difficulty": 4,
+        "tags": [
+          5,
+          59,
+          83,
+          108,
+          111,
+          252,
+          254
+        ],
+        "totalSubmit": 50989,
+        "totalAccepted": 12360,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8868",
+        "type": "P",
+        "name": "[NOIP2022] 比赛",
+        "difficulty": 7,
+        "tags": [
+          42,
+          59,
+          83,
+          108
+        ],
+        "totalSubmit": 14483,
+        "totalAccepted": 3158,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8867",
+        "type": "P",
+        "name": "[NOIP2022] 建造军营",
+        "difficulty": 6,
+        "tags": [
+          59,
+          83,
+          108,
+          152,
+          180,
+          181,
+          259
+        ],
+        "totalSubmit": 21636,
+        "totalAccepted": 6672,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8866",
+        "type": "P",
+        "name": "[NOIP2022] 喵了个喵",
+        "difficulty": 7,
+        "tags": [
+          7,
+          59,
+          83,
+          107,
+          108,
+          318,
+          365
+        ],
+        "totalSubmit": 26126,
+        "totalAccepted": 3123,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8948",
+        "type": "P",
+        "name": "[YsOI2022] NOIp 和省选",
+        "difficulty": 3,
+        "tags": [
+          81,
+          107
+        ],
+        "totalSubmit": 1537,
+        "totalAccepted": 687,
+        "flag": 5,
+        "provider": {
+          "uid": 230249,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/230249.png",
+          "name": "xiaolilsq",
+          "slogan": "灰名不比红名好看（",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7apwzqm1.png"
+        }
+      },
+      {
+        "pid": "P8996",
+        "type": "P",
+        "name": "[CEOI 2022] Abracadabra",
+        "difficulty": 7,
+        "tags": [
+          42,
+          50,
+          53,
+          59,
+          117
+        ],
+        "totalSubmit": 1454,
+        "totalAccepted": 471,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8997",
+        "type": "P",
+        "name": "[CEOI 2022] Homework",
+        "difficulty": 5,
+        "tags": [
+          2,
+          7,
+          54,
+          59,
+          117,
+          208
+        ],
+        "totalSubmit": 710,
+        "totalAccepted": 375,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8999",
+        "type": "P",
+        "name": "[CEOI 2022] Drawing",
+        "difficulty": 8,
+        "tags": [
+          59,
+          107,
+          117
+        ],
+        "totalSubmit": 291,
+        "totalAccepted": 57,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9000",
+        "type": "P",
+        "name": "[CEOI 2022] Measures",
+        "difficulty": 5,
+        "tags": [
+          42,
+          59,
+          117
+        ],
+        "totalSubmit": 1376,
+        "totalAccepted": 443,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9001",
+        "type": "P",
+        "name": "[CEOI 2022] Parking",
+        "difficulty": 7,
+        "tags": [
+          1,
+          59,
+          107,
+          117,
+          155,
+          287
+        ],
+        "totalSubmit": 1111,
+        "totalAccepted": 285,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9251",
+        "type": "P",
+        "name": "[PA 2022] Palindrom",
+        "difficulty": 3,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 654,
+        "totalAccepted": 172,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9255",
+        "type": "P",
+        "name": "[PA 2022] Podwyżki",
+        "difficulty": 4,
+        "tags": [
+          59,
+          107,
+          389
+        ],
+        "totalSubmit": 518,
+        "totalAccepted": 93,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9257",
+        "type": "P",
+        "name": "[PA 2022] Mędrcy",
+        "difficulty": 8,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 1641,
+        "totalAccepted": 425,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9259",
+        "type": "P",
+        "name": "[PA 2022] Fotografia",
+        "difficulty": 4,
+        "tags": [
+          59,
+          107,
+          389
+        ],
+        "totalSubmit": 106,
+        "totalAccepted": 38,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9260",
+        "type": "P",
+        "name": "[PA 2022] Miny",
+        "difficulty": 8,
+        "tags": [
+          49,
+          59,
+          159,
+          179,
+          180,
+          289,
+          379,
+          389,
+          465
+        ],
+        "totalSubmit": 1228,
+        "totalAccepted": 296,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9261",
+        "type": "P",
+        "name": "[PA 2022] Płótno",
+        "difficulty": 7,
+        "tags": [
+          42,
+          47,
+          59,
+          177,
+          229,
+          234,
+          289,
+          298,
+          389
+        ],
+        "totalSubmit": 548,
+        "totalAccepted": 229,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9262",
+        "type": "P",
+        "name": "[PA 2022] Łamigłówka",
+        "difficulty": 7,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 809,
+        "totalAccepted": 237,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9263",
+        "type": "P",
+        "name": "[PA 2022] Bakterie",
+        "difficulty": 8,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 107,
+        "totalAccepted": 18,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9267",
+        "type": "P",
+        "name": "[PA 2022] Walizki",
+        "difficulty": 4,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 198,
+        "totalAccepted": 27,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P12791",
+        "type": "P",
+        "name": "[NERC 2022] BinCoin",
+        "difficulty": 5,
+        "tags": [
+          59,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 107,
+        "totalAccepted": 48,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P12793",
+        "type": "P",
+        "name": "[NERC 2022] Dominoes",
+        "difficulty": 7,
+        "tags": [
+          59,
+          187,
+          335,
+          500
+        ],
+        "totalSubmit": 139,
+        "totalAccepted": 72,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P12795",
+        "type": "P",
+        "name": "[NERC 2022] Football",
+        "difficulty": 2,
+        "tags": [
+          59,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 153,
+        "totalAccepted": 67,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13607",
+        "type": "P",
+        "name": "[NWRRC 2022] Joking?",
+        "difficulty": 0,
+        "tags": [
+          59,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 23,
+        "totalAccepted": 1,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13805",
+        "type": "P",
+        "name": "[CERC 2022] Bandits",
+        "difficulty": 7,
+        "tags": [
+          49,
+          59,
+          335,
+          502
+        ],
+        "totalSubmit": 26,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13807",
+        "type": "P",
+        "name": "[CERC 2022] Constellations",
+        "difficulty": 4,
+        "tags": [
+          59,
+          335,
+          502
+        ],
+        "totalSubmit": 83,
+        "totalAccepted": 35,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13808",
+        "type": "P",
+        "name": "[CERC 2022] Deforestation",
+        "difficulty": 3,
+        "tags": [
+          59,
+          335,
+          502
+        ],
+        "totalSubmit": 68,
+        "totalAccepted": 7,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13809",
+        "type": "P",
+        "name": "[CERC 2022] Denormalization",
+        "difficulty": 3,
+        "tags": [
+          59,
+          107,
+          335,
+          502
+        ],
+        "totalSubmit": 70,
+        "totalAccepted": 20,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13810",
+        "type": "P",
+        "name": "[CERC 2022] Differences",
+        "difficulty": 4,
+        "tags": [
+          59,
+          309,
+          335,
+          502
+        ],
+        "totalSubmit": 142,
+        "totalAccepted": 56,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13812",
+        "type": "P",
+        "name": "[CERC 2022] Insertions",
+        "difficulty": 7,
+        "tags": [
+          53,
+          59,
+          302,
+          335,
+          502
+        ],
+        "totalSubmit": 110,
+        "totalAccepted": 31,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13814",
+        "type": "P",
+        "name": "[CERC 2022] Mortgage",
+        "difficulty": 7,
+        "tags": [
+          42,
+          59,
+          291,
+          335,
+          502
+        ],
+        "totalSubmit": 55,
+        "totalAccepted": 26,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15167",
+        "type": "P",
+        "name": "[SWERC 2022] Controllers",
+        "difficulty": 3,
+        "tags": [
+          59,
+          335
+        ],
+        "totalSubmit": 98,
+        "totalAccepted": 51,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16419",
+        "type": "P",
+        "name": "[IATI 2022] Cubes",
+        "difficulty": 0,
+        "tags": [
+          59,
+          537
+        ],
+        "totalSubmit": 83,
+        "totalAccepted": 15,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16420",
+        "type": "P",
+        "name": "[IATI 2022] Ones",
+        "difficulty": 0,
+        "tags": [
+          59,
+          103,
+          107,
+          537
+        ],
+        "totalSubmit": 20,
+        "totalAccepted": 1,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16421",
+        "type": "P",
+        "name": "[IATI 2022] Divide",
+        "difficulty": 0,
+        "tags": [
+          59,
+          537
+        ],
+        "totalSubmit": 56,
+        "totalAccepted": 4,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16422",
+        "type": "P",
+        "name": "[IATI 2022] Reorder",
+        "difficulty": 0,
+        "tags": [
+          59,
+          537
+        ],
+        "totalSubmit": 6,
+        "totalAccepted": 1,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16423",
+        "type": "P",
+        "name": "[IATI 2022] Fork",
+        "difficulty": 0,
+        "tags": [
+          59,
+          107,
+          537
+        ],
+        "totalSubmit": 12,
+        "totalAccepted": 1,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16424",
+        "type": "P",
+        "name": "[IATI 2022] Lifts",
+        "difficulty": 7,
+        "tags": [
+          59,
+          112,
+          155,
+          204,
+          537
+        ],
+        "totalSubmit": 26,
+        "totalAccepted": 3,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P17053",
+        "type": "P",
+        "name": "[NWERC 2022] 预计到达时间 / ETA",
+        "difficulty": 4,
+        "tags": [
+          5,
+          59,
+          107,
+          335
+        ],
+        "totalSubmit": 42,
+        "totalAccepted": 15,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P8495",
+        "type": "P",
+        "name": "[IOI 2022] 千岛",
+        "difficulty": 8,
+        "tags": [
+          59,
+          102,
+          103,
+          107
+        ],
+        "totalSubmit": 472,
+        "totalAccepted": 36,
+        "flag": 5,
+        "provider": {
+          "uid": 28910,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/28910.png",
+          "name": "览遍千秋",
+          "slogan": "不接受私信",
+          "badge": "七海",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 6,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9253",
+        "type": "P",
+        "name": "[PA 2022] Ornitolog 2",
+        "difficulty": 2,
+        "tags": [
+          1,
+          3,
+          7,
+          59,
+          389
+        ],
+        "totalSubmit": 530,
+        "totalAccepted": 192,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9254",
+        "type": "P",
+        "name": "[PA 2022] Liczenie punktów",
+        "difficulty": 1,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 1102,
+        "totalAccepted": 647,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9258",
+        "type": "P",
+        "name": "[PA 2022] Drybling Bajtessiego",
+        "difficulty": 7,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 198,
+        "totalAccepted": 134,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9264",
+        "type": "P",
+        "name": "[PA 2022] Drzewa rozpinające",
+        "difficulty": 8,
+        "tags": [
+          59,
+          389
+        ],
+        "totalSubmit": 266,
+        "totalAccepted": 92,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9266",
+        "type": "P",
+        "name": "[PA 2022] Nawiasowe podziały",
+        "difficulty": 8,
+        "tags": [
+          41,
+          59,
+          153,
+          368,
+          389,
+          463
+        ],
+        "totalSubmit": 1371,
+        "totalAccepted": 443,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9268",
+        "type": "P",
+        "name": "[PA 2022] Wieczór gier",
+        "difficulty": 4,
+        "tags": [
+          59,
+          107,
+          389
+        ],
+        "totalSubmit": 66,
+        "totalAccepted": 24,
+        "flag": 5,
+        "provider": {
+          "uid": 672333,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/672333.png",
+          "name": "VitrelosTia",
+          "slogan": "Tu arracheras les dents du dragon, et tu fouleras le lion aux pieds.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/76h2ius8.png"
+        }
+      },
+      {
+        "pid": "P9716",
+        "type": "P",
+        "name": "[EC Final 2022] Coloring",
+        "difficulty": 7,
+        "tags": [
+          3,
+          59,
+          108,
+          320,
+          335,
+          509
+        ],
+        "totalSubmit": 446,
+        "totalAccepted": 147,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9720",
+        "type": "P",
+        "name": "[EC Final 2022] Map",
+        "difficulty": 7,
+        "tags": [
+          5,
+          59,
+          107,
+          108,
+          335,
+          509
+        ],
+        "totalSubmit": 73,
+        "totalAccepted": 51,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9721",
+        "type": "P",
+        "name": "[EC Final 2022] Inversion",
+        "difficulty": 5,
+        "tags": [
+          45,
+          59,
+          103,
+          107,
+          108,
+          113,
+          335,
+          509
+        ],
+        "totalSubmit": 885,
+        "totalAccepted": 251,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9722",
+        "type": "P",
+        "name": "[EC Final 2022] Rectangle",
+        "difficulty": 8,
+        "tags": [
+          42,
+          59,
+          108,
+          335,
+          378,
+          509
+        ],
+        "totalSubmit": 175,
+        "totalAccepted": 74,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9726",
+        "type": "P",
+        "name": "[EC Final 2022] Magic",
+        "difficulty": 8,
+        "tags": [
+          59,
+          79,
+          108,
+          335,
+          465,
+          509
+        ],
+        "totalSubmit": 935,
+        "totalAccepted": 346,
+        "flag": 5,
+        "provider": {
+          "uid": 3,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/3.png",
+          "name": "洛谷",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2022",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

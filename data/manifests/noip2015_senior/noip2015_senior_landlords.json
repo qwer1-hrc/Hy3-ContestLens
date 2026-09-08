@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "noip2015_senior",
+  "problem_id": "noip2015_senior_landlords",
+  "title_zh": "斗地主",
+  "day": 1,
+  "contest": "NOIP",
+  "year": 2015,
+  "group": "senior",
+  "task_number": 3,
+  "luogu_id": "P2668",
+  "luogu_difficulty": "提高",
+  "difficulty_checked_at": "2026-09-05T05:09:57.843354+00:00",
+  "data_status": "official",
+  "test_count": 20,
+  "judge_note": null,
+  "statement_relative_path": "noip/2015/senior/day1/03_landlords/statement.md",
+  "resource_limits": {
+    "time_ms": 2000,
+    "memory_mb": 1024,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "landlords",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 5.0
+  }
+}

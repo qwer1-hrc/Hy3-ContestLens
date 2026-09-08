@@ -170,4 +170,6 @@ test("image dependency warnings explain that no image was sent", () => {
   assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", failure_kind: "stream_incomplete", duration_ms: 32800, http_status: 200}), /提前结束.*HTTP 200.*32\.8 秒/);
   assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", provider_error_type: "engine_overloaded_error", attempts: 3, http_status: 429}), /节点当前过载.*HTTP 429.*engine_overloaded_error.*尝试 3 次/);
   assert.match(ui.context.imageWarningText({label: "PDF 第 5 页", error_code: "IMAGE_SKIPPED_AFTER_RATE_LIMIT"}), /PDF 第 5 页.*未再发送/);
+  assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", type: "TimeoutError", http_status: 200}), /本地总时限.*不代表生成完成/);
+  assert.match(ui.context.imageWarningText({error_code: "IMAGE_MODEL_FAILED", failure_kind: "transport_timeout"}), /等待后续数据超时/);
 });

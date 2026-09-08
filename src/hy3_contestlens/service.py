@@ -5,6 +5,7 @@ import re
 import shutil
 
 from .datasets import ManifestCatalog, PrivateDataset
+from .assistant import RunAssistant
 from .errors import ContestLensError
 from .judge import DockerJudge
 from .image_understanding import ImageUnderstandingClient
@@ -38,6 +39,7 @@ class ServiceHub:
         report_options = self.settings.report_translation
         report_model = Hy3Client(report_options.model_settings(self.settings.hy3))
         self.report_translations = ReportTranslationService(self.settings.runs_root, self.store, report_model, report_options)
+        self.assistant = RunAssistant(self)
         self._run_tasks: dict[str, asyncio.Task] = {}
         self._supervisor: asyncio.Task | None = None
         self._closing = False

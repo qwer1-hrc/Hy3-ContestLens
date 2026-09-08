@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset_id": "noip2014_junior",
+  "problem_id": "noip2014_junior_submatrix",
+  "title_zh": "子矩阵",
+  "day": 1,
+  "contest": "NOIP",
+  "year": 2014,
+  "group": "junior",
+  "task_number": 4,
+  "luogu_id": "P2258",
+  "luogu_difficulty": "提高",
+  "difficulty_checked_at": "2026-09-05T05:09:38.971524+00:00",
+  "data_status": "official",
+  "test_count": 20,
+  "judge_note": null,
+  "statement_relative_path": "noip/2014/junior/04_submatrix/statement.md",
+  "resource_limits": {
+    "time_ms": 1000,
+    "memory_mb": 128,
+    "output_bytes": 16777216
+  },
+  "io": {
+    "basename": "submatrix",
+    "input_mode": "stdin_and_file",
+    "output_mode": "stdout_or_file"
+  },
+  "judge": {
+    "comparator": "noip_fulltext",
+    "input_glob": "tests/*.in",
+    "expected_glob": "expected/*.out",
+    "score_per_test": 5.0
+  }
+}

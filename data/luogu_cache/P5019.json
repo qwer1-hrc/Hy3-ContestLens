@@ -1,0 +1,297 @@
+{
+  "problem": {
+    "pid": "P5019",
+    "type": "P",
+    "name": "[NOIP 2018 提高组] 铺设道路",
+    "difficulty": 3,
+    "tags": [
+      7,
+      35,
+      83,
+      330
+    ],
+    "totalSubmit": 143099,
+    "totalAccepted": 87829,
+    "flag": 5,
+    "provider": {
+      "uid": 36482,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+      "name": "龟龟号打捞船",
+      "slogan": "",
+      "badge": "铲屎官",
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2018 提高组] 铺设道路",
+      "background": "NOIP2018 提高组 D1T1",
+      "description": "春春是一名道路工程师，负责铺设一条长度为 $n$ 的道路。 \n\n铺设道路的主要工作是填平下陷的地表。整段道路可以看作是 $n$ 块连续的区域，一开始，第 $i$ 块区域下陷的深度为 $d_i$ 。 \n\n春春每天可以选择一段连续区间 $[L,R]$ ，填充这段区间中的每块区域，让其下陷深度减少 $1$。在选择区间时，需要保证，区间内的每块区域在填充前下陷深度均不为 $0$ 。 \n\n春春希望你能帮他设计一种方案，可以在最短的时间内将整段道路的下陷深度都变为 $0$ 。 ",
+      "formatI": "输入文件包含两行，第一行包含一个整数 $n$，表示道路的长度。 第二行包含 $n$ 个整数，相邻两数间用一个空格隔开，第 $i$ 个整数为 $d_i$ 。 ",
+      "formatO": "输出文件仅包含一个整数，即最少需要多少天才能完成任务。 ",
+      "hint": "【样例解释】\n\n一种可行的最佳方案是，依次选择： \n$[1,6]$、$[1,6]$、$[1,2]$、$[1,1]$、$[4,6]$、$[4,4]$、$[4,4]$、$[6,6]$、$[6,6]$。   \n\n【数据规模与约定】\n\n对于 $30\\%$ 的数据，$1 ≤ n ≤ 10$ ；    \n对于 $70\\%$ 的数据，$1 ≤ n ≤ 1000$ ；     \n对于 $100\\%$ 的数据，$1 ≤ n ≤ 100000 , 0 ≤ d_i ≤ 10000$ 。   ",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2018 提高组] 铺设道路",
+      "background": "NOIP2018 提高组 D1T1",
+      "description": "春春是一名道路工程师，负责铺设一条长度为 $n$ 的道路。 \n\n铺设道路的主要工作是填平下陷的地表。整段道路可以看作是 $n$ 块连续的区域，一开始，第 $i$ 块区域下陷的深度为 $d_i$ 。 \n\n春春每天可以选择一段连续区间 $[L,R]$ ，填充这段区间中的每块区域，让其下陷深度减少 $1$。在选择区间时，需要保证，区间内的每块区域在填充前下陷深度均不为 $0$ 。 \n\n春春希望你能帮他设计一种方案，可以在最短的时间内将整段道路的下陷深度都变为 $0$ 。 ",
+      "formatI": "输入文件包含两行，第一行包含一个整数 $n$，表示道路的长度。 第二行包含 $n$ 个整数，相邻两数间用一个空格隔开，第 $i$ 个整数为 $d_i$ 。 ",
+      "formatO": "输出文件仅包含一个整数，即最少需要多少天才能完成任务。 ",
+      "hint": "【样例解释】\n\n一种可行的最佳方案是，依次选择： \n$[1,6]$、$[1,6]$、$[1,2]$、$[1,1]$、$[4,6]$、$[4,4]$、$[4,4]$、$[6,6]$、$[6,6]$。   \n\n【数据规模与约定】\n\n对于 $30\\%$ 的数据，$1 ≤ n ≤ 10$ ；    \n对于 $70\\%$ 的数据，$1 ≤ n ≤ 1000$ ；     \n对于 $100\\%$ 的数据，$1 ≤ n ≤ 100000 , 0 ≤ d_i ≤ 10000$ 。   ",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6   \n4 3 2 5 3 5 \n",
+        "9"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2018 Senior] Road Paving.",
+      "background": "NOIP 2018 Senior D1T1.",
+      "description": "Chunchun is a road engineer responsible for paving a road of length $n$.\n\nThe main task of paving is to fill the sunken ground surface. The whole road can be seen as $n$ consecutive segments connected end to end. Initially, the sinking depth of the $i$-th segment is $d_i$.\n\nEach day, Chunchun can choose a continuous interval $[L,R]$ and fill every segment in this interval, reducing its sinking depth by $1$. When choosing an interval, it must be guaranteed that, before filling, the sinking depth of every segment in the interval is not $0$.\n\nChunchun wants you to help design a plan that turns the sinking depths of the entire road into $0$ in the shortest time.",
+      "formatI": "The input file contains two lines. The first line contains an integer $n$, representing the length of the road. The second line contains $n$ integers separated by a single space; the $i$-th integer is $d_i$.",
+      "formatO": "The output file contains only one integer, which is the minimum number of days needed to complete the task.",
+      "hint": "【Sample Explanation】\n\nOne possible optimal plan is to choose, in order:\n$[1,6]$, $[1,6]$, $[1,2]$, $[1,1]$, $[4,6]$, $[4,4]$, $[4,4]$, $[6,6]$, $[6,6]$.\n\n【Constraints】\n\nFor $30\\%$ of the testdata, $1 \\le n \\le 10$.\nFor $70\\%$ of the testdata, $1 \\le n \\le 1000$.\nFor $100\\%$ of the testdata, $1 \\le n \\le 100000$, $0 \\le d_i \\le 10000$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2018 提高组] 铺设道路",
+      "background": "NOIP2018 提高组 D1T1",
+      "description": "春春是一名道路工程师，负责铺设一条长度为 $n$ 的道路。 \n\n铺设道路的主要工作是填平下陷的地表。整段道路可以看作是 $n$ 块连续的区域，一开始，第 $i$ 块区域下陷的深度为 $d_i$ 。 \n\n春春每天可以选择一段连续区间 $[L,R]$ ，填充这段区间中的每块区域，让其下陷深度减少 $1$。在选择区间时，需要保证，区间内的每块区域在填充前下陷深度均不为 $0$ 。 \n\n春春希望你能帮他设计一种方案，可以在最短的时间内将整段道路的下陷深度都变为 $0$ 。 ",
+      "formatI": "输入文件包含两行，第一行包含一个整数 $n$，表示道路的长度。 第二行包含 $n$ 个整数，相邻两数间用一个空格隔开，第 $i$ 个整数为 $d_i$ 。 ",
+      "formatO": "输出文件仅包含一个整数，即最少需要多少天才能完成任务。 ",
+      "hint": "【样例解释】\n\n一种可行的最佳方案是，依次选择： \n$[1,6]$、$[1,6]$、$[1,2]$、$[1,1]$、$[4,6]$、$[4,4]$、$[4,4]$、$[6,6]$、$[6,6]$。   \n\n【数据规模与约定】\n\n对于 $30\\%$ 的数据，$1 ≤ n ≤ 10$ ；    \n对于 $70\\%$ 的数据，$1 ≤ n ≤ 1000$ ；     \n对于 $100\\%$ 的数据，$1 ≤ n ≤ 100000 , 0 ≤ d_i ≤ 10000$ 。   ",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 12952,
+    "startTime": 1541804400,
+    "endTime": 1542211200,
+    "name": "NOIP2018提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1094",
+      "type": "P",
+      "name": "[NOIP 2007 普及组] 纪念品分组",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1208",
+      "type": "P",
+      "name": "[USACO1.3] 混合牛奶 Mixing Milk",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1969",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 积木大赛",
+      "difficulty": 3
+    },
+    {
+      "pid": "P4995",
+      "type": "P",
+      "name": "跳跳！",
+      "difficulty": 2
+    },
+    {
+      "pid": "P5020",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 货币系统",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P5019 [NOIP 2018 提高组] 铺设道路",
+    "type": 2,
+    "slug": "P5019",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1363740,
+      "title": "如果你也像本蒟蒻没看懂第一篇题解",
+      "author": {
+        "uid": 1249848,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1249848.png",
+        "name": "Scisyhp",
+        "slogan": "「好きなんです。」",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/y902xlzd.png"
+      },
+      "time": 1787581348
+    },
+    {
+      "id": 1356167,
+      "title": "四倍经验",
+      "author": {
+        "uid": 2171208,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2171208.png",
+        "name": "Qi168102",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/8wq05r0i.png"
+      },
+      "time": 1786949812
+    },
+    {
+      "id": 1354242,
+      "title": "这是什么问题？",
+      "author": {
+        "uid": 2061440,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2061440.png",
+        "name": "liyuhan1129",
+        "slogan": "我是一个人！！！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786771220
+    },
+    {
+      "id": 1333831,
+      "title": "三倍经验",
+      "author": {
+        "uid": 820022,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/820022.png",
+        "name": "MKMS",
+        "slogan": "若水是只很可爱的小狐狸呢~| 无条件回关",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/mu2g9hqi.png"
+      },
+      "time": 1784897496
+    },
+    {
+      "id": 1330740,
+      "title": "双倍经验",
+      "author": {
+        "uid": 1766814,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1766814.png",
+        "name": "zhoumu",
+        "slogan": "这个家伙很不懒，什么都留下了|宣团：https://www.luogu.com.cn/team/120139",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784688266
+    },
+    {
+      "id": 1321704,
+      "title": "80求条",
+      "author": {
+        "uid": 2122365,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2122365.png",
+        "name": "lilinjie",
+        "slogan": "心若澄澈，行自高洁 || ♀ || 壶关私 || 五年级蒟蒻 || 200粉福 预计9.10日之前上传完 || 9.10日关学术 || 上学了不常上线",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xxf83teb.png"
+      },
+      "time": 1784004893
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

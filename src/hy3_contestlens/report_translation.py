@@ -96,6 +96,7 @@ def report_sections(result: dict[str, Any], root: Path) -> list[dict[str, Any]]:
             "label": f"修复第 {number} 轮", "revision_id": round_record.get("new_revision_id"),
             "diagnosis": round_record.get("process_evaluation") or {}, "critics": reviews,
             "repair_plan": round_record.get("repair_plan") or {},
+            "quality_gate": round_record.get("quality_gate") or {},
         })
     best = result["best_submission_result"]
     best_critics = next((section["critics"] for section in sections if section["revision_id"] == best.get("revision_id")), [])

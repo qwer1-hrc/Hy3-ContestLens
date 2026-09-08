@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from typing import Iterable
+from typing import Any, Iterable
 
 from .domain import CheckResult, CriticReview, Diagnosis, ErrorType, StepVerdict, Verdict
 
@@ -17,13 +17,115 @@ JUDGE_ERROR_MAP = {
 }
 
 
-def adjudicate(algorithm: CriticReview, code: CriticReview, compile_verdict: Verdict, check: CheckResult | None) -> Diagnosis:
+def critic_review_quality_issues(
+    review: CriticReview,
+    expected_step_ids: Iterable[str] | None = None,
+) -> list[str]:
+    """Return structural contradictions that make a model review unauditable."""
+    issues: list[str] = []
+    if not review.assessments:
+        issues.append("missing_structured_assessments")
+        return issues
+    step_ids = [item.step_id for item in review.assessments]
+    if len(step_ids) != len(set(step_ids)):
+        issues.append("duplicate_step_assessments")
+    if expected_step_ids is not None:
+        expected = set(expected_step_ids)
+        actual = set(step_ids)
+        if expected - actual:
+            issues.append("missing_step_assessments:" + ",".join(sorted(expected - actual)))
+        if actual - expected:
+            issues.append("unknown_step_assessments:" + ",".join(sorted(actual - expected)))
+    negative = [
+        item for item in review.assessments
+        if item.verdict in {StepVerdict.CONTRADICTED, StepVerdict.UNSUPPORTED}
+    ]
+    if negative and review.error_type == ErrorType.UNRESOLVED:
+        issues.append("negative_assessment_with_unresolved_error_type")
+    if not negative and review.error_type != ErrorType.UNRESOLVED:
+        issues.append("error_type_without_negative_assessment")
+    negative_ids = {item.step_id for item in negative}
+    if negative and review.first_error_step_id is None:
+        issues.append("missing_first_error_step_id")
+    elif review.first_error_step_id is not None and review.first_error_step_id not in negative_ids:
+        issues.append("first_error_step_is_not_negative")
+    if review.reviewer == "code_critic" and negative and not review.code_location:
+        issues.append("missing_code_location")
+    return issues
+
+
+def _judge_observations(check: CheckResult | None) -> list[str]:
+    if check is None:
+        return []
+    verdicts = Counter(item.verdict.value for item in check.tests)
+    exits = Counter(str(item.exit_code) for item in check.tests if item.exit_code is not None)
+    signals: Counter[str] = Counter()
+    for item in check.tests:
+        signal = item.termination_signal
+        if signal is None and item.exit_code is not None:
+            if item.exit_code < 0:
+                signal = -item.exit_code
+            elif 128 < item.exit_code <= 192:
+                signal = item.exit_code - 128
+        if signal is not None:
+            signals[str(signal)] += 1
+    evidence = [
+        "judge_failure_pattern=" + ",".join(f"{key}:{value}" for key, value in sorted(verdicts.items())),
+    ]
+    if exits:
+        evidence.append("judge_exit_codes=" + ",".join(f"{key}:{value}" for key, value in sorted(exits.items())))
+    if signals:
+        evidence.append("judge_termination_signals=" + ",".join(f"{key}:{value}" for key, value in sorted(signals.items())))
+    flag_values = {
+        "timed_out": [item.timed_out for item in check.tests],
+        "memory_limited": [item.memory_limited for item in check.tests],
+        "output_limited": [item.output_limited for item in check.tests],
+    }
+    flag_summary = ",".join(
+        f"{name}:{sum(value is True for value in values)}/{sum(value is not None for value in values)}"
+        for name, values in flag_values.items()
+    )
+    output_known = []
+    for item in check.tests:
+        if item.stdout_bytes is not None and item.file_output_bytes is not None:
+            output_known.append(item.stdout_bytes == 0 and item.file_output_bytes == 0)
+        elif isinstance(item.first_diff, dict) and isinstance(item.first_diff.get("actual_length"), int):
+            output_known.append(item.first_diff["actual_length"] == 0)
+    evidence.append(
+        f"judge_flags={flag_summary},empty_output:{sum(output_known)}/{len(output_known)}"
+    )
+    return evidence
+
+
+def adjudicate(
+    algorithm: CriticReview,
+    code: CriticReview,
+    compile_verdict: Verdict,
+    check: CheckResult | None,
+    expected_step_ids: Iterable[str] | None = None,
+) -> Diagnosis:
     judge_verdict = compile_verdict if compile_verdict != Verdict.OK else check.verdict if check else Verdict.SANDBOX_UNAVAILABLE
     final_correct = judge_verdict == Verdict.AC
+    expected_steps = tuple(expected_step_ids) if expected_step_ids is not None else None
     contradicted = []
     for review in (algorithm, code):
-        contradicted.extend(item for item in review.assessments if item.verdict == StepVerdict.CONTRADICTED)
-    process_correct = not contradicted and algorithm.error_type == ErrorType.UNRESOLVED and code.error_type == ErrorType.UNRESOLVED
+        contradicted.extend(
+            item for item in review.assessments
+            if item.verdict in {StepVerdict.CONTRADICTED, StepVerdict.UNSUPPORTED}
+        )
+    quality_issues = {
+        review.reviewer: critic_review_quality_issues(review, expected_steps) for review in (algorithm, code)
+    }
+    all_assessed = all(
+        review.assessments and all(item.verdict == StepVerdict.SUPPORTED for item in review.assessments)
+        for review in (algorithm, code)
+    )
+    process_correct = (
+        all_assessed
+        and not any(quality_issues.values())
+        and algorithm.error_type == ErrorType.UNRESOLVED
+        and code.error_type == ErrorType.UNRESOLVED
+    )
     if final_correct and not process_correct:
         error_type = ErrorType.RESULT_CORRECT_PROCESS_INVALID
     elif compile_verdict == Verdict.CE:
@@ -45,16 +147,21 @@ def adjudicate(algorithm: CriticReview, code: CriticReview, compile_verdict: Ver
         if first is None and review.first_error_step_id:
             first = review.first_error_step_id
         for assessment in review.assessments:
-            if assessment.verdict == StepVerdict.CONTRADICTED:
+            if assessment.verdict in {StepVerdict.CONTRADICTED, StepVerdict.UNSUPPORTED}:
                 if first is None:
                     first = assessment.step_id
                 evidence.extend(assessment.evidence)
                 confidence_values.append(assessment.confidence)
         if review.summary:
             evidence.append(f"{review.reviewer}: {review.summary}")
+        if quality_issues[review.reviewer]:
+            evidence.append(
+                f"critic_quality_gate[{review.reviewer}]=" + ",".join(quality_issues[review.reviewer])
+            )
     if judge_verdict not in {Verdict.AC, Verdict.OK}:
         evidence.insert(0, f"deterministic_judge_verdict={judge_verdict.value}")
         confidence_values.append(1.0)
+    evidence[1:1] = _judge_observations(check)
     confidence = sum(confidence_values) / len(confidence_values) if confidence_values else (0.9 if final_correct else 0.3)
     code_location = code.code_location or algorithm.code_location
     suggestion = repair_route(judge_verdict, error_type)
@@ -79,8 +186,10 @@ def repair_route(verdict: Verdict, error_type: ErrorType) -> str | None:
         return None
     if verdict == Verdict.CE:
         return "Patch the compiler-diagnosed source error, then compile, run all tests, and repeat both process reviews."
+    if error_type in {ErrorType.STATE_TRANSITION_ERROR, ErrorType.RUNTIME_ERROR}:
+        return "Patch the earliest proven control-flow, state-management, bounds, or lifetime defect; prove loop/work-queue termination, then run all tests and audit adjacent code for the same failure class."
     if verdict == Verdict.TLE or error_type == ErrorType.COMPLEXITY_TLE:
-        return "Replace or optimize the algorithm, then run all tests and re-check the claimed complexity."
+        return "First prove forward progress and termination of every loop/work queue and rule out blocking I/O; only then optimize the measured hot path, run all tests, and re-check the claimed complexity."
     if verdict == Verdict.MLE or error_type == ErrorType.COMPLEXITY_MLE:
         return "Reduce state or data-structure memory, then run all tests under the problem memory limit."
     if verdict in {Verdict.RE, Verdict.OLE, Verdict.IO_CONFLICT}:
@@ -88,6 +197,40 @@ def repair_route(verdict: Verdict, error_type: ErrorType) -> str | None:
     if error_type == ErrorType.RESULT_CORRECT_PROCESS_INVALID:
         return "Repair the proof, dependencies, or code-step mapping; rejudge only if source code changes."
     return "Repair the earliest contradicted step and its mapped implementation, then compile, run all tests, and repeat process reviews."
+
+
+def repair_quality_gate(previous: CheckResult | None, candidate: CheckResult | None) -> dict[str, Any]:
+    """Describe deterministic per-test repair regressions without exposing private data."""
+    previous_tests = {item.test_id: item for item in previous.tests} if previous else {}
+    candidate_tests = {item.test_id: item for item in candidate.tests} if candidate else {}
+    fixed = sorted(
+        test_id for test_id, item in previous_tests.items()
+        if item.verdict != Verdict.AC
+        and candidate_tests.get(test_id) is not None
+        and candidate_tests[test_id].verdict == Verdict.AC
+    )
+    regressed = sorted(
+        test_id for test_id, item in previous_tests.items()
+        if item.verdict == Verdict.AC
+        and (candidate_tests.get(test_id) is None or candidate_tests[test_id].verdict != Verdict.AC)
+    )
+    changed = [
+        {
+            "test_id": test_id,
+            "before": previous_tests[test_id].verdict.value,
+            "after": candidate_tests[test_id].verdict.value,
+        }
+        for test_id in sorted(previous_tests)
+        if previous_tests[test_id].verdict != Verdict.AC
+        and candidate_tests.get(test_id) is not None
+        and candidate_tests[test_id].verdict not in {Verdict.AC, previous_tests[test_id].verdict}
+    ]
+    return {
+        "passed": not regressed,
+        "fixed_tests": fixed,
+        "regressed_tests": regressed,
+        "changed_failure_modes": changed,
+    }
 
 
 def is_complete(compile_verdict: Verdict, check: CheckResult | None, diagnosis: Diagnosis) -> bool:

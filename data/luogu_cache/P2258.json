@@ -1,0 +1,316 @@
+{
+  "problem": {
+    "pid": "P2258",
+    "type": "P",
+    "name": "[NOIP 2014 普及组] 子矩阵",
+    "difficulty": 5,
+    "tags": [
+      3,
+      4,
+      31,
+      82,
+      111,
+      128
+    ],
+    "totalSubmit": 28109,
+    "totalAccepted": 10300,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 普及组] 子矩阵",
+      "background": "NOIP2014 普及组 T4",
+      "description": "给出如下定义：\n\n1. 子矩阵：从一个矩阵当中选取某些行和某些列交叉位置所组成的新矩阵（保持行与列的相对顺序）被称为原矩阵的一个子矩阵。\n\n    例如，下面图中选取第 $2,4$ 行和第 $2,4,5$ 列交叉位置的元素得到一个 $2 \\times 3$ 的子矩阵如下所示。\n\n|$9$|$\\color{#6a5acd}3$|$3$|$\\color{#6a5acd}3$|$\\color{#6a5acd}9$|\n|:-|:-|:-|:-|:-|\n|$\\color{#6a5acd}9$|$\\color{blue}4$|$\\color{#6a5acd}8$|$\\color{blue}7$|$\\color{blue}4$|\n|$1$|$\\color{#6a5acd}7$|$4$|$\\color{#6a5acd}6$|$\\color{#6a5acd}6$|\n|$\\color{#6a5acd}6$|$\\color{blue}8$|$\\color{#6a5acd}5$|$\\color{blue}6$|$\\color{blue}9$|\n|$7$|$\\color{#6a5acd}4$|$5$|$\\color{#6a5acd}6$|$\\color{#6a5acd}1$|\n\n此矩阵的其中一个 $2\\times3$ 的子矩阵是：\n\n|$4$|$7$|$4$|\n|:-|:-|:-|\n|$8$|$6$|$9$|\n\n2. 相邻的元素：矩阵中的某个元素与其上下左右四个元素（如果存在的话）是相邻的。\n\n3. 矩阵的分值：矩阵中每一对相邻元素之差的绝对值之和。\n\n本题任务：给定一个 $n$ 行 $m$ 列的正整数矩阵，请你从这个矩阵中选出一个 $r$ 行 $c$ 列的子矩阵，使得这个子矩阵的分值最小，并输出这个分值。",
+      "formatI": "第一行包含用空格隔开的四个整数 $n,m,r,c$，意义如问题描述中所述，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行包含 $m$ 个用空格隔开的整数，用来表示问题描述中那个 $n$ 行 $m$ 列的矩阵。",
+      "formatO": "一个整数，表示满足题目描述的子矩阵的最小分值。\n",
+      "hint": "#### 样例 1 说明\n\n该矩阵中分值最小的 $2$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行与第 $1$ 列、第 $3$ 列、第 $4$ 列交叉位置的元素组成，为：\n\n|$6$|$5$|$6$|\n|:-|:-|:-|\n|$7$|$5$|$6$|\n\n其分值为 $|6-5|+|5-6|+|7-5|+|5-6|+|6-7|+|5-5|+|6-6|=6$。\n\n#### 样例 2 说明\n\n该矩阵中分值最小的 $3$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行、第 $6$ 行与第 $2$ 列、第 $6$ 列、第 $7$ 列交叉位置的元素组成，选取的分值最小的子矩阵为：\n\n|$9$|$7$|$8$|\n|:-|:-|:-|\n|$9$|$8$|$8$|\n|$5$|$8$|$10$|\n\n#### 数据范围\n\n- 对于 $50\\%$ 的数据，$1\\leq n\\leq 12$，$1\\leq m\\leq 12$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq20$；\n\n- 对于 $100\\%$ 的数据，$1\\leq n\\leq 16$，$1\\leq m\\leq 16$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq 1000$，$1\\leq r\\leq n$，$1\\leq c\\leq m$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 普及组] 子矩阵",
+      "background": "NOIP2014 普及组 T4",
+      "description": "给出如下定义：\n\n1. 子矩阵：从一个矩阵当中选取某些行和某些列交叉位置所组成的新矩阵（保持行与列的相对顺序）被称为原矩阵的一个子矩阵。\n\n    例如，下面图中选取第 $2,4$ 行和第 $2,4,5$ 列交叉位置的元素得到一个 $2 \\times 3$ 的子矩阵如下所示。\n\n|$9$|$\\color{#6a5acd}3$|$3$|$\\color{#6a5acd}3$|$\\color{#6a5acd}9$|\n|:-|:-|:-|:-|:-|\n|$\\color{#6a5acd}9$|$\\color{blue}4$|$\\color{#6a5acd}8$|$\\color{blue}7$|$\\color{blue}4$|\n|$1$|$\\color{#6a5acd}7$|$4$|$\\color{#6a5acd}6$|$\\color{#6a5acd}6$|\n|$\\color{#6a5acd}6$|$\\color{blue}8$|$\\color{#6a5acd}5$|$\\color{blue}6$|$\\color{blue}9$|\n|$7$|$\\color{#6a5acd}4$|$5$|$\\color{#6a5acd}6$|$\\color{#6a5acd}1$|\n\n此矩阵的其中一个 $2\\times3$ 的子矩阵是：\n\n|$4$|$7$|$4$|\n|:-|:-|:-|\n|$8$|$6$|$9$|\n\n2. 相邻的元素：矩阵中的某个元素与其上下左右四个元素（如果存在的话）是相邻的。\n\n3. 矩阵的分值：矩阵中每一对相邻元素之差的绝对值之和。\n\n本题任务：给定一个 $n$ 行 $m$ 列的正整数矩阵，请你从这个矩阵中选出一个 $r$ 行 $c$ 列的子矩阵，使得这个子矩阵的分值最小，并输出这个分值。",
+      "formatI": "第一行包含用空格隔开的四个整数 $n,m,r,c$，意义如问题描述中所述，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行包含 $m$ 个用空格隔开的整数，用来表示问题描述中那个 $n$ 行 $m$ 列的矩阵。",
+      "formatO": "一个整数，表示满足题目描述的子矩阵的最小分值。\n",
+      "hint": "#### 样例 1 说明\n\n该矩阵中分值最小的 $2$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行与第 $1$ 列、第 $3$ 列、第 $4$ 列交叉位置的元素组成，为：\n\n|$6$|$5$|$6$|\n|:-|:-|:-|\n|$7$|$5$|$6$|\n\n其分值为 $|6-5|+|5-6|+|7-5|+|5-6|+|6-7|+|5-5|+|6-6|=6$。\n\n#### 样例 2 说明\n\n该矩阵中分值最小的 $3$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行、第 $6$ 行与第 $2$ 列、第 $6$ 列、第 $7$ 列交叉位置的元素组成，选取的分值最小的子矩阵为：\n\n|$9$|$7$|$8$|\n|:-|:-|:-|\n|$9$|$8$|$8$|\n|$5$|$8$|$10$|\n\n#### 数据范围\n\n- 对于 $50\\%$ 的数据，$1\\leq n\\leq 12$，$1\\leq m\\leq 12$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq20$；\n\n- 对于 $100\\%$ 的数据，$1\\leq n\\leq 16$，$1\\leq m\\leq 16$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq 1000$，$1\\leq r\\leq n$，$1\\leq c\\leq m$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "5 5 2 3\n9 3 3 3 9\n9 4 8 7 4\n1 7 4 6 6\n6 8 5 6 9\n7 4 5 6 1",
+        "6"
+      ],
+      [
+        "7 7 3 3  \n7 7 7 6 2 10 5\n5 8 8 2 1 6 2 \n2 9 5 5 6 1 7 \n7 9 3 6 1 7 8 \n1 9 1 4 7 8 8 \n10 5 9 1 1 8 10\n1 3 1 5 4 8 6",
+        "16"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Junior] Submatrix",
+      "background": "NOIP 2014 Junior T4.",
+      "description": "Definitions:\n\n1. Submatrix: A new matrix formed by selecting some rows and some columns from a matrix and taking the elements at their intersections (preserving the relative order of rows and columns) is called a submatrix of the original matrix.\n\n    For example, in the table below, selecting rows $2,4$ and columns $2,4,5$ yields a $2 \\times 3$ submatrix as follows.\n\n|$9$|$\\color{#6a5acd}3$|$3$|$\\color{#6a5acd}3$|$\\color{#6a5acd}9$|\n|:-|:-|:-|:-|:-|\n|$\\color{#6a5acd}9$|$\\color{blue}4$|$\\color{#6a5acd}8$|$\\color{blue}7$|$\\color{blue}4$|\n|$1$|$\\color{#6a5acd}7$|$4$|$\\color{#6a5acd}6$|$\\color{#6a5acd}6$|\n|$\\color{#6a5acd}6$|$\\color{blue}8$|$\\color{#6a5acd}5$|$\\color{blue}6$|$\\color{blue}9$|\n|$7$|$\\color{#6a5acd}4$|$5$|$\\color{#6a5acd}6$|$\\color{#6a5acd}1$|\n\nOne of its $2\\times3$ submatrices is:\n\n|$4$|$7$|$4$|\n|:-|:-|:-|\n|$8$|$6$|$9$|\n\n2. Adjacent elements: An element in the matrix is adjacent to its four neighbors above, below, left, and right (if they exist).\n\n3. Score of a matrix: The sum of the absolute differences of every pair of adjacent elements in the matrix.\n\nTask: Given a positive-integer matrix with $n$ rows and $m$ columns, choose an $r$-row $c$-column submatrix from it so that the score of this submatrix is minimized, and output that score.",
+      "formatI": "The first line contains four integers $n, m, r, c$ separated by single spaces, as described above.\n\nThe next $n$ lines each contain $m$ integers, representing the $n$-row $m$-column matrix described in the problem statement.",
+      "formatO": "Output a single integer, the minimum possible score among all submatrices that satisfy the description.",
+      "hint": "Sample 1 explanation\n\nIn this matrix, the $2$-row $3$-column submatrix with the minimum score is formed by the intersection of rows $4, 5$ and columns $1, 3, 4$ of the original matrix, namely:\n\n|$6$|$5$|$6$|\n|:-|:-|:-|\n|$7$|$5$|$6$|\n\nIts score is $|6-5|+|5-6|+|7-5|+|5-6|+|6-7|+|5-5|+|6-6|=6$.\n\nSample 2 explanation\n\nIn this matrix, the $3$-row $3$-column submatrix with the minimum score is formed by the intersection of rows $4, 5, 6$ and columns $2, 6, 7$ of the original matrix. The chosen submatrix with the minimum score is:\n\n|$9$|$7$|$8$|\n|:-|:-|:-|\n|$9$|$8$|$8$|\n|$5$|$8$|$10$|\n\nConstraints\n\n- For $50\\%$ of the testdata, $1 \\leq n \\leq 12$, $1 \\leq m \\leq 12$, and for every element $1 \\leq a_{i,j} \\leq 20$.\n- For $100\\%$ of the testdata, $1 \\leq n \\leq 16$, $1 \\leq m \\leq 16$, every element satisfies $1 \\leq a_{i,j} \\leq 1000$, $1 \\leq r \\leq n$, and $1 \\leq c \\leq m$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 普及组] 子矩阵",
+      "background": "NOIP2014 普及组 T4",
+      "description": "给出如下定义：\n\n1. 子矩阵：从一个矩阵当中选取某些行和某些列交叉位置所组成的新矩阵（保持行与列的相对顺序）被称为原矩阵的一个子矩阵。\n\n    例如，下面图中选取第 $2,4$ 行和第 $2,4,5$ 列交叉位置的元素得到一个 $2 \\times 3$ 的子矩阵如下所示。\n\n|$9$|$\\color{#6a5acd}3$|$3$|$\\color{#6a5acd}3$|$\\color{#6a5acd}9$|\n|:-|:-|:-|:-|:-|\n|$\\color{#6a5acd}9$|$\\color{blue}4$|$\\color{#6a5acd}8$|$\\color{blue}7$|$\\color{blue}4$|\n|$1$|$\\color{#6a5acd}7$|$4$|$\\color{#6a5acd}6$|$\\color{#6a5acd}6$|\n|$\\color{#6a5acd}6$|$\\color{blue}8$|$\\color{#6a5acd}5$|$\\color{blue}6$|$\\color{blue}9$|\n|$7$|$\\color{#6a5acd}4$|$5$|$\\color{#6a5acd}6$|$\\color{#6a5acd}1$|\n\n此矩阵的其中一个 $2\\times3$ 的子矩阵是：\n\n|$4$|$7$|$4$|\n|:-|:-|:-|\n|$8$|$6$|$9$|\n\n2. 相邻的元素：矩阵中的某个元素与其上下左右四个元素（如果存在的话）是相邻的。\n\n3. 矩阵的分值：矩阵中每一对相邻元素之差的绝对值之和。\n\n本题任务：给定一个 $n$ 行 $m$ 列的正整数矩阵，请你从这个矩阵中选出一个 $r$ 行 $c$ 列的子矩阵，使得这个子矩阵的分值最小，并输出这个分值。",
+      "formatI": "第一行包含用空格隔开的四个整数 $n,m,r,c$，意义如问题描述中所述，每两个整数之间用一个空格隔开。\n\n接下来的 $n$ 行，每行包含 $m$ 个用空格隔开的整数，用来表示问题描述中那个 $n$ 行 $m$ 列的矩阵。",
+      "formatO": "一个整数，表示满足题目描述的子矩阵的最小分值。\n",
+      "hint": "#### 样例 1 说明\n\n该矩阵中分值最小的 $2$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行与第 $1$ 列、第 $3$ 列、第 $4$ 列交叉位置的元素组成，为：\n\n|$6$|$5$|$6$|\n|:-|:-|:-|\n|$7$|$5$|$6$|\n\n其分值为 $|6-5|+|5-6|+|7-5|+|5-6|+|6-7|+|5-5|+|6-6|=6$。\n\n#### 样例 2 说明\n\n该矩阵中分值最小的 $3$ 行 $3$ 列的子矩阵由原矩阵的第 $4$ 行、第 $5$ 行、第 $6$ 行与第 $2$ 列、第 $6$ 列、第 $7$ 列交叉位置的元素组成，选取的分值最小的子矩阵为：\n\n|$9$|$7$|$8$|\n|:-|:-|:-|\n|$9$|$8$|$8$|\n|$5$|$8$|$10$|\n\n#### 数据范围\n\n- 对于 $50\\%$ 的数据，$1\\leq n\\leq 12$，$1\\leq m\\leq 12$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq20$；\n\n- 对于 $100\\%$ 的数据，$1\\leq n\\leq 16$，$1\\leq m\\leq 16$，矩阵中的每个元素 $1\\leq a_{i,j}\\leq 1000$，$1\\leq r\\leq n$，$1\\leq c\\leq m$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1108",
+      "type": "P",
+      "name": "[USACO99FALL] 低价购买",
+      "difficulty": 3
+    },
+    {
+      "pid": "P1982",
+      "type": "P",
+      "name": "[NOIP 2013 普及组] 小朋友的数字",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2672",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 推销员",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3957",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 跳房子",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5017",
+      "type": "P",
+      "name": "[NOIP 2018 普及组] 摆渡车",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P2258 [NOIP 2014 普及组] 子矩阵",
+    "type": 2,
+    "slug": "P2258",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1319766,
+      "title": "警示后人",
+      "author": {
+        "uid": 1669637,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1669637.png",
+        "name": "qxwns6",
+        "slogan": "超炮2026.3.27完结 君指先跃动の光は 私の一生不変の信仰に、唯私の超電磁砲永世生き",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/3a77dwl3.png"
+      },
+      "time": 1783841652
+    },
+    {
+      "id": 1293041,
+      "title": "15分求条玄关",
+      "author": {
+        "uid": 1188460,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1188460.png",
+        "name": "fresh_wind",
+        "slogan": "这个家伙傻乎乎的,所以什么也没留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qjecmjah.png"
+      },
+      "time": 1778932339
+    },
+    {
+      "id": 1239718,
+      "title": "WA on #2 求调教",
+      "author": {
+        "uid": 1344756,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1344756.png",
+        "name": "ROU_bing",
+        "slogan": "这个CQ我是一点也不想待了",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/vnm2wz6z.png"
+      },
+      "time": 1770016918
+    },
+    {
+      "id": 1210616,
+      "title": "35pts求条",
+      "author": {
+        "uid": 1003847,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1003847.png",
+        "name": "xiaomi0107",
+        "slogan": "ZEZ去死！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1764770306
+    },
+    {
+      "id": 1135575,
+      "title": "求DP思路",
+      "author": {
+        "uid": 1347790,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1347790.png",
+        "name": "zjck2",
+        "slogan": "禁言且永久学术||粉福、壶关、TC聊天室看主页||地址栏里把.com换成.ac即可严肃观看主页||进度：最小生成树",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hqhec4mo.png"
+      },
+      "time": 1755486470
+    },
+    {
+      "id": 1135469,
+      "title": "5分，一河三水，玄关求条，一半WA一半T，AC#2",
+      "author": {
+        "uid": 1347790,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1347790.png",
+        "name": "zjck2",
+        "slogan": "禁言且永久学术||粉福、壶关、TC聊天室看主页||地址栏里把.com换成.ac即可严肃观看主页||进度：最小生成树",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hqhec4mo.png"
+      },
+      "time": 1755481225
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -67,6 +67,17 @@ def compare_noip_fulltext(expected: bytes, actual: bytes) -> tuple[bool, dict[st
     return False, summary, expected_hash, actual_hash
 
 
+def termination_signal(exit_code: int | None) -> int | None:
+    """Decode the conventional shell representation of a signal exit status."""
+    if exit_code is None or isinstance(exit_code, bool):
+        return None
+    if exit_code < 0:
+        return -exit_code
+    if 128 < exit_code <= 192:
+        return exit_code - 128
+    return None
+
+
 class DockerJudge:
     def __init__(self, settings: AppSettings, catalog: ManifestCatalog, dataset: PrivateDataset, workspace: WorkspaceStore):
         self.settings = settings
@@ -167,8 +178,8 @@ class DockerJudge:
             self.settings.docker_run_image,
             "/runner", "--executable", "/artifact/main", "--stdin", "/test/input.in",
             "--stdout", "/result/stdout.txt", "--stderr", "/result/stderr.txt", "--stats", "/result/stats.json",
-            "--file-output", f"/work/{problem_id}.out", "--copied-file-output", "/result/file.out",
-            "--problem-input", f"/work/{problem_id}.in", "--time-ms", str(time_ms),
+            "--file-output", f"/work/{self.catalog.get(problem_id).io.basename}.out", "--copied-file-output", "/result/file.out",
+            "--problem-input", f"/work/{self.catalog.get(problem_id).io.basename}.in", "--time-ms", str(time_ms),
             "--memory-mb", str(memory_mb), "--output-bytes", str(output_bytes),
         ]
         started = time.monotonic()
@@ -182,6 +193,8 @@ class DockerJudge:
         stats = json.loads(stats_path.read_text(encoding="utf-8")) if stats_path.is_file() else {}
         stdout = (result_root / "stdout.txt").read_bytes() if (result_root / "stdout.txt").is_file() else b""
         file_output = (result_root / "file.out").read_bytes() if (result_root / "file.out").is_file() else b""
+        stdout_size = len(stdout)
+        file_output_size = len(file_output)
         stderr_size = (result_root / "stderr.txt").stat().st_size if (result_root / "stderr.txt").is_file() else 0
         expected = case.expected_path.read_bytes()
         chosen = file_output if file_output else stdout
@@ -192,13 +205,16 @@ class DockerJudge:
         wall_ms = int(stats.get("wall_ms", observed_wall))
         cpu_ms = int(stats.get("cpu_ms", 0))
         peak_rss_mb = round(float(stats.get("peak_rss_kb", 0)) / 1024, 3)
+        timed_out = bool(stats.get("timed_out")) or wall_ms > time_ms
+        memory_limited = bool(stats.get("memory_limited")) or peak_rss_mb > memory_mb
+        output_limited = bool(stats.get("output_limited")) or stdout_size + file_output_size > output_bytes
         if result.returncode != 0 and not stats:
             verdict = Verdict.SANDBOX_VIOLATION
-        elif stats.get("output_limited") or len(stdout) + len(file_output) > output_bytes:
+        elif output_limited or stdout_size + file_output_size > output_bytes:
             verdict = Verdict.OLE
-        elif stats.get("memory_limited") or peak_rss_mb > memory_mb:
+        elif memory_limited or peak_rss_mb > memory_mb:
             verdict = Verdict.MLE
-        elif stats.get("timed_out") or wall_ms > time_ms:
+        elif timed_out or wall_ms > time_ms:
             verdict = Verdict.TLE
         elif exit_code not in (0, None):
             verdict = Verdict.RE
@@ -214,10 +230,15 @@ class DockerJudge:
             test_id=case.test_id, verdict=verdict, cpu_ms=cpu_ms, wall_ms=wall_ms, peak_rss_mb=peak_rss_mb,
             memory_limit_mb=memory_mb, memory_limit_source=memory_source, expected_sha256=normalized_expected_hash,
             actual_sha256=actual_hash, first_diff=first_diff, exit_code=exit_code,
+            termination_signal=termination_signal(exit_code), timed_out=timed_out,
+            memory_limited=memory_limited, output_limited=output_limited,
+            stdout_bytes=stdout_size, file_output_bytes=file_output_size, stderr_bytes=stderr_size,
         )
 
     def check_answer(self, compile_artifact_id: str, dataset_id: str, problem_id: str, test_ids: list[str] | None = None) -> CheckResult:
-        ensure(dataset_id == "noip2018", "DATASET_NOT_FOUND", "Only NOIP2018 is configured", status_code=404)
+        manifest = self.catalog.get(problem_id)
+        ensure(dataset_id == manifest.dataset_id, "DATASET_NOT_FOUND", "Problem does not belong to dataset", status_code=404)
+        ensure(not manifest.judge_note, "UNSUPPORTED_COMPARATOR", manifest.judge_note or "Unsupported comparator", status_code=422)
         binary, compile_meta = self._locate_compile(compile_artifact_id)
         ensure(compile_meta["problem_id"] == problem_id, "PROBLEM_ARTIFACT_MISMATCH", "Compile artifact belongs to another problem")
         health = self.healthcheck()

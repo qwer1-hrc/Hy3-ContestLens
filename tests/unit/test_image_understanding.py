@@ -274,9 +274,98 @@ async def test_quota_429_is_not_retried_and_error_body_is_safely_classified():
     assert "private-key" not in str(caught.value.details)
 
 
+@pytest.mark.asyncio
+@pytest.mark.parametrize("failure", ["timeout", "disconnect", "incomplete", "server"])
+async def test_transient_image_failures_retry_without_accepting_partial_text(failure):
+    calls = []
+
+    def respond(request):
+        calls.append(request)
+        if len(calls) == 1:
+            if failure == "timeout":
+                raise httpx.ReadTimeout("private-key")
+            if failure == "disconnect":
+                raise httpx.RemoteProtocolError("private-key")
+            if failure == "server":
+                return httpx.Response(503, json={})
+            return httpx.Response(200, headers={"content-type": "text/event-stream"},
+                                  text='data: {"choices":[{"delta":{"content":"partial"}}]}\n\n')
+        return httpx.Response(200, json={"choices": [{"finish_reason": "stop", "message": {"content": "完整图片描述"}}]})
+
+    client = ImageUnderstandingClient(ImageUnderstandingSettings(api_key="private-key", retry_backoff_seconds=0),
+                                       transport=httpx.MockTransport(respond))
+    result = await client.describe("data:image/png;base64,AA==", "page", "context")
+    assert result.text == "完整图片描述" and result.diagnostics["attempts"] == 2
+    assert len(calls) == 2 and len(result.diagnostics["retry_history"]) == 1
+    assert "private-key" not in json.dumps(result.diagnostics)
+
+
+@pytest.mark.asyncio
+async def test_total_timeout_retries_and_closes_reasoning_stream():
+    streams = []
+
+    class ThinkingStream(httpx.AsyncByteStream):
+        closed = False
+        async def __aiter__(self):
+            yield b'data: {"choices":[{"delta":{"reasoning_content":"PRIVATE_THOUGHT"}}]}\n\n'
+            await asyncio.sleep(1)
+        async def aclose(self):
+            self.closed = True
+
+    def respond(request):
+        stream = ThinkingStream(); streams.append(stream)
+        return httpx.Response(200, headers={"content-type": "text/event-stream"}, stream=stream)
+
+    settings = ImageUnderstandingSettings(api_key="private-key", max_attempts=2, retry_backoff_seconds=0)
+    settings.timeout_seconds = .03  # Accelerate a real total-deadline test.
+    client = ImageUnderstandingClient(settings, transport=httpx.MockTransport(respond))
+    with pytest.raises(ContestLensError) as caught:
+        await client.describe("data:image/png;base64,AA==", "page", "context")
+    details = caught.value.details
+    assert details["failure_kind"] == "total_timeout" and details["http_status"] == 200
+    assert details["attempts"] == 2 and details["retry_exhausted"]
+    assert details["stream"]["content_chars"] == 0 and details["stream"]["event_count"] == 1
+    assert len(streams) == 2 and all(s.closed for s in streams)
+    assert "PRIVATE_THOUGHT" not in json.dumps(details)
+
+
+@pytest.mark.asyncio
+async def test_active_stream_can_outlive_idle_budget_without_shortening_total_budget():
+    class ActiveStream(httpx.AsyncByteStream):
+        async def __aiter__(self):
+            for _ in range(8):
+                yield b'data: {"choices":[{"delta":{"reasoning_content":"thinking"}}]}\n\n'
+                await asyncio.sleep(.01)
+            yield b'data: {"choices":[{"delta":{"content":"complete"},"finish_reason":"stop"}]}\n\ndata: [DONE]\n\n'
+
+    def respond(request):
+        assert request.extensions["timeout"]["read"] == .05
+        return httpx.Response(200, headers={"content-type": "text/event-stream"}, stream=ActiveStream())
+
+    settings = ImageUnderstandingSettings(api_key="test")
+    settings.timeout_seconds = .5
+    settings.idle_timeout_seconds = .05
+    result = await ImageUnderstandingClient(settings, transport=httpx.MockTransport(respond)).describe("data:image/png;base64,AA==", "page", "context")
+    assert result.text == "complete" and result.diagnostics["attempts"] == 1
+    assert result.diagnostics["duration_ms"] >= 50
+
+
+@pytest.mark.asyncio
+async def test_cancellation_does_not_retry_image_request():
+    calls = []
+    async def respond(request):
+        calls.append(request)
+        raise asyncio.CancelledError()
+    client = ImageUnderstandingClient(ImageUnderstandingSettings(api_key="test"), transport=httpx.MockTransport(respond))
+    with pytest.raises(asyncio.CancelledError):
+        await client.describe("data:image/png;base64,AA==", "page", "context")
+    assert len(calls) == 1
+
+
 @pytest.mark.parametrize("options", [
     {"max_attempts": 0}, {"max_attempts": 6}, {"max_attempts": True},
     {"retry_backoff_seconds": -1}, {"retry_backoff_seconds": 61},
+    {"idle_timeout_seconds": 0}, {"idle_timeout_seconds": 481}, {"timeout_seconds": 481},
 ])
 def test_image_retry_configuration_is_bounded(options):
     with pytest.raises(ValueError):

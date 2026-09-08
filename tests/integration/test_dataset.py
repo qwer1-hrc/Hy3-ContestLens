@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def test_private_import_has_all_120_pairs(settings):
-    result = validate_import(settings.private_data_root, ManifestCatalog(settings.manifests_root))
+    result = validate_import(settings.private_data_root, ManifestCatalog(settings.manifests_root), "noip2018")
     assert result["valid"] is True
     assert result["count"] == 120
     assert [item["count"] for item in result["problems"]] == [10, 20, 20, 25, 20, 25]

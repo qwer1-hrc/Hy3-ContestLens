@@ -1,0 +1,300 @@
+{
+  "problem": {
+    "pid": "P2670",
+    "type": "P",
+    "name": "[NOIP 2015 普及组] 扫雷游戏",
+    "difficulty": 1,
+    "tags": [
+      2,
+      4,
+      32,
+      82,
+      111
+    ],
+    "totalSubmit": 357351,
+    "totalAccepted": 182088,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 普及组] 扫雷游戏",
+      "background": "NOIP2015 普及组 T2",
+      "description": "扫雷游戏是一款十分经典的单机小游戏。在 $n$ 行 $m$ 列的雷区中有一些格子含有地雷（称之为地雷格），其他格子不含地雷（称之为非地雷格）。玩家翻开一个非地雷格时，该格将会出现一个数字——提示周围格子中有多少个是地雷格。游戏的目标是在不翻出任何地雷格的条件下，找出所有的非地雷格。\n\n现在给出 $n$ 行 $m$ 列的雷区中的地雷分布，要求计算出每个非地雷格周围的地雷格数。\n\n注：一个格子的周围格子包括其上、下、左、右、左上、右上、左下、右下八个方向上与之直接相邻的格子。\n",
+      "formatI": "第一行是用一个空格隔开的两个整数 $n$ 和 $m$，分别表示雷区的行数和列数。\n\n接下来 $n$ 行，每行 $m$ 个字符，描述了雷区中的地雷分布情况。字符 $\\texttt{*}$ 表示相应格子是地雷格，字符 $\\texttt{?}$ 表示相应格子是非地雷格。相邻字符之间无分隔符。\n",
+      "formatO": "输出文件包含 $n$ 行，每行 $m$ 个字符，描述整个雷区。用 $\\texttt{*}$ 表示地雷格，用周围的地雷个数表示非地雷格。相邻字符之间无分隔符。\n",
+      "hint": "对于 $100\\%$的数据，$1≤n≤100, 1≤m≤100$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 普及组] 扫雷游戏",
+      "background": "NOIP2015 普及组 T2",
+      "description": "扫雷游戏是一款十分经典的单机小游戏。在 $n$ 行 $m$ 列的雷区中有一些格子含有地雷（称之为地雷格），其他格子不含地雷（称之为非地雷格）。玩家翻开一个非地雷格时，该格将会出现一个数字——提示周围格子中有多少个是地雷格。游戏的目标是在不翻出任何地雷格的条件下，找出所有的非地雷格。\n\n现在给出 $n$ 行 $m$ 列的雷区中的地雷分布，要求计算出每个非地雷格周围的地雷格数。\n\n注：一个格子的周围格子包括其上、下、左、右、左上、右上、左下、右下八个方向上与之直接相邻的格子。\n",
+      "formatI": "第一行是用一个空格隔开的两个整数 $n$ 和 $m$，分别表示雷区的行数和列数。\n\n接下来 $n$ 行，每行 $m$ 个字符，描述了雷区中的地雷分布情况。字符 $\\texttt{*}$ 表示相应格子是地雷格，字符 $\\texttt{?}$ 表示相应格子是非地雷格。相邻字符之间无分隔符。\n",
+      "formatO": "输出文件包含 $n$ 行，每行 $m$ 个字符，描述整个雷区。用 $\\texttt{*}$ 表示地雷格，用周围的地雷个数表示非地雷格。相邻字符之间无分隔符。\n",
+      "hint": "对于 $100\\%$的数据，$1≤n≤100, 1≤m≤100$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 3\n*??\n???\n?*?\n",
+        "*10\n221\n1*1"
+      ],
+      [
+        "2 3\n?*?\n*??",
+        "2*1\n*21"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Junior] Minesweeper",
+      "background": "NOIP 2015 Junior T2.",
+      "description": "Minesweeper is a classic single-player mini game. In an $n$-row by $m$-column minefield, some cells contain mines (called mine cells), and the other cells do not (called non-mine cells). When the player reveals a non-mine cell, the cell shows a number indicating how many of its neighboring cells are mine cells. The goal is to find all non-mine cells without revealing any mine cell.\n\nGiven the distribution of mines in an $n$-row by $m$-column minefield, compute for every non-mine cell the number of neighboring mine cells.\n\nNote: The neighboring cells of a cell include the eight directly adjacent cells in the up, down, left, right, upper-left, upper-right, lower-left, and lower-right directions.",
+      "formatI": "The first line contains two integers $n$ and $m$ separated by a space, representing the number of rows and columns of the minefield, respectively.\n\nThen follow $n$ lines, each with $m$ characters, describing the distribution of mines in the minefield. The character $\\texttt{*}$ indicates a mine cell, and the character $\\texttt{?}$ indicates a non-mine cell. There are no delimiters between adjacent characters.",
+      "formatO": "The output contains $n$ lines, each with $m$ characters, describing the entire minefield. Use $\\texttt{*}$ for mine cells, and use the number of neighboring mines for non-mine cells. There are no delimiters between adjacent characters.",
+      "hint": "For $100\\%$ of the testdata, $1 \\le n \\le 100$, $1 \\le m \\le 100$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 普及组] 扫雷游戏",
+      "background": "NOIP2015 普及组 T2",
+      "description": "扫雷游戏是一款十分经典的单机小游戏。在 $n$ 行 $m$ 列的雷区中有一些格子含有地雷（称之为地雷格），其他格子不含地雷（称之为非地雷格）。玩家翻开一个非地雷格时，该格将会出现一个数字——提示周围格子中有多少个是地雷格。游戏的目标是在不翻出任何地雷格的条件下，找出所有的非地雷格。\n\n现在给出 $n$ 行 $m$ 列的雷区中的地雷分布，要求计算出每个非地雷格周围的地雷格数。\n\n注：一个格子的周围格子包括其上、下、左、右、左上、右上、左下、右下八个方向上与之直接相邻的格子。\n",
+      "formatI": "第一行是用一个空格隔开的两个整数 $n$ 和 $m$，分别表示雷区的行数和列数。\n\n接下来 $n$ 行，每行 $m$ 个字符，描述了雷区中的地雷分布情况。字符 $\\texttt{*}$ 表示相应格子是地雷格，字符 $\\texttt{?}$ 表示相应格子是非地雷格。相邻字符之间无分隔符。\n",
+      "formatO": "输出文件包含 $n$ 行，每行 $m$ 个字符，描述整个雷区。用 $\\texttt{*}$ 表示地雷格，用周围的地雷个数表示非地雷格。相邻字符之间无分隔符。\n",
+      "hint": "对于 $100\\%$的数据，$1≤n≤100, 1≤m≤100$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 303,
+    "startTime": 1446859800,
+    "endTime": 1447594200,
+    "name": "NOIp2015普及组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1042",
+      "type": "P",
+      "name": "[NOIP 2003 普及组] 乒乓球",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1303",
+      "type": "P",
+      "name": "A*B Problem",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1563",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 玩具谜题",
+      "difficulty": 2
+    },
+    {
+      "pid": "P1601",
+      "type": "P",
+      "name": "高精度加法",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2141",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 珠心算测验",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P2670 [NOIP 2015 普及组] 扫雷游戏",
+    "type": 2,
+    "slug": "P2670",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1362129,
+      "title": "被热思力（悲）",
+      "author": {
+        "uid": 1449771,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1449771.png",
+        "name": "danzaiwanjia1554",
+        "slogan": "sonic/mario/roblox/OM/doors/pressure/Project moon/蛋仔/元梦（没错我中立）/音游（我是蒟蒻！）",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787446329
+    },
+    {
+      "id": 1349526,
+      "title": "90，必必必关",
+      "author": {
+        "uid": 1748667,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1748667.png",
+        "name": "wangxiao0",
+        "slogan": "考进实验高中！?",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/8lfjp0iw.png"
+      },
+      "time": 1786372228
+    },
+    {
+      "id": 1329072,
+      "title": "90分求调",
+      "author": {
+        "uid": 1843146,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1843146.png",
+        "name": "dengzhongxing",
+        "slogan": "这个人不懒，什么都留下了。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784539453
+    },
+    {
+      "id": 1315543,
+      "title": "此题难度要上调",
+      "author": {
+        "uid": 1658622,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1658622.png",
+        "name": "Ne_Lc",
+        "slogan": "我早已麻痹，我早已释怀",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783414162
+    },
+    {
+      "id": 1313468,
+      "title": "30，很多代码，闭关",
+      "author": {
+        "uid": 1687667,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1687667.png",
+        "name": "lzh13171940579",
+        "slogan": "「我眠花下人不识，一半春风是故知」",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/538f31bw.png"
+      },
+      "time": 1783150103
+    },
+    {
+      "id": 1313249,
+      "title": "70pts",
+      "author": {
+        "uid": 1765467,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1765467.png",
+        "name": "museum",
+        "slogan": "目前支持无条件互关",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783129583
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

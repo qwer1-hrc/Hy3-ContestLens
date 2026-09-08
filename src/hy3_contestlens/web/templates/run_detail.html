@@ -16,5 +16,6 @@
   <div id="judge-list" class="judge-list"></div>
 </section>
 <section class="panel raw-result-panel"><h2>诊断与完整结果</h2><details><summary>展开原始 JSON 证据</summary><pre id="run-result">尚未完成</pre></details></section>
+{% include "assistant_panel.html" %}
 {% endblock %}
-{% block scripts %}<script>watchRun('{{ run_id }}');</script>{% endblock %}
+{% block scripts %}<script>watchRun('{{ run_id }}');</script><script src="/static/assistant-markdown.js?v=2"></script><script src="/static/assistant.js?v=2"></script>{% endblock %}

@@ -1,0 +1,1427 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 896,
+    "result": [
+      {
+        "pid": "P5022",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 旅行",
+        "difficulty": 5,
+        "tags": [
+          4,
+          7,
+          35,
+          83,
+          127,
+          320
+        ],
+        "totalSubmit": 78234,
+        "totalAccepted": 18023,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5016",
+        "type": "P",
+        "name": "[NOIP 2018 普及组] 龙虎斗",
+        "difficulty": 2,
+        "tags": [
+          1,
+          35,
+          82,
+          111
+        ],
+        "totalSubmit": 240386,
+        "totalAccepted": 59227,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5017",
+        "type": "P",
+        "name": "[NOIP 2018 普及组] 摆渡车",
+        "difficulty": 5,
+        "tags": [
+          3,
+          35,
+          82,
+          150,
+          254
+        ],
+        "totalSubmit": 77280,
+        "totalAccepted": 19280,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5015",
+        "type": "P",
+        "name": "[NOIP 2018 普及组] 标题统计",
+        "difficulty": 1,
+        "tags": [
+          1,
+          2,
+          35,
+          82
+        ],
+        "totalSubmit": 447369,
+        "totalAccepted": 217128,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5019",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 铺设道路",
+        "difficulty": 3,
+        "tags": [
+          7,
+          35,
+          83,
+          330
+        ],
+        "totalSubmit": 143099,
+        "totalAccepted": 87829,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5020",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 货币系统",
+        "difficulty": 4,
+        "tags": [
+          3,
+          5,
+          7,
+          35,
+          83,
+          139,
+          264
+        ],
+        "totalSubmit": 85746,
+        "totalAccepted": 41178,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5021",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 赛道修建",
+        "difficulty": 5,
+        "tags": [
+          7,
+          35,
+          45,
+          83,
+          211
+        ],
+        "totalSubmit": 59721,
+        "totalAccepted": 12832,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5023",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 填数游戏",
+        "difficulty": 8,
+        "tags": [
+          3,
+          5,
+          35,
+          83,
+          253,
+          376
+        ],
+        "totalSubmit": 16954,
+        "totalAccepted": 3509,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5024",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 保卫王国",
+        "difficulty": 7,
+        "tags": [
+          3,
+          35,
+          43,
+          83,
+          228,
+          443,
+          472
+        ],
+        "totalSubmit": 27054,
+        "totalAccepted": 6521,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5018",
+        "type": "P",
+        "name": "[NOIP 2018 普及组] 对称二叉树",
+        "difficulty": 4,
+        "tags": [
+          11,
+          35,
+          82,
+          235
+        ],
+        "totalSubmit": 88425,
+        "totalAccepted": 30255,
+        "flag": 5,
+        "provider": {
+          "uid": 36482,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+          "name": "龟龟号打捞船",
+          "slogan": "",
+          "badge": "铲屎官",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5049",
+        "type": "P",
+        "name": "[NOIP 2018 提高组] 旅行 加强版",
+        "difficulty": 7,
+        "tags": [
+          35,
+          83,
+          320
+        ],
+        "totalSubmit": 24338,
+        "totalAccepted": 3930,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P4786",
+        "type": "P",
+        "name": "[BalkanOI 2018] Election",
+        "difficulty": 7,
+        "tags": [
+          7,
+          35,
+          42,
+          254,
+          439
+        ],
+        "totalSubmit": 1589,
+        "totalAccepted": 733,
+        "flag": 5,
+        "provider": {
+          "uid": 29762,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/29762.png",
+          "name": "Planet6174",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4787",
+        "type": "P",
+        "name": "[BalkanOI 2018] Minmaxtree",
+        "difficulty": 7,
+        "tags": [
+          35,
+          107,
+          439
+        ],
+        "totalSubmit": 368,
+        "totalAccepted": 108,
+        "flag": 5,
+        "provider": {
+          "uid": 29762,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/29762.png",
+          "name": "Planet6174",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4788",
+        "type": "P",
+        "name": "[BalkanOI 2018] Parentrises",
+        "difficulty": 7,
+        "tags": [
+          3,
+          7,
+          35,
+          107,
+          439
+        ],
+        "totalSubmit": 271,
+        "totalAccepted": 85,
+        "flag": 5,
+        "provider": {
+          "uid": 29762,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/29762.png",
+          "name": "Planet6174",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4789",
+        "type": "P",
+        "name": "[BalkanOI 2018] Zalmoxis",
+        "difficulty": 4,
+        "tags": [
+          35,
+          107,
+          439
+        ],
+        "totalSubmit": 185,
+        "totalAccepted": 38,
+        "flag": 5,
+        "provider": {
+          "uid": 29762,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/29762.png",
+          "name": "Planet6174",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5697",
+        "type": "P",
+        "name": "[CEOI 2018] toy",
+        "difficulty": 3,
+        "tags": [
+          4,
+          35,
+          117
+        ],
+        "totalSubmit": 945,
+        "totalAccepted": 344,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5863",
+        "type": "P",
+        "name": "[SEERC 2018] Numbers",
+        "difficulty": 5,
+        "tags": [
+          35,
+          111,
+          335,
+          376,
+          501
+        ],
+        "totalSubmit": 325,
+        "totalAccepted": 100,
+        "flag": 5,
+        "provider": {
+          "uid": 35795,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/35795.png",
+          "name": "KSkun",
+          "slogan": "May all the beauty be blessed.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5865",
+        "type": "P",
+        "name": "[SEERC 2018] Tree",
+        "difficulty": 3,
+        "tags": [
+          35,
+          111,
+          160,
+          335,
+          476,
+          501
+        ],
+        "totalSubmit": 670,
+        "totalAccepted": 280,
+        "flag": 5,
+        "provider": {
+          "uid": 35795,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/35795.png",
+          "name": "KSkun",
+          "slogan": "May all the beauty be blessed.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5867",
+        "type": "P",
+        "name": "[SEERC 2018] Fishermen",
+        "difficulty": 4,
+        "tags": [
+          35,
+          45,
+          254,
+          335,
+          501
+        ],
+        "totalSubmit": 651,
+        "totalAccepted": 251,
+        "flag": 5,
+        "provider": {
+          "uid": 35795,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/35795.png",
+          "name": "KSkun",
+          "slogan": "May all the beauty be blessed.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5871",
+        "type": "P",
+        "name": "[SEERC 2018] Inversion",
+        "difficulty": 4,
+        "tags": [
+          35,
+          335,
+          501
+        ],
+        "totalSubmit": 541,
+        "totalAccepted": 309,
+        "flag": 5,
+        "provider": {
+          "uid": 35795,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/35795.png",
+          "name": "KSkun",
+          "slogan": "May all the beauty be blessed.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5953",
+        "type": "P",
+        "name": "[POI 2018] Różnorodność",
+        "difficulty": 7,
+        "tags": [
+          35,
+          57,
+          65,
+          108,
+          298
+        ],
+        "totalSubmit": 1450,
+        "totalAccepted": 236,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5955",
+        "type": "P",
+        "name": "[POI 2018] Pionek",
+        "difficulty": 7,
+        "tags": [
+          35,
+          57
+        ],
+        "totalSubmit": 1530,
+        "totalAccepted": 289,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6044",
+        "type": "P",
+        "name": "[POI 2018] Prawnicy",
+        "difficulty": 3,
+        "tags": [
+          7,
+          35,
+          51,
+          57,
+          107
+        ],
+        "totalSubmit": 2479,
+        "totalAccepted": 1032,
+        "flag": 5,
+        "provider": {
+          "uid": 764746,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/764746.png",
+          "name": "Sweet_Wrapping_Grass",
+          "slogan": "曲结人散，声止影分。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6304",
+        "type": "P",
+        "name": "[eJOI 2018] 山",
+        "difficulty": 4,
+        "tags": [
+          3,
+          35,
+          118
+        ],
+        "totalSubmit": 1251,
+        "totalAccepted": 498,
+        "flag": 5,
+        "provider": {
+          "uid": 100285,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/100285.png",
+          "name": "Froggy",
+          "slogan": "最初的一步，泪水之后再一次，雕刻的风景线，消逝在黄昏中的风，直到梦的最后。—— Clannad",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/a202qtph.png"
+        }
+      },
+      {
+        "pid": "P6312",
+        "type": "P",
+        "name": "[PA 2018] Palindrom",
+        "difficulty": 3,
+        "tags": [
+          35,
+          389
+        ],
+        "totalSubmit": 1913,
+        "totalAccepted": 343,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6360",
+        "type": "P",
+        "name": "[CEOI 2018] Lottery",
+        "difficulty": 5,
+        "tags": [
+          35,
+          78,
+          117,
+          254
+        ],
+        "totalSubmit": 911,
+        "totalAccepted": 328,
+        "flag": 5,
+        "provider": {
+          "uid": 20561,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/20561.png",
+          "name": "AutumnKite",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 10,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P9076",
+        "type": "P",
+        "name": "[PA 2018] PIN",
+        "difficulty": 3,
+        "tags": [
+          5,
+          35,
+          389
+        ],
+        "totalSubmit": 1416,
+        "totalAccepted": 328,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9077",
+        "type": "P",
+        "name": "[PA 2018] Poddrzewo",
+        "difficulty": 2,
+        "tags": [
+          35,
+          107,
+          389
+        ],
+        "totalSubmit": 241,
+        "totalAccepted": 142,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9079",
+        "type": "P",
+        "name": "[PA 2018] Heros",
+        "difficulty": 0,
+        "tags": [
+          35,
+          389
+        ],
+        "totalSubmit": 250,
+        "totalAccepted": 12,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9082",
+        "type": "P",
+        "name": "[PA 2018] Gra",
+        "difficulty": 8,
+        "tags": [
+          35,
+          107,
+          389
+        ],
+        "totalSubmit": 34,
+        "totalAccepted": 7,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9083",
+        "type": "P",
+        "name": "[PA 2018] Ryki",
+        "difficulty": 8,
+        "tags": [
+          35,
+          389
+        ],
+        "totalSubmit": 90,
+        "totalAccepted": 26,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9084",
+        "type": "P",
+        "name": "[PA 2018] Skwarki",
+        "difficulty": 7,
+        "tags": [
+          3,
+          35,
+          368,
+          389
+        ],
+        "totalSubmit": 1190,
+        "totalAccepted": 527,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9085",
+        "type": "P",
+        "name": "[PA 2018] Wielokąty",
+        "difficulty": 8,
+        "tags": [
+          35,
+          389
+        ],
+        "totalSubmit": 23,
+        "totalAccepted": 5,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9287",
+        "type": "P",
+        "name": "[ROI 2018] Viruses",
+        "difficulty": 3,
+        "tags": [
+          1,
+          7,
+          35,
+          393
+        ],
+        "totalSubmit": 1243,
+        "totalAccepted": 460,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9288",
+        "type": "P",
+        "name": "[ROI 2018] Innophone",
+        "difficulty": 8,
+        "tags": [
+          35,
+          42,
+          289,
+          291,
+          298,
+          393,
+          539
+        ],
+        "totalSubmit": 728,
+        "totalAccepted": 244,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9290",
+        "type": "P",
+        "name": "[ROI 2018]  Decryption",
+        "difficulty": 4,
+        "tags": [
+          3,
+          35,
+          42,
+          112,
+          385,
+          393
+        ],
+        "totalSubmit": 4238,
+        "totalAccepted": 1256,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9292",
+        "type": "P",
+        "name": "[ROI 2018] Robomarathon",
+        "difficulty": 5,
+        "tags": [
+          11,
+          35,
+          42,
+          53,
+          298,
+          393
+        ],
+        "totalSubmit": 1205,
+        "totalAccepted": 221,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9506",
+        "type": "P",
+        "name": "[BalkanOI 2018] Homecoming",
+        "difficulty": 4,
+        "tags": [
+          3,
+          35,
+          103,
+          108,
+          439
+        ],
+        "totalSubmit": 908,
+        "totalAccepted": 169,
+        "flag": 5,
+        "provider": {
+          "uid": 267596,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/267596.png",
+          "name": "10circle",
+          "slogan": "惊觉往事历历已经年。",
+          "badge": "洛谷波特",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/1m5owpum.png"
+        }
+      },
+      {
+        "pid": "P9507",
+        "type": "P",
+        "name": "[BalkanOI 2018] Popa",
+        "difficulty": 7,
+        "tags": [
+          35,
+          103,
+          107,
+          287,
+          318,
+          439
+        ],
+        "totalSubmit": 402,
+        "totalAccepted": 134,
+        "flag": 5,
+        "provider": {
+          "uid": 267596,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/267596.png",
+          "name": "10circle",
+          "slogan": "惊觉往事历历已经年。",
+          "badge": "洛谷波特",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 10,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/1m5owpum.png"
+        }
+      },
+      {
+        "pid": "P9792",
+        "type": "P",
+        "name": "[NERC 2018]  Bimatching",
+        "difficulty": 7,
+        "tags": [
+          35,
+          335,
+          500
+        ],
+        "totalSubmit": 129,
+        "totalAccepted": 27,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9796",
+        "type": "P",
+        "name": "[NERC 2018] Fractions",
+        "difficulty": 5,
+        "tags": [
+          35,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 274,
+        "totalAccepted": 99,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9802",
+        "type": "P",
+        "name": "[NERC 2018] Lazyland",
+        "difficulty": 3,
+        "tags": [
+          7,
+          35,
+          113,
+          335,
+          500
+        ],
+        "totalSubmit": 713,
+        "totalAccepted": 353,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P9803",
+        "type": "P",
+        "name": "[NERC 2018] Minegraphed",
+        "difficulty": 5,
+        "tags": [
+          35,
+          107,
+          179,
+          318,
+          335,
+          500
+        ],
+        "totalSubmit": 51,
+        "totalAccepted": 19,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P14534",
+        "type": "P",
+        "name": "[RMI 2018] W",
+        "difficulty": 7,
+        "tags": [
+          3,
+          35,
+          253,
+          441
+        ],
+        "totalSubmit": 76,
+        "totalAccepted": 42,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15198",
+        "type": "P",
+        "name": "[SWERC 2018] Crosswords",
+        "difficulty": 8,
+        "tags": [
+          35,
+          335
+        ],
+        "totalSubmit": 40,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15200",
+        "type": "P",
+        "name": "[SWERC 2018] Rounding",
+        "difficulty": 3,
+        "tags": [
+          35,
+          335
+        ],
+        "totalSubmit": 127,
+        "totalAccepted": 41,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15202",
+        "type": "P",
+        "name": "[SWERC 2018] Strings",
+        "difficulty": 7,
+        "tags": [
+          35,
+          335
+        ],
+        "totalSubmit": 11,
+        "totalAccepted": 4,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P16992",
+        "type": "P",
+        "name": "[NWERC 2018] 充气 / Inflation",
+        "difficulty": 2,
+        "tags": [
+          5,
+          7,
+          35,
+          107,
+          113,
+          335
+        ],
+        "totalSubmit": 81,
+        "totalAccepted": 49,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P16994",
+        "type": "P",
+        "name": "[NWERC 2018] 密文破译 / Kleptography",
+        "difficulty": 2,
+        "tags": [
+          1,
+          2,
+          35,
+          335
+        ],
+        "totalSubmit": 29,
+        "totalAccepted": 24,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P4796",
+        "type": "P",
+        "name": "[BalticOI 2018] 路径",
+        "difficulty": 5,
+        "tags": [
+          4,
+          35,
+          111,
+          129,
+          334,
+          464
+        ],
+        "totalSubmit": 931,
+        "totalAccepted": 446,
+        "flag": 5,
+        "provider": {
+          "uid": 35485,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/35485.png",
+          "name": "Hatsune_Miku",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2018",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

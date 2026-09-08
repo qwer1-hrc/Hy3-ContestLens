@@ -1,0 +1,1406 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 1000,
+    "result": [
+      {
+        "pid": "P7960",
+        "type": "P",
+        "name": "[NOIP2021] 报数",
+        "difficulty": 3,
+        "tags": [
+          58,
+          83,
+          108
+        ],
+        "totalSubmit": 91891,
+        "totalAccepted": 27010,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7961",
+        "type": "P",
+        "name": "[NOIP2021] 数列",
+        "difficulty": 6,
+        "tags": [
+          3,
+          58,
+          83,
+          108,
+          253
+        ],
+        "totalSubmit": 31322,
+        "totalAccepted": 9031,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7962",
+        "type": "P",
+        "name": "[NOIP2021] 方差",
+        "difficulty": 7,
+        "tags": [
+          3,
+          58,
+          83,
+          108,
+          135,
+          146
+        ],
+        "totalSubmit": 44886,
+        "totalAccepted": 5791,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7963",
+        "type": "P",
+        "name": "[NOIP2021] 棋局",
+        "difficulty": 8,
+        "tags": [
+          47,
+          58,
+          83,
+          108,
+          379
+        ],
+        "totalSubmit": 9443,
+        "totalAccepted": 1485,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8165",
+        "type": "P",
+        "name": "[eJOI 2021] AddK",
+        "difficulty": 4,
+        "tags": [
+          58,
+          118
+        ],
+        "totalSubmit": 560,
+        "totalAccepted": 189,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8166",
+        "type": "P",
+        "name": "[eJOI 2021] Kpart",
+        "difficulty": 5,
+        "tags": [
+          58,
+          118
+        ],
+        "totalSubmit": 605,
+        "totalAccepted": 236,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8167",
+        "type": "P",
+        "name": "[eJOI 2021] XCopy",
+        "difficulty": 7,
+        "tags": [
+          58,
+          107,
+          118
+        ],
+        "totalSubmit": 294,
+        "totalAccepted": 86,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8168",
+        "type": "P",
+        "name": "[eJOI 2021] BinSearch",
+        "difficulty": 4,
+        "tags": [
+          58,
+          107,
+          118
+        ],
+        "totalSubmit": 311,
+        "totalAccepted": 157,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8169",
+        "type": "P",
+        "name": "[eJOI 2021] Dungeons",
+        "difficulty": 7,
+        "tags": [
+          58,
+          118,
+          126
+        ],
+        "totalSubmit": 620,
+        "totalAccepted": 151,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8170",
+        "type": "P",
+        "name": "[eJOI 2021] Waterfront",
+        "difficulty": 5,
+        "tags": [
+          7,
+          45,
+          58,
+          108,
+          118
+        ],
+        "totalSubmit": 1910,
+        "totalAccepted": 412,
+        "flag": 5,
+        "provider": {
+          "uid": 137367,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137367.png",
+          "name": "hensier",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8171",
+        "type": "P",
+        "name": "[CEOI 2021] Diversity",
+        "difficulty": 7,
+        "tags": [
+          7,
+          41,
+          58,
+          113,
+          117
+        ],
+        "totalSubmit": 761,
+        "totalAccepted": 205,
+        "flag": 5,
+        "provider": {
+          "uid": 160701,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/160701.png",
+          "name": "Azazеl",
+          "slogan": "Just the smallest grain in the sands",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vmq7zc0o.png"
+        }
+      },
+      {
+        "pid": "P8173",
+        "type": "P",
+        "name": "[CEOI 2021] Newspapers",
+        "difficulty": 8,
+        "tags": [
+          58,
+          107,
+          117,
+          318,
+          365
+        ],
+        "totalSubmit": 1012,
+        "totalAccepted": 238,
+        "flag": 5,
+        "provider": {
+          "uid": 160701,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/160701.png",
+          "name": "Azazеl",
+          "slogan": "Just the smallest grain in the sands",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vmq7zc0o.png"
+        }
+      },
+      {
+        "pid": "P8174",
+        "type": "P",
+        "name": "[CEOI 2021] Stones",
+        "difficulty": 5,
+        "tags": [
+          58,
+          103,
+          107,
+          117
+        ],
+        "totalSubmit": 287,
+        "totalAccepted": 90,
+        "flag": 5,
+        "provider": {
+          "uid": 160701,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/160701.png",
+          "name": "Azazеl",
+          "slogan": "Just the smallest grain in the sands",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vmq7zc0o.png"
+        }
+      },
+      {
+        "pid": "P8175",
+        "type": "P",
+        "name": "[CEOI 2021] Tortoise",
+        "difficulty": 8,
+        "tags": [
+          58,
+          117
+        ],
+        "totalSubmit": 488,
+        "totalAccepted": 202,
+        "flag": 5,
+        "provider": {
+          "uid": 160701,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/160701.png",
+          "name": "Azazеl",
+          "slogan": "Just the smallest grain in the sands",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vmq7zc0o.png"
+        }
+      },
+      {
+        "pid": "P8176",
+        "type": "P",
+        "name": "[CEOI 2021] Wells",
+        "difficulty": 8,
+        "tags": [
+          58,
+          117
+        ],
+        "totalSubmit": 222,
+        "totalAccepted": 62,
+        "flag": 5,
+        "provider": {
+          "uid": 160701,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/160701.png",
+          "name": "Azazеl",
+          "slogan": "Just the smallest grain in the sands",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 7,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/vmq7zc0o.png"
+        }
+      },
+      {
+        "pid": "P8387",
+        "type": "P",
+        "name": "[COI 2021] Autobahn",
+        "difficulty": 0,
+        "tags": [
+          58,
+          478
+        ],
+        "totalSubmit": 45,
+        "totalAccepted": 12,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P8388",
+        "type": "P",
+        "name": "[COI 2021] Cigle",
+        "difficulty": 7,
+        "tags": [
+          58,
+          478
+        ],
+        "totalSubmit": 442,
+        "totalAccepted": 128,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P8389",
+        "type": "P",
+        "name": "[COI 2021] Izvanzemaljci",
+        "difficulty": 7,
+        "tags": [
+          58,
+          107,
+          478
+        ],
+        "totalSubmit": 76,
+        "totalAccepted": 16,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P8390",
+        "type": "P",
+        "name": "[COI 2021] MalnaRISC",
+        "difficulty": 7,
+        "tags": [
+          58,
+          107,
+          478
+        ],
+        "totalSubmit": 279,
+        "totalAccepted": 85,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P9037",
+        "type": "P",
+        "name": "[PA 2021] Autostrada",
+        "difficulty": 8,
+        "tags": [
+          58,
+          107,
+          389
+        ],
+        "totalSubmit": 102,
+        "totalAccepted": 40,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9038",
+        "type": "P",
+        "name": "[PA 2021] Butelki",
+        "difficulty": 4,
+        "tags": [
+          58,
+          389
+        ],
+        "totalSubmit": 492,
+        "totalAccepted": 197,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9044",
+        "type": "P",
+        "name": "[PA 2021] Koszulki",
+        "difficulty": 1,
+        "tags": [
+          1,
+          7,
+          58,
+          389
+        ],
+        "totalSubmit": 5597,
+        "totalAccepted": 2683,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9045",
+        "type": "P",
+        "name": "[PA 2021] Oranżada",
+        "difficulty": 2,
+        "tags": [
+          1,
+          7,
+          58,
+          389
+        ],
+        "totalSubmit": 5547,
+        "totalAccepted": 2046,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9046",
+        "type": "P",
+        "name": "[PA 2021] Pandemia",
+        "difficulty": 3,
+        "tags": [
+          1,
+          7,
+          58,
+          389
+        ],
+        "totalSubmit": 261,
+        "totalAccepted": 51,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9048",
+        "type": "P",
+        "name": "[PA 2021] Zakłócenia",
+        "difficulty": 2,
+        "tags": [
+          5,
+          7,
+          58,
+          107,
+          318,
+          389
+        ],
+        "totalSubmit": 1042,
+        "totalAccepted": 422,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9049",
+        "type": "P",
+        "name": "[PA 2021] Mopadulo",
+        "difficulty": 4,
+        "tags": [
+          3,
+          42,
+          53,
+          58,
+          146,
+          254,
+          389
+        ],
+        "totalSubmit": 944,
+        "totalAccepted": 259,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9050",
+        "type": "P",
+        "name": "[PA 2021] Sumy",
+        "difficulty": 3,
+        "tags": [
+          7,
+          45,
+          58,
+          113,
+          254,
+          389
+        ],
+        "totalSubmit": 4991,
+        "totalAccepted": 1319,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9051",
+        "type": "P",
+        "name": "[PA 2021] Wystawa",
+        "difficulty": 7,
+        "tags": [
+          3,
+          7,
+          45,
+          50,
+          58,
+          107,
+          389
+        ],
+        "totalSubmit": 813,
+        "totalAccepted": 228,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P9052",
+        "type": "P",
+        "name": "[PA 2021] Areny",
+        "difficulty": 8,
+        "tags": [
+          58,
+          389
+        ],
+        "totalSubmit": 104,
+        "totalAccepted": 44,
+        "flag": 5,
+        "provider": {
+          "uid": 201007,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/201007.png",
+          "name": "Leasier",
+          "slogan": "我们所知的是沧海一粟，我们所不知的是汪洋大海。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 6,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/mh9rs93x.png"
+        }
+      },
+      {
+        "pid": "P11482",
+        "type": "P",
+        "name": "[NordicOI 2021] Pearls",
+        "difficulty": 3,
+        "tags": [
+          45,
+          58,
+          254,
+          437
+        ],
+        "totalSubmit": 263,
+        "totalAccepted": 71,
+        "flag": 5,
+        "provider": {
+          "uid": 941575,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/941575.png",
+          "name": "Stars_visitor_tyw",
+          "slogan": "退役老登 || 远方的风再没有传来你的消息。",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/gz54s6wn.png"
+        }
+      },
+      {
+        "pid": "P12825",
+        "type": "P",
+        "name": "[NERC 2021] Labyrinth",
+        "difficulty": 3,
+        "tags": [
+          58,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 70,
+        "totalAccepted": 21,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13763",
+        "type": "P",
+        "name": "[CERC 2021] Airline",
+        "difficulty": 5,
+        "tags": [
+          58,
+          152,
+          208,
+          335,
+          502
+        ],
+        "totalSubmit": 62,
+        "totalAccepted": 31,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13767",
+        "type": "P",
+        "name": "[CERC 2021] Fishing",
+        "difficulty": 5,
+        "tags": [
+          42,
+          58,
+          233,
+          234,
+          335,
+          502
+        ],
+        "totalSubmit": 82,
+        "totalAccepted": 38,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13768",
+        "type": "P",
+        "name": "[CERC 2021] Letters",
+        "difficulty": 3,
+        "tags": [
+          1,
+          58,
+          335,
+          502
+        ],
+        "totalSubmit": 220,
+        "totalAccepted": 132,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13770",
+        "type": "P",
+        "name": "[CERC 2021] Radar",
+        "difficulty": 4,
+        "tags": [
+          8,
+          45,
+          58,
+          107,
+          335,
+          502
+        ],
+        "totalSubmit": 33,
+        "totalAccepted": 5,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13772",
+        "type": "P",
+        "name": "[CERC 2021] Repetitions",
+        "difficulty": 7,
+        "tags": [
+          58,
+          303,
+          335,
+          474,
+          502
+        ],
+        "totalSubmit": 132,
+        "totalAccepted": 38,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P14117",
+        "type": "P",
+        "name": "[SCCPC 2021] Chuanpai",
+        "difficulty": 1,
+        "tags": [
+          1,
+          39,
+          58,
+          111,
+          381
+        ],
+        "totalSubmit": 1112,
+        "totalAccepted": 798,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P14118",
+        "type": "P",
+        "name": "[SCCPC 2021] Hotpot",
+        "difficulty": 3,
+        "tags": [
+          1,
+          39,
+          58,
+          381
+        ],
+        "totalSubmit": 472,
+        "totalAccepted": 215,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P14126",
+        "type": "P",
+        "name": "[SCCPC 2021] Ants",
+        "difficulty": 4,
+        "tags": [
+          1,
+          39,
+          58,
+          381
+        ],
+        "totalSubmit": 289,
+        "totalAccepted": 118,
+        "flag": 5,
+        "provider": {
+          "uid": 1,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+          "name": "kkksc03",
+          "slogan": "洛谷吉祥物 DA✩ZE",
+          "badge": "吉祥物",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+          "isRoot": true
+        }
+      },
+      {
+        "pid": "P15180",
+        "type": "P",
+        "name": "[SWERC 2021] Antennas",
+        "difficulty": 7,
+        "tags": [
+          58,
+          335
+        ],
+        "totalSubmit": 146,
+        "totalAccepted": 83,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15181",
+        "type": "P",
+        "name": "[SWERC 2021] Boundary",
+        "difficulty": 4,
+        "tags": [
+          58,
+          335
+        ],
+        "totalSubmit": 120,
+        "totalAccepted": 34,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15933",
+        "type": "P",
+        "name": "[TOPC 2021] Eatcoin",
+        "difficulty": 4,
+        "tags": [
+          58,
+          335,
+          402
+        ],
+        "totalSubmit": 25,
+        "totalAccepted": 11,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15934",
+        "type": "P",
+        "name": "[TOPC 2021] Flip",
+        "difficulty": 5,
+        "tags": [
+          42,
+          58,
+          335,
+          402
+        ],
+        "totalSubmit": 32,
+        "totalAccepted": 26,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P15938",
+        "type": "P",
+        "name": "[TOPC 2021] JavaScript",
+        "difficulty": 2,
+        "tags": [
+          2,
+          58,
+          335,
+          402
+        ],
+        "totalSubmit": 255,
+        "totalAccepted": 173,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P17047",
+        "type": "P",
+        "name": "[NWERC 2021] 挑袜子 / Knitpicking",
+        "difficulty": 3,
+        "tags": [
+          1,
+          7,
+          58,
+          335
+        ],
+        "totalSubmit": 444,
+        "totalAccepted": 190,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P7344",
+        "type": "P",
+        "name": "【DSOI 2021】积木",
+        "difficulty": 5,
+        "tags": [
+          108
+        ],
+        "totalSubmit": 140,
+        "totalAccepted": 29,
+        "flag": 5,
+        "provider": {
+          "uid": 195229,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/195229.png",
+          "name": "water_tomato",
+          "slogan": "月流华 岁遗沙 万古吴钩出玉匣",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/me1r9xa3.png"
+        }
+      },
+      {
+        "pid": "P7346",
+        "type": "P",
+        "name": "【DSOI 2021】归零",
+        "difficulty": 5,
+        "tags": [
+          108
+        ],
+        "totalSubmit": 271,
+        "totalAccepted": 82,
+        "flag": 5,
+        "provider": {
+          "uid": 209604,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/209604.png",
+          "name": "pikabi",
+          "slogan": "逝斯以往，斯人不在，留我一人空悲喜",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/zuoq3k32.png"
+        }
+      },
+      {
+        "pid": "P7512",
+        "type": "P",
+        "name": "「Byakkai OI 2021」Eaquira",
+        "difficulty": 8,
+        "tags": [
+          108
+        ],
+        "totalSubmit": 103,
+        "totalAccepted": 63,
+        "flag": 5,
+        "provider": {
+          "uid": 75840,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/75840.png",
+          "name": "Aleph1022",
+          "slogan": "「笑可以天然地飘洒 心是一地草野 唯一的家乡」",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7560",
+        "type": "P",
+        "name": "[JOISC 2021] フードコート (Day1)",
+        "difficulty": 7,
+        "tags": [
+          58,
+          512
+        ],
+        "totalSubmit": 2531,
+        "totalAccepted": 942,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P7564",
+        "type": "P",
+        "name": "[JOISC 2021] ボディーガード (Day3)",
+        "difficulty": 8,
+        "tags": [
+          3,
+          42,
+          58,
+          78,
+          377,
+          512
+        ],
+        "totalSubmit": 1046,
+        "totalAccepted": 333,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2021",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

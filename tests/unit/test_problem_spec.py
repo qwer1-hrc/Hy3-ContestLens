@@ -148,11 +148,19 @@ async def test_full_statement_reaches_solver_both_reviews_and_repair(settings):
 
         async def algorithm_review(self, spec, *args):
             calls.append(("algorithm_review", spec))
-            return CriticReview(reviewer="algorithm_critic", summary="Synthetic review")
+            return CriticReview(
+                reviewer="algorithm_critic",
+                assessments=[{"step_id": "S1", "verdict": "SUPPORTED", "evidence": ["fixture"], "confidence": 1}],
+                summary="Synthetic review",
+            )
 
         async def code_review(self, spec, *args, **kwargs):
             calls.append(("code_review", spec))
-            return CriticReview(reviewer="code_critic", summary="Synthetic review")
+            return CriticReview(
+                reviewer="code_critic",
+                assessments=[{"step_id": "S1", "verdict": "SUPPORTED", "evidence": ["fixture"], "confidence": 1}],
+                summary="Synthetic review",
+            )
 
         async def repair(self, spec, *args, **kwargs):
             calls.append(("repair", spec))

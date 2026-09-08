@@ -19,10 +19,9 @@ def main() -> None:
     args = parser.parse_args()
     settings = AppSettings.load(PROJECT)
     catalog = ManifestCatalog(settings.manifests_root, settings.default_memory_mb)
-    result = validate_import(settings.private_data_root, catalog) if args.verify_only else import_noip2018(args.source, settings.private_data_root, catalog)
+    result = validate_import(settings.private_data_root, catalog, "noip2018") if args.verify_only else import_noip2018(args.source, settings.private_data_root, catalog)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
     main()
-

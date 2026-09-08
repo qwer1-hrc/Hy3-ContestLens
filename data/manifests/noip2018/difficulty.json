@@ -1,20 +1,23 @@
 {
   "schema_version": 1,
   "allowed_levels": [
+    "普及−",
+    "普及",
+    "提高",
+    "普及+/提高−",
     "入门",
-    "普及-",
-    "普及/提高-",
-    "普及+/提高",
-    "提高+/省选-",
-    "省选/NOI-",
-    "NOI/NOI+/CTSC"
+    "省选/NOI−",
+    "NOI/NOI+/CTS",
+    "提高+/省选−"
   ],
   "problems": {
-    "road": null,
-    "money": null,
-    "track": null,
-    "travel": null,
-    "game": null,
-    "defense": null
-  }
+    "road": "普及",
+    "money": "普及+/提高−",
+    "track": "提高",
+    "travel": "提高",
+    "game": "NOI/NOI+/CTS",
+    "defense": "省选/NOI−"
+  },
+  "source": "https://www.luogu.com.cn/",
+  "checked_at": "2026-09-05"
 }

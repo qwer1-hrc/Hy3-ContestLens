@@ -1,0 +1,282 @@
+{
+  "problem": {
+    "pid": "P11233",
+    "type": "P",
+    "name": "[CSP-S 2024] 染色",
+    "difficulty": 5,
+    "tags": [
+      3,
+      42,
+      61,
+      108,
+      146,
+      254,
+      342
+    ],
+    "totalSubmit": 55213,
+    "totalAccepted": 15741,
+    "flag": 5,
+    "provider": {
+      "uid": 1,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+      "name": "kkksc03",
+      "slogan": "洛谷吉祥物 DA✩ZE",
+      "badge": "吉祥物",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 6,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2024] 染色",
+      "background": null,
+      "description": "给定一个长度为 $n$ 的正整数数组 $A$，其中所有数从左至右排成一排。\n\n你需要将 $A$ 中的每个数染成红色或蓝色之一，然后按如下方式计算最终得分：\n\n设 $C$ 为长度为 $n$ 的整数数组，对于 $A$ 中的每个数 $A_i$（$1 \\leq i \\leq n$）：\n\n- 如果 $A_i$ 左侧没有与其同色的数，则令 $C_i = 0$。\n- 否则，记其左侧**与其最靠近的同色数**为 $A_j$，若 $A_i = A_j$，则令 $C_i = A_i$，否则令 $C_i = 0$。\n\n你的最终得分为 $C$ 中所有整数的和，即 $\\sum \\limits_{i=1}^n C_i$。你需要最大化最终得分，请求出最终得分的最大值。",
+      "formatI": "**本题有多组测试数据。**\n\n输入的第一行包含一个正整数 $T$，表示数据组数。\n\n接下来包含 $T$ 组数据，每组数据的格式如下：\n\n第一行包含一个正整数 $n$，表示数组长度。\n\n第二行包含 $n$ 个正整数 $A_1, A_2, \\dots, A_n$，表示数组 $A$ 中的元素。",
+      "formatO": "对于每组数据：输出一行包含一个非负整数，表示最终得分的最大可能值。",
+      "hint": "**【样例 1 解释】**\n\n对于第一组数据，以下为三种可能的染色方案：\n\n1. 将 $A_1, A_2$ 染成红色，将 $A_3$ 染成蓝色（$\\red{1}\\red{2}\\blue{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，由于其左侧没有蓝色的数，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n2. 将 $A_1, A_2, A_3$ 全部染成红色（$\\red{121}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_2$。由于 $A_2 \\neq A_3$，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n3. 将 $A_1, A_3$ 染成红色，将 $A_2$ 染成蓝色（$\\red{1}\\blue{2}\\red{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，由于其左侧没有蓝色的数，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 = A_3$，所以 $C_3 = A_3 = 1$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 1$。\n\n可以证明，没有染色方案使得最终得分大于 $1$。\n\n对于第二组数据，可以证明，任何染色方案的最终得分都是 $0$。\n\n对于第三组数据，一种最优的染色方案为将 $A_1, A_2, A_4, A_5, A_7$ 染为红色，将 $A_3, A_6, A_8$ 染为蓝色（$\\red{35}\\blue{2}\\red{51}\\blue{2}\\red{1}\\blue{4}$），其对应 $C = [0, 0, 0, 5, 0, 2, 1, 0]$，最终得分为 $8$。\n\n**【样例 2】**\n\n见选手目录下的 color/color2.in 与 color/color2.ans。\n\n**【数据范围】**\n\n对于所有测试数据，保证：$1\\leq T\\leq 10$，$2\\leq n\\leq 2\\times 10^5$，$1\\leq A_i\\leq 10^6$。\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $A_i$ |\n| :----------: | :----------: | :----------: |\n| $1\\sim 4$ | $\\leq 15$ | $\\leq 15$ |\n| $5\\sim 7$ | $\\leq 10^2$ | $\\leq 10^2$ |\n| $8\\sim 10$ | $\\leq 2000$ | $\\leq 2000$ |\n| $11,12$ | $\\leq 2\\times 10^4$ | $\\leq 10^6$ |\n| $13\\sim 15$ | $\\leq 2\\times 10^5$ | $\\leq 10$ |\n| $16\\sim 20$ | ^ | $\\leq 10^6$ |",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2024] 染色",
+      "background": null,
+      "description": "给定一个长度为 $n$ 的正整数数组 $A$，其中所有数从左至右排成一排。\n\n你需要将 $A$ 中的每个数染成红色或蓝色之一，然后按如下方式计算最终得分：\n\n设 $C$ 为长度为 $n$ 的整数数组，对于 $A$ 中的每个数 $A_i$（$1 \\leq i \\leq n$）：\n\n- 如果 $A_i$ 左侧没有与其同色的数，则令 $C_i = 0$。\n- 否则，记其左侧**与其最靠近的同色数**为 $A_j$，若 $A_i = A_j$，则令 $C_i = A_i$，否则令 $C_i = 0$。\n\n你的最终得分为 $C$ 中所有整数的和，即 $\\sum \\limits_{i=1}^n C_i$。你需要最大化最终得分，请求出最终得分的最大值。",
+      "formatI": "**本题有多组测试数据。**\n\n输入的第一行包含一个正整数 $T$，表示数据组数。\n\n接下来包含 $T$ 组数据，每组数据的格式如下：\n\n第一行包含一个正整数 $n$，表示数组长度。\n\n第二行包含 $n$ 个正整数 $A_1, A_2, \\dots, A_n$，表示数组 $A$ 中的元素。",
+      "formatO": "对于每组数据：输出一行包含一个非负整数，表示最终得分的最大可能值。",
+      "hint": "**【样例 1 解释】**\n\n对于第一组数据，以下为三种可能的染色方案：\n\n1. 将 $A_1, A_2$ 染成红色，将 $A_3$ 染成蓝色（$\\red{1}\\red{2}\\blue{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，由于其左侧没有蓝色的数，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n2. 将 $A_1, A_2, A_3$ 全部染成红色（$\\red{121}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_2$。由于 $A_2 \\neq A_3$，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n3. 将 $A_1, A_3$ 染成红色，将 $A_2$ 染成蓝色（$\\red{1}\\blue{2}\\red{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，由于其左侧没有蓝色的数，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 = A_3$，所以 $C_3 = A_3 = 1$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 1$。\n\n可以证明，没有染色方案使得最终得分大于 $1$。\n\n对于第二组数据，可以证明，任何染色方案的最终得分都是 $0$。\n\n对于第三组数据，一种最优的染色方案为将 $A_1, A_2, A_4, A_5, A_7$ 染为红色，将 $A_3, A_6, A_8$ 染为蓝色（$\\red{35}\\blue{2}\\red{51}\\blue{2}\\red{1}\\blue{4}$），其对应 $C = [0, 0, 0, 5, 0, 2, 1, 0]$，最终得分为 $8$。\n\n**【样例 2】**\n\n见选手目录下的 color/color2.in 与 color/color2.ans。\n\n**【数据范围】**\n\n对于所有测试数据，保证：$1\\leq T\\leq 10$，$2\\leq n\\leq 2\\times 10^5$，$1\\leq A_i\\leq 10^6$。\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $A_i$ |\n| :----------: | :----------: | :----------: |\n| $1\\sim 4$ | $\\leq 15$ | $\\leq 15$ |\n| $5\\sim 7$ | $\\leq 10^2$ | $\\leq 10^2$ |\n| $8\\sim 10$ | $\\leq 2000$ | $\\leq 2000$ |\n| $11,12$ | $\\leq 2\\times 10^4$ | $\\leq 10^6$ |\n| $13\\sim 15$ | $\\leq 2\\times 10^5$ | $\\leq 10$ |\n| $16\\sim 20$ | ^ | $\\leq 10^6$ |",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "nhzufhy5",
+        "filename": "color.zip",
+        "size": 728191,
+        "uploadTime": 1729943568,
+        "downloadLink": "/fe/api/problem/downloadAttachment/nhzufhy5"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3\n3\n1 2 1\n4\n1 2 3 4\n8\n3 5 2 5 1 2 1 4",
+        "1\n0\n8"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "zh-CN": {
+      "name": "[CSP-S 2024] 染色",
+      "background": null,
+      "description": "给定一个长度为 $n$ 的正整数数组 $A$，其中所有数从左至右排成一排。\n\n你需要将 $A$ 中的每个数染成红色或蓝色之一，然后按如下方式计算最终得分：\n\n设 $C$ 为长度为 $n$ 的整数数组，对于 $A$ 中的每个数 $A_i$（$1 \\leq i \\leq n$）：\n\n- 如果 $A_i$ 左侧没有与其同色的数，则令 $C_i = 0$。\n- 否则，记其左侧**与其最靠近的同色数**为 $A_j$，若 $A_i = A_j$，则令 $C_i = A_i$，否则令 $C_i = 0$。\n\n你的最终得分为 $C$ 中所有整数的和，即 $\\sum \\limits_{i=1}^n C_i$。你需要最大化最终得分，请求出最终得分的最大值。",
+      "formatI": "**本题有多组测试数据。**\n\n输入的第一行包含一个正整数 $T$，表示数据组数。\n\n接下来包含 $T$ 组数据，每组数据的格式如下：\n\n第一行包含一个正整数 $n$，表示数组长度。\n\n第二行包含 $n$ 个正整数 $A_1, A_2, \\dots, A_n$，表示数组 $A$ 中的元素。",
+      "formatO": "对于每组数据：输出一行包含一个非负整数，表示最终得分的最大可能值。",
+      "hint": "**【样例 1 解释】**\n\n对于第一组数据，以下为三种可能的染色方案：\n\n1. 将 $A_1, A_2$ 染成红色，将 $A_3$ 染成蓝色（$\\red{1}\\red{2}\\blue{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，由于其左侧没有蓝色的数，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n2. 将 $A_1, A_2, A_3$ 全部染成红色（$\\red{121}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 \\neq A_2$，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_2$。由于 $A_2 \\neq A_3$，所以 $C_3 = 0$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 0$。\n3. 将 $A_1, A_3$ 染成红色，将 $A_2$ 染成蓝色（$\\red{1}\\blue{2}\\red{1}$），其得分计算方式如下：\n- 对于 $A_1$，由于其左侧没有红色的数，所以 $C_1 = 0$。\n- 对于 $A_2$，由于其左侧没有蓝色的数，所以 $C_2 = 0$。\n- 对于 $A_3$，其左侧与其最靠近的红色数为 $A_1$。由于 $A_1 = A_3$，所以 $C_3 = A_3 = 1$。    \n该方案最终得分为 $C_1 + C_2 + C_3 = 1$。\n\n可以证明，没有染色方案使得最终得分大于 $1$。\n\n对于第二组数据，可以证明，任何染色方案的最终得分都是 $0$。\n\n对于第三组数据，一种最优的染色方案为将 $A_1, A_2, A_4, A_5, A_7$ 染为红色，将 $A_3, A_6, A_8$ 染为蓝色（$\\red{35}\\blue{2}\\red{51}\\blue{2}\\red{1}\\blue{4}$），其对应 $C = [0, 0, 0, 5, 0, 2, 1, 0]$，最终得分为 $8$。\n\n**【样例 2】**\n\n见选手目录下的 color/color2.in 与 color/color2.ans。\n\n**【数据范围】**\n\n对于所有测试数据，保证：$1\\leq T\\leq 10$，$2\\leq n\\leq 2\\times 10^5$，$1\\leq A_i\\leq 10^6$。\n\n::cute-table{tuack}\n\n| 测试点 | $n$ | $A_i$ |\n| :----------: | :----------: | :----------: |\n| $1\\sim 4$ | $\\leq 15$ | $\\leq 15$ |\n| $5\\sim 7$ | $\\leq 10^2$ | $\\leq 10^2$ |\n| $8\\sim 10$ | $\\leq 2000$ | $\\leq 2000$ |\n| $11,12$ | $\\leq 2\\times 10^4$ | $\\leq 10^6$ |\n| $13\\sim 15$ | $\\leq 2\\times 10^5$ | $\\leq 10$ |\n| $16\\sim 20$ | ^ | $\\leq 10^6$ |",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [],
+  "forum": {
+    "name": "P11233 [CSP-S 2024] 染色",
+    "type": 2,
+    "slug": "P11233",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1369805,
+      "title": "全WA求调",
+      "author": {
+        "uid": 1143716,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1143716.png",
+        "name": "yexueWEZ",
+        "slogan": "无人扶我青云志，那就在地上呆着。阎王叫我三更死，旌旗十万斩阎罗。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788347245
+    },
+    {
+      "id": 1367517,
+      "title": "斤氏后人（如果你下载样例自测过但提交WA）",
+      "author": {
+        "uid": 1421366,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1421366.png",
+        "name": "_Heartbeat",
+        "slogan": "2026::CSP.rp++;",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/4z1jw9sq.png"
+      },
+      "time": 1787935929
+    },
+    {
+      "id": 1353165,
+      "title": "0分求调",
+      "author": {
+        "uid": 1817114,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1817114.png",
+        "name": "liujie1231212",
+        "slogan": "这个家伙很勤奋，什么都留下了https://shadiao.pro",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786679391
+    },
+    {
+      "id": 1328515,
+      "title": "如果你记得你清空了 也开longlong了 但是75pts",
+      "author": {
+        "uid": 931019,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/931019.png",
+        "name": "LJQGO",
+        "slogan": "Always Keep ドラゴンコア  智慧树上没有果，树下呆瓜就是我",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1784511554
+    },
+    {
+      "id": 1322893,
+      "title": "如果你 65pts 且全是 RE / WA",
+      "author": {
+        "uid": 1413778,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1413778.png",
+        "name": "lsx2012",
+        "slogan": "2026/8/8",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/ni70bv9l.png"
+      },
+      "time": 1784085147
+    },
+    {
+      "id": 1295838,
+      "title": "近视后人：如果你过样例却全WA",
+      "author": {
+        "uid": 1279868,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1279868.png",
+        "name": "P_Bitset",
+        "slogan": "顿悟。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hbjoh5go.png"
+      },
+      "time": 1779465608
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -1,0 +1,1410 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 947,
+    "result": [
+      {
+        "pid": "P7115",
+        "type": "P",
+        "name": "[NOIP2020] 移球游戏",
+        "difficulty": 7,
+        "tags": [
+          37,
+          83,
+          107,
+          112,
+          318,
+          365
+        ],
+        "totalSubmit": 15312,
+        "totalAccepted": 3268,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7116",
+        "type": "P",
+        "name": "[NOIP2020] 微信步数",
+        "difficulty": 7,
+        "tags": [
+          3,
+          37,
+          83,
+          417
+        ],
+        "totalSubmit": 14605,
+        "totalAccepted": 1848,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5886",
+        "type": "P",
+        "name": "Hello, 2020!",
+        "difficulty": 1,
+        "tags": [
+          337
+        ],
+        "totalSubmit": 23879,
+        "totalAccepted": 7767,
+        "flag": 5,
+        "provider": {
+          "uid": 1422,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/1422.png",
+          "name": "Snakes",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 8,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7113",
+        "type": "P",
+        "name": "[NOIP2020] 排水系统",
+        "difficulty": 3,
+        "tags": [
+          6,
+          10,
+          37,
+          83,
+          159
+        ],
+        "totalSubmit": 70705,
+        "totalAccepted": 12615,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7114",
+        "type": "P",
+        "name": "[NOIP2020] 字符串匹配",
+        "difficulty": 6,
+        "tags": [
+          2,
+          37,
+          43,
+          53,
+          83,
+          235,
+          411,
+          474
+        ],
+        "totalSubmit": 40408,
+        "totalAccepted": 9411,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P8427",
+        "type": "P",
+        "name": "[COI 2020] Paint",
+        "difficulty": 8,
+        "tags": [
+          37,
+          47,
+          371,
+          478
+        ],
+        "totalSubmit": 1886,
+        "totalAccepted": 243,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P8428",
+        "type": "P",
+        "name": "[COI 2020] Pastiri",
+        "difficulty": 7,
+        "tags": [
+          7,
+          37,
+          107,
+          126,
+          152,
+          478
+        ],
+        "totalSubmit": 1045,
+        "totalAccepted": 448,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P8429",
+        "type": "P",
+        "name": "[COI 2020] Semafor",
+        "difficulty": 5,
+        "tags": [
+          37,
+          478
+        ],
+        "totalSubmit": 54,
+        "totalAccepted": 23,
+        "flag": 5,
+        "provider": {
+          "uid": 120911,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/120911.png",
+          "name": "Lynkcat",
+          "slogan": "Reset.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 10,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/ev9lclv4.png"
+        }
+      },
+      {
+        "pid": "P8430",
+        "type": "P",
+        "name": "[COI 2020] Zagrade",
+        "difficulty": 4,
+        "tags": [
+          37,
+          103,
+          107,
+          478
+        ],
+        "totalSubmit": 596,
+        "totalAccepted": 198,
+        "flag": 5,
+        "provider": {
+          "uid": 120911,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/120911.png",
+          "name": "Lynkcat",
+          "slogan": "Reset.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 10,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/ev9lclv4.png"
+        }
+      },
+      {
+        "pid": "P9098",
+        "type": "P",
+        "name": "[PA 2020] Zabawki",
+        "difficulty": 2,
+        "tags": [
+          37,
+          389
+        ],
+        "totalSubmit": 348,
+        "totalAccepted": 142,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9100",
+        "type": "P",
+        "name": "[PA 2020] Miny",
+        "difficulty": 6,
+        "tags": [
+          3,
+          37,
+          45,
+          53,
+          112,
+          385,
+          389
+        ],
+        "totalSubmit": 693,
+        "totalAccepted": 243,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9102",
+        "type": "P",
+        "name": "[PA 2020] Cukierki",
+        "difficulty": 4,
+        "tags": [
+          3,
+          37,
+          389
+        ],
+        "totalSubmit": 867,
+        "totalAccepted": 286,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P9109",
+        "type": "P",
+        "name": "[PA 2020] Tekstówka",
+        "difficulty": 8,
+        "tags": [
+          37,
+          389
+        ],
+        "totalSubmit": 237,
+        "totalAccepted": 110,
+        "flag": 5,
+        "provider": {
+          "uid": 897776,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/897776.png",
+          "name": "Infinite_Eternity",
+          "slogan": "『放肆梦一场，谁说永夜中照不进天光，当乌云散去，自有漫天繁星』",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/8exogq9l.png"
+        }
+      },
+      {
+        "pid": "P10736",
+        "type": "P",
+        "name": "[SEERC 2020] Archeologists",
+        "difficulty": 7,
+        "tags": [
+          7,
+          37,
+          335,
+          501,
+          508,
+          524
+        ],
+        "totalSubmit": 606,
+        "totalAccepted": 356,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P10746",
+        "type": "P",
+        "name": "[SEERC 2020] Codenames",
+        "difficulty": 7,
+        "tags": [
+          37,
+          107,
+          335,
+          501
+        ],
+        "totalSubmit": 85,
+        "totalAccepted": 25,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P10748",
+        "type": "P",
+        "name": "[SEERC 2020] Mistake",
+        "difficulty": 3,
+        "tags": [
+          37,
+          107,
+          335,
+          501
+        ],
+        "totalSubmit": 366,
+        "totalAccepted": 247,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P11577",
+        "type": "P",
+        "name": "[CCC 2020] Epidemiology",
+        "difficulty": 1,
+        "tags": [
+          37,
+          116
+        ],
+        "totalSubmit": 1294,
+        "totalAccepted": 677,
+        "flag": 5,
+        "provider": {
+          "uid": 853792,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/853792.png",
+          "name": "JoeZYQ",
+          "slogan": "我已无退路，每一场都是决战||我  是  终  将  升  起  的  烈  阳",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/b0bjfhpe.png"
+        }
+      },
+      {
+        "pid": "P11578",
+        "type": "P",
+        "name": "[CCC 2020] Art",
+        "difficulty": 1,
+        "tags": [
+          37,
+          116
+        ],
+        "totalSubmit": 915,
+        "totalAccepted": 630,
+        "flag": 5,
+        "provider": {
+          "uid": 853792,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/853792.png",
+          "name": "JoeZYQ",
+          "slogan": "我已无退路，每一场都是决战||我  是  终  将  升  起  的  烈  阳",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Red",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/b0bjfhpe.png"
+        }
+      },
+      {
+        "pid": "P12633",
+        "type": "P",
+        "name": "[UOI 2020] Skyscraper",
+        "difficulty": 3,
+        "tags": [
+          7,
+          37,
+          506
+        ],
+        "totalSubmit": 216,
+        "totalAccepted": 118,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P12634",
+        "type": "P",
+        "name": "[UOI 2020] Chessfield",
+        "difficulty": 0,
+        "tags": [
+          37,
+          506
+        ],
+        "totalSubmit": 15,
+        "totalAccepted": 2,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P12903",
+        "type": "P",
+        "name": "[NERC 2020] Digits",
+        "difficulty": 5,
+        "tags": [
+          3,
+          5,
+          37,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 70,
+        "totalAccepted": 28,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P12906",
+        "type": "P",
+        "name": "[NERC 2020] Guide",
+        "difficulty": 3,
+        "tags": [
+          7,
+          37,
+          107,
+          208,
+          318,
+          335,
+          500
+        ],
+        "totalSubmit": 165,
+        "totalAccepted": 50,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13654",
+        "type": "P",
+        "name": "[CERC 2020] Excavation",
+        "difficulty": 4,
+        "tags": [
+          37,
+          47,
+          107,
+          335,
+          502
+        ],
+        "totalSubmit": 185,
+        "totalAccepted": 50,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13657",
+        "type": "P",
+        "name": "[CERC 2020] Offices",
+        "difficulty": 8,
+        "tags": [
+          37,
+          335,
+          502
+        ],
+        "totalSubmit": 27,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13658",
+        "type": "P",
+        "name": "[CERC 2020] Pickpockets",
+        "difficulty": 5,
+        "tags": [
+          37,
+          335,
+          464,
+          502
+        ],
+        "totalSubmit": 76,
+        "totalAccepted": 46,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13661",
+        "type": "P",
+        "name": "[CERC 2020] Screamers",
+        "difficulty": 7,
+        "tags": [
+          37,
+          47,
+          112,
+          229,
+          335,
+          502
+        ],
+        "totalSubmit": 43,
+        "totalAccepted": 29,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P13857",
+        "type": "P",
+        "name": "[SWERC 2020] Gratitude",
+        "difficulty": 2,
+        "tags": [
+          37,
+          113,
+          335
+        ],
+        "totalSubmit": 211,
+        "totalAccepted": 100,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13860",
+        "type": "P",
+        "name": "[SWERC 2020] Jogging",
+        "difficulty": 3,
+        "tags": [
+          37,
+          160,
+          335
+        ],
+        "totalSubmit": 189,
+        "totalAccepted": 92,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13861",
+        "type": "P",
+        "name": "[SWERC 2020] Cakes",
+        "difficulty": 1,
+        "tags": [
+          37,
+          335
+        ],
+        "totalSubmit": 855,
+        "totalAccepted": 670,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13862",
+        "type": "P",
+        "name": "[SWERC 2020] Mentors",
+        "difficulty": 5,
+        "tags": [
+          3,
+          37,
+          335
+        ],
+        "totalSubmit": 41,
+        "totalAccepted": 33,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13863",
+        "type": "P",
+        "name": "[SWERC 2020] Decoration",
+        "difficulty": 5,
+        "tags": [
+          37,
+          107,
+          320,
+          335
+        ],
+        "totalSubmit": 333,
+        "totalAccepted": 101,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13864",
+        "type": "P",
+        "name": "P13864 [SWERC 2020] Figurines",
+        "difficulty": 5,
+        "tags": [
+          37,
+          233,
+          335
+        ],
+        "totalSubmit": 87,
+        "totalAccepted": 37,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13865",
+        "type": "P",
+        "name": "[SWERC 2020] Emails",
+        "difficulty": 4,
+        "tags": [
+          37,
+          107,
+          335,
+          413
+        ],
+        "totalSubmit": 640,
+        "totalAccepted": 182,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13868",
+        "type": "P",
+        "name": "[SWERC 2020] Restaurants",
+        "difficulty": 5,
+        "tags": [
+          7,
+          37,
+          288,
+          335,
+          524
+        ],
+        "totalSubmit": 15,
+        "totalAccepted": 4,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P13869",
+        "type": "P",
+        "name": "[SWERC 2020] Fantasmagorie",
+        "difficulty": 7,
+        "tags": [
+          37,
+          107,
+          318,
+          335
+        ],
+        "totalSubmit": 41,
+        "totalAccepted": 15,
+        "flag": 5,
+        "provider": {
+          "uid": 137242,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/137242.png",
+          "name": "Diaоsi",
+          "slogan": "Coma of Souls",
+          "badge": "Kreator",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 0,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/jwhf9txm.png"
+        }
+      },
+      {
+        "pid": "P17027",
+        "type": "P",
+        "name": "[NWERC 2020] 推土机 / Bulldozer",
+        "difficulty": 0,
+        "tags": [
+          37,
+          335
+        ],
+        "totalSubmit": 5,
+        "totalAccepted": 2,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P17030",
+        "type": "P",
+        "name": "[NWERC 2020] 终局 / Endgame",
+        "difficulty": 5,
+        "tags": [
+          37,
+          107,
+          309,
+          335
+        ],
+        "totalSubmit": 22,
+        "totalAccepted": 10,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P17036",
+        "type": "P",
+        "name": "[NWERC 2020] 键盘故障 / Keyboardd",
+        "difficulty": 2,
+        "tags": [
+          1,
+          2,
+          37,
+          107,
+          335
+        ],
+        "totalSubmit": 301,
+        "totalAccepted": 158,
+        "flag": 5,
+        "provider": {
+          "uid": 361141,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/361141.png",
+          "name": "_JF_",
+          "slogan": "退役||天真在这条路上 / 跌跌撞撞 / 他被芒草割伤 ||越渴望着实现目标，那赶紧给我行动起来，跟他爆了 ||情为何物，生死相许",
+          "badge": "殉情",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 7,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/p1kfakel.png"
+        }
+      },
+      {
+        "pid": "P10743",
+        "type": "P",
+        "name": "[SEERC 2020] AND = OR",
+        "difficulty": 7,
+        "tags": [
+          37,
+          335,
+          501
+        ],
+        "totalSubmit": 698,
+        "totalAccepted": 242,
+        "flag": 5,
+        "provider": {
+          "uid": 852144,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/852144.png",
+          "name": "Loser_Syx",
+          "slogan": "不可逆の方が美しいから",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lhkha0gp.png"
+        }
+      },
+      {
+        "pid": "P6642",
+        "type": "P",
+        "name": "[CCO 2020] Exercise Deadlines",
+        "difficulty": 4,
+        "tags": [
+          37,
+          53,
+          115
+        ],
+        "totalSubmit": 753,
+        "totalAccepted": 382,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P6644",
+        "type": "P",
+        "name": "[CCO 2020] Travelling Salesperson",
+        "difficulty": 7,
+        "tags": [
+          37,
+          107,
+          115
+        ],
+        "totalSubmit": 1127,
+        "totalAccepted": 381,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P6645",
+        "type": "P",
+        "name": "[CCO 2020] Interval Collection",
+        "difficulty": 7,
+        "tags": [
+          37,
+          115
+        ],
+        "totalSubmit": 719,
+        "totalAccepted": 325,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P6646",
+        "type": "P",
+        "name": "[CCO 2020] Shopping Plans",
+        "difficulty": 8,
+        "tags": [
+          37,
+          51,
+          115
+        ],
+        "totalSubmit": 2403,
+        "totalAccepted": 615,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P6696",
+        "type": "P",
+        "name": "[BalticOI 2020] 图 (Day2)",
+        "difficulty": 4,
+        "tags": [
+          5,
+          6,
+          37,
+          107,
+          158,
+          334
+        ],
+        "totalSubmit": 590,
+        "totalAccepted": 186,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P6709",
+        "type": "P",
+        "name": "[CCC 2020]  Swapping Seats",
+        "difficulty": 4,
+        "tags": [
+          37,
+          116
+        ],
+        "totalSubmit": 837,
+        "totalAccepted": 311,
+        "flag": 5,
+        "provider": {
+          "uid": 175829,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/175829.png",
+          "name": "cnyzz",
+          "slogan": "退役 | PKU 物院 freshman",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/n8z1f34n.png"
+        }
+      },
+      {
+        "pid": "P6802",
+        "type": "P",
+        "name": "[CEOI 2020] 道路",
+        "difficulty": 7,
+        "tags": [
+          37,
+          107,
+          108,
+          117
+        ],
+        "totalSubmit": 283,
+        "totalAccepted": 51,
+        "flag": 5,
+        "provider": {
+          "uid": 22030,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/22030.png",
+          "name": "StudyingFather",
+          "slogan": "Focus on interest!",
+          "badge": "Dreamer",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 7,
+          "xcpcLevel": 8,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/desbnwy6.png"
+        }
+      },
+      {
+        "pid": "P7167",
+        "type": "P",
+        "name": "[eJOI 2020] Fountain (Day1)",
+        "difficulty": 4,
+        "tags": [
+          37,
+          43,
+          118,
+          290,
+          385
+        ],
+        "totalSubmit": 24537,
+        "totalAccepted": 8348,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P7168",
+        "type": "P",
+        "name": "[eJOI 2020] Triangulation (Day1)",
+        "difficulty": 5,
+        "tags": [
+          7,
+          37,
+          103,
+          107,
+          118
+        ],
+        "totalSubmit": 288,
+        "totalAccepted": 19,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P7169",
+        "type": "P",
+        "name": "[eJOI 2020] Exam (Day1)",
+        "difficulty": 5,
+        "tags": [
+          3,
+          37,
+          53,
+          118
+        ],
+        "totalSubmit": 994,
+        "totalAccepted": 293,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P7215",
+        "type": "P",
+        "name": "[JOISC 2020] 首都",
+        "difficulty": 7,
+        "tags": [
+          37,
+          43,
+          49,
+          512
+        ],
+        "totalSubmit": 4153,
+        "totalAccepted": 1643,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2020",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}

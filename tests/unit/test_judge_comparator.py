@@ -1,4 +1,4 @@
-from hy3_contestlens.judge import compare_noip_fulltext, normalize_noip_fulltext
+from hy3_contestlens.judge import compare_noip_fulltext, normalize_noip_fulltext, termination_signal
 
 
 def test_fulltext_normalizes_newlines_and_trailing_spaces():
@@ -19,3 +19,9 @@ def test_extra_line_is_wrong_answer():
     assert equal is False
     assert diff["actual_length"] > diff["expected_length"]
 
+
+def test_shell_exit_status_decodes_termination_signal():
+    assert termination_signal(137) == 9
+    assert termination_signal(139) == 11
+    assert termination_signal(-11) == 11
+    assert termination_signal(1) is None

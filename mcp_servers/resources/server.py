@@ -30,7 +30,7 @@ def list_scoped_directory(resource_scope_id: str, relative_path: str = ".", recu
 @mcp.tool()
 def find_problem_assets(resource_scope_id: str, dataset_id: str, problem_id: str, title_zh: str, io_basename: str) -> dict:
     """Find statement and paired test candidates without returning answer contents."""
-    if dataset_id != "noip2018":
+    if dataset_id != hub.catalog.get(problem_id).dataset_id:
         raise ValueError("DATASET_NOT_FOUND")
     return hub.resources.find_problem_assets(resource_scope_id, problem_id, title_zh, io_basename)
 
@@ -58,4 +58,3 @@ def read_problem_sample_input(resource_scope_id: str, relative_path: str) -> dic
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
-

@@ -1,0 +1,326 @@
+{
+  "problem": {
+    "pid": "P1850",
+    "type": "P",
+    "name": "[NOIP 2016 提高组] 换教室",
+    "difficulty": 5,
+    "tags": [
+      3,
+      33,
+      83,
+      270,
+      476
+    ],
+    "totalSubmit": 67973,
+    "totalAccepted": 19658,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 提高组] 换教室",
+      "background": "NOIP2016 提高组 D1T3",
+      "description": "对于刚上大学的牛牛来说，他面临的第一个问题是如何根据实际情况申请合适的课程。\n\n\n在可以选择的课程中，有 $2n$ 节课程安排在 $n$ 个时间段上。在第 $i$（$1 \\leq i \\leq n$）个时间段上，两节内容相同的课程同时在不同的地点进行，其中，牛牛预先被安排在教室 $c_i$ 上课，而另一节课程在教室 $d_i$ 进行。\n\n\n在不提交任何申请的情况下，学生们需要按时间段的顺序依次完成所有的 $n$ 节安排好的课程。如果学生想更换第 $i$ 节课程的教室，则需要提出申请。若申请通过，学生就可以在第 $i$ 个时间段去教室 $d_i$ 上课，否则仍然在教室 $c_i$ 上课。\n\n\n由于更换教室的需求太多，申请不一定能获得通过。通过计算，牛牛发现申请更换第 $i$ 节课程的教室时，申请被通过的概率是一个已知的实数 $k_i$，并且对于不同课程的申请，被通过的概率是互相独立的。\n\n\n学校规定，所有的申请只能在学期开始前一次性提交，并且每个人只能选择至多 $m$ 节课程进行申请。这意味着牛牛必须一次性决定是否申请更换每节课的教室，而不能根据某些课程的申请结果来决定其他课程是否申请；牛牛可以申请自己最希望更换教室的 $m$ 门课程，也可以不用完这 $m$ 个申请的机会，甚至可以一门课程都不申请。\n\n\n因为不同的课程可能会被安排在不同的教室进行，所以牛牛需要利用课间时间从一间教室赶到另一间教室。\n\n\n牛牛所在的大学有 $v$ 个教室，有 $e$ 条道路。每条道路连接两间教室，并且是可以双向通行的。由于道路的长度和拥堵程度不同，通过不同的道路耗费的体力可能会有所不同。 当第 $i$（$1 \\leq i \\leq n-1$）节课结束后，牛牛就会从这节课的教室出发，选择一条耗费体力最少的路径前往下一节课的教室。\n\n\n现在牛牛想知道，申请哪几门课程可以使他因在教室间移动耗费的体力值的总和的期望值最小，请你帮他求出这个最小值。\n",
+      "formatI": "第一行四个整数 $n,m,v,e$。$n$ 表示这个学期内的时间段的数量；$m$ 表示牛牛最多可以申请更换多少节课程的教室；$v$ 表示牛牛学校里教室的数量；$e$ 表示牛牛的学校里道路的数量。\n\n\n第二行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $c_i$，即第 $i$ 个时间段牛牛被安排上课的教室；保证 $1 \\le c_i \\le v$。\n\n\n第三行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $d_i$，即第 $i$ 个时间段另一间上同样课程的教室；保证 $1 \\le d_i \\le v$。\n\n\n第四行 $n$ 个实数，第 $i$（$1 \\leq i \\leq n$）个实数表示 $k_i$，即牛牛申请在第 $i$ 个时间段更换教室获得通过的概率。保证 $0 \\le k_i \\le 1$。\n\n\n接下来 $e$ 行，每行三个正整数 $a_j, b_j, w_j$，表示有一条双向道路连接教室 $a_j, b_j$，通过这条道路需要耗费的体力值是 $w_j$；保证 $1 \\le a_j, b_j \\le v$，$1 \\le w_j \\le 100$。\n\n\n保证 $1 \\leq n \\leq 2000$，$0 \\leq m \\leq 2000$，$1 \\leq v \\leq 300$，$0 \\leq e \\leq 90000$。\n\n\n保证通过学校里的道路，从任何一间教室出发，都能到达其他所有的教室。\n\n\n保证输入的实数最多包含 $3$ 位小数。\n",
+      "formatO": "输出一行，包含一个实数，四舍五入精确到小数点后恰好 $2$ 位，表示答案。你的输出必须和标准输出完全一样才算正确。\n\n测试数据保证四舍五入后的答案和准确答案的差的绝对值不大于 $4 \\times 10^{-3}$。（如果你不知道什么是浮点误差，这段话可以理解为：对于大多数的算法，你可以正常地使用浮点数类型而不用对它进行特殊的处理）\n",
+      "hint": "**样例 1 说明**\n\n所有可行的申请方案和期望收益如下：\n\n- 不作申请，耗费的体力值的期望为 $8.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     无      |  $1.0$  |  $8$  |\n\n- 申请更换第 $1$ 个时间段的上课教室，耗费的体力值的期望为 $4.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1$      |  $0.8$  |  $4$  |\n|     无      |  $0.2$  |  $8$  |\n\n- 申请更换第 $2$ 个时间段的上课教室，耗费的体力值的期望为 $6.4$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2$      |  $0.2$  |  $0$  |\n|     无      |  $0.8$  |  $8$  |\n\n- 申请更换第 $3$ 个时间段的上课教室，耗费的体力值的期望为 $6.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $3$      |  $0.5$  |  $4$  |\n|     无      |  $0.5$  |  $8$  |\n\n- 申请更换第 $1,2$ 个时间段的上课教室，耗费的体力值的期望为 $4.48$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,2$      |  $0.16$  |  $4$  |\n|     $1$      |  $0.64$  |  $4$  |\n|     $2$     |  $0.04$  |  $0$  |\n|     无      |  $0.16$  |  $8$  |\n\n- 申请更换第 $1,3$ 个时间段的上课教室，耗费的体力值的期望为 $2.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,3$      |  $0.4$  |  $0$  |\n|     $1$      |  $0.4$  |  $4$  |\n|     $3$     |  $0.1$  |  $4$  |\n|     无      |  $0.1$  |  $8$  |\n\n- 申请更换第 $2,3$ 个时间段的上课教室，耗费的体力值的期望为 $5.2$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2,3$      |  $0.1$  |  $4$  |\n|     $2$      |  $0.1$  |  $0$  |\n|     $3$     |  $0.4$  |  $4$  |\n|     无      |  $0.4$  |  $8$  |\n\n因此，最优方案为：申请更换第 $1,3$ 个时间段的上课教室。耗费的体力值的期望为 $2.8$。 \n\n**提示**\n\n1. 道路中可能会有多条双向道路连接相同的两间教室。 也有可能有道路两端连接的是同一间教室。\n2. 请注意区分 $n,m,v,e$ 的意义, $n$ 不是教室的数量, $m$ 不是道路的数量。\n\n**数据范围与说明**\n\n| 测试点编号 | $n\\le$ | $m\\le$ | $v\\le$ | 是否具有特殊性质 1 | 是否具有特殊性质 2 |\n| :--------: | :----: | :----: | :----: | :----------------: | :----------------: |\n|     1      |  $1$   |  $1$   | $300$  |      $\\times$      |      $\\times$      |\n|     2      |  $2$   |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     3      |  $2$   |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     4      |  $2$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     5      |  $3$   |  $0$   |  $20$  |      $\\surd$       |      $\\surd$       |\n|     6      |  $3$   |  $1$   | $100$  |      $\\surd$       |      $\\times$      |\n|     7      |  $3$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     8      |  $10$  |  $0$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     9      |  $10$  |  $1$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     10     |  $10$  |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     11     |  $10$  |  $10$  | $300$  |      $\\times$      |      $\\surd$       |\n|     12     |  $20$  |  $0$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     13     |  $20$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     14     |  $20$  |  $2$   | $300$  |      $\\surd$       |      $\\times$      |\n|     15     |  $20$  |  $20$  | $300$  |      $\\times$      |      $\\surd$       |\n|     16     | $300$  |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     17     | $300$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     18     | $300$  |  $2$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     19     | $300$  | $300$  | $300$  |      $\\times$      |      $\\surd$       |\n|     20     | $2000$ |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     21     | $2000$ |  $1$   |  $20$  |      $\\times$      |      $\\times$      |\n|     22     | $2000$ |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     23     | $2000$ | $2000$ | $100$  |      $\\times$      |      $\\times$      |\n|     24     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n|     25     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n \n\n特殊性质 1：图上任意不同的两点 $u,v$ 间，存在一条耗费体力最少的路径只包含一条道路。\n\n特殊性质 2：对于所有的 $1≤ i≤ n,\\ k_i= 1$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 提高组] 换教室",
+      "background": "NOIP2016 提高组 D1T3",
+      "description": "对于刚上大学的牛牛来说，他面临的第一个问题是如何根据实际情况申请合适的课程。\n\n\n在可以选择的课程中，有 $2n$ 节课程安排在 $n$ 个时间段上。在第 $i$（$1 \\leq i \\leq n$）个时间段上，两节内容相同的课程同时在不同的地点进行，其中，牛牛预先被安排在教室 $c_i$ 上课，而另一节课程在教室 $d_i$ 进行。\n\n\n在不提交任何申请的情况下，学生们需要按时间段的顺序依次完成所有的 $n$ 节安排好的课程。如果学生想更换第 $i$ 节课程的教室，则需要提出申请。若申请通过，学生就可以在第 $i$ 个时间段去教室 $d_i$ 上课，否则仍然在教室 $c_i$ 上课。\n\n\n由于更换教室的需求太多，申请不一定能获得通过。通过计算，牛牛发现申请更换第 $i$ 节课程的教室时，申请被通过的概率是一个已知的实数 $k_i$，并且对于不同课程的申请，被通过的概率是互相独立的。\n\n\n学校规定，所有的申请只能在学期开始前一次性提交，并且每个人只能选择至多 $m$ 节课程进行申请。这意味着牛牛必须一次性决定是否申请更换每节课的教室，而不能根据某些课程的申请结果来决定其他课程是否申请；牛牛可以申请自己最希望更换教室的 $m$ 门课程，也可以不用完这 $m$ 个申请的机会，甚至可以一门课程都不申请。\n\n\n因为不同的课程可能会被安排在不同的教室进行，所以牛牛需要利用课间时间从一间教室赶到另一间教室。\n\n\n牛牛所在的大学有 $v$ 个教室，有 $e$ 条道路。每条道路连接两间教室，并且是可以双向通行的。由于道路的长度和拥堵程度不同，通过不同的道路耗费的体力可能会有所不同。 当第 $i$（$1 \\leq i \\leq n-1$）节课结束后，牛牛就会从这节课的教室出发，选择一条耗费体力最少的路径前往下一节课的教室。\n\n\n现在牛牛想知道，申请哪几门课程可以使他因在教室间移动耗费的体力值的总和的期望值最小，请你帮他求出这个最小值。\n",
+      "formatI": "第一行四个整数 $n,m,v,e$。$n$ 表示这个学期内的时间段的数量；$m$ 表示牛牛最多可以申请更换多少节课程的教室；$v$ 表示牛牛学校里教室的数量；$e$ 表示牛牛的学校里道路的数量。\n\n\n第二行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $c_i$，即第 $i$ 个时间段牛牛被安排上课的教室；保证 $1 \\le c_i \\le v$。\n\n\n第三行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $d_i$，即第 $i$ 个时间段另一间上同样课程的教室；保证 $1 \\le d_i \\le v$。\n\n\n第四行 $n$ 个实数，第 $i$（$1 \\leq i \\leq n$）个实数表示 $k_i$，即牛牛申请在第 $i$ 个时间段更换教室获得通过的概率。保证 $0 \\le k_i \\le 1$。\n\n\n接下来 $e$ 行，每行三个正整数 $a_j, b_j, w_j$，表示有一条双向道路连接教室 $a_j, b_j$，通过这条道路需要耗费的体力值是 $w_j$；保证 $1 \\le a_j, b_j \\le v$，$1 \\le w_j \\le 100$。\n\n\n保证 $1 \\leq n \\leq 2000$，$0 \\leq m \\leq 2000$，$1 \\leq v \\leq 300$，$0 \\leq e \\leq 90000$。\n\n\n保证通过学校里的道路，从任何一间教室出发，都能到达其他所有的教室。\n\n\n保证输入的实数最多包含 $3$ 位小数。\n",
+      "formatO": "输出一行，包含一个实数，四舍五入精确到小数点后恰好 $2$ 位，表示答案。你的输出必须和标准输出完全一样才算正确。\n\n测试数据保证四舍五入后的答案和准确答案的差的绝对值不大于 $4 \\times 10^{-3}$。（如果你不知道什么是浮点误差，这段话可以理解为：对于大多数的算法，你可以正常地使用浮点数类型而不用对它进行特殊的处理）\n",
+      "hint": "**样例 1 说明**\n\n所有可行的申请方案和期望收益如下：\n\n- 不作申请，耗费的体力值的期望为 $8.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     无      |  $1.0$  |  $8$  |\n\n- 申请更换第 $1$ 个时间段的上课教室，耗费的体力值的期望为 $4.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1$      |  $0.8$  |  $4$  |\n|     无      |  $0.2$  |  $8$  |\n\n- 申请更换第 $2$ 个时间段的上课教室，耗费的体力值的期望为 $6.4$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2$      |  $0.2$  |  $0$  |\n|     无      |  $0.8$  |  $8$  |\n\n- 申请更换第 $3$ 个时间段的上课教室，耗费的体力值的期望为 $6.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $3$      |  $0.5$  |  $4$  |\n|     无      |  $0.5$  |  $8$  |\n\n- 申请更换第 $1,2$ 个时间段的上课教室，耗费的体力值的期望为 $4.48$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,2$      |  $0.16$  |  $4$  |\n|     $1$      |  $0.64$  |  $4$  |\n|     $2$     |  $0.04$  |  $0$  |\n|     无      |  $0.16$  |  $8$  |\n\n- 申请更换第 $1,3$ 个时间段的上课教室，耗费的体力值的期望为 $2.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,3$      |  $0.4$  |  $0$  |\n|     $1$      |  $0.4$  |  $4$  |\n|     $3$     |  $0.1$  |  $4$  |\n|     无      |  $0.1$  |  $8$  |\n\n- 申请更换第 $2,3$ 个时间段的上课教室，耗费的体力值的期望为 $5.2$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2,3$      |  $0.1$  |  $4$  |\n|     $2$      |  $0.1$  |  $0$  |\n|     $3$     |  $0.4$  |  $4$  |\n|     无      |  $0.4$  |  $8$  |\n\n因此，最优方案为：申请更换第 $1,3$ 个时间段的上课教室。耗费的体力值的期望为 $2.8$。 \n\n**提示**\n\n1. 道路中可能会有多条双向道路连接相同的两间教室。 也有可能有道路两端连接的是同一间教室。\n2. 请注意区分 $n,m,v,e$ 的意义, $n$ 不是教室的数量, $m$ 不是道路的数量。\n\n**数据范围与说明**\n\n| 测试点编号 | $n\\le$ | $m\\le$ | $v\\le$ | 是否具有特殊性质 1 | 是否具有特殊性质 2 |\n| :--------: | :----: | :----: | :----: | :----------------: | :----------------: |\n|     1      |  $1$   |  $1$   | $300$  |      $\\times$      |      $\\times$      |\n|     2      |  $2$   |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     3      |  $2$   |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     4      |  $2$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     5      |  $3$   |  $0$   |  $20$  |      $\\surd$       |      $\\surd$       |\n|     6      |  $3$   |  $1$   | $100$  |      $\\surd$       |      $\\times$      |\n|     7      |  $3$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     8      |  $10$  |  $0$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     9      |  $10$  |  $1$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     10     |  $10$  |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     11     |  $10$  |  $10$  | $300$  |      $\\times$      |      $\\surd$       |\n|     12     |  $20$  |  $0$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     13     |  $20$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     14     |  $20$  |  $2$   | $300$  |      $\\surd$       |      $\\times$      |\n|     15     |  $20$  |  $20$  | $300$  |      $\\times$      |      $\\surd$       |\n|     16     | $300$  |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     17     | $300$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     18     | $300$  |  $2$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     19     | $300$  | $300$  | $300$  |      $\\times$      |      $\\surd$       |\n|     20     | $2000$ |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     21     | $2000$ |  $1$   |  $20$  |      $\\times$      |      $\\times$      |\n|     22     | $2000$ |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     23     | $2000$ | $2000$ | $100$  |      $\\times$      |      $\\times$      |\n|     24     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n|     25     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n \n\n特殊性质 1：图上任意不同的两点 $u,v$ 间，存在一条耗费体力最少的路径只包含一条道路。\n\n特殊性质 2：对于所有的 $1≤ i≤ n,\\ k_i= 1$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 2 3 3\n2 1 2\n1 2 1\n0.8 0.2 0.5 \n1 2 5\n1 3 3\n2 3 1\n",
+        "2.80"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000,
+        512000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Senior] Switching Classrooms",
+      "background": "NOIP 2016 Senior D1T3.",
+      "description": "For Niuniu, who has just entered university, the first problem he faces is how to apply for suitable courses according to the actual situation.\n\nAmong the selectable courses, there are $2n$ classes scheduled across $n$ time slots. In the $i$-th time slot ($1 \\le i \\le n$), two classes with the same content are held simultaneously at different locations. Niuniu is pre-assigned to attend the class in classroom $c_i$, while the other class is in classroom $d_i$.\n\nWithout submitting any applications, students follow the order of time slots to complete all $n$ scheduled classes one by one. If a student wants to switch the classroom for the $i$-th class, they need to submit an application. If the application is approved, the student will attend the class in classroom $d_i$ during the $i$-th time slot; otherwise, they will still attend in classroom $c_i$.\n\nBecause there are too many requests to switch classrooms, an application may not be approved. Through calculation, Niuniu finds that when applying to switch the classroom for the $i$-th class, the probability that the application is approved is a known real number $k_i$, and the approval events for different classes are independent.\n\nThe school stipulates that all applications must be submitted once before the start of the term, and each person may choose to apply for at most $m$ classes. This means that Niuniu must decide all at once whether to apply to switch the classroom for each class, and cannot decide whether to apply for other classes based on the approval results of some classes. Niuniu can apply for the $m$ classes he most wants to switch, he may also use fewer than $m$ application opportunities, or even apply for none.\n\nBecause different classes may be arranged in different classrooms, Niuniu needs to use break time to travel from one classroom to another.\n\nNiuniu’s university has $v$ classrooms and $e$ roads. Each road connects two classrooms and is bidirectional. Because road lengths and congestion vary, the stamina consumed when traversing different roads may differ. After the $i$-th class ends ($1 \\le i \\le n - 1$), Niuniu will depart from the classroom of that class and choose a path with the minimum stamina cost to reach the classroom of the next class.\n\nNow Niuniu wants to know which classes he should apply for so that the expected value of the total stamina cost due to moving between classrooms is minimized. Please help him compute this minimum value.",
+      "formatI": "The first line contains four integers $n, m, v, e$. $n$ is the number of time slots in this term; $m$ is the maximum number of classes for which Niuniu may apply to switch classrooms; $v$ is the number of classrooms in the school; $e$ is the number of roads in the school.\n\nThe second line contains $n$ positive integers. The $i$-th ($1 \\le i \\le n$) integer is $c_i$, the classroom where Niuniu is scheduled to attend in the $i$-th time slot. It is guaranteed that $1 \\le c_i \\le v$.\n\nThe third line contains $n$ positive integers. The $i$-th ($1 \\le i \\le n$) integer is $d_i$, the classroom of the other class with the same content in the $i$-th time slot. It is guaranteed that $1 \\le d_i \\le v$.\n\nThe fourth line contains $n$ real numbers. The $i$-th ($1 \\le i \\le n$) real number is $k_i$, the probability that Niuniu’s application to switch the classroom in the $i$-th time slot is approved. It is guaranteed that $0 \\le k_i \\le 1$.\n\nThe next $e$ lines each contain three positive integers $a_j, b_j, w_j$, indicating a bidirectional road connecting classrooms $a_j$ and $b_j$, and traversing this road consumes stamina $w_j$. It is guaranteed that $1 \\le a_j, b_j \\le v$ and $1 \\le w_j \\le 100$.\n\nIt is guaranteed that $1 \\le n \\le 2000$, $0 \\le m \\le 2000$, $1 \\le v \\le 300$, and $0 \\le e \\le 90000$.\n\nIt is guaranteed that using the school’s roads, every classroom is reachable from any other classroom.\n\nIt is guaranteed that each input real number has at most $3$ decimal places.",
+      "formatO": "Output one line containing a real number, rounded to exactly $2$ decimal places, which is the answer. Your output must be exactly the same as the standard output to be considered correct.\n\nThe testdata guarantees that the absolute difference between the rounded answer and the exact answer is at most $4 \\times 10^{-3}$. (If you do not know what floating-point error is, you can understand this as: for most algorithms, you can normally use floating-point types without special handling.)",
+      "hint": "Sample 1 explanation.\n\nAll feasible application plans and their expected stamina costs are as follows:\n\n- No application submitted. The expected stamina cost is $8.0$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     None      |  $1.0$  |  $8$  |\n\n- Apply to switch the classroom in the $1$-st time slot. The expected stamina cost is $4.8$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $1$      |  $0.8$  |  $4$  |\n|     None      |  $0.2$  |  $8$  |\n\n- Apply to switch the classroom in the $2$-nd time slot. The expected stamina cost is $6.4$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $2$      |  $0.2$  |  $0$  |\n|     None      |  $0.8$  |  $8$  |\n\n- Apply to switch the classroom in the $3$-rd time slot. The expected stamina cost is $6.0$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $3$      |  $0.5$  |  $4$  |\n|     None      |  $0.5$  |  $8$  |\n\n- Apply to switch the classroom in the $1$-st and $2$-nd time slots. The expected stamina cost is $4.48$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $1,2$      |  $0.16$  |  $4$  |\n|     $1$      |  $0.64$  |  $4$  |\n|     $2$     |  $0.04$  |  $0$  |\n|     None      |  $0.16$  |  $8$  |\n\n- Apply to switch the classroom in the $1$-st and $3$-rd time slots. The expected stamina cost is $2.8$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $1,3$      |  $0.4$  |  $0$  |\n|     $1$      |  $0.4$  |  $4$  |\n|     $3$     |  $0.1$  |  $4$  |\n|     None      |  $0.1$  |  $8$  |\n\n- Apply to switch the classroom in the $2$-nd and $3$-rd time slots. The expected stamina cost is $5.2$.\n\n| Time slots approved | Probability | Stamina cost |\n| :--------: | :----: | :----: |\n|     $2,3$      |  $0.1$  |  $4$  |\n|     $2$      |  $0.1$  |  $0$  |\n|     $3$     |  $0.4$  |  $4$  |\n|     None      |  $0.4$  |  $8$  |\n\nTherefore, the optimal plan is to apply to switch the classroom in the $1$-st and $3$-rd time slots. The expected stamina cost is $2.8$.\n\nNotes.\n\n1. There may be multiple bidirectional roads connecting the same pair of classrooms. It is also possible for a road to connect a classroom to itself.\n2. Please distinguish the meanings of $n, m, v, e$. $n$ is not the number of classrooms, and $m$ is not the number of roads.\n\nConstraints and Notes.\n\n| Test set ID | $n \\le$ | $m \\le$ | $v \\le$ | Has Special Property 1 | Has Special Property 2 |\n| :--------: | :----: | :----: | :----: | :----------------: | :----------------: |\n|     1      |  $1$   |  $1$   | $300$  |      $\\times$      |      $\\times$      |\n|     2      |  $2$   |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     3      |  $2$   |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     4      |  $2$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     5      |  $3$   |  $0$   |  $20$  |      $\\surd$       |      $\\surd$       |\n|     6      |  $3$   |  $1$   | $100$  |      $\\surd$       |      $\\times$      |\n|     7      |  $3$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     8      |  $10$  |  $0$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     9      |  $10$  |  $1$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     10     |  $10$  |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     11     |  $10$  |  $10$  | $300$  |      $\\times$      |      $\\surd$       |\n|     12     |  $20$  |  $0$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     13     |  $20$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     14     |  $20$  |  $2$   | $300$  |      $\\surd$       |      $\\times$      |\n|     15     |  $20$  |  $20$  | $300$  |      $\\times$      |      $\\surd$       |\n|     16     | $300$  |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     17     | $300$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     18     | $300$  |  $2$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     19     | $300$  | $300$  | $300$  |      $\\times$      |      $\\surd$       |\n|     20     | $2000$ |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     21     | $2000$ |  $1$   |  $20$  |      $\\times$      |      $\\times$      |\n|     22     | $2000$ |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     23     | $2000$ | $2000$ | $100$  |      $\\times$      |      $\\times$      |\n|     24     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n|     25     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n\nSpecial Property 1: For any two distinct nodes $u, v$ in the graph, there exists a minimum-stamina path that consists of only one road.\n\nSpecial Property 2: For all $1 \\le i \\le n$, $k_i = 1$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 提高组] 换教室",
+      "background": "NOIP2016 提高组 D1T3",
+      "description": "对于刚上大学的牛牛来说，他面临的第一个问题是如何根据实际情况申请合适的课程。\n\n\n在可以选择的课程中，有 $2n$ 节课程安排在 $n$ 个时间段上。在第 $i$（$1 \\leq i \\leq n$）个时间段上，两节内容相同的课程同时在不同的地点进行，其中，牛牛预先被安排在教室 $c_i$ 上课，而另一节课程在教室 $d_i$ 进行。\n\n\n在不提交任何申请的情况下，学生们需要按时间段的顺序依次完成所有的 $n$ 节安排好的课程。如果学生想更换第 $i$ 节课程的教室，则需要提出申请。若申请通过，学生就可以在第 $i$ 个时间段去教室 $d_i$ 上课，否则仍然在教室 $c_i$ 上课。\n\n\n由于更换教室的需求太多，申请不一定能获得通过。通过计算，牛牛发现申请更换第 $i$ 节课程的教室时，申请被通过的概率是一个已知的实数 $k_i$，并且对于不同课程的申请，被通过的概率是互相独立的。\n\n\n学校规定，所有的申请只能在学期开始前一次性提交，并且每个人只能选择至多 $m$ 节课程进行申请。这意味着牛牛必须一次性决定是否申请更换每节课的教室，而不能根据某些课程的申请结果来决定其他课程是否申请；牛牛可以申请自己最希望更换教室的 $m$ 门课程，也可以不用完这 $m$ 个申请的机会，甚至可以一门课程都不申请。\n\n\n因为不同的课程可能会被安排在不同的教室进行，所以牛牛需要利用课间时间从一间教室赶到另一间教室。\n\n\n牛牛所在的大学有 $v$ 个教室，有 $e$ 条道路。每条道路连接两间教室，并且是可以双向通行的。由于道路的长度和拥堵程度不同，通过不同的道路耗费的体力可能会有所不同。 当第 $i$（$1 \\leq i \\leq n-1$）节课结束后，牛牛就会从这节课的教室出发，选择一条耗费体力最少的路径前往下一节课的教室。\n\n\n现在牛牛想知道，申请哪几门课程可以使他因在教室间移动耗费的体力值的总和的期望值最小，请你帮他求出这个最小值。\n",
+      "formatI": "第一行四个整数 $n,m,v,e$。$n$ 表示这个学期内的时间段的数量；$m$ 表示牛牛最多可以申请更换多少节课程的教室；$v$ 表示牛牛学校里教室的数量；$e$ 表示牛牛的学校里道路的数量。\n\n\n第二行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $c_i$，即第 $i$ 个时间段牛牛被安排上课的教室；保证 $1 \\le c_i \\le v$。\n\n\n第三行 $n$ 个正整数，第 $i$（$1 \\leq i \\leq n$）个正整数表示 $d_i$，即第 $i$ 个时间段另一间上同样课程的教室；保证 $1 \\le d_i \\le v$。\n\n\n第四行 $n$ 个实数，第 $i$（$1 \\leq i \\leq n$）个实数表示 $k_i$，即牛牛申请在第 $i$ 个时间段更换教室获得通过的概率。保证 $0 \\le k_i \\le 1$。\n\n\n接下来 $e$ 行，每行三个正整数 $a_j, b_j, w_j$，表示有一条双向道路连接教室 $a_j, b_j$，通过这条道路需要耗费的体力值是 $w_j$；保证 $1 \\le a_j, b_j \\le v$，$1 \\le w_j \\le 100$。\n\n\n保证 $1 \\leq n \\leq 2000$，$0 \\leq m \\leq 2000$，$1 \\leq v \\leq 300$，$0 \\leq e \\leq 90000$。\n\n\n保证通过学校里的道路，从任何一间教室出发，都能到达其他所有的教室。\n\n\n保证输入的实数最多包含 $3$ 位小数。\n",
+      "formatO": "输出一行，包含一个实数，四舍五入精确到小数点后恰好 $2$ 位，表示答案。你的输出必须和标准输出完全一样才算正确。\n\n测试数据保证四舍五入后的答案和准确答案的差的绝对值不大于 $4 \\times 10^{-3}$。（如果你不知道什么是浮点误差，这段话可以理解为：对于大多数的算法，你可以正常地使用浮点数类型而不用对它进行特殊的处理）\n",
+      "hint": "**样例 1 说明**\n\n所有可行的申请方案和期望收益如下：\n\n- 不作申请，耗费的体力值的期望为 $8.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     无      |  $1.0$  |  $8$  |\n\n- 申请更换第 $1$ 个时间段的上课教室，耗费的体力值的期望为 $4.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1$      |  $0.8$  |  $4$  |\n|     无      |  $0.2$  |  $8$  |\n\n- 申请更换第 $2$ 个时间段的上课教室，耗费的体力值的期望为 $6.4$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2$      |  $0.2$  |  $0$  |\n|     无      |  $0.8$  |  $8$  |\n\n- 申请更换第 $3$ 个时间段的上课教室，耗费的体力值的期望为 $6.0$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $3$      |  $0.5$  |  $4$  |\n|     无      |  $0.5$  |  $8$  |\n\n- 申请更换第 $1,2$ 个时间段的上课教室，耗费的体力值的期望为 $4.48$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,2$      |  $0.16$  |  $4$  |\n|     $1$      |  $0.64$  |  $4$  |\n|     $2$     |  $0.04$  |  $0$  |\n|     无      |  $0.16$  |  $8$  |\n\n- 申请更换第 $1,3$ 个时间段的上课教室，耗费的体力值的期望为 $2.8$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $1,3$      |  $0.4$  |  $0$  |\n|     $1$      |  $0.4$  |  $4$  |\n|     $3$     |  $0.1$  |  $4$  |\n|     无      |  $0.1$  |  $8$  |\n\n- 申请更换第 $2,3$ 个时间段的上课教室，耗费的体力值的期望为 $5.2$。\n\n| 申请通过的时间段 | 出现的概率 | 耗费的体力值 |\n| :--------: | :----: | :----: |\n|     $2,3$      |  $0.1$  |  $4$  |\n|     $2$      |  $0.1$  |  $0$  |\n|     $3$     |  $0.4$  |  $4$  |\n|     无      |  $0.4$  |  $8$  |\n\n因此，最优方案为：申请更换第 $1,3$ 个时间段的上课教室。耗费的体力值的期望为 $2.8$。 \n\n**提示**\n\n1. 道路中可能会有多条双向道路连接相同的两间教室。 也有可能有道路两端连接的是同一间教室。\n2. 请注意区分 $n,m,v,e$ 的意义, $n$ 不是教室的数量, $m$ 不是道路的数量。\n\n**数据范围与说明**\n\n| 测试点编号 | $n\\le$ | $m\\le$ | $v\\le$ | 是否具有特殊性质 1 | 是否具有特殊性质 2 |\n| :--------: | :----: | :----: | :----: | :----------------: | :----------------: |\n|     1      |  $1$   |  $1$   | $300$  |      $\\times$      |      $\\times$      |\n|     2      |  $2$   |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     3      |  $2$   |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     4      |  $2$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     5      |  $3$   |  $0$   |  $20$  |      $\\surd$       |      $\\surd$       |\n|     6      |  $3$   |  $1$   | $100$  |      $\\surd$       |      $\\times$      |\n|     7      |  $3$   |  $2$   | $300$  |      $\\times$      |      $\\times$      |\n|     8      |  $10$  |  $0$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     9      |  $10$  |  $1$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     10     |  $10$  |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     11     |  $10$  |  $10$  | $300$  |      $\\times$      |      $\\surd$       |\n|     12     |  $20$  |  $0$   |  $20$  |      $\\surd$       |      $\\times$      |\n|     13     |  $20$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     14     |  $20$  |  $2$   | $300$  |      $\\surd$       |      $\\times$      |\n|     15     |  $20$  |  $20$  | $300$  |      $\\times$      |      $\\surd$       |\n|     16     | $300$  |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     17     | $300$  |  $1$   | $100$  |      $\\times$      |      $\\times$      |\n|     18     | $300$  |  $2$   | $300$  |      $\\surd$       |      $\\surd$       |\n|     19     | $300$  | $300$  | $300$  |      $\\times$      |      $\\surd$       |\n|     20     | $2000$ |  $0$   |  $20$  |      $\\times$      |      $\\times$      |\n|     21     | $2000$ |  $1$   |  $20$  |      $\\times$      |      $\\times$      |\n|     22     | $2000$ |  $2$   | $100$  |      $\\times$      |      $\\times$      |\n|     23     | $2000$ | $2000$ | $100$  |      $\\times$      |      $\\times$      |\n|     24     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n|     25     | $2000$ | $2000$ | $300$  |      $\\times$      |      $\\times$      |\n \n\n特殊性质 1：图上任意不同的两点 $u,v$ 间，存在一条耗费体力最少的路径只包含一条道路。\n\n特殊性质 2：对于所有的 $1≤ i≤ n,\\ k_i= 1$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1266,
+    "startTime": 1479424080,
+    "endTime": 1480054800,
+    "name": "NOIP2016提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1600",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 天天爱跑步",
+      "difficulty": 7
+    },
+    {
+      "pid": "P2473",
+      "type": "P",
+      "name": "[SCOI2008] 奖励关",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2831",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2822",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 组合数问题",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2827",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P1850 [NOIP 2016 提高组] 换教室",
+    "type": 2,
+    "slug": "P1850",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1356933,
+      "title": "进食后人if u 40pts",
+      "author": {
+        "uid": 1965162,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1965162.png",
+        "name": "Dengr",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/0mjnsoz2.png"
+      },
+      "time": 1787020162
+    },
+    {
+      "id": 1350244,
+      "title": "进食后入if you 96wa#1",
+      "author": {
+        "uid": 1422270,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1422270.png",
+        "name": "chenhao1206",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786438357
+    },
+    {
+      "id": 1350169,
+      "title": "玄关求条 WA 48pts",
+      "author": {
+        "uid": 1901131,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1901131.png",
+        "name": "Cube114514",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/fycd129c.png"
+      },
+      "time": 1786435468
+    },
+    {
+      "id": 1349088,
+      "title": "虽然可能只有我一个犯这个错误",
+      "author": {
+        "uid": 1062662,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1062662.png",
+        "name": "Fvv_chenwuuu",
+        "slogan": "小F是一只Fvv||卡提可爱捏",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/x5i7im9y.png"
+      },
+      "time": 1786351490
+    },
+    {
+      "id": 1342697,
+      "title": "警示后人如果你wa92pts on#4#25",
+      "author": {
+        "uid": 393864,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/393864.png",
+        "name": "Elgo87",
+        "slogan": "Ad astra per aspera. || BITfw",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/umjnhbjm.png"
+      },
+      "time": 1785753927
+    },
+    {
+      "id": 1339335,
+      "title": "晶石厚人",
+      "author": {
+        "uid": 1344509,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1344509.png",
+        "name": "nijianwen",
+        "slogan": "这个家伙很懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Cheater",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785403529
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

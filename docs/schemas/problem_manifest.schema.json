@@ -101,7 +101,7 @@
       "type": "integer"
     },
     "dataset_id": {
-      "const": "noip2018",
+      "pattern": "^[a-z][a-z0-9_]*$",
       "title": "Dataset Id",
       "type": "string"
     },
@@ -133,6 +133,105 @@
       ],
       "default": null,
       "title": "Luogu Difficulty"
+    },
+    "contest": {
+      "default": "NOIP",
+      "title": "Contest",
+      "type": "string"
+    },
+    "year": {
+      "default": 2018,
+      "title": "Year",
+      "type": "integer"
+    },
+    "group": {
+      "default": "senior",
+      "enum": [
+        "junior",
+        "senior"
+      ],
+      "title": "Group",
+      "type": "string"
+    },
+    "task_number": {
+      "default": 1,
+      "maximum": 4,
+      "minimum": 1,
+      "title": "Task Number",
+      "type": "integer"
+    },
+    "luogu_id": {
+      "anyOf": [
+        {
+          "pattern": "^P[0-9]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Luogu Id"
+    },
+    "difficulty_checked_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Difficulty Checked At"
+    },
+    "data_status": {
+      "default": "official",
+      "enum": [
+        "official",
+        "samples",
+        "partial",
+        "missing"
+      ],
+      "title": "Data Status",
+      "type": "string"
+    },
+    "test_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Test Count"
+    },
+    "judge_note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Judge Note"
+    },
+    "statement_relative_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Statement Relative Path"
     },
     "resource_limits": {
       "$ref": "#/$defs/ResourceLimits"

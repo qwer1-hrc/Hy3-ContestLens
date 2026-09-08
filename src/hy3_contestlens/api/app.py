@@ -19,6 +19,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ..errors import ContestLensError
+from ..assistant import AssistantQuestion
 from ..reporting import aggregate_runs, has_evaluation_report, render_run_markdown, render_run_report, run_failure_summary
 from ..report_translation import REPORT_LABELS
 from ..service import ServiceHub
@@ -203,7 +204,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         components = {
             "database": database, "hy3": hy3, "resources_mcp": {"ready": True},
             "workspace_mcp": {"ready": True}, "judge_mcp": {"ready": True}, "docker": docker,
-            "private_dataset": {"ready": sum(item["count"] for item in private.values()) == 120, "problems": private},
+            "private_dataset": {"ready": bool(private) and all(item["imported"] or hub.catalog.get(pid).data_status == "missing" for pid,item in private.items()), "problems": private, "missing_data": [pid for pid,item in private.items() if not item["imported"]]},
         }
         ready = all(value.get("ready", False) for value in components.values())
         if not ready:
@@ -213,7 +214,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     @app.get("/api/v1/system/capabilities")
     def capabilities() -> dict[str, Any]:
         return {
-            "schema_version": 1, "dataset": "noip2018", "problem_count": 6,
+            "schema_version": 1, "dataset": "contest_collection", "problem_count": len(hub.catalog.list()),
             "interfaces": ["REST", "CLI", "MCP", "WebUI"], "sandbox": "linux_docker_only",
             "mcp_servers": ["resources", "workspace", "judge"], "max_repair_rounds": hub.settings.repair_hard_max_rounds,
             "image_understanding": hub.settings.image_understanding.safe_summary(),
@@ -221,7 +222,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @app.get("/api/v1/datasets")
     def datasets() -> list[dict[str, Any]]:
-        return [{"dataset_id": "noip2018", "problem_count": 6, "test_count": sum(hub.dataset.summary(item.problem_id)["count"] for item in hub.catalog.list())}]
+        manifests = hub.catalog.list()
+        return [{"dataset_id": key, "problem_count": sum(m.dataset_id == key for m in manifests), "test_count": sum(hub.dataset.summary(m.problem_id)["count"] for m in manifests if m.dataset_id == key)} for key in sorted({m.dataset_id for m in manifests})]
 
     def problem_view(problem_id: str) -> dict[str, Any]:
         manifest = hub.catalog.get(problem_id)
@@ -231,9 +233,41 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             "memory_limit_source": source, "difficulty_status": "PENDING_USER_LABEL" if manifest.luogu_difficulty is None else "LABELED",
         }
 
-    @app.get("/api/v1/datasets/noip2018/problems")
+    @app.get("/api/v1/problems")
     def problems() -> list[dict[str, Any]]:
         return [problem_view(item.problem_id) for item in hub.catalog.list()]
+
+    @app.get("/api/v1/datasets/{dataset_id}/problems")
+    def dataset_problems(dataset_id: str) -> list[dict[str, Any]]:
+        selected = [problem_view(m.problem_id) for m in hub.catalog.list() if m.dataset_id == dataset_id]
+        if not selected:
+            raise ContestLensError("DATASET_NOT_FOUND", "Unknown dataset", status_code=404)
+        return selected
+
+    @app.get("/api/v1/problems/{problem_id}/statement")
+    def statement(problem_id: str) -> dict[str, Any]:
+        manifest = hub.catalog.get(problem_id)
+        try:
+            binding = hub.store.get_binding(problem_id)
+        except ContestLensError as exc:
+            if exc.code != "RESOURCE_BINDING_NOT_FOUND" or not manifest.statement_relative_path:
+                raise
+            for scope in hub.store.list_scopes():
+                try:
+                    path = hub.resources.resolve_scoped(scope["scope_id"], manifest.statement_relative_path, extensions={".md"})
+                    return {"problem_id":problem_id, "content":path.read_text(encoding="utf-8"), "content_type":"untrusted_problem_content"}
+                except ContestLensError:
+                    continue
+            raise exc
+        document = binding["document"]
+        chunks, cursor = [], 0
+        while True:
+            chunk = hub.resources.read_problem_document(binding["scope_id"], document, cursor=cursor)
+            chunks.append(chunk["content"])
+            if chunk["next_cursor"] is None:
+                break
+            cursor = chunk["next_cursor"]
+        return {"problem_id": problem_id, "content": "\n".join(chunks), "content_type": "untrusted_problem_content"}
 
     @app.get("/api/v1/problems/{problem_id}")
     def get_problem(problem_id: str) -> dict[str, Any]:
@@ -281,7 +315,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @app.post("/api/v1/runs", status_code=201)
     def create_run(body: CreateRunRequest, idempotency_key: str | None = Header(default=None, alias="Idempotency-Key")) -> dict[str, Any]:
-        hub.catalog.get(body.problem_id)
+        manifest = hub.catalog.get(body.problem_id)
+        if manifest.judge_note:
+            raise ContestLensError("UNSUPPORTED_COMPARATOR", manifest.judge_note, status_code=422)
         binding = hub.store.get_binding(body.problem_id)
         if body.resource_binding_id and binding["binding_id"] != body.resource_binding_id:
             raise ContestLensError("RESOURCE_BINDING_MISMATCH", "Requested binding is not current", status_code=409)
@@ -290,6 +326,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     @app.get("/api/v1/runs/{run_id}")
     def get_run(run_id: str) -> dict[str, Any]:
         return hub.store.get_run(run_id)
+
+    @app.post("/api/v1/runs/{run_id}/assistant")
+    async def ask_run_assistant(run_id: str, body: AssistantQuestion) -> dict[str, Any]:
+        return await hub.assistant.answer(run_id, body)
 
     @app.post("/api/v1/runs/{run_id}/start", status_code=202)
     async def start_run(run_id: str) -> dict[str, Any]:
@@ -594,6 +634,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     @app.get("/ui/runs/new", response_class=HTMLResponse)
     def new_run_page(request: Request):
         return page(request, "new_run.html")
+
+    @app.get("/ui/problems/{problem_id}", response_class=HTMLResponse)
+    def problem_page(request: Request, problem_id: str):
+        return page(request, "problem_detail.html", problem=problem_view(problem_id), statement=statement(problem_id)["content"])
 
     @app.get("/ui/runs/{run_id}", response_class=HTMLResponse)
     def run_page(request: Request, run_id: str):

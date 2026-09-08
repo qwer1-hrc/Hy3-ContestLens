@@ -1,0 +1,306 @@
+{
+  "problem": {
+    "pid": "P2679",
+    "type": "P",
+    "name": "[NOIP 2015 提高组] 子串",
+    "difficulty": 4,
+    "tags": [
+      2,
+      3,
+      32,
+      83,
+      108,
+      111,
+      254
+    ],
+    "totalSubmit": 67866,
+    "totalAccepted": 25854,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2015 提高组] 子串",
+      "background": "NOIP2015 Day2T2",
+      "description": "有两个仅包含小写英文字母的字符串 $A$ 和 $B$。\n\n现在要从字符串 $A$ 中取出 $k$ 个互不重叠的非空子串，然后把这 $k$ 个子串按照其在字符串 $A$ 中出现的顺序依次连接起来得到一个新的字符串。请问有多少种方案可以使得这个新串与字符串 $B$ 相等？\n\n注意：子串取出的位置不同也认为是不同的方案。",
+      "formatI": "第一行是三个正整数 $n,m,k$，分别表示字符串 $A$ 的长度，字符串 $B$ 的长度，以及问题描述中所提到的 $k$，每两个整数之间用一个空格隔开。\n\n第二行包含一个长度为 $n$ 的字符串，表示字符串 $A$。\n\n第三行包含一个长度为 $m$ 的字符串，表示字符串 $B$。",
+      "formatO": "一个整数，表示所求方案数。\n\n由于答案可能很大，所以这里要求输出答案对 $1000000007(10^9 + 7)$ 取模的结果。",
+      "hint": "**样例解释**\n\n所有合法方案如下：（加下划线的部分表示取出的子串）\n\n样例 $1$：$\\texttt{\\underline{aab}\\,aab,aab\\,\\underline{aab}}$。  \n样例 $2$：$\\texttt{\\underline{a}\\,\\underline{ab}\\,aab,\\underline{a}\\,aba\\,\\underline{ab},a\\,\\underline{a}\\,ba\\,\\underline{ab},aab\\,\\underline{a}\\,\\underline{ab},\\underline{aa}\\,\\underline{b}\\,aab,\\underline{aa}\\,baa\\,\\underline{b},aab\\,\\underline{aa}\\,\\underline{b}}$。  \n样例 $3$：$\\texttt{\\underline{a}\\,\\underline{a}\\,\\underline{b}\\,aab,\\underline{a}\\,\\underline{a}\\,baa\\,\\underline{b},\\underline{a}\\,ab\\,\\underline{a}\\,a\\,\\underline{b},\\underline{a}\\,aba\\,\\underline{a}\\,\\underline{b},a\\,\\underline{a}\\,b\\,\\underline{a}\\,a\\,\\underline{b},a\\,\\underline{a}\\,ba\\,\\underline{a}\\,\\underline{b},aab\\,\\underline{a}\\,\\underline{a}\\,\\underline{b}}$。\n\n**数据范围**\n\n对于第 $1$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=1$;  \n对于第 $2$ 组至第 $3$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=2$;  \n对于第 $4$ 组至第 $5$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=m$;   \n对于第 $1$ 组至第 $7$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,1\\le k\\le m$;  \n对于第 $1$ 组至第 $9$ 组数据：$1\\le n\\le 1000,1\\le m\\le 100,1\\le k\\le m$;   \n对于所有 $10$ 组数据：$1\\le n\\le 1000,1\\le m\\le 200,1\\le k\\le m$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2015 提高组] 子串",
+      "background": "NOIP2015 Day2T2",
+      "description": "有两个仅包含小写英文字母的字符串 $A$ 和 $B$。\n\n现在要从字符串 $A$ 中取出 $k$ 个互不重叠的非空子串，然后把这 $k$ 个子串按照其在字符串 $A$ 中出现的顺序依次连接起来得到一个新的字符串。请问有多少种方案可以使得这个新串与字符串 $B$ 相等？\n\n注意：子串取出的位置不同也认为是不同的方案。",
+      "formatI": "第一行是三个正整数 $n,m,k$，分别表示字符串 $A$ 的长度，字符串 $B$ 的长度，以及问题描述中所提到的 $k$，每两个整数之间用一个空格隔开。\n\n第二行包含一个长度为 $n$ 的字符串，表示字符串 $A$。\n\n第三行包含一个长度为 $m$ 的字符串，表示字符串 $B$。",
+      "formatO": "一个整数，表示所求方案数。\n\n由于答案可能很大，所以这里要求输出答案对 $1000000007(10^9 + 7)$ 取模的结果。",
+      "hint": "**样例解释**\n\n所有合法方案如下：（加下划线的部分表示取出的子串）\n\n样例 $1$：$\\texttt{\\underline{aab}\\,aab,aab\\,\\underline{aab}}$。  \n样例 $2$：$\\texttt{\\underline{a}\\,\\underline{ab}\\,aab,\\underline{a}\\,aba\\,\\underline{ab},a\\,\\underline{a}\\,ba\\,\\underline{ab},aab\\,\\underline{a}\\,\\underline{ab},\\underline{aa}\\,\\underline{b}\\,aab,\\underline{aa}\\,baa\\,\\underline{b},aab\\,\\underline{aa}\\,\\underline{b}}$。  \n样例 $3$：$\\texttt{\\underline{a}\\,\\underline{a}\\,\\underline{b}\\,aab,\\underline{a}\\,\\underline{a}\\,baa\\,\\underline{b},\\underline{a}\\,ab\\,\\underline{a}\\,a\\,\\underline{b},\\underline{a}\\,aba\\,\\underline{a}\\,\\underline{b},a\\,\\underline{a}\\,b\\,\\underline{a}\\,a\\,\\underline{b},a\\,\\underline{a}\\,ba\\,\\underline{a}\\,\\underline{b},aab\\,\\underline{a}\\,\\underline{a}\\,\\underline{b}}$。\n\n**数据范围**\n\n对于第 $1$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=1$;  \n对于第 $2$ 组至第 $3$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=2$;  \n对于第 $4$ 组至第 $5$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=m$;   \n对于第 $1$ 组至第 $7$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,1\\le k\\le m$;  \n对于第 $1$ 组至第 $9$ 组数据：$1\\le n\\le 1000,1\\le m\\le 100,1\\le k\\le m$;   \n对于所有 $10$ 组数据：$1\\le n\\le 1000,1\\le m\\le 200,1\\le k\\le m$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "6 3 1 \naabaab \naab",
+        "2"
+      ],
+      [
+        "6 3 2 \naabaab \naab",
+        "7"
+      ],
+      [
+        "6 3 3 \naabaab \naab",
+        "7"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2015 Senior] Substring",
+      "background": "NOIP 2015 Day2T2.",
+      "description": "There are two strings $A$ and $B$ consisting only of lowercase English letters.\n\nWe will select $k$ pairwise non-overlapping, non-empty substrings from string $A$, then concatenate these $k$ substrings in the order they appear in $A$ to obtain a new string. How many ways are there to make this new string equal to string $B$?\n\nNote: Different selection positions are considered different ways.",
+      "formatI": "The first line contains three positive integers $n, m, k$, representing the length of string $A$, the length of string $B$, and the $k$ mentioned in the problem statement, respectively. Each pair of integers is separated by a single space.\n\nThe second line contains a string of length $n$, which is string $A$.\n\nThe third line contains a string of length $m$, which is string $B$.",
+      "formatO": "Output a single integer, the number of required ways.\n\nSince the answer may be large, output the result modulo $1000000007$.",
+      "hint": "**Sample Explanation**\n\nAll valid ways are as follows (the underlined parts indicate the selected substrings):\n\nSample 1: $\\texttt{\\underline{aab}\\,aab,aab\\,\\underline{aab}}$.\n\nSample 2: $\\texttt{\\underline{a}\\,\\underline{ab}\\,aab,\\underline{a}\\,aba\\,\\underline{ab},a\\,\\underline{a}\\,ba\\,\\underline{ab},aab\\,\\underline{a}\\,\\underline{ab},\\underline{aa}\\,\\underline{b}\\,aab,\\underline{aa}\\,baa\\,\\underline{b},aab\\,\\underline{aa}\\,\\underline{b}}$.\n\nSample 3: $\\texttt{\\underline{a}\\,\\underline{a}\\,\\underline{b}\\,aab,\\underline{a}\\,\\underline{a}\\,baa\\,\\underline{b},\\underline{a}\\,ab\\,\\underline{a}\\,a\\,\\underline{b},\\underline{a}\\,aba\\,\\underline{a}\\,\\underline{b},a\\,\\underline{a}\\,b\\,\\underline{a}\\,a\\,\\underline{b},a\\,\\underline{a}\\,ba\\,\\underline{a}\\,\\underline{b},aab\\,\\underline{a}\\,\\underline{a}\\,\\underline{b}}$.\n\n**Constraints**\n\nFor testdata 1: $1 \\le n \\le 500, 1 \\le m \\le 50, k = 1$;\n\nFor testdata 2 to 3: $1 \\le n \\le 500, 1 \\le m \\le 50, k = 2$;\n\nFor testdata 4 to 5: $1 \\le n \\le 500, 1 \\le m \\le 50, k = m$;\n\nFor testdata 1 to 7: $1 \\le n \\le 500, 1 \\le m \\le 50, 1 \\le k \\le m$;\n\nFor testdata 1 to 9: $1 \\le n \\le 1000, 1 \\le m \\le 100, 1 \\le k \\le m$;\n\nFor all 10 testdata sets: $1 \\le n \\le 1000, 1 \\le m \\le 200, 1 \\le k \\le m$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2015 提高组] 子串",
+      "background": "NOIP2015 Day2T2",
+      "description": "有两个仅包含小写英文字母的字符串 $A$ 和 $B$。\n\n现在要从字符串 $A$ 中取出 $k$ 个互不重叠的非空子串，然后把这 $k$ 个子串按照其在字符串 $A$ 中出现的顺序依次连接起来得到一个新的字符串。请问有多少种方案可以使得这个新串与字符串 $B$ 相等？\n\n注意：子串取出的位置不同也认为是不同的方案。",
+      "formatI": "第一行是三个正整数 $n,m,k$，分别表示字符串 $A$ 的长度，字符串 $B$ 的长度，以及问题描述中所提到的 $k$，每两个整数之间用一个空格隔开。\n\n第二行包含一个长度为 $n$ 的字符串，表示字符串 $A$。\n\n第三行包含一个长度为 $m$ 的字符串，表示字符串 $B$。",
+      "formatO": "一个整数，表示所求方案数。\n\n由于答案可能很大，所以这里要求输出答案对 $1000000007(10^9 + 7)$ 取模的结果。",
+      "hint": "**样例解释**\n\n所有合法方案如下：（加下划线的部分表示取出的子串）\n\n样例 $1$：$\\texttt{\\underline{aab}\\,aab,aab\\,\\underline{aab}}$。  \n样例 $2$：$\\texttt{\\underline{a}\\,\\underline{ab}\\,aab,\\underline{a}\\,aba\\,\\underline{ab},a\\,\\underline{a}\\,ba\\,\\underline{ab},aab\\,\\underline{a}\\,\\underline{ab},\\underline{aa}\\,\\underline{b}\\,aab,\\underline{aa}\\,baa\\,\\underline{b},aab\\,\\underline{aa}\\,\\underline{b}}$。  \n样例 $3$：$\\texttt{\\underline{a}\\,\\underline{a}\\,\\underline{b}\\,aab,\\underline{a}\\,\\underline{a}\\,baa\\,\\underline{b},\\underline{a}\\,ab\\,\\underline{a}\\,a\\,\\underline{b},\\underline{a}\\,aba\\,\\underline{a}\\,\\underline{b},a\\,\\underline{a}\\,b\\,\\underline{a}\\,a\\,\\underline{b},a\\,\\underline{a}\\,ba\\,\\underline{a}\\,\\underline{b},aab\\,\\underline{a}\\,\\underline{a}\\,\\underline{b}}$。\n\n**数据范围**\n\n对于第 $1$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=1$;  \n对于第 $2$ 组至第 $3$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=2$;  \n对于第 $4$ 组至第 $5$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,k=m$;   \n对于第 $1$ 组至第 $7$ 组数据：$1\\le n\\le 500,1\\le m\\le 50,1\\le k\\le m$;  \n对于第 $1$ 组至第 $9$ 组数据：$1\\le n\\le 1000,1\\le m\\le 100,1\\le k\\le m$;   \n对于所有 $10$ 组数据：$1\\le n\\le 1000,1\\le m\\le 200,1\\le k\\le m$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 302,
+    "startTime": 1446859800,
+    "endTime": 1447507800,
+    "name": "NOIp2015提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1850",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 换教室",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2668",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 斗地主",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2680",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 运输计划",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2827",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "difficulty": 5
+    },
+    {
+      "pid": "P3558",
+      "type": "P",
+      "name": "[POI 2013] BAJ-Bytecomputer",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P2679 [NOIP 2015 提高组] 子串",
+    "type": 2,
+    "slug": "P2679",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1360514,
+      "title": "if you wa 40pts",
+      "author": {
+        "uid": 1423380,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1423380.png",
+        "name": "WU6DA6SHI",
+        "slogan": "欲将心事付瑶琴。知音少，弦断有谁听",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/hxaq8vt9.png"
+      },
+      "time": 1787285468
+    },
+    {
+      "id": 1346559,
+      "title": "If you WA 60 pts",
+      "author": {
+        "uid": 1029340,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1029340.png",
+        "name": "雄关漫道真如铁",
+        "slogan": "姑娘请观看吧，我们前面大路平坦。看这条大路多么遥远，哎嘿，一路之上歌声不断。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/03oziqwk.png"
+      },
+      "time": 1786097960
+    },
+    {
+      "id": 1345636,
+      "title": "进食后入if you WA 40pts",
+      "author": {
+        "uid": 1629089,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1629089.png",
+        "name": "lonys",
+        "slogan": "轻舟已过万重山，春风又绿江南岸",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/cpztxceq.png"
+      },
+      "time": 1786016033
+    },
+    {
+      "id": 1345540,
+      "title": "AC但疑",
+      "author": {
+        "uid": 1848664,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1848664.png",
+        "name": "Every__Day",
+        "slogan": "无期限开学术 || 我是一条绝望的区|| 代词使用它或他 || 不拿蓝√不改签",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/z7vzof69.png"
+      },
+      "time": 1786010199
+    },
+    {
+      "id": 1340332,
+      "title": "如果你也60pts WA7,8,9,10",
+      "author": {
+        "uid": 781313,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/781313.png",
+        "name": "lQvQe",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/btutpme9.png"
+      },
+      "time": 1785500058
+    },
+    {
+      "id": 1332899,
+      "title": "十分，样例23也不对",
+      "author": {
+        "uid": 439610,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/439610.png",
+        "name": "Sturmbrigade_Rhodos",
+        "slogan": "真寻可爱",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/li4jbdhb.png"
+      },
+      "time": 1784824080
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

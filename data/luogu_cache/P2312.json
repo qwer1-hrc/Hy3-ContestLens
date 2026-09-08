@@ -1,0 +1,299 @@
+{
+  "problem": {
+    "pid": "P2312",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 解方程",
+    "difficulty": 4,
+    "tags": [
+      5,
+      31,
+      83,
+      111,
+      235
+    ],
+    "totalSubmit": 51198,
+    "totalAccepted": 13086,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 解方程",
+      "background": "NOIP2014 提高组 D2T3",
+      "description": "已知多项式方程：\n\n$$a_0+a_1x+a_2x^2+\\cdots+a_nx^n=0$$ \n\n求这个方程在 $[1,m]$ 内的整数解（$n$ 和 $m$ 均为正整数）。",
+      "formatI": "输入共 $n + 2$ 行。  \n\n第一行包含 $2$ 个整数 $n,m$，每两个整数之间用一个空格隔开。  \n\n接下来的 $n+1$ 行每行包含一个整数，依次为 $a_0,a_1,a_2\\ldots a_n$。",
+      "formatO": "第一行输出方程在 $[1,m]$ 内的整数解的个数。  \n\n接下来每行一个整数，按照从小到大的顺序依次输出方程在 $[1,m]$ 内的一个整数解。",
+      "hint": "对于 $30\\%$ 的数据：$0<n\\le 2,|a_i|\\le 100,a_n≠0,m<100$。  \n\n对于 $50\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{100},a_n≠0,m<100$。  \n\n对于 $70\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^4$。  \n\n对于 $100\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^6$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 解方程",
+      "background": "NOIP2014 提高组 D2T3",
+      "description": "已知多项式方程：\n\n$$a_0+a_1x+a_2x^2+\\cdots+a_nx^n=0$$ \n\n求这个方程在 $[1,m]$ 内的整数解（$n$ 和 $m$ 均为正整数）。",
+      "formatI": "输入共 $n + 2$ 行。  \n\n第一行包含 $2$ 个整数 $n,m$，每两个整数之间用一个空格隔开。  \n\n接下来的 $n+1$ 行每行包含一个整数，依次为 $a_0,a_1,a_2\\ldots a_n$。",
+      "formatO": "第一行输出方程在 $[1,m]$ 内的整数解的个数。  \n\n接下来每行一个整数，按照从小到大的顺序依次输出方程在 $[1,m]$ 内的一个整数解。",
+      "hint": "对于 $30\\%$ 的数据：$0<n\\le 2,|a_i|\\le 100,a_n≠0,m<100$。  \n\n对于 $50\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{100},a_n≠0,m<100$。  \n\n对于 $70\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^4$。  \n\n对于 $100\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^6$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2 10 \n1\n-2\n1",
+        "1\n1"
+      ],
+      [
+        "2 10\n2\n-3\n1",
+        "2\n1\n2"
+      ],
+      [
+        "2 10\n1\n3\n2",
+        "0"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Solve the Equation",
+      "background": "NOIP 2014 Senior D2T3.",
+      "description": "Given the polynomial equation:\n\n$$a_0+a_1x+a_2x^2+\\cdots+a_nx^n=0$$\n\nFind all integer solutions of this equation in $[1,m]$ (both $n$ and $m$ are positive integers).",
+      "formatI": "The input contains $n + 2$ lines.  \nThe first line contains two integers $n, m$, separated by a single space.  \nEach of the next $n + 1$ lines contains one integer, namely $a_0, a_1, a_2, \\ldots, a_n$ in order.",
+      "formatO": "On the first line, output the number of integer solutions in $[1,m]$.  \nThen output each integer solution in $[1,m]$ in increasing order, one per line.",
+      "hint": "For $30\\%$ of the testdata: $0<n\\le 2,|a_i|\\le 100,a_n≠0,m<100$。  \nFor $50\\%$ of the testdata: $0<n\\le 100,|a_i|\\le 10^{100},a_n≠0,m<100$。  \nFor $70\\%$ of the testdata: $0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^4$。  \nFor $100\\%$ of the testdata: $0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^6$。\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 解方程",
+      "background": "NOIP2014 提高组 D2T3",
+      "description": "已知多项式方程：\n\n$$a_0+a_1x+a_2x^2+\\cdots+a_nx^n=0$$ \n\n求这个方程在 $[1,m]$ 内的整数解（$n$ 和 $m$ 均为正整数）。",
+      "formatI": "输入共 $n + 2$ 行。  \n\n第一行包含 $2$ 个整数 $n,m$，每两个整数之间用一个空格隔开。  \n\n接下来的 $n+1$ 行每行包含一个整数，依次为 $a_0,a_1,a_2\\ldots a_n$。",
+      "formatO": "第一行输出方程在 $[1,m]$ 内的整数解的个数。  \n\n接下来每行一个整数，按照从小到大的顺序依次输出方程在 $[1,m]$ 内的一个整数解。",
+      "hint": "对于 $30\\%$ 的数据：$0<n\\le 2,|a_i|\\le 100,a_n≠0,m<100$。  \n\n对于 $50\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{100},a_n≠0,m<100$。  \n\n对于 $70\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^4$。  \n\n对于 $100\\%$ 的数据：$0<n\\le 100,|a_i|\\le 10^{10000},a_n≠0,m<10^6$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1941",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "difficulty": 4
+    },
+    {
+      "pid": "P1966",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 火柴排队",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2296",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2679",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 子串",
+      "difficulty": 4
+    },
+    {
+      "pid": "P2680",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 运输计划",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P2312 [NOIP 2014 提高组] 解方程",
+    "type": 2,
+    "slug": "P2312",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1362103,
+      "title": "晶石后入，关于TLE",
+      "author": {
+        "uid": 1817395,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1817395.png",
+        "name": "SskS006",
+        "slogan": "RE自动机",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/ifoxqhzq.png"
+      },
+      "time": 1787417954
+    },
+    {
+      "id": 1285274,
+      "title": "竟是后入",
+      "author": {
+        "uid": 1885892,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1885892.png",
+        "name": "_Trie_",
+        "slogan": "懒得写……",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1777550249
+    },
+    {
+      "id": 1280067,
+      "title": "80分求卡常",
+      "author": {
+        "uid": 1539083,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1539083.png",
+        "name": "minu99",
+        "slogan": "ut",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1776564612
+    },
+    {
+      "id": 1197028,
+      "title": "警示后人",
+      "author": {
+        "uid": 1118614,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1118614.png",
+        "name": "I_Love_DS",
+        "slogan": "把悄悄话藏在心底",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/4wozcu5x.png"
+      },
+      "time": 1763037413
+    },
+    {
+      "id": 1182541,
+      "title": "卡常80pts TLE+0.16s求助",
+      "author": {
+        "uid": 630366,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/630366.png",
+        "name": "cunmin111",
+        "slogan": "暂停壶关 | P主，爱调洛天依乐正绫 | 犯我呆毛者，虽远必诛 | B站同名求关！",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/v2sfp1mp.png"
+      },
+      "time": 1761561593
+    },
+    {
+      "id": 1158283,
+      "title": "警示后人 如果你T飞了并且一直卡不过去",
+      "author": {
+        "uid": 784164,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/784164.png",
+        "name": "hanbingqigu",
+        "slogan": "https://hanbingqigu.github.io/",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1758640186
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

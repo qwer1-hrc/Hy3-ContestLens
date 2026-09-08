@@ -1,0 +1,318 @@
+{
+  "problem": {
+    "pid": "P5020",
+    "type": "P",
+    "name": "[NOIP 2018 提高组] 货币系统",
+    "difficulty": 4,
+    "tags": [
+      3,
+      5,
+      7,
+      35,
+      83,
+      139,
+      264
+    ],
+    "totalSubmit": 85746,
+    "totalAccepted": 41178,
+    "flag": 5,
+    "provider": {
+      "uid": 36482,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/36482.png",
+      "name": "龟龟号打捞船",
+      "slogan": "",
+      "badge": "铲屎官",
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2018 提高组] 货币系统",
+      "background": "NOIP2018 提高组 D1T2",
+      "description": "在网友的国度中共有 $n$ 种不同面额的货币，第 $i$ 种货币的面额为 $a_i$，你可以假设每一种货币都有无穷多张。为了方便，我们把货币种数为 $n$、面额数组为 $a_1, a_2, \\cdots, a_n$ 的货币系统记作 $(n,a)$。 \n\n在一个完善的货币系统中，每一个非负整数的金额 $x$ 都应该可以被表示出，即对每一个非负整数 $x$，都存在 $n$ 个非负整数 $t_i$ 满足 $a_i \\times t_i$ 的和为 $x$。然而， 在网友的国度中，货币系统可能是不完善的，即可能存在金额 $x$ 不能被该货币系统表示出。例如在货币系统 $n=3$, $a=[2,5,9]$ 中，金额 $1,3$ 就无法被表示出来。 \n\n两个货币系统 $(n,a)$ 和 $(m,b)$ 是等价的，当且仅当对于任意非负整数 $x$，它要么均可以被两个货币系统表示出，要么不能被其中任何一个表示出。 \n\n现在网友们打算简化一下货币系统。他们希望找到一个货币系统 $(m,b)$，满足 $(m,b)$ 与原来的货币系统 $(n,a)$ 等价，且 $m$ 尽可能的小。他们希望你来协助完成这个艰巨的任务：找到最小的 $m$。",
+      "formatI": "输入文件的第一行包含一个整数 $T$，表示数据的组数。\n\n接下来按照如下格式分别给出 $T$ 组数据。 每组数据的第一行包含一个正整数 $n$。接下来一行包含 $n$ 个由空格隔开的正整数 $a_i$。",
+      "formatO": "输出文件共有 $T$ 行，对于每组数据，输出一行一个正整数，表示所有与 $(n,a)$ 等价的货币系统 $(m,b)$ 中，最小的 $m$。",
+      "hint": "在第一组数据中，货币系统 $(2, [3,10])$ 和给出的货币系统 $(n, a)$ 等价，并可以验证不存在 $m < 2$ 的等价的货币系统，因此答案为 $2$。 在第二组数据中，可以验证不存在 $m < n$ 的等价的货币系统，因此答案为 $5$。 \n\n【数据范围与约定】\n\n![](https://cdn.luogu.com.cn/upload/pic/43160.png)  \n\n对于 $100\\%$ 的数据，满足 $1 ≤ T ≤ 20, n,a_i ≥ 1$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2018 提高组] 货币系统",
+      "background": "NOIP2018 提高组 D1T2",
+      "description": "在网友的国度中共有 $n$ 种不同面额的货币，第 $i$ 种货币的面额为 $a_i$，你可以假设每一种货币都有无穷多张。为了方便，我们把货币种数为 $n$、面额数组为 $a_1, a_2, \\cdots, a_n$ 的货币系统记作 $(n,a)$。 \n\n在一个完善的货币系统中，每一个非负整数的金额 $x$ 都应该可以被表示出，即对每一个非负整数 $x$，都存在 $n$ 个非负整数 $t_i$ 满足 $a_i \\times t_i$ 的和为 $x$。然而， 在网友的国度中，货币系统可能是不完善的，即可能存在金额 $x$ 不能被该货币系统表示出。例如在货币系统 $n=3$, $a=[2,5,9]$ 中，金额 $1,3$ 就无法被表示出来。 \n\n两个货币系统 $(n,a)$ 和 $(m,b)$ 是等价的，当且仅当对于任意非负整数 $x$，它要么均可以被两个货币系统表示出，要么不能被其中任何一个表示出。 \n\n现在网友们打算简化一下货币系统。他们希望找到一个货币系统 $(m,b)$，满足 $(m,b)$ 与原来的货币系统 $(n,a)$ 等价，且 $m$ 尽可能的小。他们希望你来协助完成这个艰巨的任务：找到最小的 $m$。",
+      "formatI": "输入文件的第一行包含一个整数 $T$，表示数据的组数。\n\n接下来按照如下格式分别给出 $T$ 组数据。 每组数据的第一行包含一个正整数 $n$。接下来一行包含 $n$ 个由空格隔开的正整数 $a_i$。",
+      "formatO": "输出文件共有 $T$ 行，对于每组数据，输出一行一个正整数，表示所有与 $(n,a)$ 等价的货币系统 $(m,b)$ 中，最小的 $m$。",
+      "hint": "在第一组数据中，货币系统 $(2, [3,10])$ 和给出的货币系统 $(n, a)$ 等价，并可以验证不存在 $m < 2$ 的等价的货币系统，因此答案为 $2$。 在第二组数据中，可以验证不存在 $m < n$ 的等价的货币系统，因此答案为 $5$。 \n\n【数据范围与约定】\n\n![](https://cdn.luogu.com.cn/upload/pic/43160.png)  \n\n对于 $100\\%$ 的数据，满足 $1 ≤ T ≤ 20, n,a_i ≥ 1$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2\n4\n3 19 10 6\n5\n11 29 13 19 17",
+        "2\n5"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2018 Senior] Currency System",
+      "background": "NOIP 2018 Senior D1T2.",
+      "description": "In the netizens’ kingdom, there are $n$ different denominations of currency. The denomination of the $i$-th currency is $a[i]$. You may assume that there are infinitely many bills of each denomination. For convenience, we denote the currency system with $n$ types of currency and denomination array $a[1..n]$ as $(n,a)$.\n\nIn a perfect currency system, every non-negative integer amount $x$ should be representable. That is, for every non-negative integer $x$, there exist $n$ non-negative integers $t[i]$ such that the sum of $a[i] \\times t[i]$ equals $x$. However, in the netizens’ kingdom, the currency system may be imperfect, meaning there may exist an amount $x$ that cannot be represented by the system. For example, in the currency system $n=3$, $a=[2,5,9]$, the amounts $1,3$ cannot be represented.\n\nTwo currency systems $(n,a)$ and $(m,b)$ are equivalent if and only if, for any non-negative integer $x$, either $x$ can be represented by both systems, or $x$ cannot be represented by either of them.\n\nNow the netizens plan to simplify the currency system. They want to find a currency system $(m,b)$ such that $(m,b)$ is equivalent to the original currency system $(n,a)$, and $m$ is as small as possible. They hope you can help complete this difficult task: find the minimum $m$.",
+      "formatI": "The first line of the input file contains an integer $T$, the number of test cases.\n\nThen $T$ test cases are given in the following format. The first line of each test case contains a positive integer $n$. The next line contains $n$ positive integers $a[i]$ separated by spaces.",
+      "formatO": "The output file contains $T$ lines. For each test case, output one positive integer per line, representing the minimum $m$ among all currency systems $(m,b)$ that are equivalent to $(n,a)$.",
+      "hint": "In the first test case, the currency system $(2, [3,10])$ is equivalent to the given currency system $(n, a)$. It can be verified that there is no equivalent currency system with $m < 2$, so the answer is $2$. In the second test case, it can be verified that there is no equivalent currency system with $m < n$, so the answer is $5$.\n\n【Constraints】\n\n![](https://cdn.luogu.com.cn/upload/pic/43160.png)\n\nFor $100\\%$ of the testdata, $1 \\le T \\le 20$, and $n,a[i] \\ge 1$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2018 提高组] 货币系统",
+      "background": "NOIP2018 提高组 D1T2",
+      "description": "在网友的国度中共有 $n$ 种不同面额的货币，第 $i$ 种货币的面额为 $a_i$，你可以假设每一种货币都有无穷多张。为了方便，我们把货币种数为 $n$、面额数组为 $a_1, a_2, \\cdots, a_n$ 的货币系统记作 $(n,a)$。 \n\n在一个完善的货币系统中，每一个非负整数的金额 $x$ 都应该可以被表示出，即对每一个非负整数 $x$，都存在 $n$ 个非负整数 $t_i$ 满足 $a_i \\times t_i$ 的和为 $x$。然而， 在网友的国度中，货币系统可能是不完善的，即可能存在金额 $x$ 不能被该货币系统表示出。例如在货币系统 $n=3$, $a=[2,5,9]$ 中，金额 $1,3$ 就无法被表示出来。 \n\n两个货币系统 $(n,a)$ 和 $(m,b)$ 是等价的，当且仅当对于任意非负整数 $x$，它要么均可以被两个货币系统表示出，要么不能被其中任何一个表示出。 \n\n现在网友们打算简化一下货币系统。他们希望找到一个货币系统 $(m,b)$，满足 $(m,b)$ 与原来的货币系统 $(n,a)$ 等价，且 $m$ 尽可能的小。他们希望你来协助完成这个艰巨的任务：找到最小的 $m$。",
+      "formatI": "输入文件的第一行包含一个整数 $T$，表示数据的组数。\n\n接下来按照如下格式分别给出 $T$ 组数据。 每组数据的第一行包含一个正整数 $n$。接下来一行包含 $n$ 个由空格隔开的正整数 $a_i$。",
+      "formatO": "输出文件共有 $T$ 行，对于每组数据，输出一行一个正整数，表示所有与 $(n,a)$ 等价的货币系统 $(m,b)$ 中，最小的 $m$。",
+      "hint": "在第一组数据中，货币系统 $(2, [3,10])$ 和给出的货币系统 $(n, a)$ 等价，并可以验证不存在 $m < 2$ 的等价的货币系统，因此答案为 $2$。 在第二组数据中，可以验证不存在 $m < n$ 的等价的货币系统，因此答案为 $5$。 \n\n【数据范围与约定】\n\n![](https://cdn.luogu.com.cn/upload/pic/43160.png)  \n\n对于 $100\\%$ 的数据，满足 $1 ≤ T ≤ 20, n,a_i ≥ 1$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 12952,
+    "startTime": 1541804400,
+    "endTime": 1542211200,
+    "name": "NOIP2018提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1064",
+      "type": "P",
+      "name": "[NOIP 2006 提高组] 金明的预算方案",
+      "difficulty": 4
+    },
+    {
+      "pid": "P1880",
+      "type": "P",
+      "name": "[NOI1995] 石子合并",
+      "difficulty": 4
+    },
+    {
+      "pid": "P5019",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 铺设道路",
+      "difficulty": 3
+    },
+    {
+      "pid": "P5021",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 赛道修建",
+      "difficulty": 5
+    },
+    {
+      "pid": "P5022",
+      "type": "P",
+      "name": "[NOIP 2018 提高组] 旅行",
+      "difficulty": 5
+    }
+  ],
+  "forum": {
+    "name": "P5020 [NOIP 2018 提高组] 货币系统",
+    "type": 2,
+    "slug": "P5020",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1329334,
+      "title": "今世吼人",
+      "author": {
+        "uid": 1803025,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1803025.png",
+        "name": "HAnaxa",
+        "slogan": "区",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/uvhfmn6d.png"
+      },
+      "time": 1784550667
+    },
+    {
+      "id": 1313241,
+      "title": "25分求调",
+      "author": {
+        "uid": 1799279,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1799279.png",
+        "name": "liuxirui09",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783128568
+    },
+    {
+      "id": 1228941,
+      "title": "95求调",
+      "author": {
+        "uid": 1213054,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1213054.png",
+        "name": "MatthewZhang",
+        "slogan": "ฏ้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้้",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/76wk0mii.png"
+      },
+      "time": 1768009356
+    },
+    {
+      "id": 1228604,
+      "title": "建议降橙",
+      "author": {
+        "uid": 1648292,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1648292.png",
+        "name": "mayaorui",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/448m41qq.png"
+      },
+      "time": 1767942268
+    },
+    {
+      "id": 1173626,
+      "title": "？暴搜满分",
+      "author": {
+        "uid": 756825,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/756825.png",
+        "name": "Ze_king",
+        "slogan": "AFOed",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1760584111
+    },
+    {
+      "id": 1166976,
+      "title": "95分第7个点WA求调",
+      "author": {
+        "uid": 736073,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/736073.png",
+        "name": "babaozhou666",
+        "slogan": "何处望神州？满眼风光北固楼",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1759674614
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

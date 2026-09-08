@@ -1,0 +1,301 @@
+{
+  "problem": {
+    "pid": "P14364",
+    "type": "P",
+    "name": "[CSP-S 2025] 员工招聘",
+    "difficulty": 7,
+    "tags": [
+      3,
+      62,
+      108,
+      146,
+      252,
+      259,
+      342
+    ],
+    "totalSubmit": 16341,
+    "totalAccepted": 4139,
+    "flag": 5,
+    "provider": {
+      "uid": 1,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+      "name": "kkksc03",
+      "slogan": "洛谷吉祥物 DA✩ZE",
+      "badge": "吉祥物",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 6,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[CSP-S 2025] 员工招聘",
+      "background": "由于评测机性能差异，本题时限提升 1 秒。\n",
+      "description": "小 Z 和小 H 想要合伙开一家公司，共有 $n$ 人前来应聘，编号为 $1 \\sim n$。小 Z 和小 H 希望录用至少 $m$ 人。\n\n小 H 是面试官，将在接下来 $n$ 天每天面试一个人。小 Z 负责决定应聘人前来面试的顺序。具体地，小 Z 可以选择一个 $1 \\sim n$ 的排列 $p$，然后在第 $i$ ($1 \\leq i \\leq n$) 天通知编号为 $p_i$ 的人前来面试。\n\n小 H 准备了 $n$ 套难度不一的面试题。由于 $n$ 个前来应聘的人水平大致相同，因此对于同一套题，所有人的作答结果是一致的。具体地，第 $i$ ($1 \\leq i \\leq n$) 天的面试题的难度为 $s_i \\in \\{0,1\\}$，其中 $s_i = 0$ 表示这套题的难度较高，没有人能够做出；$s_i = 1$ 表示这套题的难度较低，所有人都能做出。小 H 会根据面试者的作答结果决定是否录用，即如果面试者没有做出面试题，则会拒绝，否则会录用。\n\n然而，每个人的耐心都有一定的上限，如果在他面试之前未录用的人数过多，则他会直接放弃参加面试。具体地，编号为 $i$ ($1 \\leq i \\leq n$) 的人的耐心上限可以用非负整数 $c_i$ 描述，若在他之前已经有**不少于** $c_i$ 人被拒绝或放弃参加面试，则他也将放弃参加面试。\n\n小 Z 想知道一共有多少种面试的顺序 $p$ 能够让他们录用至少 $m$ 人。你需要帮助小 Z 求出，能够录用至少 $m$ 人的排列 $p$ 的数量。由于答案可能较大，你只需要求出答案对 $998\\,244\\,353$ 取模后的结果。",
+      "formatI": "输入的第一行包含两个正整数 $n, m$，分别表示前来应聘的人数和希望录用的人数。\n\n输入的第二行包含一个长度为 $n$ 的字符串 $s_1 \\dots s_n$，表示每一天的面试题的难度。\n\n输入的第三行包含 $n$ 个非负整数 $c_1, c_2, \\dots, c_n$，表示每个人的耐心上限。",
+      "formatO": "输出一行一个非负整数，表示能够录用至少 $m$ 人的排列 $p$ 的数量对 $998\\,244\\,353$ 取模后的结果。",
+      "hint": "### 【样例 1 解释】\n\n共有以下 2 种面试的顺序 $p$ 能够让小 Z 和小 H 录用至少 2 人:\n\n1. $p = [1,2,3]$, 依次录用编号为 1 的人和编号为 3 的人;\n2. $p = [2,1,3]$, 依次录用编号为 2 的人和编号为 3 的人。\n\n### 【样例 3】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ3.in}}$ 与 $\\textbf{\\textit{employ/employ3.ans}}$。\n\n该样例满足测试点 6 ~ 8 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ4.in}}$ 与 $\\textbf{\\textit{employ/employ4.ans}}$。\n\n该样例满足测试点 12 ~ 14 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ5.in}}$ 与 $\\textbf{\\textit{employ/employ5.ans}}$。\n\n该样例满足测试点 18 ~ 21 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，保证:\n- $1 \\leq m \\leq n \\leq 500$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $s_i \\in \\{0,1\\}$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $0 \\leq c_i \\leq n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\leq$ | $m$ | 特殊性质 |\n| :--: | :--: | :--: | :--: |\n| $1,2$ | $10$ | $\\leq n$ | 无 |\n| $3 \\sim 5$ | $18$ |  ^ | ^ |\n| $6 \\sim 8$ | $10^2$ | ^ | A |\n| $9 \\sim 11$ | ^ | ^ | 无 |\n| $12 \\sim 14$ | $500$ | $=1$ | ^ |\n| $15$ | ^ | $=n$ | ^ |\n| $16,17$ | ^ | $\\leq n$ | A |\n| $18 \\sim 21$ | ^ | ^ | B |\n| $22 \\sim 25$ | ^ | ^ | 无 |\n\n\n特殊性质 A: 对于所有 $1 \\leq i \\leq n$，均有 $s_i = 1$。\n\n特殊性质 B: 在 $s_1, s_2, \\dots, s_n$ 中最多只有 18 个取值为 1，即 $\\sum_{i=1}^{n} s_i \\leq 18$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2025] 员工招聘",
+      "background": "由于评测机性能差异，本题时限提升 1 秒。\n",
+      "description": "小 Z 和小 H 想要合伙开一家公司，共有 $n$ 人前来应聘，编号为 $1 \\sim n$。小 Z 和小 H 希望录用至少 $m$ 人。\n\n小 H 是面试官，将在接下来 $n$ 天每天面试一个人。小 Z 负责决定应聘人前来面试的顺序。具体地，小 Z 可以选择一个 $1 \\sim n$ 的排列 $p$，然后在第 $i$ ($1 \\leq i \\leq n$) 天通知编号为 $p_i$ 的人前来面试。\n\n小 H 准备了 $n$ 套难度不一的面试题。由于 $n$ 个前来应聘的人水平大致相同，因此对于同一套题，所有人的作答结果是一致的。具体地，第 $i$ ($1 \\leq i \\leq n$) 天的面试题的难度为 $s_i \\in \\{0,1\\}$，其中 $s_i = 0$ 表示这套题的难度较高，没有人能够做出；$s_i = 1$ 表示这套题的难度较低，所有人都能做出。小 H 会根据面试者的作答结果决定是否录用，即如果面试者没有做出面试题，则会拒绝，否则会录用。\n\n然而，每个人的耐心都有一定的上限，如果在他面试之前未录用的人数过多，则他会直接放弃参加面试。具体地，编号为 $i$ ($1 \\leq i \\leq n$) 的人的耐心上限可以用非负整数 $c_i$ 描述，若在他之前已经有**不少于** $c_i$ 人被拒绝或放弃参加面试，则他也将放弃参加面试。\n\n小 Z 想知道一共有多少种面试的顺序 $p$ 能够让他们录用至少 $m$ 人。你需要帮助小 Z 求出，能够录用至少 $m$ 人的排列 $p$ 的数量。由于答案可能较大，你只需要求出答案对 $998\\,244\\,353$ 取模后的结果。",
+      "formatI": "输入的第一行包含两个正整数 $n, m$，分别表示前来应聘的人数和希望录用的人数。\n\n输入的第二行包含一个长度为 $n$ 的字符串 $s_1 \\dots s_n$，表示每一天的面试题的难度。\n\n输入的第三行包含 $n$ 个非负整数 $c_1, c_2, \\dots, c_n$，表示每个人的耐心上限。",
+      "formatO": "输出一行一个非负整数，表示能够录用至少 $m$ 人的排列 $p$ 的数量对 $998\\,244\\,353$ 取模后的结果。",
+      "hint": "### 【样例 1 解释】\n\n共有以下 2 种面试的顺序 $p$ 能够让小 Z 和小 H 录用至少 2 人:\n\n1. $p = [1,2,3]$, 依次录用编号为 1 的人和编号为 3 的人;\n2. $p = [2,1,3]$, 依次录用编号为 2 的人和编号为 3 的人。\n\n### 【样例 3】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ3.in}}$ 与 $\\textbf{\\textit{employ/employ3.ans}}$。\n\n该样例满足测试点 6 ~ 8 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ4.in}}$ 与 $\\textbf{\\textit{employ/employ4.ans}}$。\n\n该样例满足测试点 12 ~ 14 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ5.in}}$ 与 $\\textbf{\\textit{employ/employ5.ans}}$。\n\n该样例满足测试点 18 ~ 21 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，保证:\n- $1 \\leq m \\leq n \\leq 500$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $s_i \\in \\{0,1\\}$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $0 \\leq c_i \\leq n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\leq$ | $m$ | 特殊性质 |\n| :--: | :--: | :--: | :--: |\n| $1,2$ | $10$ | $\\leq n$ | 无 |\n| $3 \\sim 5$ | $18$ |  ^ | ^ |\n| $6 \\sim 8$ | $10^2$ | ^ | A |\n| $9 \\sim 11$ | ^ | ^ | 无 |\n| $12 \\sim 14$ | $500$ | $=1$ | ^ |\n| $15$ | ^ | $=n$ | ^ |\n| $16,17$ | ^ | $\\leq n$ | A |\n| $18 \\sim 21$ | ^ | ^ | B |\n| $22 \\sim 25$ | ^ | ^ | 无 |\n\n\n特殊性质 A: 对于所有 $1 \\leq i \\leq n$，均有 $s_i = 1$。\n\n特殊性质 B: 在 $s_1, s_2, \\dots, s_n$ 中最多只有 18 个取值为 1，即 $\\sum_{i=1}^{n} s_i \\leq 18$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "yjuaick5",
+        "filename": "employ.zip",
+        "size": 2922,
+        "uploadTime": 1762009165,
+        "downloadLink": "/fe/api/problem/downloadAttachment/yjuaick5"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 2\n101\n1 1 2",
+        "2"
+      ],
+      [
+        "10 5\n1101111011\n6 0 4 2 1 2 5 4 3 3",
+        "2204128"
+      ]
+    ],
+    "limits": {
+      "time": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "zh-CN": {
+      "name": "[CSP-S 2025] 员工招聘",
+      "background": "由于评测机性能差异，本题时限提升 1 秒。\n",
+      "description": "小 Z 和小 H 想要合伙开一家公司，共有 $n$ 人前来应聘，编号为 $1 \\sim n$。小 Z 和小 H 希望录用至少 $m$ 人。\n\n小 H 是面试官，将在接下来 $n$ 天每天面试一个人。小 Z 负责决定应聘人前来面试的顺序。具体地，小 Z 可以选择一个 $1 \\sim n$ 的排列 $p$，然后在第 $i$ ($1 \\leq i \\leq n$) 天通知编号为 $p_i$ 的人前来面试。\n\n小 H 准备了 $n$ 套难度不一的面试题。由于 $n$ 个前来应聘的人水平大致相同，因此对于同一套题，所有人的作答结果是一致的。具体地，第 $i$ ($1 \\leq i \\leq n$) 天的面试题的难度为 $s_i \\in \\{0,1\\}$，其中 $s_i = 0$ 表示这套题的难度较高，没有人能够做出；$s_i = 1$ 表示这套题的难度较低，所有人都能做出。小 H 会根据面试者的作答结果决定是否录用，即如果面试者没有做出面试题，则会拒绝，否则会录用。\n\n然而，每个人的耐心都有一定的上限，如果在他面试之前未录用的人数过多，则他会直接放弃参加面试。具体地，编号为 $i$ ($1 \\leq i \\leq n$) 的人的耐心上限可以用非负整数 $c_i$ 描述，若在他之前已经有**不少于** $c_i$ 人被拒绝或放弃参加面试，则他也将放弃参加面试。\n\n小 Z 想知道一共有多少种面试的顺序 $p$ 能够让他们录用至少 $m$ 人。你需要帮助小 Z 求出，能够录用至少 $m$ 人的排列 $p$ 的数量。由于答案可能较大，你只需要求出答案对 $998\\,244\\,353$ 取模后的结果。",
+      "formatI": "输入的第一行包含两个正整数 $n, m$，分别表示前来应聘的人数和希望录用的人数。\n\n输入的第二行包含一个长度为 $n$ 的字符串 $s_1 \\dots s_n$，表示每一天的面试题的难度。\n\n输入的第三行包含 $n$ 个非负整数 $c_1, c_2, \\dots, c_n$，表示每个人的耐心上限。",
+      "formatO": "输出一行一个非负整数，表示能够录用至少 $m$ 人的排列 $p$ 的数量对 $998\\,244\\,353$ 取模后的结果。",
+      "hint": "### 【样例 1 解释】\n\n共有以下 2 种面试的顺序 $p$ 能够让小 Z 和小 H 录用至少 2 人:\n\n1. $p = [1,2,3]$, 依次录用编号为 1 的人和编号为 3 的人;\n2. $p = [2,1,3]$, 依次录用编号为 2 的人和编号为 3 的人。\n\n### 【样例 3】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ3.in}}$ 与 $\\textbf{\\textit{employ/employ3.ans}}$。\n\n该样例满足测试点 6 ~ 8 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ4.in}}$ 与 $\\textbf{\\textit{employ/employ4.ans}}$。\n\n该样例满足测试点 12 ~ 14 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 $\\textbf{\\textit{employ/employ5.in}}$ 与 $\\textbf{\\textit{employ/employ5.ans}}$。\n\n该样例满足测试点 18 ~ 21 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，保证:\n- $1 \\leq m \\leq n \\leq 500$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $s_i \\in \\{0,1\\}$;\n- 对于所有 $1 \\leq i \\leq n$，均有 $0 \\leq c_i \\leq n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\leq$ | $m$ | 特殊性质 |\n| :--: | :--: | :--: | :--: |\n| $1,2$ | $10$ | $\\leq n$ | 无 |\n| $3 \\sim 5$ | $18$ |  ^ | ^ |\n| $6 \\sim 8$ | $10^2$ | ^ | A |\n| $9 \\sim 11$ | ^ | ^ | 无 |\n| $12 \\sim 14$ | $500$ | $=1$ | ^ |\n| $15$ | ^ | $=n$ | ^ |\n| $16,17$ | ^ | $\\leq n$ | A |\n| $18 \\sim 21$ | ^ | ^ | B |\n| $22 \\sim 25$ | ^ | ^ | 无 |\n\n\n特殊性质 A: 对于所有 $1 \\leq i \\leq n$，均有 $s_i = 1$。\n\n特殊性质 B: 在 $s_1, s_2, \\dots, s_n$ 中最多只有 18 个取值为 1，即 $\\sum_{i=1}^{n} s_i \\leq 18$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 288428,
+    "startTime": 1762000200,
+    "endTime": 1762777800,
+    "name": "CSP-S 2025 自测（官方数据）"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [],
+  "forum": {
+    "name": "P14364 [CSP-S 2025] 员工招聘",
+    "type": 2,
+    "slug": "P14364",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368813,
+      "title": "晶石候任",
+      "author": {
+        "uid": 766436,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/766436.png",
+        "name": "Mr_RedStone",
+        "slogan": "Attention is all you need | 世上无难事，只要肯放弃[doge] 主页：https://www.luogu.me/user/766436",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788098398
+    },
+    {
+      "id": 1362305,
+      "title": "警示后人",
+      "author": {
+        "uid": 705058,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/705058.png",
+        "name": "BGM114514",
+        "slogan": "在知识的海洋里，我竟是一条淡水鱼 || 从 2026/02/07 00:00 开始，互关条件：（红名且有勾）或 线下认识 或 我想和你互关",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/d2fee70m.png"
+      },
+      "time": 1787459432
+    },
+    {
+      "id": 1345794,
+      "title": "16分求条，玄关",
+      "author": {
+        "uid": 1202504,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1202504.png",
+        "name": "Chengqijun2012",
+        "slogan": "长风破浪会有时，直挂云帆济沧海。|| 进我团队：https://www.luogu.com.cn/team/91424",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/xyxiq8ou.png"
+      },
+      "time": 1786023947
+    },
+    {
+      "id": 1341209,
+      "title": "卡常小技巧",
+      "author": {
+        "uid": 1010363,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1010363.png",
+        "name": "lkjlkjlkj2012",
+        "slogan": "⎛⎝≥⏝⏝≤⎛⎝இ௰இ",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1785591277
+    },
+    {
+      "id": 1312414,
+      "title": "进食后入",
+      "author": {
+        "uid": 2151107,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2151107.png",
+        "name": "yvvwhj",
+        "slogan": "新人求带|刚学OI|我究竟是谁？|你如何定义定义|假的多了就成了真的假",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dv1vnuiz.png"
+      },
+      "time": 1782974573
+    },
+    {
+      "id": 1296617,
+      "title": "关于贡献延后做法的一些 Q & A",
+      "author": {
+        "uid": 697898,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/697898.png",
+        "name": "b1tset",
+        "slogan": "QQ 1460297785 欢迎来找我玩喵",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1779548610
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -1,0 +1,325 @@
+{
+  "problem": {
+    "pid": "P2827",
+    "type": "P",
+    "name": "[NOIP 2016 提高组] 蚯蚓",
+    "difficulty": 5,
+    "tags": [
+      33,
+      83,
+      108,
+      288
+    ],
+    "totalSubmit": 97943,
+    "totalAccepted": 23250,
+    "flag": 5,
+    "provider": {
+      "uid": 99,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/99.png",
+      "name": "saffah",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Orange",
+      "ccfLevel": 10,
+      "xcpcLevel": 8,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "background": "NOIP2016 提高组 D2T2",
+      "description": "本题中，我们将用符号 $\\lfloor c \\rfloor$ 表示对 $c$ 向下取整，例如：$\\lfloor 3.0 \\rfloor = \\lfloor 3.1 \\rfloor = \\lfloor 3.9 \\rfloor = 3$。\n\n蛐蛐国最近蚯蚓成灾了！隔壁跳蚤国的跳蚤也拿蚯蚓们没办法，蛐蛐国王只好去请神刀手来帮他们消灭蚯蚓。\n\n蛐蛐国里现在共有 $n$ 只蚯蚓（$n$ 为正整数）。每只蚯蚓拥有长度，我们设第 $i$ 只蚯蚓的长度为 $a_i\\,(i=1,2,\\dots,n)$，并保证所有的长度都是非负整数（即：可能存在长度为 $0$ 的蚯蚓）。\n\n每一秒，神刀手会在所有的蚯蚓中，准确地找到最长的那一只（如有多个则任选一个）将其切成两半。神刀手切开蚯蚓的位置由常数 $p$（是满足 $0 < p < 1$ 的有理数）决定，设这只蚯蚓长度为 $x$，神刀手会将其切成两只长度分别为 $\\lfloor px \\rfloor$ 和 $x - \\lfloor px \\rfloor$ 的蚯蚓。特殊地，如果这两个数的其中一个等于 $0$，则这个长度为 $0$ 的蚯蚓也会被保留。此外，除了刚刚产生的两只新蚯蚓，其余蚯蚓的长度都会增加 $q$（是一个非负整常数）。\n\n蛐蛐国王知道这样不是长久之计，因为蚯蚓不仅会越来越多，还会越来越长。蛐蛐国王决定求助于一位有着洪荒之力的神秘人物，但是救兵还需要 $m$ 秒才能到来……（$m$ 为非负整数）\n\n蛐蛐国王希望知道这 $m$ 秒内的战况。具体来说，他希望知道：\n\n- $m$ 秒内，每一秒被切断的蚯蚓被切断前的长度（有 $m$ 个数）；\n- $m$ 秒后，所有蚯蚓的长度（有 $n + m$ 个数）。\n\n蛐蛐国王当然知道怎么做啦！但是他想考考你……",
+      "formatI": "第一行包含六个整数 $n,m,q,u,v,t$，其中：$n,m,q$ 的意义见【题目描述】；$u,v,t$ 均为正整数；你需要自己计算 $p=u / v$（保证 $0 < u < v$）；$t$ 是输出参数，其含义将会在【输出格式】中解释。\n\n第二行包含 $n$ 个非负整数，为 $a_1, a_2, \\dots, a_n$，即初始时 $n$ 只蚯蚓的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。\n\n保证 $1 \\leq n \\leq 10^5$，$0 \\leq m \\leq 7 \\times 10^6$，$0 < u < v \\leq 10^9$，$0 \\leq q \\leq 200$，$1 \\leq t \\leq 71$，$0 \\leq a_i \\leq 10^8$。",
+      "formatO": "第一行输出 $\\left \\lfloor \\frac{m}{t} \\right \\rfloor$ 个整数，按时间顺序，依次输出第 $t$ 秒，第 $2t$ 秒，第 $3t$ 秒，……被切断蚯蚓（在被切断前）的长度。\n\n第二行输出 $\\left \\lfloor \\frac{n+m}{t} \\right \\rfloor$ 个整数，输出 $m$ 秒后蚯蚓的长度；需要按从大到小的顺序，依次输出排名第 $t$，第 $2t$，第 $3t$，……的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。即使某一行没有任何数需要输出，你也应输出一个空行。\n\n请阅读样例来更好地理解这个格式。",
+      "hint": "**样例解释 1**\n\n在神刀手到来前：$3$ 只蚯蚓的长度为 $3,3,2$。\n\n$1$ 秒后：一只长度为 $3$ 的蚯蚓被切成了两只长度分别为$1$ 和 $2$ 的蚯蚓，其余蚯蚓的长度增加了 $1$。最终 $4$ 只蚯蚓的长度分别为 $(1,2),4,3$。括号表示这个位置刚刚有一只蚯蚓被切断。\n\n$2$ 秒后：一只长度为 $4$ 的蚯蚓被切成了 $1$ 和 $3$。$5$ 只蚯蚓的长度分别为：$2,3,(1,3),4$。\n\n$3$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$6$ 只蚯蚓的长度分别为：$3,4,2,4,(1,3)$。\n\n$4$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$7$ 只蚯蚓的长度分别为：$4,(1,3),3,5,2,4$。\n\n$5$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$8$ 只蚯蚓的长度分别为：$5,2,4,4,(1,4),3,5$。\n\n$6$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$9$ 只蚯蚓的长度分别为：$(1,4),3,5,5,2,5,4,6$。\n\n$7$ 秒后：一只长度为 $6$ 的蚯蚓被切断。$10$ 只蚯蚓的长度分别为：$2,5,4,6,6,3,6,5,(2,4)$。所以，$7$ 秒内被切断的蚯蚓的长度依次为 $3,4,4,4,5,5,6$。$7$ 秒后，所有蚯蚓长度从大到小排序为 $6,6,6,5,5,4,4,3,2,2$。\n\n**样例解释 2**\n\n这个数据中只有 $t=2$ 与上个数据不同。只需在每行都改为每两个数输出一个数即可。\n\n虽然第一行最后有一个 $6$ 没有被输出，但是第二行仍然要重新从第二个数再开始输出。\n\n**样例解释 3**\n\n这个数据中只有 $t=9$ 与上个数据不同。\n\n注意第一行没有数要输出，但也要输出一个空行。\n\n\n**数据范围**\n\n::cute-table{tuack}\n| 测试点  | $n$            | $m$              | $t$   | $a_i$     | $v$       | $q$      |\n|:----:|:--------------:|:----------------:|:-----:|:---------:|:---------:|:--------:|\n| $1$  | $=1$           | $=0$             | $=1$  | $\\le10^6$ | $\\le2$    | $=0$     |\n| $2$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $3$  | $=10^5$        | ^                | ^     | ^         | ^         | ^        |\n| $4$  | $=1$           | $=10^3$          | ^     | ^         | ^         | ^        |\n| $5$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $6$  | $=1$           | ^                | ^     | ^         | ^         | $\\le200$ |\n| $7$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $8$  | $=5\\times10^4$ | $=5\\times10^4$   | ^     | ^         | ^         | $=0$     |\n| $9$  | $=10^5$        | $=10^5$          | $=2$  | ^         | ^         | ^        |\n| $10$ | ^              | $=2\\times10^6$   | $=21$ | ^         | ^         | ^        |\n| $11$ | ^              | $=2.5\\times10^6$ | $=26$ | ^         | ^         | ^        |\n| $12$ | ^              | $=3.5\\times10^6$ | $=36$ | $\\le10^7$ | ^         | ^        |\n| $13$ | ^              | $=5\\times10^6$   | $=51$ | ^         | $\\le10^9$ | ^        |\n| $14$ | ^              | $=7\\times10^6$   | $=71$ | $\\le10^8$ | ^         | ^        |\n| $15$ | $=5\\times10^4$ | $=5\\times10^4$   | $=1$  | ^         | $\\le2$    | $\\le200$ |\n| $16$ | ^              | $=1.5\\times10^5$ | $=2$  | ^         | ^         | ^        |\n| $17$ | $=10^5$        | $=10^5$          | $=3$  | ^         | $\\le10^9$ | ^        |\n| $18$ | ^              | $=3\\times10^5$   | $=4$  | ^         | ^         | ^        |\n| $19$ | ^              | $=3.5\\times10^6$ | $=36$ | ^         | ^         | ^        |\n| $20$ | ^              | $=7\\times10^6$   | $=71$ | ^         | ^         | ^        |",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "background": "NOIP2016 提高组 D2T2",
+      "description": "本题中，我们将用符号 $\\lfloor c \\rfloor$ 表示对 $c$ 向下取整，例如：$\\lfloor 3.0 \\rfloor = \\lfloor 3.1 \\rfloor = \\lfloor 3.9 \\rfloor = 3$。\n\n蛐蛐国最近蚯蚓成灾了！隔壁跳蚤国的跳蚤也拿蚯蚓们没办法，蛐蛐国王只好去请神刀手来帮他们消灭蚯蚓。\n\n蛐蛐国里现在共有 $n$ 只蚯蚓（$n$ 为正整数）。每只蚯蚓拥有长度，我们设第 $i$ 只蚯蚓的长度为 $a_i\\,(i=1,2,\\dots,n)$，并保证所有的长度都是非负整数（即：可能存在长度为 $0$ 的蚯蚓）。\n\n每一秒，神刀手会在所有的蚯蚓中，准确地找到最长的那一只（如有多个则任选一个）将其切成两半。神刀手切开蚯蚓的位置由常数 $p$（是满足 $0 < p < 1$ 的有理数）决定，设这只蚯蚓长度为 $x$，神刀手会将其切成两只长度分别为 $\\lfloor px \\rfloor$ 和 $x - \\lfloor px \\rfloor$ 的蚯蚓。特殊地，如果这两个数的其中一个等于 $0$，则这个长度为 $0$ 的蚯蚓也会被保留。此外，除了刚刚产生的两只新蚯蚓，其余蚯蚓的长度都会增加 $q$（是一个非负整常数）。\n\n蛐蛐国王知道这样不是长久之计，因为蚯蚓不仅会越来越多，还会越来越长。蛐蛐国王决定求助于一位有着洪荒之力的神秘人物，但是救兵还需要 $m$ 秒才能到来……（$m$ 为非负整数）\n\n蛐蛐国王希望知道这 $m$ 秒内的战况。具体来说，他希望知道：\n\n- $m$ 秒内，每一秒被切断的蚯蚓被切断前的长度（有 $m$ 个数）；\n- $m$ 秒后，所有蚯蚓的长度（有 $n + m$ 个数）。\n\n蛐蛐国王当然知道怎么做啦！但是他想考考你……",
+      "formatI": "第一行包含六个整数 $n,m,q,u,v,t$，其中：$n,m,q$ 的意义见【题目描述】；$u,v,t$ 均为正整数；你需要自己计算 $p=u / v$（保证 $0 < u < v$）；$t$ 是输出参数，其含义将会在【输出格式】中解释。\n\n第二行包含 $n$ 个非负整数，为 $a_1, a_2, \\dots, a_n$，即初始时 $n$ 只蚯蚓的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。\n\n保证 $1 \\leq n \\leq 10^5$，$0 \\leq m \\leq 7 \\times 10^6$，$0 < u < v \\leq 10^9$，$0 \\leq q \\leq 200$，$1 \\leq t \\leq 71$，$0 \\leq a_i \\leq 10^8$。",
+      "formatO": "第一行输出 $\\left \\lfloor \\frac{m}{t} \\right \\rfloor$ 个整数，按时间顺序，依次输出第 $t$ 秒，第 $2t$ 秒，第 $3t$ 秒，……被切断蚯蚓（在被切断前）的长度。\n\n第二行输出 $\\left \\lfloor \\frac{n+m}{t} \\right \\rfloor$ 个整数，输出 $m$ 秒后蚯蚓的长度；需要按从大到小的顺序，依次输出排名第 $t$，第 $2t$，第 $3t$，……的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。即使某一行没有任何数需要输出，你也应输出一个空行。\n\n请阅读样例来更好地理解这个格式。",
+      "hint": "**样例解释 1**\n\n在神刀手到来前：$3$ 只蚯蚓的长度为 $3,3,2$。\n\n$1$ 秒后：一只长度为 $3$ 的蚯蚓被切成了两只长度分别为$1$ 和 $2$ 的蚯蚓，其余蚯蚓的长度增加了 $1$。最终 $4$ 只蚯蚓的长度分别为 $(1,2),4,3$。括号表示这个位置刚刚有一只蚯蚓被切断。\n\n$2$ 秒后：一只长度为 $4$ 的蚯蚓被切成了 $1$ 和 $3$。$5$ 只蚯蚓的长度分别为：$2,3,(1,3),4$。\n\n$3$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$6$ 只蚯蚓的长度分别为：$3,4,2,4,(1,3)$。\n\n$4$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$7$ 只蚯蚓的长度分别为：$4,(1,3),3,5,2,4$。\n\n$5$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$8$ 只蚯蚓的长度分别为：$5,2,4,4,(1,4),3,5$。\n\n$6$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$9$ 只蚯蚓的长度分别为：$(1,4),3,5,5,2,5,4,6$。\n\n$7$ 秒后：一只长度为 $6$ 的蚯蚓被切断。$10$ 只蚯蚓的长度分别为：$2,5,4,6,6,3,6,5,(2,4)$。所以，$7$ 秒内被切断的蚯蚓的长度依次为 $3,4,4,4,5,5,6$。$7$ 秒后，所有蚯蚓长度从大到小排序为 $6,6,6,5,5,4,4,3,2,2$。\n\n**样例解释 2**\n\n这个数据中只有 $t=2$ 与上个数据不同。只需在每行都改为每两个数输出一个数即可。\n\n虽然第一行最后有一个 $6$ 没有被输出，但是第二行仍然要重新从第二个数再开始输出。\n\n**样例解释 3**\n\n这个数据中只有 $t=9$ 与上个数据不同。\n\n注意第一行没有数要输出，但也要输出一个空行。\n\n\n**数据范围**\n\n::cute-table{tuack}\n| 测试点  | $n$            | $m$              | $t$   | $a_i$     | $v$       | $q$      |\n|:----:|:--------------:|:----------------:|:-----:|:---------:|:---------:|:--------:|\n| $1$  | $=1$           | $=0$             | $=1$  | $\\le10^6$ | $\\le2$    | $=0$     |\n| $2$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $3$  | $=10^5$        | ^                | ^     | ^         | ^         | ^        |\n| $4$  | $=1$           | $=10^3$          | ^     | ^         | ^         | ^        |\n| $5$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $6$  | $=1$           | ^                | ^     | ^         | ^         | $\\le200$ |\n| $7$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $8$  | $=5\\times10^4$ | $=5\\times10^4$   | ^     | ^         | ^         | $=0$     |\n| $9$  | $=10^5$        | $=10^5$          | $=2$  | ^         | ^         | ^        |\n| $10$ | ^              | $=2\\times10^6$   | $=21$ | ^         | ^         | ^        |\n| $11$ | ^              | $=2.5\\times10^6$ | $=26$ | ^         | ^         | ^        |\n| $12$ | ^              | $=3.5\\times10^6$ | $=36$ | $\\le10^7$ | ^         | ^        |\n| $13$ | ^              | $=5\\times10^6$   | $=51$ | ^         | $\\le10^9$ | ^        |\n| $14$ | ^              | $=7\\times10^6$   | $=71$ | $\\le10^8$ | ^         | ^        |\n| $15$ | $=5\\times10^4$ | $=5\\times10^4$   | $=1$  | ^         | $\\le2$    | $\\le200$ |\n| $16$ | ^              | $=1.5\\times10^5$ | $=2$  | ^         | ^         | ^        |\n| $17$ | $=10^5$        | $=10^5$          | $=3$  | ^         | $\\le10^9$ | ^        |\n| $18$ | ^              | $=3\\times10^5$   | $=4$  | ^         | ^         | ^        |\n| $19$ | ^              | $=3.5\\times10^6$ | $=36$ | ^         | ^         | ^        |\n| $20$ | ^              | $=7\\times10^6$   | $=71$ | ^         | ^         | ^        |",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 7 1 1 3 1\n3 3 2",
+        "3 4 4 4 5 5 6\n6 6 6 5 5 4 4 3 2 2"
+      ],
+      [
+        "3 7 1 1 3 2\n3 3 2",
+        "4 4 5\n6 5 4 3 2"
+      ],
+      [
+        "3 7 1 1 3 9\n3 3 2",
+        "//空行\n2"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2016 Senior] Earthworms",
+      "background": "NOIP 2016 Senior D2T2.",
+      "description": "In this problem, we use the symbol $\\lfloor c \\rfloor$ to denote the floor of $c$. For example, $\\lfloor 3.0 \\rfloor = \\lfloor 3.1 \\rfloor = \\lfloor 3.9 \\rfloor = 3$.\n\nThe Cricket Kingdom is suffering from an earthworm outbreak! Even the fleas from the neighboring Flea Kingdom can’t handle the earthworms. The Cricket King has no choice but to invite the Divine Blade Master to help eliminate them.\n\nThere are currently $n$ earthworms in the Cricket Kingdom (where $n$ is a positive integer). Each earthworm has a length. Let the length of the $i$-th earthworm be $a_i \\,(i=1,2,\\dots,n)$, and all lengths are guaranteed to be non-negative integers (i.e., earthworms with length $0$ may exist).\n\nEvery second, the Divine Blade Master will accurately find the longest earthworm among all earthworms (if there are multiple, choose any one) and cut it in half. The cutting position is determined by a constant $p$ (a rational number satisfying $0 < p < 1$). Suppose the length of this earthworm is $x$. The master will cut it into two earthworms with lengths $\\lfloor p x \\rfloor$ and $x - \\lfloor p x \\rfloor$. In particular, if either of these numbers equals $0$, that earthworm of length $0$ is also kept. In addition, except for the two newly created earthworms, the lengths of all other earthworms will increase by $q$ (a non-negative integer constant).\n\nThe Cricket King knows this is not a long-term solution, because not only will the number of earthworms increase, but they will also become longer. The king decides to seek help from a mysterious figure with great power, but the reinforcements will take $m$ seconds to arrive... (where $m$ is a non-negative integer).\n\nThe king wants to know the situation within these $m$ seconds. Specifically, he wants to know:\n- Within $m$ seconds, for each second, the length of the earthworm that is cut, measured just before it is cut (there are $m$ numbers).\n- After $m$ seconds, the lengths of all earthworms (there are $n + m$ numbers).\n\nOf course, the Cricket King knows how to do this! But he wants to test you.",
+      "formatI": "The first line contains six integers $n,m,q,u,v,t$, where: the meanings of $n,m,q$ are as in [Description]; $u,v,t$ are positive integers; you need to compute $p = u / v$ yourself (guaranteed $0 < u < v$); $t$ is an output parameter, whose meaning will be explained in [Output Format].\n\nThe second line contains $n$ non-negative integers, namely $a_1, a_2, \\dots, a_n$, the initial lengths of the $n$ earthworms.\n\nBetween any two adjacent numbers on the same line, there is exactly one space.\n\nIt is guaranteed that $1 \\leq n \\leq 10^5$, $0 \\leq m \\leq 7 \\times 10^6$, $0 < u < v \\leq 10^9$, $0 \\leq q \\leq 200$, $1 \\leq t \\leq 71$, $0 \\leq a_i \\leq 10^8$.",
+      "formatO": "On the first line, output $\\left\\lfloor \\frac{m}{t} \\right\\rfloor$ integers. In chronological order, output the length (just before being cut) of the earthworm cut at time $t$, $2t$, $3t$, … .\n\nOn the second line, output $\\left\\lfloor \\frac{n+m}{t} \\right\\rfloor$ integers: after $m$ seconds, output the earthworm lengths in non-increasing order, specifically the $t$-th, $2t$-th, $3t$-th, … largest lengths.\n\nBetween any two adjacent numbers on the same line, there is exactly one space. Even if a line has no numbers to output, you must still output a blank line.\n\nPlease read the samples to better understand this format.",
+      "hint": "Sample Explanation 1\n\nBefore the Divine Blade Master arrives: the lengths of $3$ earthworms are $3, 3, 2$.\n\nAfter $1$ second: one earthworm of length $3$ is cut into two earthworms of lengths $1$ and $2$; the other earthworms increase by $1$. In the end, the $4$ earthworms have lengths $(1,2), 4, 3$. Parentheses mean an earthworm at that position has just been cut.\n\nAfter $2$ seconds: one earthworm of length $4$ is cut into $1$ and $3$. The $5$ earthworms’ lengths are: $2, 3, (1,3), 4$.\n\nAfter $3$ seconds: one earthworm of length $4$ is cut. The $6$ earthworms’ lengths are: $3, 4, 2, 4, (1,3)$.\n\nAfter $4$ seconds: one earthworm of length $4$ is cut. The $7$ earthworms’ lengths are: $4, (1,3), 3, 5, 2, 4$.\n\nAfter $5$ seconds: one earthworm of length $5$ is cut. The $8$ earthworms’ lengths are: $5, 2, 4, 4, (1,4), 3, 5$.\n\nAfter $6$ seconds: one earthworm of length $5$ is cut. The $9$ earthworms’ lengths are: $(1,4), 3, 5, 5, 2, 5, 4, 6$.\n\nAfter $7$ seconds: one earthworm of length $6$ is cut. The $10$ earthworms’ lengths are: $2, 5, 4, 6, 6, 3, 6, 5, (2,4)$. Therefore, within $7$ seconds, the lengths of the cut earthworms are $3, 4, 4, 4, 5, 5, 6$ in order. After $7$ seconds, all earthworm lengths in non-increasing order are $6, 6, 6, 5, 5, 4, 4, 3, 2, 2$.\n\nSample Explanation 2\n\nIn this testdata, only $t = 2$ differs from the previous one. You only need to output one number every two numbers on each line.\n\nAlthough the last $6$ on the first line is not output, the second line must restart counting from the second number.\n\nSample Explanation 3\n\nIn this testdata, only $t = 9$ differs from the previous one.\n\nNote that there are no numbers to output on the first line, but you must still print a blank line.\n\nConstraints\n\n::cute-table{tuack}\n|Testcase  | $n$            | $m$              | $t$   | $a_i$     | $v$       | $q$      |\n|:----:|:--------------:|:----------------:|:-----:|:---------:|:---------:|:--------:|\n| $1$  | $=1$           | $=0$             | $=1$  | $\\le10^6$ | $\\le2$    | $=0$     |\n| $2$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $3$  | $=10^5$        | ^                | ^     | ^         | ^         | ^        |\n| $4$  | $=1$           | $=10^3$          | ^     | ^         | ^         | ^        |\n| $5$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $6$  | $=1$           | ^                | ^     | ^         | ^         | $\\le200$ |\n| $7$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $8$  | $=5\\times10^4$ | $=5\\times10^4$   | ^     | ^         | ^         | $=0$     |\n| $9$  | $=10^5$        | $=10^5$          | $=2$  | ^         | ^         | ^        |\n| $10$ | ^              | $=2\\times10^6$   | $=21$ | ^         | ^         | ^        |\n| $11$ | ^              | $=2.5\\times10^6$ | $=26$ | ^         | ^         | ^        |\n| $12$ | ^              | $=3.5\\times10^6$ | $=36$ | $\\le10^7$ | ^         | ^        |\n| $13$ | ^              | $=5\\times10^6$   | $=51$ | ^         | $\\le10^9$ | ^        |\n| $14$ | ^              | $=7\\times10^6$   | $=71$ | $\\le10^8$ | ^         | ^        |\n| $15$ | $=5\\times10^4$ | $=5\\times10^4$   | $=1$  | ^         | $\\le2$    | $\\le200$ |\n| $16$ | ^              | $=1.5\\times10^5$ | $=2$  | ^         | ^         | ^        |\n| $17$ | $=10^5$        | $=10^5$          | $=3$  | ^         | $\\le10^9$ | ^        |\n| $18$ | ^              | $=3\\times10^5$   | $=4$  | ^         | ^         | ^        |\n| $19$ | ^              | $=3.5\\times10^6$ | $=36$ | ^         | ^         | ^        |\n| $20$ | ^              | $=7\\times10^6$   | $=71$ | ^         | ^         | ^        |\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2016 提高组] 蚯蚓",
+      "background": "NOIP2016 提高组 D2T2",
+      "description": "本题中，我们将用符号 $\\lfloor c \\rfloor$ 表示对 $c$ 向下取整，例如：$\\lfloor 3.0 \\rfloor = \\lfloor 3.1 \\rfloor = \\lfloor 3.9 \\rfloor = 3$。\n\n蛐蛐国最近蚯蚓成灾了！隔壁跳蚤国的跳蚤也拿蚯蚓们没办法，蛐蛐国王只好去请神刀手来帮他们消灭蚯蚓。\n\n蛐蛐国里现在共有 $n$ 只蚯蚓（$n$ 为正整数）。每只蚯蚓拥有长度，我们设第 $i$ 只蚯蚓的长度为 $a_i\\,(i=1,2,\\dots,n)$，并保证所有的长度都是非负整数（即：可能存在长度为 $0$ 的蚯蚓）。\n\n每一秒，神刀手会在所有的蚯蚓中，准确地找到最长的那一只（如有多个则任选一个）将其切成两半。神刀手切开蚯蚓的位置由常数 $p$（是满足 $0 < p < 1$ 的有理数）决定，设这只蚯蚓长度为 $x$，神刀手会将其切成两只长度分别为 $\\lfloor px \\rfloor$ 和 $x - \\lfloor px \\rfloor$ 的蚯蚓。特殊地，如果这两个数的其中一个等于 $0$，则这个长度为 $0$ 的蚯蚓也会被保留。此外，除了刚刚产生的两只新蚯蚓，其余蚯蚓的长度都会增加 $q$（是一个非负整常数）。\n\n蛐蛐国王知道这样不是长久之计，因为蚯蚓不仅会越来越多，还会越来越长。蛐蛐国王决定求助于一位有着洪荒之力的神秘人物，但是救兵还需要 $m$ 秒才能到来……（$m$ 为非负整数）\n\n蛐蛐国王希望知道这 $m$ 秒内的战况。具体来说，他希望知道：\n\n- $m$ 秒内，每一秒被切断的蚯蚓被切断前的长度（有 $m$ 个数）；\n- $m$ 秒后，所有蚯蚓的长度（有 $n + m$ 个数）。\n\n蛐蛐国王当然知道怎么做啦！但是他想考考你……",
+      "formatI": "第一行包含六个整数 $n,m,q,u,v,t$，其中：$n,m,q$ 的意义见【题目描述】；$u,v,t$ 均为正整数；你需要自己计算 $p=u / v$（保证 $0 < u < v$）；$t$ 是输出参数，其含义将会在【输出格式】中解释。\n\n第二行包含 $n$ 个非负整数，为 $a_1, a_2, \\dots, a_n$，即初始时 $n$ 只蚯蚓的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。\n\n保证 $1 \\leq n \\leq 10^5$，$0 \\leq m \\leq 7 \\times 10^6$，$0 < u < v \\leq 10^9$，$0 \\leq q \\leq 200$，$1 \\leq t \\leq 71$，$0 \\leq a_i \\leq 10^8$。",
+      "formatO": "第一行输出 $\\left \\lfloor \\frac{m}{t} \\right \\rfloor$ 个整数，按时间顺序，依次输出第 $t$ 秒，第 $2t$ 秒，第 $3t$ 秒，……被切断蚯蚓（在被切断前）的长度。\n\n第二行输出 $\\left \\lfloor \\frac{n+m}{t} \\right \\rfloor$ 个整数，输出 $m$ 秒后蚯蚓的长度；需要按从大到小的顺序，依次输出排名第 $t$，第 $2t$，第 $3t$，……的长度。\n\n同一行中相邻的两个数之间，恰好用一个空格隔开。即使某一行没有任何数需要输出，你也应输出一个空行。\n\n请阅读样例来更好地理解这个格式。",
+      "hint": "**样例解释 1**\n\n在神刀手到来前：$3$ 只蚯蚓的长度为 $3,3,2$。\n\n$1$ 秒后：一只长度为 $3$ 的蚯蚓被切成了两只长度分别为$1$ 和 $2$ 的蚯蚓，其余蚯蚓的长度增加了 $1$。最终 $4$ 只蚯蚓的长度分别为 $(1,2),4,3$。括号表示这个位置刚刚有一只蚯蚓被切断。\n\n$2$ 秒后：一只长度为 $4$ 的蚯蚓被切成了 $1$ 和 $3$。$5$ 只蚯蚓的长度分别为：$2,3,(1,3),4$。\n\n$3$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$6$ 只蚯蚓的长度分别为：$3,4,2,4,(1,3)$。\n\n$4$ 秒后：一只长度为 $4$ 的蚯蚓被切断。$7$ 只蚯蚓的长度分别为：$4,(1,3),3,5,2,4$。\n\n$5$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$8$ 只蚯蚓的长度分别为：$5,2,4,4,(1,4),3,5$。\n\n$6$ 秒后：一只长度为 $5$ 的蚯蚓被切断。$9$ 只蚯蚓的长度分别为：$(1,4),3,5,5,2,5,4,6$。\n\n$7$ 秒后：一只长度为 $6$ 的蚯蚓被切断。$10$ 只蚯蚓的长度分别为：$2,5,4,6,6,3,6,5,(2,4)$。所以，$7$ 秒内被切断的蚯蚓的长度依次为 $3,4,4,4,5,5,6$。$7$ 秒后，所有蚯蚓长度从大到小排序为 $6,6,6,5,5,4,4,3,2,2$。\n\n**样例解释 2**\n\n这个数据中只有 $t=2$ 与上个数据不同。只需在每行都改为每两个数输出一个数即可。\n\n虽然第一行最后有一个 $6$ 没有被输出，但是第二行仍然要重新从第二个数再开始输出。\n\n**样例解释 3**\n\n这个数据中只有 $t=9$ 与上个数据不同。\n\n注意第一行没有数要输出，但也要输出一个空行。\n\n\n**数据范围**\n\n::cute-table{tuack}\n| 测试点  | $n$            | $m$              | $t$   | $a_i$     | $v$       | $q$      |\n|:----:|:--------------:|:----------------:|:-----:|:---------:|:---------:|:--------:|\n| $1$  | $=1$           | $=0$             | $=1$  | $\\le10^6$ | $\\le2$    | $=0$     |\n| $2$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $3$  | $=10^5$        | ^                | ^     | ^         | ^         | ^        |\n| $4$  | $=1$           | $=10^3$          | ^     | ^         | ^         | ^        |\n| $5$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $6$  | $=1$           | ^                | ^     | ^         | ^         | $\\le200$ |\n| $7$  | $=10^3$        | ^                | ^     | ^         | ^         | ^        |\n| $8$  | $=5\\times10^4$ | $=5\\times10^4$   | ^     | ^         | ^         | $=0$     |\n| $9$  | $=10^5$        | $=10^5$          | $=2$  | ^         | ^         | ^        |\n| $10$ | ^              | $=2\\times10^6$   | $=21$ | ^         | ^         | ^        |\n| $11$ | ^              | $=2.5\\times10^6$ | $=26$ | ^         | ^         | ^        |\n| $12$ | ^              | $=3.5\\times10^6$ | $=36$ | $\\le10^7$ | ^         | ^        |\n| $13$ | ^              | $=5\\times10^6$   | $=51$ | ^         | $\\le10^9$ | ^        |\n| $14$ | ^              | $=7\\times10^6$   | $=71$ | $\\le10^8$ | ^         | ^        |\n| $15$ | $=5\\times10^4$ | $=5\\times10^4$   | $=1$  | ^         | $\\le2$    | $\\le200$ |\n| $16$ | ^              | $=1.5\\times10^5$ | $=2$  | ^         | ^         | ^        |\n| $17$ | $=10^5$        | $=10^5$          | $=3$  | ^         | $\\le10^9$ | ^        |\n| $18$ | ^              | $=3\\times10^5$   | $=4$  | ^         | ^         | ^        |\n| $19$ | ^              | $=3.5\\times10^6$ | $=36$ | ^         | ^         | ^        |\n| $20$ | ^              | $=7\\times10^6$   | $=71$ | ^         | ^         | ^        |",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 1266,
+    "startTime": 1479424080,
+    "endTime": 1480054800,
+    "name": "NOIP2016提高组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1600",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 天天爱跑步",
+      "difficulty": 7
+    },
+    {
+      "pid": "P1850",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 换教室",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2680",
+      "type": "P",
+      "name": "[NOIP 2015 提高组] 运输计划",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2831",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 愤怒的小鸟",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2822",
+      "type": "P",
+      "name": "[NOIP 2016 提高组] 组合数问题",
+      "difficulty": 3
+    }
+  ],
+  "forum": {
+    "name": "P2827 [NOIP 2016 提高组] 蚯蚓",
+    "type": 2,
+    "slug": "P2827",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1364471,
+      "title": "几乎无指令集优化的手写二叉堆居然能过！",
+      "author": {
+        "uid": 2141510,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2141510.png",
+        "name": "raywxiong",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787652300
+    },
+    {
+      "id": 1361004,
+      "title": "AC代码过不了样例请求添加hack数据",
+      "author": {
+        "uid": 689146,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/689146.png",
+        "name": "mushezi",
+        "slogan": "人生苦短 , 及时行乐~",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/jujzzurh.png"
+      },
+      "time": 1787315284
+    },
+    {
+      "id": 1358344,
+      "title": "如果 RE 85pts",
+      "author": {
+        "uid": 1636821,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1636821.png",
+        "name": "Xudongning",
+        "slogan": "最后在线时间: 2026/9/5 13:10。别再颓了~ qwq",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/uosstzxk.png"
+      },
+      "time": 1787118955
+    },
+    {
+      "id": 1357482,
+      "title": "为什么我的蚯蚓第二行无论怎么蠕动都是666",
+      "author": {
+        "uid": 836448,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/836448.png",
+        "name": "Cherry_Pop",
+        "slogan": "你的时间已经属于我了…||集训时依旧高强度上网",
+        "badge": "",
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/44jhkdqt.png"
+      },
+      "time": 1787043466
+    },
+    {
+      "id": 1354801,
+      "title": "讲个笑话：如果你25pts",
+      "author": {
+        "uid": 1536846,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1536846.png",
+        "name": "lcc0222",
+        "slogan": "会强起来的",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/dp8lkhro.png"
+      },
+      "time": 1786802393
+    },
+    {
+      "id": 1350235,
+      "title": "警示后人",
+      "author": {
+        "uid": 2034469,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2034469.png",
+        "name": "Xpac793",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/tuy7lxc4.png"
+      },
+      "time": 1786438034
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

@@ -1,0 +1,291 @@
+{
+  "problem": {
+    "pid": "P2239",
+    "type": "P",
+    "name": "[NOIP 2014 普及组] 螺旋矩阵",
+    "difficulty": 3,
+    "tags": [
+      1,
+      5,
+      31,
+      54,
+      82
+    ],
+    "totalSubmit": 84661,
+    "totalAccepted": 27157,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 普及组] 螺旋矩阵",
+      "background": "NOIP2014 普及组 T3",
+      "description": "一个 $n$ 行 $ n$ 列的螺旋矩阵可由如下方法生成：\n\n\n从矩阵的左上角（第 $1$ 行第 $1$ 列）出发，初始时向右移动；如果前方是未曾经过的格子，则继续前进，否则右转；重复上述操作直至经过矩阵中所有格子。根据经过顺序，在格子中依次填入 $1, 2, 3, \\dots, n^2$，便构成了一个螺旋矩阵。\n\n\n下图是一个 $n = 4$ 时的螺旋矩阵。\n\n$$\\begin{pmatrix}\n 1 &    2  &   3   &  4 \\\\\n12 &   13  &  14   &  5 \\\\\n11 &   16  &  15   &  6 \\\\\n10 &    9  &   8   &  7 \\\\\n\\end{pmatrix}$$\n\n现给出矩阵大小 $n$ 以及 $i$ 和 $j$，请你求出该矩阵中第 $i$ 行第 $j$ 列的数是多少。\n",
+      "formatI": "共一行，包含三个整数 $n$, $i$, $j$，每两个整数之间用一个空格隔开，分别表示矩阵大小、待求的数所在的行号和列号。\n",
+      "formatO": "一个整数，表示相应矩阵中第 $i$ 行第 $j$ 列的数。\n",
+      "hint": "【数据说明】\n\n对于 $50\\%$ 的数据，$1 \\leqslant n \\leqslant 100$;\n\n对于 $100\\%$ 的数据，$1 \\leqslant n \\leqslant 30,000,1 \\leqslant i \\leqslant n,1 \\leqslant j \\leqslant n$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 普及组] 螺旋矩阵",
+      "background": "NOIP2014 普及组 T3",
+      "description": "一个 $n$ 行 $ n$ 列的螺旋矩阵可由如下方法生成：\n\n\n从矩阵的左上角（第 $1$ 行第 $1$ 列）出发，初始时向右移动；如果前方是未曾经过的格子，则继续前进，否则右转；重复上述操作直至经过矩阵中所有格子。根据经过顺序，在格子中依次填入 $1, 2, 3, \\dots, n^2$，便构成了一个螺旋矩阵。\n\n\n下图是一个 $n = 4$ 时的螺旋矩阵。\n\n$$\\begin{pmatrix}\n 1 &    2  &   3   &  4 \\\\\n12 &   13  &  14   &  5 \\\\\n11 &   16  &  15   &  6 \\\\\n10 &    9  &   8   &  7 \\\\\n\\end{pmatrix}$$\n\n现给出矩阵大小 $n$ 以及 $i$ 和 $j$，请你求出该矩阵中第 $i$ 行第 $j$ 列的数是多少。\n",
+      "formatI": "共一行，包含三个整数 $n$, $i$, $j$，每两个整数之间用一个空格隔开，分别表示矩阵大小、待求的数所在的行号和列号。\n",
+      "formatO": "一个整数，表示相应矩阵中第 $i$ 行第 $j$ 列的数。\n",
+      "hint": "【数据说明】\n\n对于 $50\\%$ 的数据，$1 \\leqslant n \\leqslant 100$;\n\n对于 $100\\%$ 的数据，$1 \\leqslant n \\leqslant 30,000,1 \\leqslant i \\leqslant n,1 \\leqslant j \\leqslant n$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "4 2 3",
+        "14"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Junior] Spiral Matrix",
+      "background": "NOIP 2014 Junior T3.",
+      "description": "A spiral matrix with $n$ rows and $n$ columns can be generated as follows:\n\nStarting from the top-left corner (row $1$, column $1$), initially move to the right. If the cell ahead has not been visited, keep moving forward; otherwise, turn right. Repeat this process until all cells in the matrix have been visited. According to the visiting order, fill the cells with $1, 2, 3, \\dots, n^2$ in sequence to form a spiral matrix.\n\nBelow is the spiral matrix when $n = 4$.\n\n$$\\begin{pmatrix}\n 1 &    2  &   3   &  4 \\\\\n12 &   13  &  14   &  5 \\\\\n11 &   16  &  15   &  6 \\\\\n10 &    9  &   8   &  7 \\\\\n\\end{pmatrix}$$\n\nGiven the matrix size $n$ and $i$ and $j$, please compute the number at row $i$, column $j$ in this matrix.",
+      "formatI": "A single line containing three integers $n$, $i$, $j$, separated by a single space. They represent the matrix size, and the row and column of the number to query.",
+      "formatO": "A single integer, the number at row $i$, column $j$ in the corresponding matrix.",
+      "hint": "Constraints\n\n- For $50\\%$ of the testdata, $1 \\leqslant n \\leqslant 100$.\n- For $100\\%$ of the testdata, $1 \\leqslant n \\leqslant 30{,}000$; $1 \\leqslant i \\leqslant n$; $1 \\leqslant j \\leqslant n$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 普及组] 螺旋矩阵",
+      "background": "NOIP2014 普及组 T3",
+      "description": "一个 $n$ 行 $ n$ 列的螺旋矩阵可由如下方法生成：\n\n\n从矩阵的左上角（第 $1$ 行第 $1$ 列）出发，初始时向右移动；如果前方是未曾经过的格子，则继续前进，否则右转；重复上述操作直至经过矩阵中所有格子。根据经过顺序，在格子中依次填入 $1, 2, 3, \\dots, n^2$，便构成了一个螺旋矩阵。\n\n\n下图是一个 $n = 4$ 时的螺旋矩阵。\n\n$$\\begin{pmatrix}\n 1 &    2  &   3   &  4 \\\\\n12 &   13  &  14   &  5 \\\\\n11 &   16  &  15   &  6 \\\\\n10 &    9  &   8   &  7 \\\\\n\\end{pmatrix}$$\n\n现给出矩阵大小 $n$ 以及 $i$ 和 $j$，请你求出该矩阵中第 $i$ 行第 $j$ 列的数是多少。\n",
+      "formatI": "共一行，包含三个整数 $n$, $i$, $j$，每两个整数之间用一个空格隔开，分别表示矩阵大小、待求的数所在的行号和列号。\n",
+      "formatO": "一个整数，表示相应矩阵中第 $i$ 行第 $j$ 列的数。\n",
+      "hint": "【数据说明】\n\n对于 $50\\%$ 的数据，$1 \\leqslant n \\leqslant 100$;\n\n对于 $100\\%$ 的数据，$1 \\leqslant n \\leqslant 30,000,1 \\leqslant i \\leqslant n,1 \\leqslant j \\leqslant n$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1981",
+      "type": "P",
+      "name": "[NOIP 2013 普及组] 表达式求值",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2058",
+      "type": "P",
+      "name": "[NOIP 2016 普及组] 海港",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2118",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 比例简化",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2258",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 子矩阵",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2671",
+      "type": "P",
+      "name": "[NOIP 2015 普及组] 求和",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P2239 [NOIP 2014 普及组] 螺旋矩阵",
+    "type": 2,
+    "slug": "P2239",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368374,
+      "title": "CE",
+      "author": {
+        "uid": 2153298,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2153298.png",
+        "name": "Roy340522",
+        "slogan": "这个家伙不懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/o9hryynr.png"
+      },
+      "time": 1788060124
+    },
+    {
+      "id": 1361269,
+      "title": "50分求调",
+      "author": {
+        "uid": 1828311,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1828311.png",
+        "name": "taishanglj",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1787362985
+    },
+    {
+      "id": 1340603,
+      "title": "50求条",
+      "author": {
+        "uid": 1981534,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1981534.png",
+        "name": "_66_",
+        "slogan": "jhjh",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/g63258gb.png"
+      },
+      "time": 1785549967
+    },
+    {
+      "id": 1334813,
+      "title": "50分，求调(必关)",
+      "author": {
+        "uid": 1638313,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1638313.png",
+        "name": "yuyu1217",
+        "slogan": "喵吧哇哇",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/pf7gu8fh.png"
+      },
+      "time": 1784987763
+    },
+    {
+      "id": 1306035,
+      "title": "4AC 6WA 求解",
+      "author": {
+        "uid": 2114692,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2114692.png",
+        "name": "lzr2014",
+        "slogan": "人生呐能不能放过我这一次",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1781433108
+    },
+    {
+      "id": 1291835,
+      "title": "这道题能用bfs吗？",
+      "author": {
+        "uid": 971101,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/971101.png",
+        "name": "LSR120218_juruo",
+        "slogan": "天生我材必有用，何必嫌弃自己呢？做好自己，不必在乎别人的眼光",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 3,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qdthca1j.png"
+      },
+      "time": 1778759478
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

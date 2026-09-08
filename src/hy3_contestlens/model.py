@@ -15,7 +15,7 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 from .domain import CriticReview, SolverOutput
 from .errors import ContestLensError, ensure
 from .model_diagnostics import MAX_RESPONSE_LOG_CHARS, current_model_run, redact, safe_endpoint, write_attempt
-from .model_stream import CompletionStream, StreamResponseError
+from .model_stream import CompletionStream, RepetitionGuard, StreamResponseError
 from .problem_spec import Analysis
 from .settings import Hy3Settings
 from .utils import canonical_json, safe_id, sha256_bytes, utc_now
@@ -46,6 +46,86 @@ def _safe_compile_evidence(summary: dict[str, Any] | None) -> dict[str, Any]:
         "duration_ms": source.get("duration_ms"),
         "diagnostics": [str(item) for item in diagnostics],
         "source_artifact_id": source.get("source_artifact_id"),
+    }
+
+
+_SIGNAL_NAMES = {6: "SIGABRT", 9: "SIGKILL", 11: "SIGSEGV", 15: "SIGTERM"}
+
+
+def _decoded_signal(item: dict[str, Any]) -> tuple[int | None, str | None]:
+    signal = item.get("termination_signal")
+    exit_code = item.get("exit_code")
+    if not isinstance(signal, int) and isinstance(exit_code, int) and not isinstance(exit_code, bool):
+        if exit_code < 0:
+            signal = -exit_code
+        elif 128 < exit_code <= 192:
+            signal = exit_code - 128
+    return (signal, _SIGNAL_NAMES.get(signal)) if isinstance(signal, int) else (None, None)
+
+
+def _safe_judge_evidence(summary: dict[str, Any] | None) -> dict[str, Any]:
+    """Keep diagnostic metadata while withholding private inputs and expected output contents."""
+    source = summary or {}
+    tests = source.get("tests") or []
+    if not isinstance(tests, list):
+        tests = []
+    safe_tests: list[dict[str, Any]] = []
+    verdict_counts: Counter[str] = Counter()
+    exit_code_counts: Counter[str] = Counter()
+    signal_counts: Counter[str] = Counter()
+    for raw in tests[:200]:
+        if not isinstance(raw, dict):
+            continue
+        verdict = str(raw.get("verdict") or "UNKNOWN")
+        verdict_counts[verdict] += 1
+        exit_code = raw.get("exit_code")
+        if isinstance(exit_code, int) and not isinstance(exit_code, bool):
+            exit_code_counts[str(exit_code)] += 1
+        signal, signal_name = _decoded_signal(raw)
+        if signal is not None:
+            signal_counts[signal_name or str(signal)] += 1
+        first_diff = raw.get("first_diff") if isinstance(raw.get("first_diff"), dict) else None
+        safe_diff = None
+        if first_diff is not None:
+            safe_diff = {key: first_diff.get(key) for key in (
+                "byte_offset", "line", "column", "expected_length", "actual_length",
+            )}
+        stdout_bytes = raw.get("stdout_bytes")
+        file_output_bytes = raw.get("file_output_bytes")
+        actual_length = safe_diff.get("actual_length") if safe_diff else None
+        safe_tests.append({
+            "test_id": raw.get("test_id"),
+            "verdict": verdict,
+            "cpu_ms": raw.get("cpu_ms"),
+            "wall_ms": raw.get("wall_ms"),
+            "peak_rss_mb": raw.get("peak_rss_mb"),
+            "memory_limit_mb": raw.get("memory_limit_mb"),
+            "exit_code": exit_code,
+            "termination_signal": signal,
+            "termination_signal_name": signal_name,
+            "timed_out": raw.get("timed_out"),
+            "memory_limited": raw.get("memory_limited"),
+            "output_limited": raw.get("output_limited"),
+            "stdout_bytes": stdout_bytes,
+            "file_output_bytes": file_output_bytes,
+            "stderr_bytes": raw.get("stderr_bytes"),
+            "actual_output_empty": (
+                stdout_bytes == 0 and file_output_bytes == 0
+                if isinstance(stdout_bytes, int) and isinstance(file_output_bytes, int)
+                else actual_length == 0 if isinstance(actual_length, int) else None
+            ),
+            "first_diff": safe_diff,
+        })
+    return {
+        "verdict": source.get("verdict"),
+        "passed": source.get("passed"),
+        "total": source.get("total"),
+        "score": source.get("score"),
+        "verdict_counts": dict(verdict_counts),
+        "exit_code_counts": dict(exit_code_counts),
+        "signal_counts": dict(signal_counts),
+        "tests": safe_tests,
+        "privacy_note": "Private test inputs and expected output contents are intentionally omitted.",
     }
 
 
@@ -146,6 +226,13 @@ class Hy3Client:
         context = current_model_run.get()
         directory = context.directory if context else self.diagnostics_dir
         call_id = safe_id("call")
+        review_role = role in {"algorithm_critic", "code_critic", "code_critic_recheck"}
+        call_started_at = utc_now()
+        if review_role:
+            prompt += ("\nOutput discipline: give each step concrete evidence once. Keep the summary to a short synthesis. "
+                       "Do not repeat verdict explanations or announce that the answer is complete. "
+                       "Stop immediately after the closing brace of the complete JSON object. "
+                       "Preserve all substantive checks and evidence.")
         response_schema = schema.model_json_schema()
         response_format: dict[str, Any] = {"type": self.settings.response_format}
         if self.settings.response_format == "json_schema":
@@ -186,17 +273,37 @@ class Hy3Client:
                 stream: CompletionStream | None = None
                 started_at = utc_now()
                 started = time.monotonic()
+                last_progress = started
+                last_phase = "waiting"
+
+                def emit(phase: str, **extra: Any) -> None:
+                    if context:
+                        context.emit_progress({
+                            "call_id": call_id, "role": role, "attempt": attempt,
+                            "max_attempts": self.settings.max_attempts, "phase": phase,
+                            "started_at": call_started_at, "attempt_started_at": started_at,
+                            "elapsed_ms": round((time.monotonic() - started) * 1000),
+                            "answer_chars": stream.content_chars if stream else 0,
+                            **extra,
+                        })
+
+                emit("waiting")
                 try:
                     # Bound total elapsed time as well as the socket's idle timeout.
                     async with asyncio.timeout(self.timeout_seconds):
                         async with client.stream("POST", self._endpoint(), headers=headers, json=payload) as response:
                             if response.is_success and "text/event-stream" in response.headers.get("content-type", "").lower():
-                                stream = CompletionStream()
+                                stream = CompletionStream(guard_repetition=review_role)
                                 try:
                                     async for line in response.aiter_lines():
                                         if context:
                                             context.check_cancelled()
                                         stream.feed(line)
+                                        phase = "generating" if stream.content_chars else "reasoning" if stream.reasoning_chars else "waiting"
+                                        now = time.monotonic()
+                                        if phase != last_phase or now - last_progress >= 5:
+                                            emit(phase)
+                                            last_phase, last_progress = phase, now
                                         if stream.done:
                                             break
                                     stream.finish()
@@ -211,8 +318,14 @@ class Hy3Client:
                                     response.raise_for_status()
                                     raise _ResponseError("json_decode", "Provider returned a non-JSON response envelope")
                                 response.raise_for_status()
+                    emit("validating")
                     content = _completion_content(body)
+                    if review_role and stream is None:
+                        RepetitionGuard().feed(content)
                     result = schema.model_validate(json.loads(content))
+                except asyncio.CancelledError:
+                    emit("cancelled")
+                    raise
                 except ValidationError as exc:
                     failure = {
                         "kind": "schema_validation", "reason": "Model JSON does not match the required schema",
@@ -259,9 +372,11 @@ class Hy3Client:
                 if context:
                     context.check_cancelled()
                 if failure is None:
+                    emit("success")
                     assert result is not None
                     return result
                 if not will_retry:
+                    emit("error", failure_kind=failure["kind"])
                     details = redact({
                         "role": role, "reason": failure["reason"], "failure_kind": failure["kind"],
                         "attempts": attempt, "retry_exhausted": retryable and attempt == self.settings.max_attempts,
@@ -273,7 +388,7 @@ class Hy3Client:
                         "diagnostics": diagnostics, "diagnostic_log_errors": log_errors,
                     }, self.settings.api_key)
                     raise ContestLensError("HY3_INVALID_RESPONSE", "Hy3 model call failed; see structured diagnostics", details, 502)
-                if failure["kind"] in {"schema_validation", "json_decode", "response_shape", "output_truncated"}:
+                if failure["kind"] in {"schema_validation", "json_decode", "response_shape", "output_truncated", "repetitive_output"}:
                     # Never promote the prior untrusted output to instructions or echo it into the retry.
                     feedback = redact(failure, self.settings.api_key)
                     for issue in feedback.get("validation_errors", []):
@@ -294,7 +409,12 @@ class Hy3Client:
                         delay = max(delay, min(30.0, retry_after))
                     except ValueError:
                         pass
-                await asyncio.sleep(delay)
+                emit("retrying", failure_kind=failure["kind"], retry_delay_seconds=delay)
+                try:
+                    await asyncio.sleep(delay)
+                except asyncio.CancelledError:
+                    emit("cancelled")
+                    raise
         raise AssertionError("Hy3 max_attempts must be positive")
 
     async def translate_report_texts(self, texts: dict[str, str]) -> dict[str, str]:
@@ -364,8 +484,13 @@ class Hy3Client:
     async def algorithm_review(self, problem_spec: dict[str, Any], solution: SolverOutput) -> CriticReview:
         view = solution.model_dump(exclude={"cpp_source", "code_step_map"})
         prompt = (
-            "Independently reconstruct the reference algorithm, then assess each provided step, proof, complexity, and boundary condition. "
-            "You are isolated from the code critic and deterministic judge result. reviewer must be algorithm_critic.\n"
+            "Independently reconstruct the reference algorithm, then assess every provided step exactly once, including its proof, "
+            "complexity, termination argument, invariants, and boundary conditions. Give concrete evidence in every assessment. "
+            "If any defect is claimed anywhere in summary, mark the earliest affected step CONTRADICTED (or NOT_ASSESSABLE when evidence "
+            "is genuinely unavailable), set a matching non-UNRESOLVED error_type, and set first_error_step_id. UNRESOLVED means that no "
+            "defect was found and the summary must not claim one. Do not accept an asymptotic bound until every loop and graph traversal "
+            "has a monotone progress or visited-state argument. You are isolated from the code critic and deterministic judge result. "
+            "reviewer must be algorithm_critic.\n"
             f"PROBLEM SPECIFICATION:\n{json.dumps(problem_spec, ensure_ascii=False)}\n"
             f"SOLUTION PROCESS:\n{json.dumps(view, ensure_ascii=False)}\n"
         )
@@ -377,6 +502,7 @@ class Hy3Client:
         solution: SolverOutput,
         io_basename: str,
         compile_evidence: dict[str, Any] | None = None,
+        judge_evidence: dict[str, Any] | None = None,
     ) -> CriticReview:
         view = {
             "steps": [step.model_dump() for step in solution.steps], "complexity": solution.complexity.model_dump(),
@@ -386,28 +512,46 @@ class Hy3Client:
         deterministic_evidence = ""
         role = "code_critic"
         review_context = "You are isolated from the algorithm critic and deterministic judge result. reviewer must be code_critic."
-        if compile_evidence is not None:
+        if compile_evidence is not None or judge_evidence is not None:
             safe_compile = _safe_compile_evidence(compile_evidence)
+            safe_judge = _safe_judge_evidence(judge_evidence)
             role = "code_critic_recheck"
             review_context = (
-                "This is a fresh code review because the prior review contradicted deterministic local compilation evidence. "
-                "Do not assume the prior review was correct. reviewer must be code_critic."
+                "This is a fresh evidence-informed review. Do not assume the prior review was correct, including its proposed root cause. "
+                "Compiler and judge observations are authoritative facts, but their root cause must still be established from the code. "
+                "reviewer must be code_critic."
             )
-            classification_rule = (
-                "The local compiler verdict is authoritative: error_type must be COMPILE_ERROR. "
-                "Use the diagnostics to identify the first concrete compiler error and its code location."
-                if safe_compile["verdict"] == "CE"
-                else "The local compiler succeeded, so do not classify the solution as COMPILE_ERROR."
-            )
+            if safe_compile["verdict"] == "CE":
+                classification_rule = (
+                    "The local compiler verdict is authoritative: error_type must be COMPILE_ERROR. "
+                    "Use the diagnostics to identify the first concrete compiler error and its code location."
+                )
+            elif safe_compile["verdict"] == "OK":
+                classification_rule = "The local compiler succeeded, so do not classify the solution as COMPILE_ERROR."
+            else:
+                classification_rule = "No authoritative local compilation verdict was supplied; do not invent one."
             deterministic_evidence = (
                 f"DETERMINISTIC LOCAL COMPILATION EVIDENCE:\n{json.dumps(safe_compile, ensure_ascii=False)}\n"
+                f"DETERMINISTIC JUDGE EVIDENCE:\n{json.dumps(safe_judge, ensure_ascii=False)}\n"
                 f"AUTHORITATIVE CLASSIFICATION RULE:\n{classification_rule}\n"
             )
         prompt = (
-            "Check code/step consistency, overflow, bounds, recursion, initialization, transitions, I/O, and real complexity. "
+            "Audit every solution step and its mapped code exactly once. Check code/step consistency, overflow, every indexed access, "
+            "container resizing and iterator/reference invalidation, recursion/stack use, initialization, state transitions, I/O, "
+            "termination, and real complexity. For every loop or work queue, prove progress: distinguish newly discovered from merely "
+            "last-numbered states, verify visited/in-queue arrays grow with dynamic state storage, and test cycles/self-loops mentally. "
+            "For TLE, trace control flow to the first reachable non-terminating or unexpectedly repeated operation before proposing "
+            "asymptotic optimization; 137/SIGKILL together with timed_out=true means the time limiter killed the process and is not by "
+            "itself evidence of OOM. For RE, interpret conventional signal exits (for example 139/SIGSEGV) and identify the exact "
+            "bounds, lifetime, shift, stack, or allocation risk. Compare AC and failing-test timing/output patterns and check whether "
+            "an early-return or boundary branch explains the split. Do not analyze downstream code as the current root cause when an "
+            "earlier phase cannot terminate or crashes. "
             f"Require active calls to freopen(\"{io_basename}.in\", \"r\", stdin) and "
             f"freopen(\"{io_basename}.out\", \"w\", stdout) before any input or output. "
             "Treat missing, commented-out, or incorrectly named freopen calls as an I/O error. "
+            "Give concrete code evidence in every assessment. If summary claims a defect, the earliest affected step must be "
+            "CONTRADICTED, error_type must be non-UNRESOLVED, and first_error_step_id plus code_location must identify it. "
+            "UNRESOLVED means no defect was found and the summary must not claim one. "
             f"{review_context}\n"
             f"PROBLEM SPECIFICATION:\n{json.dumps(problem_spec, ensure_ascii=False)}\n"
             f"CODE REVIEW MATERIAL:\n{json.dumps(view, ensure_ascii=False)}\n"
@@ -425,22 +569,22 @@ class Hy3Client:
         io_basename: str,
         compile_summary: dict[str, Any] | None = None,
     ) -> SolverOutput:
-        safe_judge = {
-            "verdict": judge_summary.get("verdict"), "passed": judge_summary.get("passed"), "total": judge_summary.get("total"),
-            "failed_tests": [
-                {"test_id": item.get("test_id"), "verdict": item.get("verdict"), "first_diff": item.get("first_diff"), "cpu_ms": item.get("cpu_ms"), "peak_rss_mb": item.get("peak_rss_mb")}
-                for item in judge_summary.get("tests", []) if item.get("verdict") != "AC"
-            ],
-        }
+        safe_judge = _safe_judge_evidence(judge_summary)
         safe_compile = _safe_compile_evidence(compile_summary)
         prompt = (
-            "Produce a corrected auditable solution. Do not request or infer hidden expected outputs. Preserve valid parts and repair the diagnosed root cause.\n"
+            "Produce a corrected auditable solution. Do not request or infer hidden inputs or expected outputs. Preserve every previously "
+            "passing behavior and repair the evidence-supported earliest root cause. Treat the diagnosis as a hypothesis: verify it against "
+            "the source and deterministic evidence before editing. For TLE, prove termination and forward progress of every loop/work queue "
+            "before optimizing complexity; treat 137/SIGKILL with timed_out=true as a timeout kill, not automatic proof of OOM. For RE, "
+            "use exit signal (including 139/SIGSEGV), bounds, container-growth, lifetime and stack evidence to locate the "
+            "invalid access. Audit adjacent code for the same defect class. Do not spend the repair on downstream code that is unreachable "
+            "before the observed timeout or crash. The revised reasoning must state the invariant that prevents recurrence.\n"
             f"MANDATORY JUDGE FILE I/O: Preserve or add active calls to freopen(\"{io_basename}.in\", \"r\", stdin) and "
             f"freopen(\"{io_basename}.out\", \"w\", stdout) in main before any input or output. Include <cstdio>. "
             "Never remove, comment out, rename, or replace these calls during repair.\n"
             f"REPAIR ROUND: {round_number}\nPROBLEM SPECIFICATION:\n{json.dumps(problem_spec, ensure_ascii=False)}\n"
             f"CURRENT SOLUTION:\n{solution.model_dump_json()}\nDIAGNOSIS:\n{json.dumps(diagnosis, ensure_ascii=False)}\n"
             f"LOCAL COMPILATION EVIDENCE:\n{json.dumps(safe_compile, ensure_ascii=False)}\n"
-            f"LIMITED JUDGE EVIDENCE:\n{json.dumps(safe_judge, ensure_ascii=False)}\n"
+            f"PRIVACY-SAFE DETERMINISTIC JUDGE EVIDENCE:\n{json.dumps(safe_judge, ensure_ascii=False)}\n"
         )
         return await self.json_completion(role="code_repair_agent", prompt=prompt, schema=SolverOutput)

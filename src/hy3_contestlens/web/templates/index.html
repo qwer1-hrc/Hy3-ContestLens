@@ -3,12 +3,25 @@
 <section class="hero">
   <span class="eyebrow">PROCESS EVALUATION · ERROR LOCALIZATION</span>
   <h1>看见答案，也看见错误从哪里开始。</h1>
-  <p>Hy3-ContestLens 对 NOIP2018 解题过程、C++ 实现与 120 个确定性测试点进行联合评审，并保留每次修复的完整证据链。</p>
+  <p>浏览 NOIP 与 CSP-S 历年题目，查看题面、洛谷难度与本地数据，并对解题过程和 C++ 实现进行联合评审。</p>
   <div class="actions"><a class="button primary" href="/ui/runs/new">创建评测</a><a class="button" href="/ui/resources">检查资源</a></div>
 </section>
-<section><div class="section-title"><div><span class="eyebrow">DATASET</span><h2>NOIP2018 提高组</h2></div><span class="muted">难度等待用户按洛谷七档标注</span></div>
-<div class="cards">
-{% for problem in problems %}<article class="card"><div class="card-top"><span class="tag">DAY {{ problem.day }}</span><span class="status pending">待标注</span></div><h3>{{ problem.title_zh }}</h3><code>{{ problem.problem_id }}</code><dl><div><dt>时间</dt><dd>{{ problem.resource_limits.time_ms }} ms</dd></div><div><dt>内存</dt><dd>{{ problem.effective_memory_limit_mb }} MB</dd></div></dl><a href="/ui/runs/new?problem={{ problem.problem_id }}" target="_blank" rel="noopener" aria-label="在新页面评测{{ problem.title_zh }}">评测此题 → <span class="open-new-mark" aria-hidden="true">新页面</span></a></article>{% endfor %}
+<section><div class="section-title"><div><span class="eyebrow">DATASET</span><h2>比赛题库 · {{ problems|length }} 题</h2></div><span class="muted">难度来自洛谷 · 2025 年仅含附加样例</span></div>
+<div class="catalog-filters">
+<label>比赛<select id="filter-contest"><option value="">全部比赛</option><option>NOIP</option><option>CSP-S</option></select></label>
+<label>年份<select id="filter-year"><option value="">全部年份</option>{% for year in problems|map(attribute='year')|unique|sort %}<option>{{ year }}</option>{% endfor %}</select></label>
+<label>组别<select id="filter-group"><option value="">全部组别</option><option value="junior">普及组 junior</option><option value="senior">提高组 senior</option></select></label>
+<label>题目<input id="filter-title" type="search" placeholder="题名、英文名或洛谷题号"></label>
+</div><p id="catalog-count" class="muted" aria-live="polite"></p>
+<div class="cards" id="problem-cards">
+{% for problem in problems %}<article class="card" data-contest="{{ problem.contest }}" data-year="{{ problem.year }}" data-group="{{ problem.group }}" data-search="{{ problem.title_zh }} {{ problem.problem_id }} {{ problem.luogu_id or '' }}">
+<div class="card-top"><span class="tag">{{ problem.contest }} {{ problem.year }} · {{ '普及组' if problem.group == 'junior' else '提高组' }}</span><span class="status">{{ problem.luogu_difficulty or '待标注' }}</span></div>
+<p class="muted">{% if problem.data_status == 'partial' %}测试数据不完整 · {% endif %}{% if (problem.contest == 'NOIP' and problem.year < 2020 and problem.group == 'senior') or (problem.contest == 'CSP-S' and problem.year == 2019) %}Day {{ problem.day }} · {% endif %}第 {{ problem.task_number }} 题</p>
+<h3>{{ problem.title_zh }}</h3><code>{{ problem.io.basename }}</code>
+<dl><div><dt>时间 / 内存</dt><dd>{{ problem.resource_limits.time_ms }} ms / {{ problem.effective_memory_limit_mb }} MB</dd></div><div><dt>{{ '样例' if problem.data_status == 'samples' else '测试点' }}</dt><dd>{{ problem.test_count if problem.test_count is not none else '—' }} 对</dd></div></dl>
+{% if problem.judge_note %}<p class="muted">{{ problem.judge_note }}</p>{% endif %}
+<div class="actions"><a href="/ui/problems/{{ problem.problem_id }}">查看题面</a>{% if not problem.judge_note %}<a href="/ui/runs/new?problem={{ problem.problem_id }}" target="_blank" rel="noopener">{{ '样例评测' if problem.data_status == 'samples' else '评测此题' }} → <span class="open-new-mark">新页面</span></a>{% endif %}</div></article>{% endfor %}
 </div></section>
 <section class="pipeline"><span>题面冻结</span><i>→</i><span>Hy3 求解</span><i>→</i><span>双 Critic 盲审</span><i>→</i><span>Docker 判题</span><i>→</i><span>定位与修复</span></section>
 {% endblock %}
+{% block scripts %}<script src="/static/catalog.js"></script>{% endblock %}

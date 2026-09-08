@@ -130,13 +130,33 @@ class ReportTranslationSettings:
 
 
 @dataclass(slots=True)
+class AssistantSettings:
+    api_key: str | None = None
+    base_url: str | None = None
+    model: str | None = None
+    max_tokens: int = 4096
+    timeout_seconds: float = 120
+    max_tool_rounds: int = 4
+    max_concurrency: int = 2
+
+    def __post_init__(self) -> None:
+        for name, low, high in (("max_tokens", 256, 16384), ("max_tool_rounds", 1, 8), ("max_concurrency", 1, 8)):
+            value = getattr(self, name)
+            if type(value) is not int or not low <= value <= high:
+                raise ValueError(f"Assistant {name} must be between {low} and {high}")
+        if not math.isfinite(self.timeout_seconds) or not 1 <= self.timeout_seconds <= 480:
+            raise ValueError("Assistant timeout_seconds must be between 1 and 480")
+
+
+@dataclass(slots=True)
 class ImageUnderstandingSettings:
     """Optional vision connection. Never inherits credentials or parameters from Hy3."""
     api_key: str | None = None
     base_url: str = "https://api.moonshot.cn/v1"
     model: str = "kimi-k3"
     max_tokens: int = 8192
-    timeout_seconds: float = 90
+    timeout_seconds: float = 300
+    idle_timeout_seconds: float = 90
     decision_timeout_seconds: float = 300
     max_images: int = 12
     max_image_mb: int = 8
@@ -168,7 +188,7 @@ class ImageUnderstandingSettings:
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
                 raise ValueError(f"Image understanding {name} is out of range")
-        for name, maximum in (("timeout_seconds", 480), ("decision_timeout_seconds", 3600)):
+        for name, maximum in (("timeout_seconds", 480), ("idle_timeout_seconds", 480), ("decision_timeout_seconds", 3600)):
             value = getattr(self, name)
             if isinstance(value, bool) or not math.isfinite(value) or not 1 <= value <= maximum:
                 raise ValueError(f"Image understanding {name} is out of range")
@@ -180,6 +200,7 @@ class ImageUnderstandingSettings:
     def safe_summary(self) -> dict[str, Any]:
         return {"configured": self.configured, "model": self.model,
                 "configuration_error": self.configuration_error,
+                "timeout_seconds": self.timeout_seconds, "idle_timeout_seconds": self.idle_timeout_seconds,
                 "decision_timeout_seconds": self.decision_timeout_seconds,
                 "stream": self.stream, "max_attempts": self.max_attempts}
 
@@ -218,6 +239,7 @@ class AppSettings:
     compile_timeout_seconds: int = 30
     hy3: Hy3Settings = field(default_factory=Hy3Settings)
     report_translation: ReportTranslationSettings = field(default_factory=ReportTranslationSettings)
+    assistant: AssistantSettings = field(default_factory=AssistantSettings)
     image_understanding: ImageUnderstandingSettings = field(default_factory=ImageUnderstandingSettings)
     resources: ResourceSettings = field(default_factory=ResourceSettings)
 
@@ -278,6 +300,16 @@ class AppSettings:
             return _value(report_data, "report_translation", name, f"HY3_REPORT_{name.upper()}", default)
 
         report_concurrency = report_value("max_concurrency", 2)
+        assistant_data = {"assistant": {**app_file.get("assistant", {}), **secret_file.get("assistant", {})}}
+        def assistant_value(name: str, default: Any = None) -> Any:
+            return _value(assistant_data, "assistant", name, f"HY3_ASSISTANT_{name.upper()}", default)
+        assistant = AssistantSettings(
+            api_key=assistant_value("api_key"), base_url=assistant_value("base_url"), model=assistant_value("model"),
+            max_tokens=int(assistant_value("max_tokens", 4096)),
+            timeout_seconds=float(assistant_value("timeout_seconds", 120)),
+            max_tool_rounds=int(assistant_value("max_tool_rounds", 4)),
+            max_concurrency=int(assistant_value("max_concurrency", 2)),
+        )
         report_translation = ReportTranslationSettings(
             api_key=report_value("api_key"), base_url=report_value("base_url"), model=report_value("model"),
             reasoning_effort=str(report_value("reasoning_effort", "low")),
@@ -304,7 +336,8 @@ class AppSettings:
                     ("max_tokens", 8192), ("max_images", 12), ("max_image_mb", 8),
                     ("max_image_side", 2400), ("max_output_chars", 16000),
                 )},
-                timeout_seconds=float(image_value("timeout_seconds", 90)),
+                timeout_seconds=float(image_value("timeout_seconds", 300)),
+                idle_timeout_seconds=float(image_value("idle_timeout_seconds", 90)),
                 decision_timeout_seconds=float(image_value("decision_timeout_seconds", 300)),
                 stream=_boolean(image_value("stream", True)),
                 max_attempts=int(image_value("max_attempts", 3)),
@@ -332,6 +365,7 @@ class AppSettings:
             compile_timeout_seconds=int(docker.get("compile_timeout_seconds", 30)),
             hy3=hy3,
             report_translation=report_translation,
+            assistant=assistant,
             image_understanding=image_understanding,
             resources=ResourceSettings(
                 allow_local_webui_grants=bool(resource.get("allow_local_webui_grants", True)),

@@ -1,0 +1,296 @@
+{
+  "problem": {
+    "pid": "P2296",
+    "type": "P",
+    "name": "[NOIP 2014 提高组] 寻找道路",
+    "difficulty": 3,
+    "tags": [
+      4,
+      6,
+      31,
+      83
+    ],
+    "totalSubmit": 70815,
+    "totalAccepted": 21538,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "background": "NOIP2014 提高组 D2T2",
+      "description": "在有向图 $G$ 中，每条边的长度均为 $1$，现给定起点和终点，请你在图中找一条从起点到终点的路径，该路径满足以下条件：\n\n1. 路径上的所有点的出边所指向的点都直接或间接与终点连通。\n2. 在满足条件 $1$ 的情况下使路径最短。\n\n注意：图 $G$ 中可能存在重边和自环，题目保证终点没有出边。\n\n请你输出符合条件的路径的长度。",
+      "formatI": "第一行有两个用一个空格隔开的整数 $n$ 和 $m$，表示图有 $n$ 个点和 $m$ 条边。\n\n接下来的 $m$ 行每行 $2$ 个整数 $x,y$，之间用一个空格隔开，表示有一条边从点 $x$ 指向点 $y$。\n\n最后一行有两个用一个空格隔开的整数 $s,t$，表示起点为 $s$，终点为 $t$。",
+      "formatO": "输出只有一行，包含一个整数，表示满足题目描述的最短路径的长度。如果这样的路径不存在，输出 $-1$。",
+      "hint": "**样例 1 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/2p3mke49.png) \n\n如上图所示，箭头表示有向道路，圆点表示城市。起点 $1$ 与终点 $3$ 不连通，所以满足题目描述的路径不存在，故输出 $-1$。\n\n**样例 2 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tm2e1lqq.png)\n如上图所示，满足条件的路径为 $1\\to 3\\to 4\\to 5$。注意点 $2$ 不能在答案路径中，因为点 $2$ 连了一条边到点 $6$，而点 $6$ 不与终点 $5$ 连通。\n\n**数据范围及约定**\n\n- 对于 $30\\%$ 的数据，$0<n\\le10$，$0<m\\le 20$。\n- 对于 $60\\%$ 的数据，$0<n\\le100$，$0<m\\le 2000$。\n- 对于 $100\\%$ 的数据，$0<n\\le 10^4$，$0<m\\le 2\\times 10^5$，$0<x,y,s,t\\le n,x,s\\ne t$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "background": "NOIP2014 提高组 D2T2",
+      "description": "在有向图 $G$ 中，每条边的长度均为 $1$，现给定起点和终点，请你在图中找一条从起点到终点的路径，该路径满足以下条件：\n\n1. 路径上的所有点的出边所指向的点都直接或间接与终点连通。\n2. 在满足条件 $1$ 的情况下使路径最短。\n\n注意：图 $G$ 中可能存在重边和自环，题目保证终点没有出边。\n\n请你输出符合条件的路径的长度。",
+      "formatI": "第一行有两个用一个空格隔开的整数 $n$ 和 $m$，表示图有 $n$ 个点和 $m$ 条边。\n\n接下来的 $m$ 行每行 $2$ 个整数 $x,y$，之间用一个空格隔开，表示有一条边从点 $x$ 指向点 $y$。\n\n最后一行有两个用一个空格隔开的整数 $s,t$，表示起点为 $s$，终点为 $t$。",
+      "formatO": "输出只有一行，包含一个整数，表示满足题目描述的最短路径的长度。如果这样的路径不存在，输出 $-1$。",
+      "hint": "**样例 1 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/2p3mke49.png) \n\n如上图所示，箭头表示有向道路，圆点表示城市。起点 $1$ 与终点 $3$ 不连通，所以满足题目描述的路径不存在，故输出 $-1$。\n\n**样例 2 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tm2e1lqq.png)\n如上图所示，满足条件的路径为 $1\\to 3\\to 4\\to 5$。注意点 $2$ 不能在答案路径中，因为点 $2$ 连了一条边到点 $6$，而点 $6$ 不与终点 $5$ 连通。\n\n**数据范围及约定**\n\n- 对于 $30\\%$ 的数据，$0<n\\le10$，$0<m\\le 20$。\n- 对于 $60\\%$ 的数据，$0<n\\le100$，$0<m\\le 2000$。\n- 对于 $100\\%$ 的数据，$0<n\\le 10^4$，$0<m\\le 2\\times 10^5$，$0<x,y,s,t\\le n,x,s\\ne t$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "3 2\n1 2\n2 1\n1 3",
+        "-1"
+      ],
+      [
+        "6 6\n1 2\n1 3\n2 6\n2 5  \n4 5\n3 4\n1 5",
+        "3"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Senior] Finding the Road",
+      "background": "NOIP 2014 Senior D2T2.",
+      "description": "In a directed graph $G$ where every edge has length $1$, you are given a start and a terminal. Please find a path from the start to the terminal that satisfies the following conditions:\n\n1. For every vertex on the path, all endpoints of its outgoing edges are directly or indirectly able to reach the terminal.\n2. Among all paths satisfying condition 1, the path should be the shortest.\n\nNote: Graph $G$ may contain multiple edges and self-loops. It is guaranteed that the terminal has no outgoing edges.\n\nPlease output the length of a path that satisfies the conditions.",
+      "formatI": "The first line contains two integers $n$ and $m$ separated by a space, denoting that the graph has $n$ vertices and $m$ edges.\n\nEach of the next $m$ lines contains two integers $x, y$ separated by a space, indicating there is a directed edge from vertex $x$ to vertex $y$.\n\nThe last line contains two integers $s, t$ separated by a space, indicating that the start is $s$ and the terminal is $t$.",
+      "formatO": "Output a single line containing an integer, the length of the shortest path that satisfies the problem statement. If such a path does not exist, output $-1$.",
+      "hint": "Sample 1 Explanation.\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/2p3mke49.png)\n\nAs shown in the figure above, arrows represent directed roads and dots represent cities. The start $1$ is not connected to the terminal $3$, so a path satisfying the problem statement does not exist, hence the output is $-1$.\n\nSample 2 Explanation.\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tm2e1lqq.png)\nAs shown in the figure above, a path that satisfies the conditions is $1 \\to 3 \\to 4 \\to 5$. Note that vertex $2$ cannot appear in the answer path because vertex $2$ has an edge to vertex $6$, and vertex $6$ cannot reach the terminal $5$.\n\nConstraints.\n\n- For 30% of the testdata, $0 < n \\le 10$, $0 < m \\le 20$.\n- For 60% of the testdata, $0 < n \\le 100$, $0 < m \\le 2000$.\n- For 100% of the testdata, $0 < n \\le 10^4$, $0 < m \\le 2 \\times 10^5$, $0 < x, y, s, t \\le n$, $x, s \\ne t$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 提高组] 寻找道路",
+      "background": "NOIP2014 提高组 D2T2",
+      "description": "在有向图 $G$ 中，每条边的长度均为 $1$，现给定起点和终点，请你在图中找一条从起点到终点的路径，该路径满足以下条件：\n\n1. 路径上的所有点的出边所指向的点都直接或间接与终点连通。\n2. 在满足条件 $1$ 的情况下使路径最短。\n\n注意：图 $G$ 中可能存在重边和自环，题目保证终点没有出边。\n\n请你输出符合条件的路径的长度。",
+      "formatI": "第一行有两个用一个空格隔开的整数 $n$ 和 $m$，表示图有 $n$ 个点和 $m$ 条边。\n\n接下来的 $m$ 行每行 $2$ 个整数 $x,y$，之间用一个空格隔开，表示有一条边从点 $x$ 指向点 $y$。\n\n最后一行有两个用一个空格隔开的整数 $s,t$，表示起点为 $s$，终点为 $t$。",
+      "formatO": "输出只有一行，包含一个整数，表示满足题目描述的最短路径的长度。如果这样的路径不存在，输出 $-1$。",
+      "hint": "**样例 1 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/2p3mke49.png) \n\n如上图所示，箭头表示有向道路，圆点表示城市。起点 $1$ 与终点 $3$ 不连通，所以满足题目描述的路径不存在，故输出 $-1$。\n\n**样例 2 解释**\n\n![](https://cdn.luogu.com.cn/upload/image_hosting/tm2e1lqq.png)\n如上图所示，满足条件的路径为 $1\\to 3\\to 4\\to 5$。注意点 $2$ 不能在答案路径中，因为点 $2$ 连了一条边到点 $6$，而点 $6$ 不与终点 $5$ 连通。\n\n**数据范围及约定**\n\n- 对于 $30\\%$ 的数据，$0<n\\le10$，$0<m\\le 20$。\n- 对于 $60\\%$ 的数据，$0<n\\le100$，$0<m\\le 2000$。\n- 对于 $100\\%$ 的数据，$0<n\\le 10^4$，$0<m\\le 2\\times 10^5$，$0<x,y,s,t\\le n,x,s\\ne t$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1311",
+      "type": "P",
+      "name": "[NOIP 2011 提高组] 选择客栈",
+      "difficulty": 3
+    },
+    {
+      "pid": "P1351",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 联合权值",
+      "difficulty": 3
+    },
+    {
+      "pid": "P1941",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 飞扬的小鸟",
+      "difficulty": 4
+    },
+    {
+      "pid": "P1967",
+      "type": "P",
+      "name": "[NOIP 2013 提高组] 货车运输",
+      "difficulty": 5
+    },
+    {
+      "pid": "P2312",
+      "type": "P",
+      "name": "[NOIP 2014 提高组] 解方程",
+      "difficulty": 4
+    }
+  ],
+  "forum": {
+    "name": "P2296 [NOIP 2014 提高组] 寻找道路",
+    "type": 2,
+    "slug": "P2296",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1341408,
+      "title": "求调",
+      "author": {
+        "uid": 1433512,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1433512.png",
+        "name": "MAX_Payne",
+        "slogan": "##JPL  发呆时装到了 ,  叫做深沉 ; 阿米诺斯教育创始人",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/l3im8t9h.png"
+      },
+      "time": 1785635689
+    },
+    {
+      "id": 1336764,
+      "title": "求调必关！",
+      "author": {
+        "uid": 1848222,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1848222.png",
+        "name": "_YMZ",
+        "slogan": "抬起头，向上看",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/s5ylv3uy.png"
+      },
+      "time": 1785202550
+    },
+    {
+      "id": 1333925,
+      "title": "red_100 玄关",
+      "author": {
+        "uid": 1614280,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1614280.png",
+        "name": "Chenjx2013",
+        "slogan": "新人awa || 今年不过回家种牛||壶关条件(任意满足一个):1.绿及以上  2.我认识你  3.同为胡桃厨",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/g72hx1sk.png"
+      },
+      "time": 1784901978
+    },
+    {
+      "id": 1312662,
+      "title": "救救蒟蒻~",
+      "author": {
+        "uid": 1721772,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1721772.png",
+        "name": "LiuSibel",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/uzbcr5rt.png"
+      },
+      "time": 1783001595
+    },
+    {
+      "id": 1303595,
+      "title": "求条，WA#5#6#7#11",
+      "author": {
+        "uid": 1281856,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1281856.png",
+        "name": "Crux475",
+        "slogan": "This person is too lasy to write anything.",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1780921245
+    },
+    {
+      "id": 1302892,
+      "title": "求调，必关",
+      "author": {
+        "uid": 1044071,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1044071.png",
+        "name": "dzq_2012",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1780801939
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

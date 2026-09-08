@@ -1,0 +1,288 @@
+{
+  "problem": {
+    "pid": "P14638",
+    "type": "P",
+    "name": "[NOIP2025] 序列询问",
+    "difficulty": 8,
+    "tags": [
+      43,
+      56,
+      62,
+      83,
+      108,
+      112,
+      290,
+      385
+    ],
+    "totalSubmit": 14515,
+    "totalAccepted": 1923,
+    "flag": 5,
+    "provider": {
+      "uid": 1,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/1.png",
+      "name": "kkksc03",
+      "slogan": "洛谷吉祥物 DA✩ZE",
+      "badge": "吉祥物",
+      "isAdmin": true,
+      "isBanned": false,
+      "color": "Purple",
+      "ccfLevel": 6,
+      "xcpcLevel": 0,
+      "background": "https://cdn.luogu.com.cn/upload/image_hosting/sgseiz6v.png",
+      "isRoot": true
+    },
+    "contenu": {
+      "name": "[NOIP2025] 序列询问",
+      "background": "额外提供了 1 秒的时限。",
+      "description": "给定一个长度为 $n$ 的整数序列 $a_1, a_2, \\ldots, a_n$。\n\n有 $q$ 次询问，其中第 $j$ ($1 \\le j \\le q$) 次询问将会给出 $L_j, R_j$ ($1 \\le L_j \\le R_j \\le n$)。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 是**极好的**，当且仅当区间 $[l, r]$ 的长度在 $[L_j, R_j]$ 内，即 $L_j \\le r - l + 1 \\le R_j$。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 的**权值**为 $\\sum_{i=l}^{r} a_i$。对于所有 $i = 1, 2, \\ldots, n$，求出所有**包含** $i$ 的极好区间的最大权值，即 $\\max_{1 \\le l \\le i \\le r \\le n} \\{ \\sum_{i=l}^{r} a_i \\mid L_j \\le r - l + 1 \\le R_j \\}$。",
+      "formatI": "输入的第一行包含一个正整数 $n$，表示序列长度。\n\n输入的第二行包含 $n$ 个整数 $a_1, a_2, \\ldots, a_n$。\n\n输入的第三行包含一个正整数 $q$，表示询问次数。\n\n输入的第 $j + 3$ ($1 \\le j \\le q$) 行包含两个正整数 $L_j, R_j$，表示第 $j$ 次询问。\n",
+      "formatO": "对于每次询问，设包含 $i$ ($1 \\le i \\le n$) 的极好区间的最大权值为 $k_i$，输出一行一个非负整数，表示 $\\bigoplus_{i=1}^{n} \\left( (i \\times k_i) \\bmod 2^{64} \\right)$，其中 $\\oplus$ 表示**二进制按位异或**。注意：对于任意**整数** $x$，存在**唯一的非负整数** $x'$ 满足 $x' \\equiv x \\pmod{2^{64}}$ 且 $0 \\le x' \\le 2^{64} - 1$，则记 $x \\bmod 2^{64} = x'$。",
+      "hint": "### 【样例 1 解释】\n\n对于第 $1$ 次询问：\n- 包含 $1$ 的极好区间为 $[1,1]$ 和 $[1,2]$，权值分别为 $2,6$；\n- 包含 $2$ 的极好区间为 $[1,2]$，$[2,2]$ 和 $[2,3]$，权值分别为 $6,4,-1$；\n- 包含 $3$ 的极好区间为 $[2,3]$，$[3,3]$ 和 $[3,4]$，权值分别为 $-1,-5,-4$；\n- 包含 $4$ 的极好区间为 $[3,4]$ 和 $[4,4]$，权值分别为 $-4,1$。\n\n因此 $k_1 = 6$，$k_2 = 6$，$k_3 = -1$，$k_4 = 1$。\n\n对于第 2 次询问，$k_1 = 2$，$k_2 = 2$，$k_3 = 2$，$k_4 = 2$。\n\n对于第 3 次询问，$k_1 = 6$，$k_2 = 6$，$k_3 = 2$，$k_4 = 2$。\n\n### 【样例 2】\n\n见选手目录下的 `query/query2.in` 与 `query/query2.ans`。  \n\n该样例满足测试点 $2,3$ 的约束条件。\n\n### 【样例 3】\n\n见选手目录下的 `query/query3.in` 与 `query/query3.ans`。  \n\n该样例满足测试点 $4$ 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 `query/query4.in` 与 `query/query4.ans`。  \n\n该样例满足测试点 $6,7$ 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 `query/query5.in` 与 `query/query5.ans`。  \n\n该样例满足测试点 $8 \\sim 10$ 的约束条件。\n\n### 【样例 6】\n\n见选手目录下的 `query/query6.in` 与 `query/query6.ans`。  \n\n该样例满足测试点 $11,12$ 的约束条件。\n\n### 【样例 7】\n\n见选手目录下的 `query/query7.in` 与 `query/query7.ans`。  \n\n该样例满足测试点 $13$ 的约束条件。\n\n### 【样例 8】\n\n见选手目录下的 `query/query8.in` 与 `query/query8.ans`。  \n\n该样例满足测试点 $16 \\sim 20$ 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，均有：\n\n- $1 \\le n \\le 5 \\times 10^4$，$1 \\le q \\le 1,024$；\n- 对于所有 $1 \\le i \\le n$，均有 $|a_i| \\le 10^5$；\n- 对于所有 $1 \\le j \\le q$，均有 $1 \\le L_j \\le R_j \\le n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\le$       | $q \\le$ | 特殊性质 |\n|:----------:|:-------------:|:-------:|:--------:|\n| $1$        | $10^3$        | $1$     | 无       |\n| $2,3$      | $3{,}000$     | $50$    | ^        |\n| $4$        | $10^4$        | $128$   | ^        |\n| $5$        | $3 \\times 10^4$ | $512$ | ^        |\n| $6,7$      | $5 \\times 10^4$ | $1{,}024$ | A     |\n| $8 \\sim 10$| ^             | $512$   | B        |\n| $11,12$    | ^             | ^       | C        |\n| $13$       | ^             | $1{,}024$ | D     |\n| $14,15$    | ^             | ^       | E        |\n| $16 \\sim 20$| ^            | ^       | 无       |\n\n特殊性质 A：对于所有 $1 \\le j \\le q$，均有 $L_j = R_j$。\n\n特殊性质 B：对于所有 $1 \\le j \\le q$，均有 $R_j \\le 32$。\n\n特殊性质 C：对于所有 $1 \\le j \\le q$，均有 $L_j \\le 16$ 且 $R_j \\ge n - 1000$。\n\n特殊性质 D：对于所有 $1 \\le j \\le q$，均有 $L_j > n/2$。\n\n特殊性质 E：对于所有 $1 \\le j \\le q$，均有 $L_j > n/4$。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP2025] 序列询问",
+      "background": "额外提供了 1 秒的时限。",
+      "description": "给定一个长度为 $n$ 的整数序列 $a_1, a_2, \\ldots, a_n$。\n\n有 $q$ 次询问，其中第 $j$ ($1 \\le j \\le q$) 次询问将会给出 $L_j, R_j$ ($1 \\le L_j \\le R_j \\le n$)。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 是**极好的**，当且仅当区间 $[l, r]$ 的长度在 $[L_j, R_j]$ 内，即 $L_j \\le r - l + 1 \\le R_j$。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 的**权值**为 $\\sum_{i=l}^{r} a_i$。对于所有 $i = 1, 2, \\ldots, n$，求出所有**包含** $i$ 的极好区间的最大权值，即 $\\max_{1 \\le l \\le i \\le r \\le n} \\{ \\sum_{i=l}^{r} a_i \\mid L_j \\le r - l + 1 \\le R_j \\}$。",
+      "formatI": "输入的第一行包含一个正整数 $n$，表示序列长度。\n\n输入的第二行包含 $n$ 个整数 $a_1, a_2, \\ldots, a_n$。\n\n输入的第三行包含一个正整数 $q$，表示询问次数。\n\n输入的第 $j + 3$ ($1 \\le j \\le q$) 行包含两个正整数 $L_j, R_j$，表示第 $j$ 次询问。\n",
+      "formatO": "对于每次询问，设包含 $i$ ($1 \\le i \\le n$) 的极好区间的最大权值为 $k_i$，输出一行一个非负整数，表示 $\\bigoplus_{i=1}^{n} \\left( (i \\times k_i) \\bmod 2^{64} \\right)$，其中 $\\oplus$ 表示**二进制按位异或**。注意：对于任意**整数** $x$，存在**唯一的非负整数** $x'$ 满足 $x' \\equiv x \\pmod{2^{64}}$ 且 $0 \\le x' \\le 2^{64} - 1$，则记 $x \\bmod 2^{64} = x'$。",
+      "hint": "### 【样例 1 解释】\n\n对于第 $1$ 次询问：\n- 包含 $1$ 的极好区间为 $[1,1]$ 和 $[1,2]$，权值分别为 $2,6$；\n- 包含 $2$ 的极好区间为 $[1,2]$，$[2,2]$ 和 $[2,3]$，权值分别为 $6,4,-1$；\n- 包含 $3$ 的极好区间为 $[2,3]$，$[3,3]$ 和 $[3,4]$，权值分别为 $-1,-5,-4$；\n- 包含 $4$ 的极好区间为 $[3,4]$ 和 $[4,4]$，权值分别为 $-4,1$。\n\n因此 $k_1 = 6$，$k_2 = 6$，$k_3 = -1$，$k_4 = 1$。\n\n对于第 2 次询问，$k_1 = 2$，$k_2 = 2$，$k_3 = 2$，$k_4 = 2$。\n\n对于第 3 次询问，$k_1 = 6$，$k_2 = 6$，$k_3 = 2$，$k_4 = 2$。\n\n### 【样例 2】\n\n见选手目录下的 `query/query2.in` 与 `query/query2.ans`。  \n\n该样例满足测试点 $2,3$ 的约束条件。\n\n### 【样例 3】\n\n见选手目录下的 `query/query3.in` 与 `query/query3.ans`。  \n\n该样例满足测试点 $4$ 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 `query/query4.in` 与 `query/query4.ans`。  \n\n该样例满足测试点 $6,7$ 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 `query/query5.in` 与 `query/query5.ans`。  \n\n该样例满足测试点 $8 \\sim 10$ 的约束条件。\n\n### 【样例 6】\n\n见选手目录下的 `query/query6.in` 与 `query/query6.ans`。  \n\n该样例满足测试点 $11,12$ 的约束条件。\n\n### 【样例 7】\n\n见选手目录下的 `query/query7.in` 与 `query/query7.ans`。  \n\n该样例满足测试点 $13$ 的约束条件。\n\n### 【样例 8】\n\n见选手目录下的 `query/query8.in` 与 `query/query8.ans`。  \n\n该样例满足测试点 $16 \\sim 20$ 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，均有：\n\n- $1 \\le n \\le 5 \\times 10^4$，$1 \\le q \\le 1,024$；\n- 对于所有 $1 \\le i \\le n$，均有 $|a_i| \\le 10^5$；\n- 对于所有 $1 \\le j \\le q$，均有 $1 \\le L_j \\le R_j \\le n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\le$       | $q \\le$ | 特殊性质 |\n|:----------:|:-------------:|:-------:|:--------:|\n| $1$        | $10^3$        | $1$     | 无       |\n| $2,3$      | $3{,}000$     | $50$    | ^        |\n| $4$        | $10^4$        | $128$   | ^        |\n| $5$        | $3 \\times 10^4$ | $512$ | ^        |\n| $6,7$      | $5 \\times 10^4$ | $1{,}024$ | A     |\n| $8 \\sim 10$| ^             | $512$   | B        |\n| $11,12$    | ^             | ^       | C        |\n| $13$       | ^             | $1{,}024$ | D     |\n| $14,15$    | ^             | ^       | E        |\n| $16 \\sim 20$| ^            | ^       | 无       |\n\n特殊性质 A：对于所有 $1 \\le j \\le q$，均有 $L_j = R_j$。\n\n特殊性质 B：对于所有 $1 \\le j \\le q$，均有 $R_j \\le 32$。\n\n特殊性质 C：对于所有 $1 \\le j \\le q$，均有 $L_j \\le 16$ 且 $R_j \\ge n - 1000$。\n\n特殊性质 D：对于所有 $1 \\le j \\le q$，均有 $L_j > n/2$。\n\n特殊性质 E：对于所有 $1 \\le j \\le q$，均有 $L_j > n/4$。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "0jq2msiw",
+        "filename": "query.zip",
+        "size": 822938,
+        "uploadTime": 1764426421,
+        "downloadLink": "/fe/api/problem/downloadAttachment/0jq2msiw"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "4\n2 4 -5 1\n3\n1 2\n3 4\n1 4",
+        "18446744073709551603\n8\n4"
+      ]
+    ],
+    "limits": {
+      "time": [
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000,
+        3000
+      ],
+      "memory": [
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288,
+        524288
+      ]
+    }
+  },
+  "translations": {
+    "zh-CN": {
+      "name": "[NOIP2025] 序列询问",
+      "background": "额外提供了 1 秒的时限。",
+      "description": "给定一个长度为 $n$ 的整数序列 $a_1, a_2, \\ldots, a_n$。\n\n有 $q$ 次询问，其中第 $j$ ($1 \\le j \\le q$) 次询问将会给出 $L_j, R_j$ ($1 \\le L_j \\le R_j \\le n$)。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 是**极好的**，当且仅当区间 $[l, r]$ 的长度在 $[L_j, R_j]$ 内，即 $L_j \\le r - l + 1 \\le R_j$。定义区间 $[l, r]$ ($1 \\le l \\le r \\le n$) 的**权值**为 $\\sum_{i=l}^{r} a_i$。对于所有 $i = 1, 2, \\ldots, n$，求出所有**包含** $i$ 的极好区间的最大权值，即 $\\max_{1 \\le l \\le i \\le r \\le n} \\{ \\sum_{i=l}^{r} a_i \\mid L_j \\le r - l + 1 \\le R_j \\}$。",
+      "formatI": "输入的第一行包含一个正整数 $n$，表示序列长度。\n\n输入的第二行包含 $n$ 个整数 $a_1, a_2, \\ldots, a_n$。\n\n输入的第三行包含一个正整数 $q$，表示询问次数。\n\n输入的第 $j + 3$ ($1 \\le j \\le q$) 行包含两个正整数 $L_j, R_j$，表示第 $j$ 次询问。\n",
+      "formatO": "对于每次询问，设包含 $i$ ($1 \\le i \\le n$) 的极好区间的最大权值为 $k_i$，输出一行一个非负整数，表示 $\\bigoplus_{i=1}^{n} \\left( (i \\times k_i) \\bmod 2^{64} \\right)$，其中 $\\oplus$ 表示**二进制按位异或**。注意：对于任意**整数** $x$，存在**唯一的非负整数** $x'$ 满足 $x' \\equiv x \\pmod{2^{64}}$ 且 $0 \\le x' \\le 2^{64} - 1$，则记 $x \\bmod 2^{64} = x'$。",
+      "hint": "### 【样例 1 解释】\n\n对于第 $1$ 次询问：\n- 包含 $1$ 的极好区间为 $[1,1]$ 和 $[1,2]$，权值分别为 $2,6$；\n- 包含 $2$ 的极好区间为 $[1,2]$，$[2,2]$ 和 $[2,3]$，权值分别为 $6,4,-1$；\n- 包含 $3$ 的极好区间为 $[2,3]$，$[3,3]$ 和 $[3,4]$，权值分别为 $-1,-5,-4$；\n- 包含 $4$ 的极好区间为 $[3,4]$ 和 $[4,4]$，权值分别为 $-4,1$。\n\n因此 $k_1 = 6$，$k_2 = 6$，$k_3 = -1$，$k_4 = 1$。\n\n对于第 2 次询问，$k_1 = 2$，$k_2 = 2$，$k_3 = 2$，$k_4 = 2$。\n\n对于第 3 次询问，$k_1 = 6$，$k_2 = 6$，$k_3 = 2$，$k_4 = 2$。\n\n### 【样例 2】\n\n见选手目录下的 `query/query2.in` 与 `query/query2.ans`。  \n\n该样例满足测试点 $2,3$ 的约束条件。\n\n### 【样例 3】\n\n见选手目录下的 `query/query3.in` 与 `query/query3.ans`。  \n\n该样例满足测试点 $4$ 的约束条件。\n\n### 【样例 4】\n\n见选手目录下的 `query/query4.in` 与 `query/query4.ans`。  \n\n该样例满足测试点 $6,7$ 的约束条件。\n\n### 【样例 5】\n\n见选手目录下的 `query/query5.in` 与 `query/query5.ans`。  \n\n该样例满足测试点 $8 \\sim 10$ 的约束条件。\n\n### 【样例 6】\n\n见选手目录下的 `query/query6.in` 与 `query/query6.ans`。  \n\n该样例满足测试点 $11,12$ 的约束条件。\n\n### 【样例 7】\n\n见选手目录下的 `query/query7.in` 与 `query/query7.ans`。  \n\n该样例满足测试点 $13$ 的约束条件。\n\n### 【样例 8】\n\n见选手目录下的 `query/query8.in` 与 `query/query8.ans`。  \n\n该样例满足测试点 $16 \\sim 20$ 的约束条件。\n\n### 【数据范围】\n\n对于所有测试数据，均有：\n\n- $1 \\le n \\le 5 \\times 10^4$，$1 \\le q \\le 1,024$；\n- 对于所有 $1 \\le i \\le n$，均有 $|a_i| \\le 10^5$；\n- 对于所有 $1 \\le j \\le q$，均有 $1 \\le L_j \\le R_j \\le n$。\n\n::cute-table{tuack}\n\n| 测试点编号 | $n \\le$       | $q \\le$ | 特殊性质 |\n|:----------:|:-------------:|:-------:|:--------:|\n| $1$        | $10^3$        | $1$     | 无       |\n| $2,3$      | $3{,}000$     | $50$    | ^        |\n| $4$        | $10^4$        | $128$   | ^        |\n| $5$        | $3 \\times 10^4$ | $512$ | ^        |\n| $6,7$      | $5 \\times 10^4$ | $1{,}024$ | A     |\n| $8 \\sim 10$| ^             | $512$   | B        |\n| $11,12$    | ^             | ^       | C        |\n| $13$       | ^             | $1{,}024$ | D     |\n| $14,15$    | ^             | ^       | E        |\n| $16 \\sim 20$| ^            | ^       | 无       |\n\n特殊性质 A：对于所有 $1 \\le j \\le q$，均有 $L_j = R_j$。\n\n特殊性质 B：对于所有 $1 \\le j \\le q$，均有 $R_j \\le 32$。\n\n特殊性质 C：对于所有 $1 \\le j \\le q$，均有 $L_j \\le 16$ 且 $R_j \\ge n - 1000$。\n\n特殊性质 D：对于所有 $1 \\le j \\le q$，均有 $L_j > n/2$。\n\n特殊性质 E：对于所有 $1 \\le j \\le q$，均有 $L_j > n/4$。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 294607,
+    "startTime": 1764394200,
+    "endTime": 1765195200,
+    "name": "NOIP2025 自测（官方数据）"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [],
+  "forum": {
+    "name": "P14638 [NOIP2025] 序列询问",
+    "type": 2,
+    "slug": "P14638",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1344206,
+      "title": "求问部分分",
+      "author": {
+        "uid": 1123752,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1123752.png",
+        "name": "clo201111",
+        "slogan": "我是给！||禁言是自己申请的||九年级fw||无NOIP一等高中不APIO银牌金钩不改签||宣团92514||纠出通过的题解内容（非格式）错误会关注。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/e2k2vxqc.png"
+      },
+      "time": 1785913233
+    },
+    {
+      "id": 1314900,
+      "title": "为什么，只得了10分？？？",
+      "author": {
+        "uid": 2197837,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2197837.png",
+        "name": "huangmeiqin0626",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783341119
+    },
+    {
+      "id": 1281694,
+      "title": "求卡常",
+      "author": {
+        "uid": 895312,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/895312.png",
+        "name": "hyf719346",
+        "slogan": "并非",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/r6svinv2.png"
+      },
+      "time": 1776865066
+    },
+    {
+      "id": 1259265,
+      "title": "nqlogn 15ptsWA+TLE求调",
+      "author": {
+        "uid": 524091,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/524091.png",
+        "name": "dami826",
+        "slogan": "既然选择了远方，便只顾风雨兼程",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/t2xt83z9.png"
+      },
+      "time": 1772959426
+    },
+    {
+      "id": 1249588,
+      "title": "警钟砸烂",
+      "author": {
+        "uid": 572133,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/572133.png",
+        "name": "潘德理2010",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1771118403
+    },
+    {
+      "id": 1249562,
+      "title": "卡常",
+      "author": {
+        "uid": 572133,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/572133.png",
+        "name": "潘德理2010",
+        "slogan": "",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 7,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1771084314
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

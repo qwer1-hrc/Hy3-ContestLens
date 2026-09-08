@@ -1,0 +1,337 @@
+{
+  "problem": {
+    "pid": "P7078",
+    "type": "P",
+    "name": "[CSP-S 2020] 贪吃蛇",
+    "difficulty": 7,
+    "tags": [
+      7,
+      13,
+      37,
+      51,
+      288,
+      342
+    ],
+    "totalSubmit": 35808,
+    "totalAccepted": 7133,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[CSP-S 2020] 贪吃蛇",
+      "background": "",
+      "description": "草原上有 $n$ 条蛇，编号分别为 $1, 2, \\ldots , n$。初始时每条蛇有一个体力值 $a_i$，我们称编号为 $x$ 的蛇实力比编号为 $y$ 的蛇强当且仅当它们当前的体力值满足 $a_x > a_y$，或者 $a_x = a_y$ 且 $x > y$。\n\n接下来这些蛇将进行决斗，决斗将持续若干轮，每一轮实力最强的蛇拥有选择权，可以选择吃或者不吃掉实力最弱的蛇：\n\n1. 如果选择吃，那么实力最强的蛇的体力值将减去实力最弱的蛇的体力值，实力最弱的蛇被吃掉，退出接下来的决斗。之后开始下一轮决斗。\n2. 如果选择不吃，决斗立刻结束。\n\n每条蛇希望在自己不被吃的前提下在决斗中尽可能多吃别的蛇（显然，蛇不会选择吃自己）。\n\n现在假设每条蛇都足够聪明，请你求出决斗结束后会剩几条蛇。\n\n本题有多组数据，对于第一组数据，每条蛇体力会全部由输入给出，之后的每一组数据，会相对于上一组的数据，修改一部分蛇的体力作为新的输入。",
+      "formatI": "第一行一个正整数 $T$，表示数据组数。  \n接下来有 $T$ 组数据，对于第一组数据，第一行一个正整数 $n$，第二行 $n$ 个非负整数表示 $a_i$。  \n对于第二组到第 $T$ 组数据，每组数据：  \n第一行第一个非负整数 $k$ 表示体力修改的蛇的个数。  \n第二行 $2k$ 个整数，每两个整数组成一个二元组 $(x,y)$，表示依次将 $a_x$ 的值改为 $y$。一个位置可能被修改多次，以最后一次修改为准。",
+      "formatO": "输出 $T$ 行，每行一个整数表示最终存活的蛇的条数。",
+      "hint": "**【样例 #1 解释】**\n\n第一组数据，第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱。若 $3$ 号蛇选择吃，那么它将在第二轮被 $2$ 号蛇吃掉。因此 $3$ 号蛇第一轮选择不吃，$3$ 条蛇都将存活。\n\n对于第二组数据，$3$ 条蛇体力变为 $5, 6, 25$。第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱，若它选择吃，那么 $3$ 号蛇体力值变为 $20$，在第二轮中依然是最强蛇并能吃掉 $2$ 号蛇，因此 $3$ 号蛇会选择两轮都吃，最终只有 $1$ 条蛇存活。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n = 3$。  \n对于 $40 \\%$ 的数据，$n \\le 10$。  \n对于 $55 \\%$ 的数据，$n \\le 2000$。  \n对于 $70\\%$ 的数据，$n \\le 5 \\times {10}^4$。  \n对于 $100\\%$ 的数据：$3 \\le n \\le {10}^6$，$1 \\le T \\le 10$，$0 \\le k \\le {10}^5$，$0 \\le a_i, y \\le 10^9$。保证每组数据（包括所有修改完成后的）的 $a_i$ 以不降顺序排列。",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[CSP-S 2020] 贪吃蛇",
+      "background": "",
+      "description": "草原上有 $n$ 条蛇，编号分别为 $1, 2, \\ldots , n$。初始时每条蛇有一个体力值 $a_i$，我们称编号为 $x$ 的蛇实力比编号为 $y$ 的蛇强当且仅当它们当前的体力值满足 $a_x > a_y$，或者 $a_x = a_y$ 且 $x > y$。\n\n接下来这些蛇将进行决斗，决斗将持续若干轮，每一轮实力最强的蛇拥有选择权，可以选择吃或者不吃掉实力最弱的蛇：\n\n1. 如果选择吃，那么实力最强的蛇的体力值将减去实力最弱的蛇的体力值，实力最弱的蛇被吃掉，退出接下来的决斗。之后开始下一轮决斗。\n2. 如果选择不吃，决斗立刻结束。\n\n每条蛇希望在自己不被吃的前提下在决斗中尽可能多吃别的蛇（显然，蛇不会选择吃自己）。\n\n现在假设每条蛇都足够聪明，请你求出决斗结束后会剩几条蛇。\n\n本题有多组数据，对于第一组数据，每条蛇体力会全部由输入给出，之后的每一组数据，会相对于上一组的数据，修改一部分蛇的体力作为新的输入。",
+      "formatI": "第一行一个正整数 $T$，表示数据组数。  \n接下来有 $T$ 组数据，对于第一组数据，第一行一个正整数 $n$，第二行 $n$ 个非负整数表示 $a_i$。  \n对于第二组到第 $T$ 组数据，每组数据：  \n第一行第一个非负整数 $k$ 表示体力修改的蛇的个数。  \n第二行 $2k$ 个整数，每两个整数组成一个二元组 $(x,y)$，表示依次将 $a_x$ 的值改为 $y$。一个位置可能被修改多次，以最后一次修改为准。",
+      "formatO": "输出 $T$ 行，每行一个整数表示最终存活的蛇的条数。",
+      "hint": "**【样例 #1 解释】**\n\n第一组数据，第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱。若 $3$ 号蛇选择吃，那么它将在第二轮被 $2$ 号蛇吃掉。因此 $3$ 号蛇第一轮选择不吃，$3$ 条蛇都将存活。\n\n对于第二组数据，$3$ 条蛇体力变为 $5, 6, 25$。第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱，若它选择吃，那么 $3$ 号蛇体力值变为 $20$，在第二轮中依然是最强蛇并能吃掉 $2$ 号蛇，因此 $3$ 号蛇会选择两轮都吃，最终只有 $1$ 条蛇存活。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n = 3$。  \n对于 $40 \\%$ 的数据，$n \\le 10$。  \n对于 $55 \\%$ 的数据，$n \\le 2000$。  \n对于 $70\\%$ 的数据，$n \\le 5 \\times {10}^4$。  \n对于 $100\\%$ 的数据：$3 \\le n \\le {10}^6$，$1 \\le T \\le 10$，$0 \\le k \\le {10}^5$，$0 \\le a_i, y \\le 10^9$。保证每组数据（包括所有修改完成后的）的 $a_i$ 以不降顺序排列。",
+      "locale": "zh-CN"
+    },
+    "attachments": [
+      {
+        "id": "fg9bsk1k",
+        "filename": "snakes.zip",
+        "size": 1429196,
+        "uploadTime": 1604781180,
+        "downloadLink": "/fe/api/problem/downloadAttachment/fg9bsk1k"
+      }
+    ],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "2\n3\n11 14 14\n3\n1 5 2 6 3 25",
+        "3\n1"
+      ],
+      [
+        "2\n5\n13 31 33 39 42\n5\n1 7 2 10 3 24 4 48 5 50",
+        "5\n3"
+      ],
+      [
+        "见附件中的 snakes/snakes3.in",
+        "见附件中的 snakes/snakes3.ans"
+      ],
+      [
+        "见附件中的 snakes/snakes4.in",
+        "见附件中的 snakes/snakes4.ans"
+      ]
+    ],
+    "limits": {
+      "time": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000
+      ],
+      "memory": [
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144,
+        262144
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[CSP-S 2020] Greedy Snake",
+      "background": "",
+      "description": "There are $n$ snakes on the grassland, numbered $1, 2, \\ldots , n$. Initially, each snake has a stamina value $a_i$. We say that the snake with index $x$ is stronger than the snake with index $y$ if and only if their current stamina values satisfy $a_x > a_y$, or $a_x = a_y$ and $x > y$.\n\nNext, these snakes will duel. The duel lasts for several rounds. In each round, the strongest snake has the right to choose whether to eat the weakest snake:\n\n1. If it chooses to eat, then the strongest snake’s stamina value decreases by the weakest snake’s stamina value. The weakest snake is eaten and leaves the subsequent duels. Then the next round starts.\n2. If it chooses not to eat, the duel ends immediately.\n\nEach snake wants to eat as many other snakes as possible in the duel, under the condition that it is not eaten (obviously, a snake will not choose to eat itself).\n\nNow assume every snake is smart enough. Please find how many snakes will remain after the duel ends.\n\nThis problem contains multiple test cases. For the first test case, all snakes’ stamina values are given by the input. For each subsequent test case, compared to the previous test case, the stamina values of some snakes are modified as the new input.",
+      "formatI": "The first line contains a positive integer $T$, denoting the number of test cases.  \nThen there are $T$ test cases. For the first test case, the first line contains a positive integer $n$, and the second line contains $n$ non-negative integers representing $a_i$.  \nFor test cases $2$ to $T$, each test case is given as follows:  \nThe first line contains a non-negative integer $k$, denoting the number of snakes whose stamina will be modified.  \nThe second line contains $2k$ integers. Every two integers form a pair $(x,y)$, meaning that $a_x$ is updated to $y$ in order. A position may be updated multiple times; the last update takes effect.",
+      "formatO": "Output $T$ lines. Each line contains one integer, denoting the number of snakes that survive in the end.",
+      "hint": "**[Sample #1 Explanation]**\n\nIn the first test case, in the first round, snake $3$ is the strongest and snake $1$ is the weakest. If snake $3$ chooses to eat, then it will be eaten by snake $2$ in the second round. Therefore, snake $3$ chooses not to eat in the first round, and all $3$ snakes survive.\n\nFor the second test case, the $3$ snakes’ stamina values become $5, 6, 25$. In the first round, snake $3$ is the strongest and snake $1$ is the weakest. If it chooses to eat, then snake $3$’s stamina becomes $20$. In the second round, it is still the strongest snake and can eat snake $2$. Therefore, snake $3$ will choose to eat in both rounds, and finally only $1$ snake survives.\n\n**[Constraints]**\n\nFor $20\\%$ of the testdata, $n = 3$.  \nFor $40\\%$ of the testdata, $n \\le 10$.  \nFor $55\\%$ of the testdata, $n \\le 2000$.  \nFor $70\\%$ of the testdata, $n \\le 5 \\times {10}^4$.  \nFor $100\\%$ of the testdata: $3 \\le n \\le {10}^6$, $1 \\le T \\le 10$, $0 \\le k \\le {10}^5$, $0 \\le a_i, y \\le 10^9$. It is guaranteed that for each test case (including after all modifications), the sequence $a_i$ is in non-decreasing order.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[CSP-S 2020] 贪吃蛇",
+      "background": "",
+      "description": "草原上有 $n$ 条蛇，编号分别为 $1, 2, \\ldots , n$。初始时每条蛇有一个体力值 $a_i$，我们称编号为 $x$ 的蛇实力比编号为 $y$ 的蛇强当且仅当它们当前的体力值满足 $a_x > a_y$，或者 $a_x = a_y$ 且 $x > y$。\n\n接下来这些蛇将进行决斗，决斗将持续若干轮，每一轮实力最强的蛇拥有选择权，可以选择吃或者不吃掉实力最弱的蛇：\n\n1. 如果选择吃，那么实力最强的蛇的体力值将减去实力最弱的蛇的体力值，实力最弱的蛇被吃掉，退出接下来的决斗。之后开始下一轮决斗。\n2. 如果选择不吃，决斗立刻结束。\n\n每条蛇希望在自己不被吃的前提下在决斗中尽可能多吃别的蛇（显然，蛇不会选择吃自己）。\n\n现在假设每条蛇都足够聪明，请你求出决斗结束后会剩几条蛇。\n\n本题有多组数据，对于第一组数据，每条蛇体力会全部由输入给出，之后的每一组数据，会相对于上一组的数据，修改一部分蛇的体力作为新的输入。",
+      "formatI": "第一行一个正整数 $T$，表示数据组数。  \n接下来有 $T$ 组数据，对于第一组数据，第一行一个正整数 $n$，第二行 $n$ 个非负整数表示 $a_i$。  \n对于第二组到第 $T$ 组数据，每组数据：  \n第一行第一个非负整数 $k$ 表示体力修改的蛇的个数。  \n第二行 $2k$ 个整数，每两个整数组成一个二元组 $(x,y)$，表示依次将 $a_x$ 的值改为 $y$。一个位置可能被修改多次，以最后一次修改为准。",
+      "formatO": "输出 $T$ 行，每行一个整数表示最终存活的蛇的条数。",
+      "hint": "**【样例 #1 解释】**\n\n第一组数据，第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱。若 $3$ 号蛇选择吃，那么它将在第二轮被 $2$ 号蛇吃掉。因此 $3$ 号蛇第一轮选择不吃，$3$ 条蛇都将存活。\n\n对于第二组数据，$3$ 条蛇体力变为 $5, 6, 25$。第一轮中 $3$ 号蛇最强，$1$ 号蛇最弱，若它选择吃，那么 $3$ 号蛇体力值变为 $20$，在第二轮中依然是最强蛇并能吃掉 $2$ 号蛇，因此 $3$ 号蛇会选择两轮都吃，最终只有 $1$ 条蛇存活。\n\n**【数据范围】**\n\n对于 $20 \\%$ 的数据，$n = 3$。  \n对于 $40 \\%$ 的数据，$n \\le 10$。  \n对于 $55 \\%$ 的数据，$n \\le 2000$。  \n对于 $70\\%$ 的数据，$n \\le 5 \\times {10}^4$。  \n对于 $100\\%$ 的数据：$3 \\le n \\le {10}^6$，$1 \\le T \\le 10$，$0 \\le k \\le {10}^5$，$0 \\le a_i, y \\le 10^9$。保证每组数据（包括所有修改完成后的）的 $a_i$ 以不降顺序排列。",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": {
+    "id": 37022,
+    "startTime": 1604678400,
+    "endTime": 1605024000,
+    "name": "CSP2020 S-2 组自测"
+  },
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P7075",
+      "type": "P",
+      "name": "[CSP-S 2020] 儒略日",
+      "difficulty": 4
+    },
+    {
+      "pid": "P7077",
+      "type": "P",
+      "name": "[CSP-S 2020] 函数调用",
+      "difficulty": 6
+    },
+    {
+      "pid": "P7076",
+      "type": "P",
+      "name": "[CSP-S 2020] 动物园",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7113",
+      "type": "P",
+      "name": "[NOIP2020] 排水系统",
+      "difficulty": 3
+    },
+    {
+      "pid": "P7114",
+      "type": "P",
+      "name": "[NOIP2020] 字符串匹配",
+      "difficulty": 6
+    }
+  ],
+  "forum": {
+    "name": "P7078 [CSP-S 2020] 贪吃蛇",
+    "type": 2,
+    "slug": "P7078",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1367187,
+      "title": "我不明白（过了但是求问）",
+      "author": {
+        "uid": 1130462,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1130462.png",
+        "name": "180700553dd",
+        "slogan": "我是帝果，我才是帝果（lw393曾说过，任何声称都是绵软无力的）",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/are1djzj.png"
+      },
+      "time": 1787909401
+    },
+    {
+      "id": 1354659,
+      "title": "70pts求调，WA #15~#20",
+      "author": {
+        "uid": 730192,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/730192.png",
+        "name": "gh_AC",
+        "slogan": ">_<",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/qp1qcpwc.png"
+      },
+      "time": 1786795106
+    },
+    {
+      "id": 1347744,
+      "title": "50pts求调，只有AC和WA",
+      "author": {
+        "uid": 1799711,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1799711.png",
+        "name": "OIbeginnerWZH",
+        "slogan": "始为beginner，终应为winner",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1786235959
+    },
+    {
+      "id": 1298351,
+      "title": "初始体力两两不同的情况下，最终存活数是否一定为奇数？",
+      "author": {
+        "uid": 239832,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/239832.png",
+        "name": "sipu6174",
+        "slogan": "已退役",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 6,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/appq685z.png"
+      },
+      "time": 1779881069
+    },
+    {
+      "id": 1286787,
+      "title": "70分求调，调对必关",
+      "author": {
+        "uid": 1774095,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1774095.png",
+        "name": "yzm3262",
+        "slogan": "这个家伙很懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 5,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1777803022
+    },
+    {
+      "id": 1256877,
+      "title": "TLE 55pts求条",
+      "author": {
+        "uid": 1652179,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1652179.png",
+        "name": "Sur_facial",
+        "slogan": "我是 蒟蒻",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1772524518
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

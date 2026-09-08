@@ -101,11 +101,21 @@ class JudgeConfig(StrictModel):
 
 class ProblemManifest(StrictModel):
     schema_version: Literal[1]
-    dataset_id: Literal["noip2018"]
+    dataset_id: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     problem_id: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     title_zh: str
     day: Literal[1, 2]
     luogu_difficulty: str | None = None
+    contest: str = "NOIP"
+    year: int = 2018
+    group: Literal["junior", "senior"] = "senior"
+    task_number: int = Field(default=1, ge=1, le=4)
+    luogu_id: str | None = Field(default=None, pattern=r"^P[0-9]+$")
+    difficulty_checked_at: str | None = None
+    data_status: Literal["official", "samples", "partial", "missing"] = "official"
+    test_count: int | None = Field(default=None, ge=0)
+    judge_note: str | None = None
+    statement_relative_path: str | None = None
     resource_limits: ResourceLimits
     io: IOConfig
     judge: JudgeConfig
@@ -190,6 +200,13 @@ class TestResult(StrictModel):
     actual_sha256: str | None = None
     first_diff: dict[str, Any] | None = None
     exit_code: int | None = None
+    termination_signal: int | None = None
+    timed_out: bool | None = None
+    memory_limited: bool | None = None
+    output_limited: bool | None = None
+    stdout_bytes: int | None = Field(default=None, ge=0)
+    file_output_bytes: int | None = Field(default=None, ge=0)
+    stderr_bytes: int | None = Field(default=None, ge=0)
 
 
 class CheckResult(StrictModel):

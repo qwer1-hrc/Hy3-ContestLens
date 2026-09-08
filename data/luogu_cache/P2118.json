@@ -1,0 +1,291 @@
+{
+  "problem": {
+    "pid": "P2118",
+    "type": "P",
+    "name": "[NOIP 2014 普及组] 比例简化",
+    "difficulty": 2,
+    "tags": [
+      5,
+      31,
+      82,
+      111,
+      241
+    ],
+    "totalSubmit": 95317,
+    "totalAccepted": 44871,
+    "flag": 5,
+    "provider": {
+      "uid": 19,
+      "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+      "name": "CCF_NOI",
+      "slogan": "",
+      "badge": null,
+      "isAdmin": false,
+      "isBanned": false,
+      "color": "Gray",
+      "ccfLevel": 0,
+      "xcpcLevel": 0,
+      "background": ""
+    },
+    "contenu": {
+      "name": "[NOIP 2014 普及组] 比例简化",
+      "background": "NOIP2014 普及组 T2",
+      "description": "在社交媒体上，经常会看到针对某一个观点同意与否的民意调查以及结果。例如，对某一观点表示支持的有 $1498$ 人，反对的有 $902$ 人，那么赞同与反对的比例可以简单的记为 $1498:902$。\n\n不过，如果把调查结果就以这种方式呈现出来，大多数人肯定不会满意。因为这个比例的数值太大，难以一眼看出它们的关系。对于上面这个例子，如果把比例记为 $5:3$，虽然与真实结果有一定的误差，但依然能够较为准确地反映调查结果，同时也显得比较直观。\n\n现给出支持人数 $A$，反对人数 $B$，以及一个上限 $L$，请你将 $A$ 比 $B$ 化简为 $A'$ 比 $B'$，要求在 $A'$ 和 $B'$ 均不大于 $L$ 且 $A'$ 和 $B'$ 互质（两个整数的最大公约数是 $1$）的前提下，$\\dfrac{A'}{B'} \\ge  \\dfrac{A}{B}$ 且 $\\dfrac{A'}{B'} - \\dfrac{A}{B}$ 的值尽可能小。",
+      "formatI": "共一行，包含三个整数 $A,B,L$，每两个整数之间用一个空格隔开，分别表示支持人数、反对人数以及上限。\n",
+      "formatO": "共一行，包含两个整数 $A',B'$，中间用一个空格隔开，表示化简后的比例。\n",
+      "hint": "对于 $100\\%$ 的数据，$1 \\le A \\le 10^6,1 \\le B \\le 10^6,1 \\le L \\le 100,\\dfrac{A}{B} \\le L$。\n",
+      "locale": "zh-CN"
+    },
+    "content": {
+      "name": "[NOIP 2014 普及组] 比例简化",
+      "background": "NOIP2014 普及组 T2",
+      "description": "在社交媒体上，经常会看到针对某一个观点同意与否的民意调查以及结果。例如，对某一观点表示支持的有 $1498$ 人，反对的有 $902$ 人，那么赞同与反对的比例可以简单的记为 $1498:902$。\n\n不过，如果把调查结果就以这种方式呈现出来，大多数人肯定不会满意。因为这个比例的数值太大，难以一眼看出它们的关系。对于上面这个例子，如果把比例记为 $5:3$，虽然与真实结果有一定的误差，但依然能够较为准确地反映调查结果，同时也显得比较直观。\n\n现给出支持人数 $A$，反对人数 $B$，以及一个上限 $L$，请你将 $A$ 比 $B$ 化简为 $A'$ 比 $B'$，要求在 $A'$ 和 $B'$ 均不大于 $L$ 且 $A'$ 和 $B'$ 互质（两个整数的最大公约数是 $1$）的前提下，$\\dfrac{A'}{B'} \\ge  \\dfrac{A}{B}$ 且 $\\dfrac{A'}{B'} - \\dfrac{A}{B}$ 的值尽可能小。",
+      "formatI": "共一行，包含三个整数 $A,B,L$，每两个整数之间用一个空格隔开，分别表示支持人数、反对人数以及上限。\n",
+      "formatO": "共一行，包含两个整数 $A',B'$，中间用一个空格隔开，表示化简后的比例。\n",
+      "hint": "对于 $100\\%$ 的数据，$1 \\le A \\le 10^6,1 \\le B \\le 10^6,1 \\le L \\le 100,\\dfrac{A}{B} \\le L$。\n",
+      "locale": "zh-CN"
+    },
+    "attachments": [],
+    "showScore": true,
+    "acceptSolution": false,
+    "acceptLanguages": [
+      5,
+      1,
+      2,
+      28,
+      3,
+      4,
+      11,
+      12,
+      27,
+      34,
+      7,
+      25,
+      8,
+      33,
+      15,
+      14,
+      19,
+      30,
+      31,
+      32,
+      21,
+      22,
+      17,
+      9,
+      16,
+      13,
+      23
+    ],
+    "samples": [
+      [
+        "1498 902 10",
+        "5 3"
+      ]
+    ],
+    "limits": {
+      "time": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "memory": [
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000,
+        128000
+      ]
+    }
+  },
+  "translations": {
+    "en": {
+      "name": "[NOIP 2014 Junior] Ratio Simplification",
+      "background": "NOIP 2014 Junior T2.",
+      "description": "On social media, it is common to see polls and their results about whether people agree with a certain viewpoint. For example, if $1498$ people support it and $902$ oppose it, then the ratio of support to opposition can be written simply as $1498:902$.\n\nHowever, most people would not be satisfied if the results were presented this way, because the numbers in the ratio are too large and it is hard to see the relationship at a glance. For the example above, if the ratio is written as $5:3$, although there is some error compared with the true result, it still reflects the poll result fairly accurately and is more intuitive.\n\nGiven the number of supporters $A$, the number of opponents $B$, and an upper bound $L$, please reduce $A$ to $B$ into $A'$ to $B'$ under the conditions that $A'$ and $B'$ are both no greater than $L$ and $A'$ and $B'$ are coprime (the greatest common divisor of the two integers is $1$), such that $\\dfrac{A'}{B'} \\ge \\dfrac{A}{B}$ and the value of $\\dfrac{A'}{B'} - \\dfrac{A}{B}$ is as small as possible.",
+      "formatI": "One line containing three integers $A,B,L$, separated by a single space, representing the number of supporters, the number of opponents, and the upper bound.",
+      "formatO": "One line containing two integers $A',B'$, separated by a single space, representing the simplified ratio.",
+      "hint": "For $100\\%$ of the testdata, $1 \\le A \\le 10^6, 1 \\le B \\le 10^6, 1 \\le L \\le 100, \\dfrac{A}{B} \\le L$.\n\nTranslated by ChatGPT 5",
+      "locale": "en"
+    },
+    "zh-CN": {
+      "name": "[NOIP 2014 普及组] 比例简化",
+      "background": "NOIP2014 普及组 T2",
+      "description": "在社交媒体上，经常会看到针对某一个观点同意与否的民意调查以及结果。例如，对某一观点表示支持的有 $1498$ 人，反对的有 $902$ 人，那么赞同与反对的比例可以简单的记为 $1498:902$。\n\n不过，如果把调查结果就以这种方式呈现出来，大多数人肯定不会满意。因为这个比例的数值太大，难以一眼看出它们的关系。对于上面这个例子，如果把比例记为 $5:3$，虽然与真实结果有一定的误差，但依然能够较为准确地反映调查结果，同时也显得比较直观。\n\n现给出支持人数 $A$，反对人数 $B$，以及一个上限 $L$，请你将 $A$ 比 $B$ 化简为 $A'$ 比 $B'$，要求在 $A'$ 和 $B'$ 均不大于 $L$ 且 $A'$ 和 $B'$ 互质（两个整数的最大公约数是 $1$）的前提下，$\\dfrac{A'}{B'} \\ge  \\dfrac{A}{B}$ 且 $\\dfrac{A'}{B'} - \\dfrac{A}{B}$ 的值尽可能小。",
+      "formatI": "共一行，包含三个整数 $A,B,L$，每两个整数之间用一个空格隔开，分别表示支持人数、反对人数以及上限。\n",
+      "formatO": "共一行，包含两个整数 $A',B'$，中间用一个空格隔开，表示化简后的比例。\n",
+      "hint": "对于 $100\\%$ 的数据，$1 \\le A \\le 10^6,1 \\le B \\le 10^6,1 \\le L \\le 100,\\dfrac{A}{B} \\le L$。\n",
+      "locale": "zh-CN"
+    }
+  },
+  "bookmarked": false,
+  "contest": null,
+  "contestProblems": null,
+  "contestOrigin": null,
+  "vjudgeUsername": null,
+  "lastLanguage": null,
+  "lastCode": "",
+  "lastCodeAt": null,
+  "recommendations": [
+    {
+      "pid": "P1981",
+      "type": "P",
+      "name": "[NOIP 2013 普及组] 表达式求值",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2010",
+      "type": "P",
+      "name": "[NOIP 2016 普及组] 回文日期",
+      "difficulty": 2
+    },
+    {
+      "pid": "P2239",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 螺旋矩阵",
+      "difficulty": 3
+    },
+    {
+      "pid": "P2141",
+      "type": "P",
+      "name": "[NOIP 2014 普及组] 珠心算测验",
+      "difficulty": 2
+    },
+    {
+      "pid": "P3955",
+      "type": "P",
+      "name": "[NOIP 2017 普及组] 图书管理员",
+      "difficulty": 2
+    }
+  ],
+  "forum": {
+    "name": "P2118 [NOIP 2014 普及组] 比例简化",
+    "type": 2,
+    "slug": "P2118",
+    "color": "orange-3"
+  },
+  "discussions": [
+    {
+      "id": 1368573,
+      "title": "造了个Fraction算不算坦克打蚊子？求问这种题有没有必要",
+      "author": {
+        "uid": 2082904,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2082904.png",
+        "name": "WSCFisher",
+        "slogan": "准初二的蒟蒻【最近在学：DP、搜索】",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Red",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1788078912
+    },
+    {
+      "id": 1315584,
+      "title": "解答必关",
+      "author": {
+        "uid": 1221629,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1221629.png",
+        "name": "luka14",
+        "slogan": "无论结局如何，我都要拼尽全力",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": ""
+      },
+      "time": 1783415824
+    },
+    {
+      "id": 1287092,
+      "title": "AC一个点，求条",
+      "author": {
+        "uid": 2153298,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/2153298.png",
+        "name": "Roy340522",
+        "slogan": "这个家伙不懒，什么也没有留下",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Green",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/o9hryynr.png"
+      },
+      "time": 1777863854
+    },
+    {
+      "id": 1183646,
+      "title": "100///求调",
+      "author": {
+        "uid": 1179643,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1179643.png",
+        "name": "b15022336688",
+        "slogan": "爱吃AC",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Blue",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/2ubip3hq.png"
+      },
+      "time": 1761655778
+    },
+    {
+      "id": 1181402,
+      "title": "80求调！！",
+      "author": {
+        "uid": 1404659,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1404659.png",
+        "name": "xiangchuancyl",
+        "slogan": "我是蒟蒻",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 0,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/k2zv3wj3.png"
+      },
+      "time": 1761452270
+    },
+    {
+      "id": 1170906,
+      "title": "20pts 求调，必关",
+      "author": {
+        "uid": 1473063,
+        "avatar": "https://cdn.luogu.com.cn/upload/usericon/1473063.png",
+        "name": "ws540d",
+        "slogan": "光华万丈，雀翎山河，这芳华盛世，如你所求。",
+        "badge": null,
+        "isAdmin": false,
+        "isBanned": false,
+        "color": "Orange",
+        "ccfLevel": 4,
+        "xcpcLevel": 0,
+        "background": "https://cdn.luogu.com.cn/upload/image_hosting/9afr0znz.png"
+      },
+      "time": 1760184602
+    }
+  ],
+  "locale": "zh-CN",
+  "canEdit": false
+}

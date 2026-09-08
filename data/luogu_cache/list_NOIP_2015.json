@@ -1,0 +1,1428 @@
+{
+  "problems": {
+    "perPage": 50,
+    "count": 724,
+    "result": [
+      {
+        "pid": "P2669",
+        "type": "P",
+        "name": "[NOIP 2015 普及组] 金币",
+        "difficulty": 1,
+        "tags": [
+          1,
+          5,
+          32,
+          82
+        ],
+        "totalSubmit": 447072,
+        "totalAccepted": 265026,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2671",
+        "type": "P",
+        "name": "[NOIP 2015 普及组] 求和",
+        "difficulty": 4,
+        "tags": [
+          32,
+          44,
+          82,
+          113,
+          254
+        ],
+        "totalSubmit": 110667,
+        "totalAccepted": 29442,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2679",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 子串",
+        "difficulty": 4,
+        "tags": [
+          2,
+          3,
+          32,
+          83,
+          108,
+          111,
+          254
+        ],
+        "totalSubmit": 67866,
+        "totalAccepted": 25854,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2668",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 斗地主",
+        "difficulty": 5,
+        "tags": [
+          1,
+          4,
+          7,
+          32,
+          83,
+          127
+        ],
+        "totalSubmit": 47562,
+        "totalAccepted": 11811,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2672",
+        "type": "P",
+        "name": "[NOIP 2015 普及组] 推销员",
+        "difficulty": 5,
+        "tags": [
+          7,
+          32,
+          42,
+          53,
+          82,
+          148,
+          254
+        ],
+        "totalSubmit": 47163,
+        "totalAccepted": 21504,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2678",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 跳石头",
+        "difficulty": 3,
+        "tags": [
+          7,
+          32,
+          45,
+          83
+        ],
+        "totalSubmit": 444993,
+        "totalAccepted": 151117,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2661",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 信息传递",
+        "difficulty": 3,
+        "tags": [
+          6,
+          32,
+          47,
+          83,
+          127,
+          159,
+          179,
+          180,
+          320
+        ],
+        "totalSubmit": 134614,
+        "totalAccepted": 50413,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2670",
+        "type": "P",
+        "name": "[NOIP 2015 普及组] 扫雷游戏",
+        "difficulty": 1,
+        "tags": [
+          2,
+          4,
+          32,
+          82,
+          111
+        ],
+        "totalSubmit": 357351,
+        "totalAccepted": 182088,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2680",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 运输计划",
+        "difficulty": 5,
+        "tags": [
+          6,
+          32,
+          45,
+          83,
+          211,
+          228,
+          330,
+          379
+        ],
+        "totalSubmit": 109001,
+        "totalAccepted": 25108,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2615",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 神奇的幻方",
+        "difficulty": 2,
+        "tags": [
+          1,
+          32,
+          83,
+          111
+        ],
+        "totalSubmit": 235406,
+        "totalAccepted": 147876,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P2540",
+        "type": "P",
+        "name": "[NOIP 2015 提高组] 斗地主 加强版",
+        "difficulty": 7,
+        "tags": [
+          3,
+          4,
+          32,
+          83,
+          126,
+          127,
+          128,
+          132
+        ],
+        "totalSubmit": 32680,
+        "totalAccepted": 4256,
+        "flag": 5,
+        "provider": {
+          "uid": 19,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/19.png",
+          "name": "CCF_NOI",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4665",
+        "type": "P",
+        "name": "[BalticOI 2015] Network",
+        "difficulty": 5,
+        "tags": [
+          6,
+          7,
+          32,
+          107,
+          318,
+          334
+        ],
+        "totalSubmit": 2443,
+        "totalAccepted": 621,
+        "flag": 5,
+        "provider": {
+          "uid": 41051,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/41051.png",
+          "name": "和泉正宗",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4731",
+        "type": "P",
+        "name": "[BalticOI 2015] Bowling",
+        "difficulty": 7,
+        "tags": [
+          32,
+          334
+        ],
+        "totalSubmit": 149,
+        "totalAccepted": 39,
+        "flag": 5,
+        "provider": {
+          "uid": 41051,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/41051.png",
+          "name": "和泉正宗",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4732",
+        "type": "P",
+        "name": "[BalticOI 2015] Editor",
+        "difficulty": 7,
+        "tags": [
+          32,
+          107,
+          334
+        ],
+        "totalSubmit": 205,
+        "totalAccepted": 109,
+        "flag": 5,
+        "provider": {
+          "uid": 41051,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/41051.png",
+          "name": "和泉正宗",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P4734",
+        "type": "P",
+        "name": "[BalticOI 2015] Hacker",
+        "difficulty": 4,
+        "tags": [
+          7,
+          32,
+          42,
+          56,
+          254,
+          290,
+          318,
+          334
+        ],
+        "totalSubmit": 1014,
+        "totalAccepted": 392,
+        "flag": 5,
+        "provider": {
+          "uid": 41051,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/41051.png",
+          "name": "和泉正宗",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5579",
+        "type": "P",
+        "name": "[PA 2015] Siano",
+        "difficulty": 5,
+        "tags": [
+          32,
+          42,
+          389
+        ],
+        "totalSubmit": 4850,
+        "totalAccepted": 1225,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5580",
+        "type": "P",
+        "name": "[PA 2015] Fibonacci",
+        "difficulty": 5,
+        "tags": [
+          32,
+          107,
+          389
+        ],
+        "totalSubmit": 329,
+        "totalAccepted": 46,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5581",
+        "type": "P",
+        "name": "[PA 2015] Hazard",
+        "difficulty": 5,
+        "tags": [
+          32,
+          389
+        ],
+        "totalSubmit": 447,
+        "totalAccepted": 32,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5849",
+        "type": "P",
+        "name": "[IOI 2015] boxes",
+        "difficulty": 3,
+        "tags": [
+          32,
+          102
+        ],
+        "totalSubmit": 702,
+        "totalAccepted": 188,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P5861",
+        "type": "P",
+        "name": "[IOI 2015] teams",
+        "difficulty": 8,
+        "tags": [
+          7,
+          32,
+          45,
+          102,
+          187,
+          233,
+          289,
+          298,
+          385,
+          541
+        ],
+        "totalSubmit": 1321,
+        "totalAccepted": 284,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P5862",
+        "type": "P",
+        "name": "[IOI 2015] sorting",
+        "difficulty": 7,
+        "tags": [
+          32,
+          102,
+          107
+        ],
+        "totalSubmit": 437,
+        "totalAccepted": 152,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P5874",
+        "type": "P",
+        "name": "[IOI 2015] horses",
+        "difficulty": 5,
+        "tags": [
+          5,
+          32,
+          42,
+          102
+        ],
+        "totalSubmit": 1593,
+        "totalAccepted": 427,
+        "flag": 5,
+        "provider": {
+          "uid": 136601,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/136601.png",
+          "name": "　　　吾皇",
+          "slogan": "但屈指西风几时来，又不道流年暗中偷换",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Green",
+          "ccfLevel": 5,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/7fiecm2l.png"
+        }
+      },
+      {
+        "pid": "P5990",
+        "type": "P",
+        "name": "[PA 2015] Kieszonkowe",
+        "difficulty": 2,
+        "tags": [
+          5,
+          32,
+          389
+        ],
+        "totalSubmit": 3743,
+        "totalAccepted": 1338,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P5991",
+        "type": "P",
+        "name": "[PA 2015] Równanie",
+        "difficulty": 3,
+        "tags": [
+          32,
+          389
+        ],
+        "totalSubmit": 990,
+        "totalAccepted": 444,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6979",
+        "type": "P",
+        "name": "[NEERC 2015] Generators",
+        "difficulty": 3,
+        "tags": [
+          32,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 291,
+        "totalAccepted": 62,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6980",
+        "type": "P",
+        "name": "[NEERC 2015] Hypercube",
+        "difficulty": 7,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 102,
+        "totalAccepted": 29,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6982",
+        "type": "P",
+        "name": "[NEERC 2015] Jump",
+        "difficulty": 7,
+        "tags": [
+          32,
+          103,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 1324,
+        "totalAccepted": 420,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7050",
+        "type": "P",
+        "name": "[NWRRC 2015] Concatenation",
+        "difficulty": 3,
+        "tags": [
+          32,
+          335,
+          503
+        ],
+        "totalSubmit": 1101,
+        "totalAccepted": 318,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7053",
+        "type": "P",
+        "name": "[NWRRC 2015] Fygon",
+        "difficulty": 5,
+        "tags": [
+          32,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 79,
+        "totalAccepted": 25,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7054",
+        "type": "P",
+        "name": "[NWRRC 2015] Graph",
+        "difficulty": 7,
+        "tags": [
+          7,
+          32,
+          51,
+          107,
+          159,
+          335,
+          503
+        ],
+        "totalSubmit": 747,
+        "totalAccepted": 377,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P14412",
+        "type": "P",
+        "name": "[JOISC 2015] AAQQZ",
+        "difficulty": 7,
+        "tags": [
+          32,
+          512
+        ],
+        "totalSubmit": 213,
+        "totalAccepted": 46,
+        "flag": 5,
+        "provider": {
+          "uid": 8457,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/8457.png",
+          "name": "chen_zhe",
+          "slogan": "Aya 敲可爱的~",
+          "badge": "Aya",
+          "isAdmin": true,
+          "isBanned": false,
+          "color": "Purple",
+          "ccfLevel": 6,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/h1pl4exd.png"
+        }
+      },
+      {
+        "pid": "P5476",
+        "type": "P",
+        "name": "[CCO 2015] 挖掘",
+        "difficulty": 7,
+        "tags": [
+          32,
+          107,
+          115
+        ],
+        "totalSubmit": 164,
+        "totalAccepted": 72,
+        "flag": 5,
+        "provider": {
+          "uid": 9142,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/9142.png",
+          "name": "酷暑一夏1",
+          "slogan": "这个家伙很懒，什么也没有留下🍥🏳️‍⚧️",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Blue",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P5992",
+        "type": "P",
+        "name": "[PA 2015] Rozstaw szyn",
+        "difficulty": 5,
+        "tags": [
+          32,
+          389
+        ],
+        "totalSubmit": 442,
+        "totalAccepted": 165,
+        "flag": 5,
+        "provider": {
+          "uid": 45475,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/45475.png",
+          "name": "ShineEternal",
+          "slogan": "",
+          "badge": "萌新",
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lk7t6aj6.png"
+        }
+      },
+      {
+        "pid": "P6700",
+        "type": "P",
+        "name": "[PA 2015 Final] Edycja",
+        "difficulty": 8,
+        "tags": [
+          7,
+          32,
+          155,
+          320,
+          389,
+          464
+        ],
+        "totalSubmit": 1472,
+        "totalAccepted": 408,
+        "flag": 5,
+        "provider": {
+          "uid": 65681,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/65681.png",
+          "name": "UltiMadow",
+          "slogan": "Well I do.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Orange",
+          "ccfLevel": 9,
+          "xcpcLevel": 8,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6843",
+        "type": "P",
+        "name": "[BalticOI 2015] File Paths",
+        "difficulty": 5,
+        "tags": [
+          6,
+          32,
+          127,
+          334
+        ],
+        "totalSubmit": 804,
+        "totalAccepted": 186,
+        "flag": 5,
+        "provider": {
+          "uid": 114914,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/114914.png",
+          "name": "一只书虫仔",
+          "slogan": "End.",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": "https://cdn.luogu.com.cn/upload/image_hosting/lxnz5mtl.png"
+        }
+      },
+      {
+        "pid": "P6905",
+        "type": "P",
+        "name": "[ICPC 2015 WF] Asteroids",
+        "difficulty": 8,
+        "tags": [
+          32,
+          107,
+          335,
+          510
+        ],
+        "totalSubmit": 61,
+        "totalAccepted": 12,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6906",
+        "type": "P",
+        "name": "[ICPC 2015 WF] Catering",
+        "difficulty": 7,
+        "tags": [
+          32,
+          335,
+          510
+        ],
+        "totalSubmit": 104,
+        "totalAccepted": 54,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6909",
+        "type": "P",
+        "name": "[ICPC 2015 WF] Keyboarding",
+        "difficulty": 4,
+        "tags": [
+          32,
+          335,
+          510
+        ],
+        "totalSubmit": 1221,
+        "totalAccepted": 478,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6911",
+        "type": "P",
+        "name": "[ICPC 2015 WF] Qanat",
+        "difficulty": 5,
+        "tags": [
+          32,
+          107,
+          335,
+          510
+        ],
+        "totalSubmit": 79,
+        "totalAccepted": 45,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6914",
+        "type": "P",
+        "name": "[ICPC 2015 WF] Tours",
+        "difficulty": 8,
+        "tags": [
+          32,
+          335,
+          510
+        ],
+        "totalSubmit": 1105,
+        "totalAccepted": 482,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6974",
+        "type": "P",
+        "name": "[NEERC 2015] Adjustment Office",
+        "difficulty": 2,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 1360,
+        "totalAccepted": 421,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6975",
+        "type": "P",
+        "name": "[NEERC 2015] Cactus Jubilee",
+        "difficulty": 7,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 91,
+        "totalAccepted": 53,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6977",
+        "type": "P",
+        "name": "[NEERC 2015] Easy Problemset",
+        "difficulty": 2,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 543,
+        "totalAccepted": 294,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6981",
+        "type": "P",
+        "name": "[NEERC 2015] Iceberg Orders",
+        "difficulty": 7,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 42,
+        "totalAccepted": 1,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6983",
+        "type": "P",
+        "name": "[NEERC 2015] King’s Inspection",
+        "difficulty": 7,
+        "tags": [
+          32,
+          107,
+          335,
+          500
+        ],
+        "totalSubmit": 564,
+        "totalAccepted": 151,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P6984",
+        "type": "P",
+        "name": "[NEERC 2015] Landscape Improved",
+        "difficulty": 7,
+        "tags": [
+          32,
+          335,
+          500
+        ],
+        "totalSubmit": 416,
+        "totalAccepted": 121,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7052",
+        "type": "P",
+        "name": "[NWRRC 2015] Easy Arithmetic",
+        "difficulty": 2,
+        "tags": [
+          2,
+          32,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 583,
+        "totalAccepted": 159,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7056",
+        "type": "P",
+        "name": "[NWRRC 2015] Insider's Information",
+        "difficulty": 8,
+        "tags": [
+          32,
+          107,
+          335,
+          503
+        ],
+        "totalSubmit": 855,
+        "totalAccepted": 309,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7058",
+        "type": "P",
+        "name": "[NWRRC 2015] Kingdom Trip",
+        "difficulty": 8,
+        "tags": [
+          32,
+          335,
+          503
+        ],
+        "totalSubmit": 290,
+        "totalAccepted": 72,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      },
+      {
+        "pid": "P7059",
+        "type": "P",
+        "name": "[NWRRC 2015] Lucky Chances",
+        "difficulty": 2,
+        "tags": [
+          32,
+          335,
+          503
+        ],
+        "totalSubmit": 336,
+        "totalAccepted": 210,
+        "flag": 5,
+        "provider": {
+          "uid": 341369,
+          "avatar": "https://cdn.luogu.com.cn/upload/usericon/341369.png",
+          "name": "Baylor_ICPC",
+          "slogan": "",
+          "badge": null,
+          "isAdmin": false,
+          "isBanned": false,
+          "color": "Gray",
+          "ccfLevel": 0,
+          "xcpcLevel": 0,
+          "background": ""
+        }
+      }
+    ]
+  },
+  "filter": {
+    "tag": [],
+    "content": null,
+    "keyword": "NOIP 2015",
+    "difficulty": [],
+    "type": "luogu",
+    "page": 1
+  }
+}
