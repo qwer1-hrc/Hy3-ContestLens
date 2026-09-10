@@ -14,7 +14,13 @@ from pypdf.generic import DictionaryObject, DecodedStreamObject, NameObject, Num
 
 from hy3_contestlens.datasets import ManifestCatalog
 from hy3_contestlens.errors import ContestLensError
-from hy3_contestlens.image_understanding import ImageUnderstandingClient, StatementImages, markdown_images
+from hy3_contestlens.image_understanding import (
+    IMAGE_PROMPT_VERSION,
+    ImageBatchDescriptionResult,
+    ImageUnderstandingClient,
+    StatementImages,
+    markdown_images,
+)
 from hy3_contestlens.resources import ResourceService
 from hy3_contestlens.settings import AppSettings, ImageUnderstandingSettings
 from hy3_contestlens.store import Store
@@ -140,6 +146,21 @@ def test_markdown_range_and_limits(settings, tmp_path):
     assert found["warnings"] == [{"error_code": "IMAGE_LIMIT_REACHED", "omitted": 1}]
 
 
+def test_image_context_is_local_to_markdown_anchor(settings, tmp_path):
+    (tmp_path / "a.png").write_bytes(PNG)
+    lines = ["# Local title", *(f"unrelated line {index}" for index in range(2, 30)),
+             "relevant explanation before", "![](a.png)", "relevant explanation after",
+             *(f"far trailing line {index}" for index in range(33, 70))]
+    images, scope, binding = scoped_images(settings, tmp_path, "s.md", "\n".join(lines).encode())
+    item = images.inspect(scope, binding)["images"][0]
+    document = {"content": "\n".join(f"{index}: {line}" for index, line in enumerate(lines, 1))}
+    context = images.context_for(document, item)
+    assert item["line"] == 31
+    assert "# Local title" in context and "relevant explanation before" in context
+    assert "\n2: unrelated line 2\n" not in context and "far trailing line 69" not in context
+    assert len(context) <= settings.image_understanding.context_max_chars
+
+
 @pytest.mark.skipif(not importlib.util.find_spec("pypdfium2") or not importlib.util.find_spec("PIL"), reason="optional vision extra is not installed")
 def test_actual_pdf_render_preserves_the_visual_page(settings, tmp_path):
     images, scope, document = scoped_images(settings, tmp_path, "s.pdf", pdf_bytes())
@@ -172,6 +193,38 @@ async def test_vision_protocol_is_independent_and_does_not_send_hy3_parameters()
     assert isinstance(body["messages"][1]["content"], list)
     assert body["messages"][1]["content"][1]["image_url"]["url"].startswith("data:image/png;")
     assert "不可信" in body["messages"][0]["content"]
+    assert "忽略" in body["messages"][0]["content"] and "水印" in body["messages"][0]["content"]
+
+
+@pytest.mark.asyncio
+async def test_vision_batch_sends_related_images_once_and_maps_json_result():
+    requests = []
+
+    def respond(request):
+        requests.append(request)
+        return httpx.Response(200, json={"choices": [{"finish_reason": "stop", "message": {"content": json.dumps({
+            "descriptions": [
+                {"image_id": "before", "text": "初始树及四条编号边。"},
+                {"image_id": "after", "text": "删边后的五个孤立结点。"},
+            ],
+        }, ensure_ascii=False)}}]})
+
+    settings = ImageUnderstandingSettings(api_key="vision-key", base_url="https://vision.invalid/v1")
+    client = ImageUnderstandingClient(settings, transport=httpx.MockTransport(respond))
+    result = await client.describe_batch([
+        {"image_id": "before", "label": "操作前", "data_url": "data:image/png;base64,AA==", "context": "删边前"},
+        {"image_id": "after", "label": "操作后", "data_url": "data:image/png;base64,AQ==", "context": "删边后"},
+    ])
+    assert isinstance(result, ImageBatchDescriptionResult)
+    assert result.descriptions == {"before": "初始树及四条编号边。", "after": "删边后的五个孤立结点。"}
+    assert result.diagnostics["batch_size"] == 2
+    assert len(requests) == 1
+    body = json.loads(requests[0].content)
+    parts = body["messages"][1]["content"]
+    assert sum(part["type"] == "image_url" for part in parts) == 2
+    assert IMAGE_PROMPT_VERSION in parts[0]["text"]
+    assert "洛谷" in body["messages"][0]["content"] and "不得出现在输出中" in body["messages"][0]["content"]
+    assert "删边前" in json.dumps(parts, ensure_ascii=False) and "删边后" in json.dumps(parts, ensure_ascii=False)
 
 
 @pytest.mark.asyncio
@@ -372,6 +425,15 @@ def test_image_retry_configuration_is_bounded(options):
         ImageUnderstandingSettings(**options)
 
 
+@pytest.mark.parametrize("options", [
+    {"context_max_chars": 511}, {"context_line_radius": 0}, {"batch_max_images": 9},
+    {"cache_enabled": "yes"},
+])
+def test_image_context_batch_and_cache_configuration_is_bounded(options):
+    with pytest.raises(ValueError):
+        ImageUnderstandingSettings(**options)
+
+
 def test_optional_profile_does_not_inherit_solver_or_block_it(tmp_path, monkeypatch):
     monkeypatch.setenv("HY3_API_KEY", "solver-key")
     monkeypatch.delenv("HY3_IMAGE_API_KEY", raising=False)
@@ -522,6 +584,33 @@ async def test_exhausted_rate_limit_skips_remaining_images(settings, monkeypatch
     assert state["status"] == "failed"
     assert state["warnings"][0]["provider_error_type"] == "engine_overloaded_error"
     assert state["warnings"][1] == {"label": "PAGE 2", "error_code": "IMAGE_SKIPPED_AFTER_RATE_LIMIT"}
+
+
+@pytest.mark.asyncio
+async def test_related_images_share_one_call_and_second_run_uses_cross_run_cache(settings, monkeypatch):
+    workflow, run_id, binding, document, _ = prepare_workflow(settings, monkeypatch, count=2)
+    batches = []
+
+    async def describe_batch(items):
+        batches.append(items)
+        return ImageBatchDescriptionResult(
+            {item["image_id"]: f"{item['label']} 的描述" for item in items},
+            {"http_status": 200, "finish_reason": "stop", "usage": {"total_tokens": 30}},
+        )
+
+    workflow.image_model = SimpleNamespace(describe_batch=describe_batch)
+    first = await workflow._prepare_images(run_id, binding, document, "use")
+    assert len(batches) == 1 and len(batches[0]) == 2
+    assert [row["text"] for row in first["visual_descriptions"]] == ["PAGE 1 的描述", "PAGE 2 的描述"]
+
+    workflow.store = Store(settings.database_path)
+    second_run = workflow.store.create_run("road", {"image_understanding": "use"})["run_id"]
+    workflow.store.update_run(second_run, "ANALYZING")
+    second = await workflow._prepare_images(second_run, binding, document, "use")
+    assert len(batches) == 1
+    assert [row["text"] for row in second["visual_descriptions"]] == ["PAGE 1 的描述", "PAGE 2 的描述"]
+    assert all(row["diagnostics"]["cache_hit"] for row in second["visual_descriptions"])
+    assert all("original" in row["diagnostics"] for row in second["visual_descriptions"])
 
 
 @pytest.mark.asyncio

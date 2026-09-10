@@ -654,7 +654,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         status_labels = {
             "CREATED": "已创建", "QUEUED": "排队中", "INTERRUPTED": "等待恢复", "DISCOVERING_RESOURCES": "发现资源",
             "WAITING_FOR_RESOURCE_CONFIRMATION": "等待资源确认", "ANALYZING": "分析题目",
-            "SOLVING": "生成解法", "REVIEWING": "双路盲审", "COMPILING": "编译中",
+            "SOLVING": "生成解法", "REVIEWING": "双路盲审", "COMPILING": "编译中", "PUBLIC_VALIDATING": "公开样例与小规模验证",
             "JUDGING": "评测中", "LOCALIZING": "定位错误", "REPAIRING": "修复中",
             "REJUDGING": "重新评测", "COMPLETED": "已完成", "FAILED": "运行失败",
             "CANCELLED": "已取消",

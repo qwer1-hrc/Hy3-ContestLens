@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import pytest
 
 from hy3_contestlens.datasets import ManifestCatalog
-from hy3_contestlens.image_understanding import ImageDescriptionResult, StatementImages
+from hy3_contestlens.image_understanding import ImageBatchDescriptionResult, ImageDescriptionResult, StatementImages
 from hy3_contestlens.resources import ResourceService
 from hy3_contestlens.settings import ImageUnderstandingSettings
 from hy3_contestlens.store import Store
@@ -24,15 +24,18 @@ async def test_localized_markdown_images_reach_vision_model(settings):
     binding = hub.resources.bind_candidate(scope['scope_id'], pid, candidate)
     document = hub.resources.read_problem_document(scope['scope_id'], binding['document'])
     calls = []
-    async def describe(data_url, label, context):
-        calls.append(data_url)
-        return ImageDescriptionResult('图中节点和边的测试描述', {})
-    hub.workflow.image_model = SimpleNamespace(describe=describe)
+    async def describe_batch(items):
+        calls.append(items)
+        return ImageBatchDescriptionResult(
+            {item['image_id']: f"{item['label']}：图中节点和边的测试描述" for item in items}, {},
+        )
+    hub.workflow.image_model = SimpleNamespace(describe_batch=describe_batch)
     hub.resources.settings.image_understanding.api_key = 'mock-key'
     rid = hub.store.create_run(pid, {'image_understanding':'use'})['run_id']
     augmented = await hub.workflow._prepare_images(rid, binding, document, 'use')
-    assert len(calls) == 2
-    assert all(value.startswith('data:image/png;base64,') for value in calls)
+    assert len(calls) == 1 and len(calls[0]) == 2
+    assert all(item['data_url'].startswith('data:image/png;base64,') for item in calls[0])
+    assert all(len(item['context']) < len(document['content']) for item in calls[0])
     assert len(augmented['visual_descriptions']) == 2
     state = hub.store.get_run(rid)['image_understanding']
     assert state['status'] == 'completed'

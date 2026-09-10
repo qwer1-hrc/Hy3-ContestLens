@@ -162,6 +162,10 @@ class ImageUnderstandingSettings:
     max_image_mb: int = 8
     max_image_side: int = 2400
     max_output_chars: int = 16000
+    context_max_chars: int = 4000
+    context_line_radius: int = 10
+    batch_max_images: int = 4
+    cache_enabled: bool = True
     configuration_error: bool = False
     stream: bool = True
     max_attempts: int = 3
@@ -170,6 +174,8 @@ class ImageUnderstandingSettings:
     def __post_init__(self) -> None:
         if not isinstance(self.stream, bool):
             raise ValueError("Image understanding stream must be a boolean")
+        if not isinstance(self.cache_enabled, bool):
+            raise ValueError("Image understanding cache_enabled must be a boolean")
         if isinstance(self.max_attempts, bool) or not isinstance(self.max_attempts, int) or not 1 <= self.max_attempts <= 5:
             raise ValueError("Image understanding max_attempts must be an integer between 1 and 5")
         if isinstance(self.retry_backoff_seconds, bool) or not math.isfinite(self.retry_backoff_seconds) or not 0 <= self.retry_backoff_seconds <= 60:
@@ -184,6 +190,8 @@ class ImageUnderstandingSettings:
         for name, minimum, maximum in (
             ("max_tokens", 256, 32768), ("max_images", 1, 32), ("max_image_mb", 1, 20),
             ("max_image_side", 512, 4096), ("max_output_chars", 256, 32000),
+            ("context_max_chars", 512, 12000), ("context_line_radius", 1, 50),
+            ("batch_max_images", 1, 8),
         ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
@@ -202,7 +210,9 @@ class ImageUnderstandingSettings:
                 "configuration_error": self.configuration_error,
                 "timeout_seconds": self.timeout_seconds, "idle_timeout_seconds": self.idle_timeout_seconds,
                 "decision_timeout_seconds": self.decision_timeout_seconds,
-                "stream": self.stream, "max_attempts": self.max_attempts}
+                "stream": self.stream, "max_attempts": self.max_attempts,
+                "context_max_chars": self.context_max_chars, "batch_max_images": self.batch_max_images,
+                "cache_enabled": self.cache_enabled}
 
 
 @dataclass(slots=True)
@@ -233,6 +243,9 @@ class AppSettings:
     repair_max_rounds: int = 3
     repair_hard_max_rounds: int = 5
     stop_after_no_improvement_rounds: int = 2
+    public_preflight_enabled: bool = True
+    rethink_probability: float = 0.5
+    max_rethinks: int = 1
     docker_executable: str = "docker"
     docker_compile_image: str = "hy3-contestlens-compile:local"
     docker_run_image: str = "hy3-contestlens-run:local"
@@ -245,6 +258,12 @@ class AppSettings:
 
     def __post_init__(self) -> None:
         root = self.project_root.resolve()
+        if not isinstance(self.public_preflight_enabled, bool):
+            raise ValueError("public_preflight_enabled must be boolean")
+        if isinstance(self.rethink_probability, bool) or not math.isfinite(self.rethink_probability) or not 0 <= self.rethink_probability <= 1:
+            raise ValueError("rethink_probability must be between 0 and 1")
+        if type(self.max_rethinks) is not int or not 0 <= self.max_rethinks <= 3:
+            raise ValueError("max_rethinks must be between 0 and 3")
         self.project_root = root
         self.database_path = (self.database_path or root / "runs" / "contestlens.sqlite3").resolve()
         self.runs_root = (self.runs_root or root / "runs").resolve()
@@ -335,11 +354,13 @@ class AppSettings:
                 **{name: int(image_value(name, default)) for name, default in (
                     ("max_tokens", 8192), ("max_images", 12), ("max_image_mb", 8),
                     ("max_image_side", 2400), ("max_output_chars", 16000),
+                    ("context_max_chars", 4000), ("context_line_radius", 10), ("batch_max_images", 4),
                 )},
                 timeout_seconds=float(image_value("timeout_seconds", 300)),
                 idle_timeout_seconds=float(image_value("idle_timeout_seconds", 90)),
                 decision_timeout_seconds=float(image_value("decision_timeout_seconds", 300)),
                 stream=_boolean(image_value("stream", True)),
+                cache_enabled=_boolean(image_value("cache_enabled", True)),
                 max_attempts=int(image_value("max_attempts", 3)),
                 retry_backoff_seconds=float(image_value("retry_backoff_seconds", 10)),
             )
@@ -359,6 +380,9 @@ class AppSettings:
             repair_max_rounds=int(repair.get("max_rounds", 3)),
             repair_hard_max_rounds=int(repair.get("hard_max_rounds", 5)),
             stop_after_no_improvement_rounds=int(repair.get("stop_after_no_improvement_rounds", 2)),
+            public_preflight_enabled=_boolean(repair.get("public_preflight_enabled", True)),
+            rethink_probability=float(repair.get("rethink_probability", 0.5)),
+            max_rethinks=int(repair.get("max_rethinks", 1)),
             docker_executable=str(docker.get("executable", "docker")),
             docker_compile_image=str(docker.get("compile_image", "hy3-contestlens-compile:local")),
             docker_run_image=str(docker.get("run_image", "hy3-contestlens-run:local")),

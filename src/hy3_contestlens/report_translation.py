@@ -94,12 +94,15 @@ def report_sections(result: dict[str, Any], root: Path) -> list[dict[str, Any]]:
                 reviews.append({"label": label, "review": round_record[field]})
         sections.append({
             "label": f"修复第 {number} 轮", "revision_id": round_record.get("new_revision_id"),
+            "reasoning_revision_id": round_record.get("reasoning_revision_id"),
+            "proof_only": round_record.get("proof_only", False),
             "diagnosis": round_record.get("process_evaluation") or {}, "critics": reviews,
             "repair_plan": round_record.get("repair_plan") or {},
             "quality_gate": round_record.get("quality_gate") or {},
         })
     best = result["best_submission_result"]
-    best_critics = next((section["critics"] for section in sections if section["revision_id"] == best.get("revision_id")), [])
+    best_critics = next((section["critics"] for section in sections if section["revision_id"] == best.get("revision_id")
+                         and section.get("reasoning_revision_id") == best.get("reasoning_revision_id")), [])
     return [{"label": "最佳提交", "revision_id": best.get("revision_id"), "diagnosis": best["diagnosis"], "critics": best_critics}, *sections]
 
 

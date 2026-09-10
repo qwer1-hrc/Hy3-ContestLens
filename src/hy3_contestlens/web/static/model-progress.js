@@ -7,6 +7,7 @@ const MODEL_PHASES = {
 const MODEL_ROLES = {
   problem_analyst: "题目分析", solver: "解法生成", algorithm_critic: "算法评审",
   code_critic: "代码评审", code_critic_recheck: "结合判题证据复核", code_repair_agent: "解法修复",
+  public_oracle: "构建独立穷举器", model_rethink: "重新检查算法建模",
 };
 const MODEL_FAILURES = {
   repetitive_output: "检测到持续重复的评审正文，已提前停止无效生成",

@@ -57,6 +57,12 @@ CREATE TABLE IF NOT EXISTS image_understanding (
   state_json TEXT NOT NULL,
   FOREIGN KEY(run_id) REFERENCES runs(run_id)
 );
+CREATE TABLE IF NOT EXISTS image_description_cache (
+  cache_key TEXT PRIMARY KEY,
+  record_json TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  last_used_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS run_report_preferences (
   run_id TEXT PRIMARY KEY,
   hidden INTEGER NOT NULL DEFAULT 0,
@@ -94,7 +100,7 @@ TERMINAL_RUN_STATUSES = {"COMPLETED", "FAILED", "CANCELLED"}
 RECOVERABLE_RUN_STATUSES = {
     "QUEUED", "INTERRUPTED", "DISCOVERING_RESOURCES", "WAITING_FOR_RESOURCE_CONFIRMATION",
     "ANALYZING", "WAITING_FOR_IMAGE_CONFIRMATION", "UNDERSTANDING_IMAGES", "SOLVING",
-    "REVIEWING", "COMPILING", "JUDGING", "LOCALIZING", "REPAIRING", "REJUDGING",
+    "REVIEWING", "COMPILING", "JUDGING", "LOCALIZING", "REPAIRING", "REJUDGING", "PUBLIC_VALIDATING",
 }
 
 
@@ -399,6 +405,33 @@ class Store:
                 "INSERT INTO image_understanding VALUES (?, ?) "
                 "ON CONFLICT(run_id) DO UPDATE SET state_json=excluded.state_json",
                 (run_id, canonical_json(data)),
+            )
+
+    def get_image_description_cache(self, cache_key: str) -> dict[str, Any] | None:
+        with self._lock, self.connect() as connection:
+            row = connection.execute(
+                "SELECT record_json, created_at FROM image_description_cache WHERE cache_key=?",
+                (cache_key,),
+            ).fetchone()
+            if row is None:
+                return None
+            connection.execute(
+                "UPDATE image_description_cache SET last_used_at=? WHERE cache_key=?",
+                (utc_now(), cache_key),
+            )
+        try:
+            record = json.loads(row["record_json"])
+        except (TypeError, ValueError):
+            return None
+        return {**record, "cached_at": row["created_at"]} if isinstance(record, dict) else None
+
+    def put_image_description_cache(self, cache_key: str, record: dict[str, Any]) -> None:
+        now = utc_now()
+        with self._lock, self.connect() as connection:
+            connection.execute(
+                "INSERT INTO image_description_cache VALUES (?, ?, ?, ?) "
+                "ON CONFLICT(cache_key) DO UPDATE SET record_json=excluded.record_json, last_used_at=excluded.last_used_at",
+                (cache_key, canonical_json(record), now, now),
             )
 
     def decide_image_understanding(self, run_id: str, request_id: str, choice: str) -> dict[str, Any]:

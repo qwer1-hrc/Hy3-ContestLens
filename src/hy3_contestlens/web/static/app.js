@@ -2,12 +2,29 @@ const TERMINAL_RUN_STATUSES = new Set(["COMPLETED", "FAILED", "CANCELLED"]);
 const ACTIVE_RUN_STATUSES = new Set([
   "CREATED", "QUEUED", "INTERRUPTED", "DISCOVERING_RESOURCES", "WAITING_FOR_RESOURCE_CONFIRMATION",
   "ANALYZING", "SOLVING", "REVIEWING", "COMPILING", "JUDGING", "LOCALIZING", "REPAIRING", "REJUDGING",
-  "WAITING_FOR_IMAGE_CONFIRMATION", "UNDERSTANDING_IMAGES",
+  "WAITING_FOR_IMAGE_CONFIRMATION", "UNDERSTANDING_IMAGES", "PUBLIC_VALIDATING",
 ]);
 const renderedCheckIds = new Set();
 const imageChoicePanels = new Map();
 
 const WORKFLOW_COPY = {
+  PUBLIC_VALIDATING: {
+    title: "公开样例与小规模验证",
+    description: "先执行公开样例，再以独立穷举程序检查小规模输入。",
+    command: "public samples → exhaustive oracle → differential check",
+  },
+  PUBLIC_VALIDATION_COMPLETED: {
+    title: "前置验证完成", description: "公开样例与小规模验证结果已保存；生成的穷举器仍需结合证据审查。",
+    command: "save public evidence",
+  },
+  PUBLIC_VALIDATION_SKIPPED: {
+    title: "前置验证不可用", description: "未提取到明确的公开样例对，保留原因并继续正式评测。",
+    command: "record missing public samples",
+  },
+  MODEL_RETHINK_DECISION: {
+    title: "检查建模重检条件", description: "连续不改善后，按固定概率与剩余预算决定是否重新建模。",
+    command: "bounded rethink decision",
+  },
   CREATED: {
     title: "评测已创建",
     description: "已固定题目与修复策略，等待后台工作流接管。",
@@ -35,8 +52,8 @@ const WORKFLOW_COPY = {
   },
   UNDERSTANDING_IMAGES: {
     title: "精确理解题面图片",
-    description: "独立图片模型正在读取图形结构，成功的描述将作为题面补充交给 Hy3。",
-    command: "vision.describe → append_untrusted_statement_text",
+    description: "独立图片模型按局部题面上下文读取图形；邻近图片会合并请求，已缓存描述会直接复用。",
+    command: "vision.describe_batch → cache → append_untrusted_statement_text",
   },
   IMAGE_DESCRIPTION_READY: {
     title: "图片描述已生成",
@@ -337,11 +354,20 @@ function appendWorkflowEvent(event, runStatus, runId) {
     previousCurrent.querySelector(":scope > details")?.removeAttribute("open");
   }
 
-  const copy = WORKFLOW_COPY[event.type] || {
+  let copy = WORKFLOW_COPY[event.type] || {
     title: event.type,
     description: "工作流返回了一条新事件。",
     command: event.type.toLowerCase(),
   };
+  if (event.type === "REVIEWING" && event.data?.deferred) {
+    copy = {title: "评审暂缓", description: "公开样例或编译已失败，先修复已复现的问题，本轮未调用双路评审。", command: "defer model reviews"};
+  }
+  if (event.type === "REPAIRING" && event.data?.mode === "rethink") {
+    copy = {title: "重新检查算法建模", description: "结合失败尝试和反例，从原始题意重新推导模型。", command: "reconstruct algorithm from statement"};
+  }
+  if (event.type === "REVIEWING" && event.data?.proof_only && !event.data?.deferred) {
+    copy = {title: "重新评审证明", description: "推理步骤已更新，重新执行逐步骤评审；源码未变，复用原编译和判题结果。", command: "review updated proof · reuse judge evidence"};
+  }
   const row = makeElement("article", `workflow-event tone-${eventTone(event)}`);
   row.dataset.eventSeq = event.seq;
   row.dataset.eventType = event.type;
@@ -365,6 +391,14 @@ function appendWorkflowEvent(event, runStatus, runId) {
   details.append(summary);
 
   const body = makeElement("div", "event-body");
+  if (event.type === "PUBLIC_VALIDATION_COMPLETED") {
+    const labels = {PASSED: "样例与小规模对拍通过", SAMPLE_FAILED: "公开样例未通过，暂缓模型评审", COMPILE_FAILED: "编译未通过，暂缓模型评审",
+      DIFFERENTIAL_MISMATCH: "小规模结果不一致，需要核查候选与穷举器", SAMPLES_PASSED: "公开样例通过；穷举器暂不可用"};
+    body.append(makeElement("p", "", labels[event.data.status] || event.data.status));
+  }
+  if (event.type === "MODEL_RETHINK_DECISION") {
+    body.append(makeElement("p", "", event.data.selected ? "已选中：下一轮独立重建算法模型。" : "未选中或预算已用尽：结束本次修复。"));
+  }
   body.append(makeElement("p", "event-description", copy.description));
   const command = makeElement("div", "event-command");
   command.append(makeElement("span", "event-command-label", "当前指令"));
@@ -393,6 +427,7 @@ function appendWorkflowEvent(event, runStatus, runId) {
     imageChoicePanels.set(event.data.request_id, {buttons, message, pending: false});
   }
   if (event.type === "IMAGE_DESCRIPTION_READY") {
+    if (event.data.cache_hit) body.append(makeElement("p", "", "已命中跨运行图片描述缓存，本次未调用图片模型。"));
     body.append(makeElement("pre", "image-description", event.data.text));
   }
   if (event.type === "IMAGE_UNDERSTANDING_SKIPPED") {

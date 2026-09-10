@@ -27,6 +27,8 @@ def critic_review_quality_issues(
         issues.append("missing_structured_assessments")
         return issues
     step_ids = [item.step_id for item in review.assessments]
+    if any(not item.evidence or not all(text.strip() for text in item.evidence) for item in review.assessments):
+        issues.append("missing_step_evidence")
     if len(step_ids) != len(set(step_ids)):
         issues.append("duplicate_step_assessments")
     if expected_step_ids is not None:
@@ -165,6 +167,14 @@ def adjudicate(
     confidence = sum(confidence_values) / len(confidence_values) if confidence_values else (0.9 if final_correct else 0.3)
     code_location = code.code_location or algorithm.code_location
     suggestion = repair_route(judge_verdict, error_type)
+    triage = failure_triage(check)
+    if triage["focus"] in {"WA", "RE", "IO_CONFLICT", "OLE"}:
+        suggestion = ("Correctness first: reproduce public/synthetic counterexamples and repair invalid results, crashes or I/O. "
+                      "Require public samples and small-case checks to pass before optimizing TLE or MLE. "
+                      f"Handle each category separately: {triage['counts']}.")
+    elif triage["focus"] == "MLE":
+        suggestion = "Resolve memory exhaustion while preserving correct outputs; distinguish allocation growth from runtime errors, then optimize time."
+    evidence.append("repair_priority=" + ",".join(triage["priority"]))
     return Diagnosis(
         error_type=error_type, first_error_step_id=first, code_location=code_location, evidence=evidence[:20],
         confidence=min(1.0, confidence), final_result_correct=final_correct, process_correct=process_correct,
@@ -231,6 +241,15 @@ def repair_quality_gate(previous: CheckResult | None, candidate: CheckResult | N
         "regressed_tests": regressed,
         "changed_failure_modes": changed,
     }
+
+
+def failure_triage(check: CheckResult | None) -> dict[str, Any]:
+    """Keep mixed failures visible; an aggregate timeout must not hide wrong answers."""
+    counts = Counter(t.verdict.value for t in check.tests) if check else Counter()
+    if check and not counts:
+        counts[check.verdict.value] = 1
+    pending = [v for v in ("RE", "WA", "IO_CONFLICT", "OLE", "MLE", "TLE") if counts[v]]
+    return {"counts": dict(counts), "priority": pending, "focus": pending[0] if pending else None}
 
 
 def is_complete(compile_verdict: Verdict, check: CheckResult | None, diagnosis: Diagnosis) -> bool:

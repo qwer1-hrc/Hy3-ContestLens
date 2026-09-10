@@ -16,15 +16,26 @@ from .evaluation import (
     improvement_key,
     is_complete,
     repair_quality_gate,
+    failure_triage,
 )
 from .judge import DockerJudge
-from .image_understanding import ImageDescriptionResult, ImageUnderstandingClient, StatementImages, augment_document
+from .image_understanding import (
+    IMAGE_PROMPT_VERSION,
+    ImageBatchDescriptionResult,
+    ImageDescriptionResult,
+    ImageUnderstandingClient,
+    StatementImages,
+    augment_document,
+    image_description_cache_key,
+    rendered_image_sha256,
+)
 from .model import Hy3Client
 from .model_diagnostics import model_run_context
 from .problem_spec import build_problem_spec
+from .preflight import is_hard, public_samples, validate_public
 from .resources import ResourceService
 from .store import Store
-from .utils import atomic_write_json, safe_id, utc_now
+from .utils import atomic_write_json, safe_id, utc_now, sha256_bytes
 from .workspace import WorkspaceStore
 
 
@@ -82,7 +93,98 @@ class ContestWorkflow:
     async def _reviews(self, problem_spec: dict[str, Any], solution: SolverOutput, io_basename: str) -> tuple[CriticReview, CriticReview]:
         algorithm_task = self.model.algorithm_review(problem_spec, solution)
         code_task = self.model.code_review(problem_spec, solution, io_basename)
-        return await asyncio.gather(algorithm_task, code_task)
+        tasks = [asyncio.create_task(algorithm_task), asyncio.create_task(code_task)]
+        try:
+            return tuple(await asyncio.gather(*tasks))
+        except BaseException:
+            for task in tasks:
+                task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
+            raise
+
+    async def _public_validation(self, run_id, problem_id, submission, spec, checkpoint):
+        if not self.workspace.settings.public_preflight_enabled or not is_hard(self.manifests.get(problem_id).luogu_difficulty):
+            return {}
+        records = checkpoint.setdefault("public_validation", {})
+        state = records.setdefault(submission["sha256"], {})
+        if "report" in state:
+            return state["report"]
+        if not public_samples(spec):
+            state["report"] = {"status": "UNAVAILABLE", "reason": "No unambiguous public sample pairs could be extracted"}
+            self.store.append_event(run_id, "PUBLIC_VALIDATION_SKIPPED", state["report"])
+            return state["report"]
+        self._status(run_id, RunStatus.PUBLIC_VALIDATING, revision_id=submission["revision_id"])
+        def save():
+            self._save_checkpoint(run_id, checkpoint, "PUBLIC_VALIDATION_IN_PROGRESS")
+        shared = checkpoint.setdefault("public_oracle", {})
+        report = await validate_public(self, run_id, problem_id, submission, spec, state, shared, save)
+        state["report"] = report
+        self._write(run_id, f"public_validation/{submission['sha256']}.json", report)
+        save()
+        self.store.append_event(run_id, "PUBLIC_VALIDATION_COMPLETED", {"revision_id": submission["revision_id"], **report})
+        return report
+
+    @staticmethod
+    def _valid_review_payload(data, solution):
+        if not data:
+            return False
+        for key, role in (("algorithm", "algorithm_critic"), ("code", "code_critic")):
+            try:
+                review = CriticReview.model_validate(data[key])
+            except (ValueError, KeyError):
+                return False
+            if review.reviewer != role or critic_review_quality_issues(review, (s.step_id for s in solution.steps)):
+                return False
+        return True
+
+    @staticmethod
+    def _deferred_reviews(solution):
+        return tuple(CriticReview(reviewer=role, assessments=[{
+            "step_id": step.step_id, "verdict": "NOT_ASSESSABLE", "confidence": 0,
+            "evidence": ["Model review deferred: compilation or authoritative public sample already failed."],
+        } for step in solution.steps], summary="Model review deferred until public validation passes.")
+                     for role in ("algorithm_critic", "code_critic"))
+
+    @staticmethod
+    def _public_diagnosis(diagnosis, report):
+        if report.get("defer_reviews") or report.get("status") == "DIFFERENTIAL_MISMATCH":
+            diagnosis.process_correct = False
+            diagnosis.evidence.append("public_validation=" + report["status"])
+            diagnosis.repair_suggestion = (
+                "First reproduce the attached public/synthetic counterexample. Fix public sample failures before optimization. "
+                "For synthetic disagreements, verify the exhaustive oracle as well as the candidate; do not blindly trust either.")
+        return diagnosis
+
+    @staticmethod
+    def _public_feedback(report):
+        cases = report.get("samples", []) + report.get("small_cases", [])
+        return {"status": report.get("status"), "oracle_status": report.get("oracle_status"),
+                "counterexamples": [{k: (v[:4096] if isinstance(v, str) else v) for k, v in case.items()}
+                                    for case in cases if case.get("verdict") != "AC"][:2]}
+
+    @staticmethod
+    def _failure_memory(rounds):
+        return [{"revision": r["new_revision_id"], "base_revision": r["parent_revision_id"],
+                 "reasoning_revision": r.get("reasoning_revision_id"),
+                 "attempted_change": r.get("attempted_change", "Legacy run: change summary unavailable"),
+                 "triage": r.get("failure_triage", {}), "improved": r["improved"],
+                 "findings": r.get("process_evaluation", {}).get("evidence", [])[:6],
+                 "public_validation": r.get("public_feedback", {}),
+                 "lesson": "This attempt did not improve the best result; do not repeat it without new evidence."}
+                for r in rounds[-3:] if not r["improved"]]
+
+    def _schedule_rethink(self, run_id, checkpoint, round_number, max_rounds):
+        decisions = checkpoint.setdefault("rethink_decisions", {})
+        key = str(round_number)
+        if key not in decisions:
+            draw = int(sha256_bytes(f"{run_id}:rethink:{round_number}".encode())[:16], 16) / 2**64
+            allowed = round_number < max_rounds and sum(d["selected"] for d in decisions.values()) < self.workspace.settings.max_rethinks
+            decisions[key] = {"draw": draw, "probability": self.workspace.settings.rethink_probability,
+                              "selected": allowed and draw < self.workspace.settings.rethink_probability,
+                              "within_budget": allowed, "after_round": round_number}
+            self.store.append_event(run_id, "MODEL_RETHINK_DECISION", decisions[key])
+            self._save_checkpoint(run_id, checkpoint, "RETHINK_DECISION_READY")
+        return decisions[key]["selected"]
 
     async def _recheck_code_review_if_needed(
         self,
@@ -128,14 +230,14 @@ class ContestWorkflow:
         *,
         phase: str,
         round_number: int | None = None,
+        prepared: dict[str, Any] | None = None,
     ) -> tuple[CompileResult, CheckResult | None, dict[str, Any]]:
-        frozen = self.workspace.freeze_cpp_revision(run_id, submission_id, revision_id, sha256)
-        compile_result = await asyncio.to_thread(
-            self.judge.compile_cpp,
-            problem_id,
-            frozen["source_artifact_id"],
-            frozen["source_sha256"],
-        )
+        if prepared and prepared.get("compile"):
+            frozen = prepared["frozen"]
+            compile_result = CompileResult.model_validate(prepared["compile"])
+        else:
+            frozen = self.workspace.freeze_cpp_revision(run_id, submission_id, revision_id, sha256)
+            compile_result = await asyncio.to_thread(self.judge.compile_cpp, problem_id, frozen["source_artifact_id"], frozen["source_sha256"])
         event_context = {
             "phase": phase,
             "round": round_number,
@@ -272,6 +374,30 @@ class ContestWorkflow:
         save("running")
         self._status(run_id, RunStatus.UNDERSTANDING_IMAGES, model=settings.model, image_count=len(state["images"]))
         client = self.image_model or ImageUnderstandingClient(settings)
+        pending: list[dict[str, Any]] = []
+
+        def warning_for(item: dict[str, Any], exc: Exception) -> dict[str, Any]:
+            warning = {"label": item["label"], "error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_PROCESSING_FAILED"}
+            if isinstance(exc, ContestLensError) and isinstance(exc.details, dict):
+                warning.update({key: exc.details[key] for key in (
+                    "type", "duration_ms", "http_status", "request_id", "failure_kind", "stream",
+                    "provider_error_type", "retry_after_seconds", "attempts", "retry_exhausted", "retry_history",
+                    "total_duration_ms", "batch_size",
+                ) if key in exc.details})
+            return warning
+
+        def accept(item: dict[str, Any], text: str, diagnostics: dict[str, Any] | None, *, cache_hit: bool = False) -> None:
+            record = {
+                "image_id": item["image_id"], "source_label": item["label"], "model": settings.model,
+                "content_type": "untrusted_problem_content", "text": text,
+            }
+            if diagnostics:
+                record["diagnostics"] = diagnostics
+            state["descriptions"].append(record)
+            self.store.append_event(run_id, "IMAGE_DESCRIPTION_READY", {
+                "label": item["label"], "text": text, "cache_hit": cache_hit,
+            })
+
         for item in state["images"]:
             if self._cancelled(run_id):
                 save("cancelled")
@@ -281,44 +407,79 @@ class ContestWorkflow:
                 if self._cancelled(run_id):
                     save("cancelled")
                     return document
-                description_result = await client.describe(data_url, item["label"], document["content"])
-                if isinstance(description_result, ImageDescriptionResult):
-                    description = description_result.text
-                    diagnostics = description_result.diagnostics
+                context = images.context_for(document, item)
+                image_sha256 = rendered_image_sha256(data_url)
+                cache_key = image_description_cache_key(settings.model, image_sha256, context)
+                cached = self.store.get_image_description_cache(cache_key) if settings.cache_enabled else None
+                if (cached and cached.get("model") == settings.model
+                        and cached.get("prompt_version") == IMAGE_PROMPT_VERSION
+                        and isinstance(cached.get("text"), str)
+                        and 0 < len(cached["text"]) <= settings.max_output_chars):
+                    accept(item, cached["text"], {
+                        "cache_hit": True, "cache_key": cache_key, "cached_at": cached.get("cached_at"),
+                        **({"original": cached["diagnostics"]} if isinstance(cached.get("diagnostics"), dict) else {}),
+                    }, cache_hit=True)
+                else:
+                    pending.append({**item, "data_url": data_url, "context": context,
+                                    "rendered_sha256": image_sha256, "cache_key": cache_key})
+            except Exception as exc:
+                state["warnings"].append(warning_for(item, exc))
+            save("running")
+
+        batch_method = getattr(client, "describe_batch", None)
+        batches = images.related_batches(pending) if callable(batch_method) else [[item] for item in pending]
+        for batch_index, batch in enumerate(batches):
+            if self._cancelled(run_id):
+                save("cancelled")
+                return document
+            try:
+                if callable(batch_method):
+                    batch_result = await batch_method([{
+                        "image_id": item["image_id"], "label": item["label"],
+                        "data_url": item["data_url"], "context": item["context"],
+                    } for item in batch])
+                    if not isinstance(batch_result, ImageBatchDescriptionResult):
+                        raise TypeError("Batch image client returned an invalid result")
+                    results = {image_id: (text, batch_result.diagnostics) for image_id, text in batch_result.descriptions.items()}
                 else:
                     # Preserve compatibility with simple custom/mock vision clients.
-                    description = description_result
-                    diagnostics = None
+                    results = {}
+                    for item in batch:
+                        description_result = await client.describe(item["data_url"], item["label"], item["context"])
+                        results[item["image_id"]] = (
+                            (description_result.text, description_result.diagnostics)
+                            if isinstance(description_result, ImageDescriptionResult)
+                            else (description_result, None)
+                        )
                 if self._cancelled(run_id):
                     save("cancelled")
                     return document
-                description_record = {
-                    "image_id": item["image_id"], "source_label": item["label"], "model": settings.model,
-                    "content_type": "untrusted_problem_content", "text": description,
-                }
-                if diagnostics:
-                    description_record["diagnostics"] = diagnostics
-                state["descriptions"].append(description_record)
-                self.store.append_event(run_id, "IMAGE_DESCRIPTION_READY", {"label": item["label"], "text": description})
+                for item in batch:
+                    description, diagnostics = results[item["image_id"]]
+                    accept(item, description, dict(diagnostics) if diagnostics else None)
+                    if settings.cache_enabled:
+                        self.store.put_image_description_cache(item["cache_key"], {
+                            "model": settings.model, "prompt_version": IMAGE_PROMPT_VERSION,
+                            "image_sha256": item["rendered_sha256"],
+                            "context_sha256": sha256_bytes(item["context"].encode("utf-8")),
+                            "text": description, **({"diagnostics": diagnostics} if diagnostics else {}),
+                        })
             except Exception as exc:
-                warning = {"label": item["label"], "error_code": exc.code if isinstance(exc, ContestLensError) else "IMAGE_PROCESSING_FAILED"}
-                if isinstance(exc, ContestLensError) and isinstance(exc.details, dict):
-                    warning.update({key: exc.details[key] for key in (
-                        "type", "duration_ms", "http_status", "request_id", "failure_kind", "stream",
-                        "provider_error_type", "retry_after_seconds", "attempts", "retry_exhausted", "retry_history",
-                    ) if key in exc.details})
-                state["warnings"].append(warning)
-                if warning.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"}:
-                    remaining = state["images"][state["images"].index(item) + 1:]
+                warnings = [warning_for(item, exc) for item in batch]
+                state["warnings"].extend(warnings)
+                if any(warning.get("provider_error_type") in {"engine_overloaded_error", "rate_limit_reached_error"} for warning in warnings):
+                    remaining = [item for later in batches[batch_index + 1:] for item in later]
                     state["warnings"].extend({
-                        "label": remaining_item["label"], "error_code": "IMAGE_SKIPPED_AFTER_RATE_LIMIT",
-                    } for remaining_item in remaining)
+                        "label": item["label"], "error_code": "IMAGE_SKIPPED_AFTER_RATE_LIMIT",
+                    } for item in remaining)
                     save("running")
                     break
             save("running")
         if self._cancelled(run_id):
             save("cancelled")
             return document
+        order = {item["image_id"]: index for index, item in enumerate(state["images"])}
+        state["descriptions"].sort(key=lambda item: order.get(item["image_id"], len(order)))
         outcome = "partial" if state["descriptions"] and state["warnings"] else "completed" if state["descriptions"] else "failed"
         save(outcome)
         self.store.append_event(run_id, "IMAGE_UNDERSTANDING_COMPLETED", {
@@ -443,10 +604,15 @@ class ContestWorkflow:
             return
 
         if checkpoint.get("initial") is None:
+            public_report = await self._public_validation(run_id, problem_id, submission, problem_spec, checkpoint)
             review_data = checkpoint.get("initial_reviews")
+            if review_data and not public_report.get("defer_reviews") and not self._valid_review_payload(review_data, solution):
+                review_data = None
+                checkpoint.pop("initial_final_reviews", None)
             if review_data is None:
-                self._status(run_id, RunStatus.REVIEWING, revision_id=revision_id)
-                algorithm_review, code_review = await self._reviews(problem_spec, solution, io_basename)
+                self._status(run_id, RunStatus.REVIEWING, revision_id=revision_id, deferred=bool(public_report.get("defer_reviews")))
+                algorithm_review, code_review = (self._deferred_reviews(solution) if public_report.get("defer_reviews")
+                                                 else await self._reviews(problem_spec, solution, io_basename))
                 review_data = {
                     "algorithm": algorithm_review.model_dump(mode="json"),
                     "code": code_review.model_dump(mode="json"),
@@ -462,6 +628,7 @@ class ContestWorkflow:
                 self._status(run_id, RunStatus.COMPILING, phase="initial", revision_id=revision_id)
                 compile_result, check, frozen = await self._judge_revision(
                     run_id, problem_id, submission_id, revision_id, revision_sha, phase="initial",
+                    prepared=checkpoint.get("public_validation", {}).get(revision_sha),
                 )
                 judge_data = {
                     "compile": compile_result.model_dump(mode="json"),
@@ -476,11 +643,12 @@ class ContestWorkflow:
                 frozen = judge_data["frozen"]
 
             final_reviews = checkpoint.get("initial_final_reviews")
+            if final_reviews and not public_report.get("defer_reviews") and not self._valid_review_payload(final_reviews, solution):
+                final_reviews = None
             if final_reviews is None:
                 self._status(run_id, RunStatus.LOCALIZING, phase="initial", revision_id=revision_id)
-                code_review, initial_code_review = await self._recheck_code_review_if_needed(
-                    problem_spec, solution, io_basename, code_review, compile_result, check,
-                )
+                code_review, initial_code_review = ((code_review, None) if public_report.get("defer_reviews") else
+                    await self._recheck_code_review_if_needed(problem_spec, solution, io_basename, code_review, compile_result, check))
                 final_reviews = {
                     "algorithm": algorithm_review.model_dump(mode="json"),
                     "code": code_review.model_dump(mode="json"),
@@ -505,7 +673,9 @@ class ContestWorkflow:
                 algorithm_review, code_review, compile_result.verdict, check,
                 (step.step_id for step in solution.steps),
             )
+            diagnosis = self._public_diagnosis(diagnosis, public_report)
             initial = self._evaluation_record(revision_id, revision_sha, compile_result, check, diagnosis, frozen)
+            initial["public_validation"] = public_report
             self._write(run_id, "initial_evaluation/compile_result.json", compile_result.model_dump(mode="json"))
             if check:
                 self._write(run_id, "initial_evaluation/answer_check_result.json", check.model_dump(mode="json"))
@@ -548,12 +718,15 @@ class ContestWorkflow:
                 break
             inflight = checkpoint.get("inflight_round")
             if not inflight or inflight.get("round_number") != round_number:
-                self._status(run_id, RunStatus.REPAIRING, round=round_number, base_revision_id=best["revision_id"])
+                rethink = checkpoint.get("pending_rethink", False)
+                self._status(run_id, RunStatus.REPAIRING, round=round_number, base_revision_id=best["revision_id"], mode="rethink" if rethink else "repair")
                 repair_plan_id = safe_id("repairplan")
                 repair_plan = {
                     "repair_plan_id": repair_plan_id,
                     "target_revision": best["revision_id"],
+                    "target_reasoning_revision_id": best.get("reasoning_revision_id"),
                     "target_sha256": best["sha256"],
+                    "mode": "rethink" if rethink else "repair",
                     "root_cause": best["diagnosis"]["evidence"],
                     "first_error_step_id": best["diagnosis"]["first_error_step_id"],
                     "error_type": best["diagnosis"]["error_type"],
@@ -572,6 +745,9 @@ class ContestWorkflow:
                     problem_spec, best_solution, best["diagnosis"],
                     best.get("check") or {"verdict": best["compile"]["verdict"]},
                     round_number, io_basename, compile_summary=best["compile"],
+                    failure_memory=self._failure_memory(rounds) + checkpoint.get("unchanged_attempts", [])[-1:],
+                    public_validation=self._public_feedback(best.get("public_validation", {})),
+                    rethink=rethink,
                 )
                 old_source = self.workspace.read_cpp_submission(
                     run_id, submission_id, best["revision_id"],
@@ -580,7 +756,20 @@ class ContestWorkflow:
                     old_source.splitlines(keepends=True), repaired.cpp_source.splitlines(keepends=True),
                     fromfile="a/main.cpp", tofile="b/main.cpp",
                 ))
-                if not diff:
+                proof_only = not diff and repaired.model_dump(exclude={"cpp_source"}) != best_solution.model_dump(exclude={"cpp_source"})
+                if not diff and not proof_only:
+                    no_improvement += 1
+                    checkpoint.setdefault("unchanged_attempts", []).append({"round": round_number, "revision": best["revision_id"],
+                        "attempted_change": "Returned identical source", "lesson": "No executable change was made; reconsider the failed hypothesis."})
+                    if no_improvement < self.workspace.settings.stop_after_no_improvement_rounds and round_number < max_rounds:
+                        checkpoint.update(next_round=round_number + 1, no_improvement=no_improvement, pending_rethink=False)
+                        self._save_checkpoint(run_id, checkpoint, "UNCHANGED_REPAIR_READY")
+                        continue
+                    if self._schedule_rethink(run_id, checkpoint, round_number, max_rounds):
+                        checkpoint.update(next_round=round_number + 1, no_improvement=0, pending_rethink=True)
+                        no_improvement = 0
+                        self._save_checkpoint(run_id, checkpoint, "RETHINK_PENDING")
+                        continue
                     stop_reason = "STALLED"
                     checkpoint["stop_reason"] = stop_reason
                     self._save_checkpoint(run_id, checkpoint, "REPAIR_STALLED")
@@ -590,7 +779,12 @@ class ContestWorkflow:
                     "repair_plan": repair_plan,
                     "repaired": repaired.model_dump(mode="json"),
                     "diff": diff,
+                    "proof_only": proof_only,
                 }
+                if proof_only:
+                    inflight["revision"] = {"revision_id": best["revision_id"], "sha256": best["sha256"]}
+                    inflight["judge"] = {"compile": best["compile"], "check": best.get("check"),
+                                         "frozen": {"source_artifact_id": best["source_artifact_id"]}}
                 checkpoint["inflight_round"] = inflight
                 self._save_checkpoint(run_id, checkpoint, "REPAIR_SOLUTION_READY")
             else:
@@ -598,6 +792,10 @@ class ContestWorkflow:
                 repair_plan_id = repair_plan["repair_plan_id"]
                 repaired = SolverOutput.model_validate(inflight["repaired"])
                 diff = inflight["diff"]
+
+            proof_only = inflight.get("proof_only", False)
+            solution_artifact = f"repair_rounds/round_{round_number:03d}/solution.json"
+            self._write(run_id, solution_artifact, repaired.model_dump(mode="json"))
 
             revision = inflight.get("revision")
             if revision is None:
@@ -611,6 +809,8 @@ class ContestWorkflow:
                 inflight["revision"] = revision
                 self._save_checkpoint(run_id, checkpoint, "REPAIR_REVISION_READY")
 
+            public_report = await self._public_validation(run_id, problem_id, {**revision, "submission_id": submission_id}, problem_spec, checkpoint)
+
             judge_data = inflight.get("judge")
             if judge_data is None:
                 self._status(
@@ -620,6 +820,7 @@ class ContestWorkflow:
                 compile_result, check, frozen = await self._judge_revision(
                     run_id, problem_id, submission_id, revision["revision_id"], revision["sha256"],
                     phase="repair", round_number=round_number,
+                    prepared=checkpoint.get("public_validation", {}).get(revision["sha256"]),
                 )
                 judge_data = {
                     "compile": compile_result.model_dump(mode="json"),
@@ -634,14 +835,22 @@ class ContestWorkflow:
                 frozen = judge_data["frozen"]
 
             review_data = inflight.get("reviews")
+            if review_data and not public_report.get("defer_reviews") and not self._valid_review_payload(review_data, repaired):
+                review_data = None
+                inflight.pop("reviews_raw", None)
             if review_data is None:
                 raw_reviews = inflight.get("reviews_raw")
+                if raw_reviews and not public_report.get("defer_reviews") and not self._valid_review_payload(raw_reviews, repaired):
+                    raw_reviews = None
                 if raw_reviews is None:
                     self._status(
                         run_id, RunStatus.REVIEWING, phase="repair",
                         round=round_number, revision_id=revision["revision_id"],
+                        deferred=bool(public_report.get("defer_reviews")),
+                        proof_only=proof_only, judge_reused=proof_only,
                     )
-                    algorithm_review, code_review = await self._reviews(problem_spec, repaired, io_basename)
+                    algorithm_review, code_review = (self._deferred_reviews(repaired) if public_report.get("defer_reviews")
+                                                     else await self._reviews(problem_spec, repaired, io_basename))
                     raw_reviews = {
                         "algorithm": algorithm_review.model_dump(mode="json"),
                         "code": code_review.model_dump(mode="json"),
@@ -651,9 +860,8 @@ class ContestWorkflow:
                 else:
                     algorithm_review = CriticReview.model_validate(raw_reviews["algorithm"])
                     code_review = CriticReview.model_validate(raw_reviews["code"])
-                code_review, initial_code_review = await self._recheck_code_review_if_needed(
-                    problem_spec, repaired, io_basename, code_review, compile_result, check,
-                )
+                code_review, initial_code_review = ((code_review, None) if public_report.get("defer_reviews") else
+                    await self._recheck_code_review_if_needed(problem_spec, repaired, io_basename, code_review, compile_result, check))
                 review_data = {
                     "algorithm": algorithm_review.model_dump(mode="json"),
                     "code": code_review.model_dump(mode="json"),
@@ -677,9 +885,10 @@ class ContestWorkflow:
                 algorithm_review, code_review, compile_result.verdict, check,
                 (step.step_id for step in repaired.steps),
             )
-            current = self._evaluation_record(
-                revision["revision_id"], revision["sha256"], compile_result, check, diagnosis, frozen,
-            )
+            diagnosis = self._public_diagnosis(diagnosis, public_report)
+            current = self._evaluation_record(revision["revision_id"], revision["sha256"], compile_result, check, diagnosis, frozen)
+            current["public_validation"] = public_report
+            current.update(reasoning_revision_id=f"proof_{round_number:03d}", solution_artifact=solution_artifact)
             current_key = improvement_key(compile_result.verdict, check, diagnosis)
             previous_check = CheckResult.model_validate(best["check"]) if best.get("check") else None
             quality_gate = repair_quality_gate(previous_check, check)
@@ -695,9 +904,18 @@ class ContestWorkflow:
             round_record = {
                 "repair_round_id": f"round_{round_number:03d}",
                 "parent_revision_id": repair_plan["target_revision"],
+                "parent_reasoning_revision_id": repair_plan.get("target_reasoning_revision_id"),
                 "repair_plan": repair_plan,
                 "new_revision_id": revision["revision_id"],
                 "new_sha256": revision["sha256"],
+                "attempted_change": ("Proof/steps changed; source unchanged.\n" + repaired.model_dump_json(exclude={"cpp_source"}))[:5000] if proof_only else inflight["diff"][:5000],
+                "proof_only": proof_only,
+                "judge_reused": proof_only,
+                "reasoning_revision_id": current["reasoning_revision_id"],
+                "solution_artifact": solution_artifact,
+                "failure_triage": failure_triage(check),
+                "public_validation": public_report,
+                "public_feedback": self._public_feedback(public_report),
                 "compile_result": compile_result.model_dump(mode="json"),
                 "answer_check_result": check.model_dump(mode="json") if check else None,
                 "algorithm_review": algorithm_review.model_dump(mode="json"),
@@ -730,7 +948,13 @@ class ContestWorkflow:
             elif diagnosis.error_type == ErrorType.UNRESOLVED:
                 stop_reason = "UNRESOLVED"
             elif no_improvement >= self.workspace.settings.stop_after_no_improvement_rounds:
-                stop_reason = "STALLED"
+                if self._schedule_rethink(run_id, checkpoint, round_number, max_rounds):
+                    checkpoint["pending_rethink"] = True
+                    no_improvement = 0
+                else:
+                    stop_reason = "STALLED"
+            else:
+                checkpoint["pending_rethink"] = False
             checkpoint.update(
                 best=best,
                 best_solution=best_solution.model_dump(mode="json"),
@@ -758,7 +982,11 @@ class ContestWorkflow:
             "final_submission_result": best,
             "repair_success": not initial["complete"] and best["complete"],
             "repair_round_count": len(rounds),
+            "repair_attempt_count": len(rounds) + len(checkpoint.get("unchanged_attempts", [])),
+            "proof_only_round_count": sum(bool(r.get("proof_only")) for r in rounds),
+            "code_revision_count": sum(not r.get("proof_only", False) for r in rounds),
             "regression_count": regression_count,
+            "rethink_decisions": checkpoint.get("rethink_decisions", {}),
             "stop_reason": stop_reason,
             "difficulty": manifest.luogu_difficulty,
             "difficulty_status": "PENDING_USER_LABEL" if manifest.luogu_difficulty is None else "LABELED",
@@ -766,7 +994,8 @@ class ContestWorkflow:
         }
         self._write(
             run_id, "best_revision.json",
-            {"revision_id": best["revision_id"], "sha256": best["sha256"], "selection_key": list(best_key)},
+            {"revision_id": best["revision_id"], "sha256": best["sha256"], "selection_key": list(best_key),
+             "reasoning_revision_id": best.get("reasoning_revision_id"), "solution_artifact": best.get("solution_artifact", "solver_output.json")},
         )
         self._write(run_id, "final_evaluation.json", final_result)
         checkpoint["final_result"] = final_result

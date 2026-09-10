@@ -160,7 +160,7 @@ class DockerJudge:
         ensure(binary.is_file() and sha256_file(binary) == metadata["binary_sha256"], "COMPILE_ARTIFACT_TAMPERED", "Compiled binary hash mismatch", status_code=500)
         return binary, metadata
 
-    def _run_case(self, binary: Path, compile_meta: dict[str, Any], case: TestCase, problem_id: str, memory_mb: int, memory_source: str, time_ms: int, output_bytes: int) -> TestResult:
+    def _run_case(self, binary: Path, compile_meta: dict[str, Any], case: TestCase, problem_id: str, memory_mb: int, memory_source: str, time_ms: int, output_bytes: int, public_capture: dict[str, Any] | None = None) -> TestResult:
         run_root = self.settings.runs_root / compile_meta["run_id"]
         result_root = run_root / "judge_tmp" / safe_id("case")
         result_root.mkdir(parents=True, exist_ok=False)
@@ -198,6 +198,8 @@ class DockerJudge:
         stderr_size = (result_root / "stderr.txt").stat().st_size if (result_root / "stderr.txt").is_file() else 0
         expected = case.expected_path.read_bytes()
         chosen = file_output if file_output else stdout
+        if public_capture is not None:
+            public_capture["actual"] = chosen[:16384].decode("utf-8", errors="replace")
         verdict = Verdict.AC
         first_diff = None
         equal, first_diff, normalized_expected_hash, actual_hash = compare_noip_fulltext(expected, chosen)
@@ -234,6 +236,24 @@ class DockerJudge:
             memory_limited=memory_limited, output_limited=output_limited,
             stdout_bytes=stdout_size, file_output_bytes=file_output_size, stderr_bytes=stderr_size,
         )
+
+    def run_public_case(self, compile_artifact_id: str, problem_id: str, input_text: str, expected: str = "") -> dict[str, Any]:
+        """Execute supplied public/synthetic data, never read the private dataset."""
+        ensure(len(input_text.encode()) <= 16384 and len(expected.encode()) <= 16384, "PUBLIC_CASE_TOO_LARGE", "Public case exceeds budget")
+        binary, meta = self._locate_compile(compile_artifact_id)
+        ensure(meta["problem_id"] == problem_id, "PROBLEM_ARTIFACT_MISMATCH", "Public case binary belongs to another problem")
+        root = self.settings.runs_root / meta["run_id"] / "public_cases" / safe_id("public")
+        root.mkdir(parents=True)
+        inp, out = root / "input.txt", root / "expected.txt"
+        inp.write_text(input_text, encoding="utf-8")
+        out.write_text(expected, encoding="utf-8")
+        case = TestCase(root.name, inp, out, sha256_file(inp), sha256_file(out))
+        capture: dict[str, Any] = {}
+        manifest = self.catalog.get(problem_id)
+        memory_mb, memory_source = self.catalog.effective_memory(problem_id)
+        result = self._run_case(binary, meta, case, problem_id, memory_mb,
+                                memory_source, min(manifest.resource_limits.time_ms, 2000), 16384, capture)
+        return {"verdict": result.verdict.value, "actual": capture.get("actual", ""), "wall_ms": result.wall_ms}
 
     def check_answer(self, compile_artifact_id: str, dataset_id: str, problem_id: str, test_ids: list[str] | None = None) -> CheckResult:
         manifest = self.catalog.get(problem_id)

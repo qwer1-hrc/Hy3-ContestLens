@@ -12,6 +12,9 @@ enabled = true
 max_rounds = 3
 hard_max_rounds = 5
 stop_after_no_improvement_rounds = 2
+public_preflight_enabled = true
+rethink_probability = 0.5
+max_rethinks = 1
 
 [report_translation]
 reasoning_effort = "low"
@@ -52,3 +55,7 @@ max_images = 12
 max_image_mb = 8
 max_image_side = 2400
 max_output_chars = 16000
+context_max_chars = 4000
+context_line_radius = 10
+batch_max_images = 4
+cache_enabled = true

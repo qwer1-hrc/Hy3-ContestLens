@@ -21,7 +21,8 @@ async def test_persisted_progress_is_grouped_by_stage_and_parallel_call(settings
             result = {"problem_summary": "scan", "steps": [{"step_id": "S1", "goal": "sum", "statement": "scan", "justification": "induction"}],
                       "complexity": {"time": "O(n)", "space": "O(1)"}, "cpp_source": "int main() {}"}
         else:
-            result = {"reviewer": role, "assessments": [], "summary": "review"}
+            result = {"reviewer": role, "assessments": [{"step_id": "S1", "verdict": "SUPPORTED", "evidence": ["induction"], "confidence": 1}],
+                      "summary": "review", "error_type": "UNRESOLVED", "first_error_step_id": None, "code_location": None}
         return httpx.Response(200, json={"choices": [{"message": {"content": json.dumps(result)}, "finish_reason": "stop"}]})
 
     store = Store(settings.database_path)
