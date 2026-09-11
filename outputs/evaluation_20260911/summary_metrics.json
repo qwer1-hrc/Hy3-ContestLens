@@ -1,0 +1,376 @@
+{
+  "generated_at": "2026-09-11T07:15:43.769550+00:00",
+  "source_snapshot": {
+    "database_row_count": 129,
+    "database_status_counts": {
+      "CANCELLED": 4,
+      "COMPLETED": 86,
+      "CREATED": 3,
+      "FAILED": 36
+    },
+    "events": 14433,
+    "event_runs": 129,
+    "annotation_tasks": 0,
+    "annotations": 0,
+    "benchmarks": 0,
+    "campaigns": [
+      {
+        "campaign_id": "collection-20260910T103603Z",
+        "created_at": "2026-09-10T10:36:03.278191+00:00",
+        "updated_at": "2026-09-10T18:13:38.840534+00:00",
+        "catalog_problem_count": 74,
+        "campaign_complete": true,
+        "counts_by_campaign_status": {
+          "CANCELLED": 1,
+          "COMPLETED": 39,
+          "EXCLUDED_SAMPLES_AFTER_RUN": 1,
+          "EXCLUDED_SAMPLES_ONLY": 7,
+          "EXCLUDED_UNSUPPORTED_COMPARATOR": 3,
+          "FAILED_AFTER_RESTART": 8,
+          "SKIPPED_PREVIOUS_SUCCESS": 15
+        },
+        "counts_by_complexity_class": {
+          "complex": 19,
+          "simple": 55
+        },
+        "pending_counts_by_complexity_class": {},
+        "previous_successes_skipped": 15,
+        "historical_strict_successes_skipped": 5,
+        "unsupported_comparator_excluded": 3,
+        "samples_only_excluded": 8,
+        "campaign_runs_started": 50,
+        "campaign_workflows_completed": 39,
+        "campaign_workflows_failed_after_restart": 8,
+        "campaign_workflows_cancelled": 1,
+        "controller_errors": 0,
+        "workflow_restarts_used": 9,
+        "fully_passing_runs": 35,
+        "generated_at": "2026-09-10T18:13:38.841060+00:00",
+        "source_path": "campaigns/collection-20260910T103603Z/campaign_state.json"
+      },
+      {
+        "campaign_id": "collection-20260911T013612Z",
+        "created_at": "2026-09-11T01:36:12.837609+00:00",
+        "updated_at": "2026-09-11T02:27:32.202136+00:00",
+        "catalog_problem_count": 74,
+        "campaign_complete": true,
+        "counts_by_campaign_status": {
+          "COMPLETED": 8,
+          "EXCLUDED_SAMPLES_ONLY": 8,
+          "EXCLUDED_UNSUPPORTED_COMPARATOR": 3,
+          "SKIPPED_PREVIOUS_SUCCESS": 55
+        },
+        "counts_by_complexity_class": {
+          "complex": 19,
+          "simple": 55
+        },
+        "pending_counts_by_complexity_class": {},
+        "previous_successes_skipped": 55,
+        "historical_strict_successes_skipped": 37,
+        "unsupported_comparator_excluded": 3,
+        "samples_only_excluded": 8,
+        "campaign_runs_started": 8,
+        "campaign_workflows_completed": 8,
+        "campaign_workflows_failed_after_restart": 0,
+        "campaign_workflows_cancelled": 0,
+        "controller_errors": 0,
+        "workflow_restarts_used": 1,
+        "fully_passing_runs": 7,
+        "generated_at": "2026-09-11T02:27:32.202136+00:00",
+        "source_path": "campaigns/collection-20260911T013612Z/campaign_state.json"
+      }
+    ]
+  },
+  "workflow_records": {
+    "n": 86,
+    "answer_correct_n": 64,
+    "answer_accuracy": 0.7441860465116279,
+    "process_correct_n": 61,
+    "process_correct_rate": 0.7093023255813954,
+    "strict_success_n": 51,
+    "strict_success_rate": 0.5930232558139535,
+    "answer_only_ac_n": 13,
+    "answer_only_ac_rate": 0.1511627906976744,
+    "initial_answer_correct_n": 53,
+    "initial_answer_accuracy": 0.6162790697674418,
+    "initial_process_correct_n": 54,
+    "initial_process_correct_rate": 0.627906976744186,
+    "initial_strict_success_n": 41,
+    "initial_strict_success_rate": 0.47674418604651164
+  },
+  "problem_coverage": {
+    "runnable_problem_count": 63,
+    "workflow_closed_n": 63,
+    "workflow_closed_rate": 1.0,
+    "answer_ac_ever_n": 53,
+    "answer_ac_ever_rate": 0.8412698412698413,
+    "strict_success_ever_n": 44,
+    "strict_success_ever_rate": 0.6984126984126984,
+    "definition": "每题至少一次历史运行达到相应条件；非单次统一实验。"
+  },
+  "revision_records": {
+    "n": 172,
+    "initial_n": 86,
+    "repair_n": 86
+  },
+  "repair_effectiveness": {
+    "initially_not_strict_n": 45,
+    "recovered_to_strict_n": 10,
+    "recovery_rate": 0.2222222222222222,
+    "strict_gain_n": 10
+  },
+  "model_usage": {
+    "model_calls_logged": 637,
+    "successful_calls": 544,
+    "failed_calls": 93,
+    "total_tokens_recorded": 11689463,
+    "scope": "主工作流 model_calls；不含按需报告翻译目录。"
+  },
+  "campaign_recomputed": [
+    {
+      "campaign_id": "collection-20260910T103603Z",
+      "n": 39,
+      "answer_correct_n": 35,
+      "answer_accuracy": 0.8974358974358975,
+      "process_correct_n": 32,
+      "process_correct_rate": 0.8205128205128205,
+      "strict_success_n": 32,
+      "strict_success_rate": 0.8205128205128205,
+      "answer_only_ac_n": 3,
+      "answer_only_ac_rate": 0.07692307692307693
+    },
+    {
+      "campaign_id": "collection-20260911T013612Z",
+      "n": 8,
+      "answer_correct_n": 7,
+      "answer_accuracy": 0.875,
+      "process_correct_n": 7,
+      "process_correct_rate": 0.875,
+      "strict_success_n": 7,
+      "strict_success_rate": 0.875,
+      "answer_only_ac_n": 0,
+      "answer_only_ac_rate": 0.0
+    }
+  ],
+  "difficulty_backfill": {
+    "run_result_labeled_n": 64,
+    "current_manifest_backfilled_n": 22,
+    "unresolved_n": 0
+  },
+  "difficulty": [
+    {
+      "difficulty": "入门",
+      "difficulty_rank": 1,
+      "completed_runs": 3,
+      "run_answer_accuracy": 1.0,
+      "run_process_correct_rate": 1.0,
+      "run_strict_success_rate": 1.0,
+      "unique_problems": 3,
+      "problem_answer_ac_ever_n": 3,
+      "problem_answer_ac_ever_rate": 1.0,
+      "problem_strict_success_ever_n": 3,
+      "problem_strict_success_ever_rate": 1.0
+    },
+    {
+      "difficulty": "普及−",
+      "difficulty_rank": 2,
+      "completed_runs": 9,
+      "run_answer_accuracy": 1.0,
+      "run_process_correct_rate": 1.0,
+      "run_strict_success_rate": 1.0,
+      "unique_problems": 9,
+      "problem_answer_ac_ever_n": 9,
+      "problem_answer_ac_ever_rate": 1.0,
+      "problem_strict_success_ever_n": 9,
+      "problem_strict_success_ever_rate": 1.0
+    },
+    {
+      "difficulty": "普及",
+      "difficulty_rank": 3,
+      "completed_runs": 17,
+      "run_answer_accuracy": 0.8823529411764706,
+      "run_process_correct_rate": 0.9411764705882353,
+      "run_strict_success_rate": 0.8235294117647058,
+      "unique_problems": 11,
+      "problem_answer_ac_ever_n": 11,
+      "problem_answer_ac_ever_rate": 1.0,
+      "problem_strict_success_ever_n": 11,
+      "problem_strict_success_ever_rate": 1.0
+    },
+    {
+      "difficulty": "普及+/提高−",
+      "difficulty_rank": 4,
+      "completed_runs": 16,
+      "run_answer_accuracy": 0.8125,
+      "run_process_correct_rate": 0.8125,
+      "run_strict_success_rate": 0.6875,
+      "unique_problems": 12,
+      "problem_answer_ac_ever_n": 11,
+      "problem_answer_ac_ever_rate": 0.9166666666666666,
+      "problem_strict_success_ever_n": 10,
+      "problem_strict_success_ever_rate": 0.8333333333333334
+    },
+    {
+      "difficulty": "提高",
+      "difficulty_rank": 5,
+      "completed_runs": 14,
+      "run_answer_accuracy": 0.7857142857142857,
+      "run_process_correct_rate": 0.7142857142857143,
+      "run_strict_success_rate": 0.5714285714285714,
+      "unique_problems": 9,
+      "problem_answer_ac_ever_n": 8,
+      "problem_answer_ac_ever_rate": 0.8888888888888888,
+      "problem_strict_success_ever_n": 5,
+      "problem_strict_success_ever_rate": 0.5555555555555556
+    },
+    {
+      "difficulty": "提高+/省选−",
+      "difficulty_rank": 6,
+      "completed_runs": 7,
+      "run_answer_accuracy": 1.0,
+      "run_process_correct_rate": 0.7142857142857143,
+      "run_strict_success_rate": 0.7142857142857143,
+      "unique_problems": 6,
+      "problem_answer_ac_ever_n": 6,
+      "problem_answer_ac_ever_rate": 1.0,
+      "problem_strict_success_ever_n": 5,
+      "problem_strict_success_ever_rate": 0.8333333333333334
+    },
+    {
+      "difficulty": "省选/NOI−",
+      "difficulty_rank": 7,
+      "completed_runs": 11,
+      "run_answer_accuracy": 0.5454545454545454,
+      "run_process_correct_rate": 0.09090909090909091,
+      "run_strict_success_rate": 0.09090909090909091,
+      "unique_problems": 9,
+      "problem_answer_ac_ever_n": 5,
+      "problem_answer_ac_ever_rate": 0.5555555555555556,
+      "problem_strict_success_ever_n": 1,
+      "problem_strict_success_ever_rate": 0.1111111111111111
+    },
+    {
+      "difficulty": "NOI/NOI+/CTS",
+      "difficulty_rank": 8,
+      "completed_runs": 9,
+      "run_answer_accuracy": 0.0,
+      "run_process_correct_rate": 0.4444444444444444,
+      "run_strict_success_rate": 0.0,
+      "unique_problems": 4,
+      "problem_answer_ac_ever_n": 0,
+      "problem_answer_ac_ever_rate": 0.0,
+      "problem_strict_success_ever_n": 0,
+      "problem_strict_success_ever_rate": 0.0
+    }
+  ],
+  "diagnosis_types_all": [
+    {
+      "category": "UNRESOLVED",
+      "count": 51,
+      "share": 0.5930232558139535
+    },
+    {
+      "category": "RESULT_CORRECT_PROCESS_INVALID",
+      "count": 13,
+      "share": 0.1511627906976744
+    },
+    {
+      "category": "IMPLEMENTATION_MISMATCH",
+      "count": 11,
+      "share": 0.12790697674418605
+    },
+    {
+      "category": "COMPLEXITY_TLE",
+      "count": 8,
+      "share": 0.09302325581395349
+    },
+    {
+      "category": "RUNTIME_ERROR",
+      "count": 2,
+      "share": 0.023255813953488372
+    },
+    {
+      "category": "WRONG_ALGORITHM",
+      "count": 1,
+      "share": 0.011627906976744186
+    }
+  ],
+  "failure_error_types": [
+    {
+      "category": "RESULT_CORRECT_PROCESS_INVALID",
+      "count": 13,
+      "share": 0.37142857142857144
+    },
+    {
+      "category": "IMPLEMENTATION_MISMATCH",
+      "count": 11,
+      "share": 0.3142857142857143
+    },
+    {
+      "category": "COMPLEXITY_TLE",
+      "count": 8,
+      "share": 0.22857142857142856
+    },
+    {
+      "category": "RUNTIME_ERROR",
+      "count": 2,
+      "share": 0.05714285714285714
+    },
+    {
+      "category": "WRONG_ALGORITHM",
+      "count": 1,
+      "share": 0.02857142857142857
+    }
+  ],
+  "stop_reasons": [
+    {
+      "category": "COMPLETED",
+      "count": 51,
+      "share": 0.5930232558139535
+    },
+    {
+      "category": "STALLED",
+      "count": 30,
+      "share": 0.3488372093023256
+    },
+    {
+      "category": "MAX_ROUNDS",
+      "count": 4,
+      "share": 0.046511627906976744
+    },
+    {
+      "category": "REPAIR_DISABLED",
+      "count": 1,
+      "share": 0.011627906976744186
+    }
+  ],
+  "assisted_validation": {
+    "status": "ASSISTED_PREAUDIT_NOT_HUMAN_GROUND_TRUTH",
+    "reviewed_n": 10,
+    "incorrect_answer_reviewed_n": 6,
+    "localizable_ground_truth_n": 6,
+    "exact_localization_match_n": 3,
+    "assisted_localization_accuracy": 0.5,
+    "correct_answer_flagged_n": 4,
+    "true_process_issue_n": 3,
+    "false_positive_n": 1,
+    "assisted_true_issue_rate_among_flagged": 0.75,
+    "assisted_false_positive_rate_among_flagged": 0.25,
+    "official_localization_accuracy": null,
+    "official_false_positive_rate": null,
+    "official_status": "PENDING_TWO_PERSON_HUMAN_REVIEW"
+  },
+  "manual_review": {
+    "selected_n": 10,
+    "human_signed_n": 0,
+    "status": "PENDING_HUMAN_SIGNOFF",
+    "selection": "所有先失败/过程无效、后修复至严格成功的 10 条运行之初始版本。"
+  },
+  "known_limitations": [
+    "SQLite 的 COMPLETED 表示工作流结束，不等于答案与过程均正确。",
+    "运行级历史表含同题重复运行；问题覆盖率使用至少一次成功口径，不能解释为单次通过率。",
+    "22 条历史结果未固化难度，本包使用当前 manifest 回填并保留来源字段。",
+    "数据库 annotation_tasks、annotations 和 benchmarks 均为空；官方定位准确率与误报率仍需双人人工盲标。",
+    "模型调用 token 只汇总成功返回且带 usage 的日志，不等于精确计费量。"
+  ]
+}

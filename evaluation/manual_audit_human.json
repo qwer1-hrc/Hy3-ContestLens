@@ -1,0 +1,78 @@
+{
+  "review_method": "项目作者逐条单人复核，并确认当前辅助预审标签与证据；未执行双人盲标或第三方裁决。",
+  "reviewer_1": "项目作者",
+  "reviewer_2": null,
+  "signed_at": "2026-09-11",
+  "records": {
+    "run_Dwq5kWBqPd8K3Tqb": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S4",
+      "actual_error_type": "WRONG_ALGORITHM"
+    },
+    "run_nPPFL5vXxjog7GZ8": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S4",
+      "actual_error_type": "WRONG_ALGORITHM"
+    },
+    "run_R9reSD2WJqZJHWd9": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S4",
+      "actual_error_type": "WRONG_ALGORITHM"
+    },
+    "run_Uzytk8n4cDblWHh": {
+      "status": "已完成",
+      "actual_final_result_correct": true,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S3",
+      "actual_error_type": "RESULT_CORRECT_PROCESS_INVALID"
+    },
+    "run_25X8tgq2qpxb0Yyc": {
+      "status": "已完成",
+      "actual_final_result_correct": true,
+      "actual_process_correct": true,
+      "actual_first_error_step_id": null,
+      "actual_error_type": "UNRESOLVED"
+    },
+    "run_aI26zu6L1yVpXpr": {
+      "status": "已完成",
+      "actual_final_result_correct": true,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "R5",
+      "actual_error_type": "RESULT_CORRECT_PROCESS_INVALID"
+    },
+    "run_Y7Ys6c6YegTHoMdR": {
+      "status": "已完成",
+      "actual_final_result_correct": true,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S6",
+      "actual_error_type": "RESULT_CORRECT_PROCESS_INVALID"
+    },
+    "run_NTDFmqoRKKpYRFY2": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S8",
+      "actual_error_type": "WRONG_ALGORITHM"
+    },
+    "run_m4f2CLks1kqFAPhO": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S2",
+      "actual_error_type": "WRONG_ALGORITHM"
+    },
+    "run_ogSNVlvSTdibvV9T": {
+      "status": "已完成",
+      "actual_final_result_correct": false,
+      "actual_process_correct": false,
+      "actual_first_error_step_id": "S3",
+      "actual_error_type": "WRONG_ALGORITHM"
+    }
+  }
+}

@@ -30,12 +30,14 @@ import csv
 import json
 import os
 import sqlite3
+import subprocess
 import sys
 import time
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 
@@ -123,12 +125,76 @@ def safe_api_error(response: httpx.Response) -> str:
     try:
         body = response.json()
         if isinstance(body, dict):
-            code = body.get("error_code") or body.get("detail", {}).get("error_code")
-            message = body.get("message") or body.get("detail", {}).get("message")
+            detail = body.get("detail") if isinstance(body.get("detail"), dict) else {}
+            code = body.get("error_code") or detail.get("error_code")
+            message = body.get("message") or detail.get("message") or body.get("detail")
             return ": ".join(str(item) for item in (code, message) if item)[:500]
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
         pass
     return response.text.replace("\n", " ")[:500]
+
+
+class ServiceGuardian:
+    """Keep the local API/WebUI available after a process crash.
+
+    The workflow service owns durable checkpoints, so restarting the Uvicorn
+    process is safe: its startup supervisor claims recoverable runs from the
+    same SQLite database.  The guardian never starts a second copy while the
+    health endpoint is already responding.
+    """
+
+    def __init__(self, base_url: str, log_dir: Path):
+        parsed = urlparse(base_url)
+        self.base_url = base_url.rstrip("/")
+        self.host = parsed.hostname or "127.0.0.1"
+        self.port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        self.project_root = Path(__file__).resolve().parents[1]
+        self.log_dir = log_dir
+        self.lock = asyncio.Lock()
+        self.restart_count = 0
+        self._log_handles: list[Any] = []
+
+    async def _healthy(self, client: httpx.AsyncClient) -> bool:
+        try:
+            response = await client.get("/healthz", timeout=5)
+            return response.status_code == 200
+        except httpx.HTTPError:
+            return False
+
+    def _spawn(self) -> None:
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+        stdout = (self.log_dir / "service-restart.stdout.log").open("a", encoding="utf-8")
+        stderr = (self.log_dir / "service-restart.stderr.log").open("a", encoding="utf-8")
+        self._log_handles.extend([stdout, stderr])
+        env = os.environ.copy()
+        source_root = str(self.project_root / "src")
+        env["PYTHONPATH"] = source_root + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+        command = [
+            sys.executable, "-m", "uvicorn", "hy3_contestlens.api.app:app",
+            "--host", self.host, "--port", str(self.port),
+        ]
+        flags = 0
+        if os.name == "nt":
+            flags = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)
+        subprocess.Popen(
+            command, cwd=self.project_root, env=env,
+            stdout=stdout, stderr=stderr, stdin=subprocess.DEVNULL,
+            creationflags=flags, close_fds=(os.name != "nt"),
+        )
+        self.restart_count += 1
+
+    async def ensure(self, client: httpx.AsyncClient) -> None:
+        if await self._healthy(client):
+            return
+        async with self.lock:
+            if await self._healthy(client):
+                return
+            self._spawn()
+            for _ in range(60):
+                if await self._healthy(client):
+                    return
+                await asyncio.sleep(2)
+        raise RuntimeError("Local WebUI/API did not recover within 120 seconds")
 
 
 async def api_request(
@@ -139,15 +205,29 @@ async def api_request(
     payload: dict[str, Any] | None = None,
     headers: dict[str, str] | None = None,
     attempts: int = 5,
+    service: ServiceGuardian | None = None,
 ) -> dict[str, Any] | list[dict[str, Any]]:
-    """Retry only controller transport failures; this is not a workflow retry."""
+    """Retry transport/server failures and recover the local API if needed.
+
+    HTTP 4xx responses are configuration or contract errors and are returned
+    immediately; they are never confused with a workflow restart.
+    """
     last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:
             response = await client.request(method, path, json=payload, headers=headers)
-            if response.status_code >= 500 and attempt < attempts:
-                await asyncio.sleep(min(20, 2 ** (attempt - 1)))
-                continue
+            if response.status_code >= 500:
+                detail = safe_api_error(response)
+                last_error = RuntimeError(f"{method} {path} -> HTTP {response.status_code}{(': ' + detail) if detail else ''}")
+                if service is not None:
+                    try:
+                        await service.ensure(client)
+                    except Exception as recovery_error:
+                        last_error = recovery_error
+                if attempt < attempts:
+                    await asyncio.sleep(min(20, 2 ** (attempt - 1)))
+                    continue
+                break
             if response.is_error:
                 detail = safe_api_error(response)
                 raise RuntimeError(f"{method} {path} -> HTTP {response.status_code}{(': ' + detail) if detail else ''}")
@@ -155,8 +235,13 @@ async def api_request(
             if not isinstance(value, (dict, list)):
                 raise RuntimeError(f"{method} {path} returned an unexpected JSON value")
             return value
-        except (httpx.HTTPError, RuntimeError) as exc:
+        except httpx.HTTPError as exc:
             last_error = exc
+            if service is not None:
+                try:
+                    await service.ensure(client)
+                except Exception as recovery_error:
+                    last_error = recovery_error
             if attempt == attempts:
                 break
             await asyncio.sleep(min(20, 2 ** (attempt - 1)))
@@ -239,6 +324,8 @@ def build_summary(state: dict[str, Any]) -> dict[str, Any]:
         in {
             "SKIPPED_PREVIOUS_SUCCESS",
             "EXCLUDED_UNSUPPORTED_COMPARATOR",
+            "EXCLUDED_SAMPLES_ONLY",
+            "EXCLUDED_SAMPLES_AFTER_RUN",
             "COMPLETED",
             "FAILED_AFTER_RESTART",
             "CANCELLED",
@@ -260,6 +347,7 @@ def build_summary(state: dict[str, Any]) -> dict[str, Any]:
             for item in entries if item["campaign_status"] == "SKIPPED_PREVIOUS_SUCCESS"
         ),
         "unsupported_comparator_excluded": statuses["EXCLUDED_UNSUPPORTED_COMPARATOR"],
+        "samples_only_excluded": statuses["EXCLUDED_SAMPLES_ONLY"] + statuses["EXCLUDED_SAMPLES_AFTER_RUN"],
         "campaign_runs_started": len(run_entries),
         "campaign_workflows_completed": len(finished),
         "campaign_workflows_failed_after_restart": statuses["FAILED_AFTER_RESTART"],
@@ -316,6 +404,7 @@ def write_markdown(path: Path, state: dict[str, Any]) -> None:
         ("跳过的历史成功题", "previous_successes_skipped"),
         ("其中严格全通过题", "historical_strict_successes_skipped"),
         ("未接入专用比较器而排除", "unsupported_comparator_excluded"),
+        ("仅样例数据而排除", "samples_only_excluded"),
         ("本次已创建运行", "campaign_runs_started"),
         ("本次工作流完成", "campaign_workflows_completed"),
         ("重启后仍失败", "campaign_workflows_failed_after_restart"),
@@ -356,13 +445,17 @@ def initial_state(
             "complexity_class": "complex" if complex_problem else "simple",
             "repair_max_rounds": 5 if complex_problem else 3,
             "judge_note": problem.get("judge_note"),
+            "data_status": problem.get("data_status"),
+            "sample_only": problem.get("data_status") == "samples",
             "previous_run_ids": [],
             "workflow_restarts_used": 0,
             "activation": 0,
             "created_at": utc_now(),
             "updated_at": utc_now(),
         }
-        if problem.get("judge_note"):
+        if problem.get("data_status") == "samples":
+            entry["campaign_status"] = "EXCLUDED_SAMPLES_ONLY"
+        elif problem.get("judge_note"):
             entry["campaign_status"] = "EXCLUDED_UNSUPPORTED_COMPARATOR"
         elif problem["problem_id"] in completed:
             entry["campaign_status"] = "SKIPPED_PREVIOUS_SUCCESS"
@@ -392,7 +485,12 @@ def initial_state(
     }
 
 
-async def start_fresh_run(campaign: Campaign, client: httpx.AsyncClient, entry: dict[str, Any]) -> None:
+async def start_fresh_run(
+    campaign: Campaign,
+    client: httpx.AsyncClient,
+    entry: dict[str, Any],
+    service: ServiceGuardian | None = None,
+) -> None:
     campaign_id = campaign.state["campaign_id"]
     key = f"{campaign_id}:{entry['problem_id']}:activation:{entry['activation']}"
     payload = {
@@ -400,15 +498,24 @@ async def start_fresh_run(campaign: Campaign, client: httpx.AsyncClient, entry: 
         "repair": {"enabled": True, "max_rounds": entry["repair_max_rounds"]},
         "image_understanding": "skip",
     }
-    created = await api_request(client, "POST", "/api/v1/runs", payload=payload, headers={"Idempotency-Key": key})
+    created = await api_request(
+        client, "POST", "/api/v1/runs", payload=payload,
+        headers={"Idempotency-Key": key}, service=service,
+    )
     if not isinstance(created, dict) or not isinstance(created.get("run_id"), str):
         raise RuntimeError("Run creation did not return a run_id")
     await campaign.update(entry, run_id=created["run_id"], campaign_status="CREATED", started_at=utc_now())
-    await api_request(client, "POST", f"/api/v1/runs/{created['run_id']}/start")
+    await api_request(client, "POST", f"/api/v1/runs/{created['run_id']}/start", service=service)
     await campaign.update(entry, campaign_status="RUNNING")
 
 
-async def restart_once(campaign: Campaign, client: httpx.AsyncClient, entry: dict[str, Any], run: dict[str, Any]) -> None:
+async def restart_once(
+    campaign: Campaign,
+    client: httpx.AsyncClient,
+    entry: dict[str, Any],
+    run: dict[str, Any],
+    service: ServiceGuardian | None = None,
+) -> None:
     """Use exactly one restart token, resuming only when that can do useful work."""
     restart_number = int(entry.get("workflow_restarts_used", 0)) + 1
     history = list(entry.get("restart_history", []))
@@ -424,7 +531,7 @@ async def restart_once(campaign: Campaign, client: httpx.AsyncClient, entry: dic
             workflow_restarts_used=restart_number,
             restart_history=history,
         )
-        await api_request(client, "POST", f"/api/v1/runs/{entry['run_id']}/start")
+        await api_request(client, "POST", f"/api/v1/runs/{entry['run_id']}/start", service=service)
         await campaign.update(entry, campaign_status="RUNNING")
         return
 
@@ -445,10 +552,15 @@ async def restart_once(campaign: Campaign, client: httpx.AsyncClient, entry: dic
         activation=int(entry.get("activation", 0)) + 1,
         run_id=None,
     )
-    await start_fresh_run(campaign, client, entry)
+    await start_fresh_run(campaign, client, entry, service)
 
 
-async def work_entry(campaign: Campaign, client: httpx.AsyncClient, entry: dict[str, Any]) -> None:
+async def work_entry(
+    campaign: Campaign,
+    client: httpx.AsyncClient,
+    entry: dict[str, Any],
+    service: ServiceGuardian | None = None,
+) -> None:
     try:
         if entry["campaign_status"] == "EXTERNAL_IN_PROGRESS":
             # Existing work is deliberately not manipulated.  A future resume
@@ -456,17 +568,18 @@ async def work_entry(campaign: Campaign, client: httpx.AsyncClient, entry: dict[
             return
         if entry["campaign_status"] in {
             "SKIPPED_PREVIOUS_SUCCESS", "EXCLUDED_UNSUPPORTED_COMPARATOR", "COMPLETED",
+            "EXCLUDED_SAMPLES_ONLY", "EXCLUDED_SAMPLES_AFTER_RUN",
             "FAILED_AFTER_RESTART", "CANCELLED", "CONTROLLER_ERROR",
         }:
             return
         if not entry.get("run_id"):
-            await start_fresh_run(campaign, client, entry)
+            await start_fresh_run(campaign, client, entry, service)
         while True:
             run_id = entry.get("run_id")
             if not run_id:
-                await start_fresh_run(campaign, client, entry)
+                await start_fresh_run(campaign, client, entry, service)
                 run_id = entry["run_id"]
-            run = await api_request(client, "GET", f"/api/v1/runs/{run_id}")
+            run = await api_request(client, "GET", f"/api/v1/runs/{run_id}", service=service)
             if not isinstance(run, dict):
                 raise RuntimeError(f"Run {run_id} state has an unexpected shape")
             status = run.get("status")
@@ -476,7 +589,7 @@ async def work_entry(campaign: Campaign, client: httpx.AsyncClient, entry: dict[
                     # creation but before the start request.  Finish that
                     # idempotent transition on resume instead of polling a
                     # run the service will never claim.
-                    await api_request(client, "POST", f"/api/v1/runs/{run_id}/start")
+                    await api_request(client, "POST", f"/api/v1/runs/{run_id}/start", service=service)
                     await campaign.update(entry, campaign_status="RUNNING", server_status="QUEUED")
                     continue
                 if entry.get("campaign_status") != "RUNNING" or entry.get("server_status") != status:
@@ -503,7 +616,7 @@ async def work_entry(campaign: Campaign, client: httpx.AsyncClient, entry: dict[
                 )
                 return
             if int(entry.get("workflow_restarts_used", 0)) < 1:
-                await restart_once(campaign, client, entry, run)
+                await restart_once(campaign, client, entry, run, service)
                 continue
             await campaign.update(
                 entry,
@@ -522,8 +635,73 @@ async def work_entry(campaign: Campaign, client: httpx.AsyncClient, entry: dict[
         )
 
 
-async def run_campaign(campaign: Campaign) -> None:
+async def enforce_samples_only(
+    campaign: Campaign,
+    problems: list[dict[str, Any]],
+    client: httpx.AsyncClient,
+    service: ServiceGuardian | None = None,
+) -> None:
+    """Migrate older campaign state and cancel any accidentally-started sample run."""
+    by_id = {item.get("problem_id"): item for item in problems}
+    for entry in campaign.entries:
+        problem = by_id.get(entry.get("problem_id"))
+        if not problem:
+            continue
+        sample_only = problem.get("data_status") == "samples"
+        await campaign.update(
+            entry,
+            data_status=problem.get("data_status"),
+            sample_only=sample_only,
+        )
+        if not sample_only:
+            continue
+        if entry.get("campaign_status") in {
+            "EXCLUDED_SAMPLES_ONLY", "EXCLUDED_SAMPLES_AFTER_RUN",
+        }:
+            if entry.get("run_id"):
+                try:
+                    fetched = await api_request(
+                        client, "GET", f"/api/v1/runs/{entry['run_id']}", service=service,
+                    )
+                    if isinstance(fetched, dict):
+                        await campaign.update(
+                            entry,
+                            server_status=fetched.get("status"),
+                            metrics=result_metrics(fetched.get("result")) or entry.get("metrics", {}),
+                        )
+                except Exception:
+                    pass
+            continue
+        old_status = entry.get("campaign_status")
+        run_id = entry.get("run_id")
+        run: dict[str, Any] | None = None
+        if run_id:
+            try:
+                fetched = await api_request(client, "GET", f"/api/v1/runs/{run_id}", service=service)
+                run = fetched if isinstance(fetched, dict) else None
+                if run and run.get("status") not in TERMINAL:
+                    await api_request(client, "POST", f"/api/v1/runs/{run_id}/cancel", service=service)
+                    fetched = await api_request(client, "GET", f"/api/v1/runs/{run_id}", service=service)
+                    run = fetched if isinstance(fetched, dict) else run
+            except Exception as exc:
+                # The run remains visible in the campaign record.  If the API
+                # is temporarily down, the guardian/retry path will try again
+                # on the next resume rather than silently claiming cancellation.
+                await campaign.update(entry, controller_error=f"sample-policy: {type(exc).__name__}: {str(exc)[:300]}")
+        after_run = bool(run_id) or old_status in {
+            "CREATED", "RUNNING", "RESTARTING", "COMPLETED", "FAILED", "CANCELLED",
+        }
+        await campaign.update(
+            entry,
+            campaign_status="EXCLUDED_SAMPLES_AFTER_RUN" if after_run else "EXCLUDED_SAMPLES_ONLY",
+            metrics=result_metrics(run.get("result")) if run else entry.get("metrics", {}),
+            finished_at=utc_now(),
+        )
+
+
+async def run_campaign(campaign: Campaign, service: ServiceGuardian | None = None) -> None:
     base_url = str(campaign.state["options"]["base_url"]).rstrip("/")
+    service = service or ServiceGuardian(base_url, campaign.root)
     timeout = httpx.Timeout(connect=15, read=60, write=60, pool=60)
     limits = httpx.Limits(max_connections=max(4, campaign.concurrency * 2), max_keepalive_connections=campaign.concurrency)
     async with httpx.AsyncClient(base_url=base_url, timeout=timeout, limits=limits) as client:
@@ -531,12 +709,13 @@ async def run_campaign(campaign: Campaign) -> None:
 
         async def limited(entry: dict[str, Any]) -> None:
             async with semaphore:
-                await work_entry(campaign, client, entry)
+                await work_entry(campaign, client, entry, service)
 
         candidates = [
             entry for entry in campaign.entries
             if entry["campaign_status"] not in {
-                "SKIPPED_PREVIOUS_SUCCESS", "EXCLUDED_UNSUPPORTED_COMPARATOR", "COMPLETED",
+                "SKIPPED_PREVIOUS_SUCCESS", "EXCLUDED_UNSUPPORTED_COMPARATOR",
+                "EXCLUDED_SAMPLES_ONLY", "EXCLUDED_SAMPLES_AFTER_RUN", "COMPLETED",
                 "FAILED_AFTER_RESTART", "CANCELLED", "CONTROLLER_ERROR", "EXTERNAL_IN_PROGRESS",
             }
         ]
@@ -544,9 +723,9 @@ async def run_campaign(campaign: Campaign) -> None:
     await campaign.save()
 
 
-async def load_problems(base_url: str) -> list[dict[str, Any]]:
+async def load_problems(base_url: str, service: ServiceGuardian | None = None) -> list[dict[str, Any]]:
     async with httpx.AsyncClient(base_url=base_url.rstrip("/"), timeout=httpx.Timeout(30)) as client:
-        data = await api_request(client, "GET", "/api/v1/problems")
+        data = await api_request(client, "GET", "/api/v1/problems", service=service)
     if not isinstance(data, list) or not all(isinstance(item, dict) for item in data):
         raise RuntimeError("Problem catalog returned an unexpected shape")
     return data
@@ -583,9 +762,16 @@ async def main_async(args: argparse.Namespace) -> int:
         # A resume intentionally preserves the original target service and
         # policies; only scheduling controls are allowed to vary.
         campaign = Campaign(root, state, poll_seconds=args.poll_seconds, concurrency=args.concurrency)
+        service = ServiceGuardian(str(state["options"]["base_url"]), root)
+        problems = await load_problems(str(state["options"]["base_url"]), service)
+        async with httpx.AsyncClient(
+            base_url=str(state["options"]["base_url"]).rstrip("/"),
+            timeout=httpx.Timeout(connect=15, read=60, write=60, pool=60),
+        ) as client:
+            await enforce_samples_only(campaign, problems, client, service)
         await campaign.save()
         print(f"Resuming {state['campaign_id']} from {root}", flush=True)
-        await run_campaign(campaign)
+        await run_campaign(campaign, service)
         print(json.dumps(campaign.state["summary"], ensure_ascii=False, indent=2), flush=True)
         return 0
 
